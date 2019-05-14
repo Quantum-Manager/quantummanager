@@ -71,5 +71,5 @@ GPLv3
 Компания "Деловой дизайн" https://delo-design.ru
 
 ### Поддержка
-- quantum@hika.su (email)
-- @tsymbalmitia (telegram)
+- [quantum@hika.su](mailto:quantum@hika.su) (email)
+-  [@tsymbalmitia](tg://resolve?domain=tsymbalmitia) (telegram) 
