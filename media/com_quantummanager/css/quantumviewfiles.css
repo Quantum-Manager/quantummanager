@@ -1,0 +1,585 @@
+.quantumviewfiles-module {
+    position: relative;
+    /*height: 80%;*/
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    flex: 1 1 auto;
+}
+.quantumviewfiles-module .filters {
+    /*display: flex;*/
+    display: none;
+    margin-bottom: 12px;
+    width: 100%;
+    height: auto;
+}
+.quantumviewfiles-module .filters > div {
+    width: auto;
+    margin-right: 20px;
+}
+.quantumviewfiles-module .filters .head {
+    font-weight: 700;
+    margin-right: 40px;
+}
+.quantumviewfiles-module .filters > div:last-child {
+    margin-right: 0;
+}
+.quantumviewfiles-module .breadcumbs {
+    margin-top: 0;
+    margin-bottom: 10px;
+    width: 100%;
+    height: auto;
+}
+.quantumviewfiles-module .breadcumbs ul {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0;
+    height: 30px;
+    align-content: center;
+    align-items: center;
+    list-style: none;
+}
+.quantumviewfiles-module .breadcumbs > ul {
+}
+.quantumviewfiles-module .breadcumbs > ul > li {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    position: relative;
+    line-height: 16px;
+    transition: all 0.2s;
+}
+.quantumviewfiles-module .breadcumbs > ul > li:last-child {
+    margin-right: 0;
+}
+.quantumviewfiles-module .breadcumbs > ul > li.carret {
+    height: 100%;
+    padding: 0 5px;
+}
+.quantumviewfiles-module .breadcumbs > ul > li.carret > span {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    background-size: cover;
+    background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg' data-svg='chevron-right'%3E%3Cpolyline fill='none' stroke='%23000' stroke-width='1.03' points='7 4 13 10 7 16'%3E%3C/polyline%3E%3C/svg%3E");
+}
+.quantumviewfiles-module .breadcumbs > ul > li:last-child:after {
+    display: none;
+}
+.quantumviewfiles-module .breadcumbs ul li:hover {
+    background-color: #f4f4f4;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    outline: 0;
+    transition: all 0.2s;
+}
+.quantumviewfiles-module .breadcumbs > ul > li > span {
+    display: inline-block;
+    font-weight: 100;
+    font-size: 21px;
+    color: #333;
+    padding: 7px 10px;
+    max-width: 150px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.quantumviewfiles-module .breadcumbs ul li.dropdown {
+    position: relative;
+}
+.quantumviewfiles-module .breadcumbs ul li .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: auto;
+    top: 30px;
+    left: 0;
+    width: 180px;
+    padding: 0;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    height: 320px;
+    max-height: 320px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    webkit-overflow-scrolling: touch;
+    z-index: 1;
+    transition: display 0.2s ease;
+}
+.quantumviewfiles-module .breadcumbs ul li .dropdown-content ul {
+    display: inline-block;
+    white-space: normal;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+.quantumviewfiles-module .breadcumbs ul li .dropdown-content ul li {
+    display: inline-block;
+    width: 100%;
+    padding: 0;
+    color: black;
+    text-decoration: none;
+}
+.quantumviewfiles-module .breadcumbs ul li .dropdown-content ul li span {
+    display: inline-block;
+    width: 100%;
+    padding: 5px 15px;
+}
+.quantumviewfiles-module .breadcumbs ul li.dropdown:hover .dropdown-content {
+    display: block;
+    transition: display 0.2s ease;
+}
+.quantumviewfiles-module .view {
+    flex: 2;
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+.quantumviewfiles-module .field-list-files {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    overflow: auto;
+    webkit-overflow-scrolling: touch;
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+}
+.quantumviewfiles-module .empty {
+    text-align: center;
+    padding: 40px 50px;
+}
+.quantumviewfiles-module .field-list-files .active {
+    background: #f3dd8c73;
+}
+.quantumviewfiles-module .field-list-files .file {
+    width: 100%;
+    display: flex;
+    align-self: center;
+    align-items: center;
+}
+.quantumviewfiles-module .field-list-files .file .file-exs {
+    width: auto;
+    height: 100%;
+    margin: 0;
+}
+.quantumviewfiles-module .field-list-files .file .file-exs .av-folderlist-label:after {
+    width: 16px;
+    height: 16px;
+}
+.quantumviewfiles-module .field-list-files .file .file-name {
+    width: 85%;
+    height: 100%;
+    line-height: 14px;
+    white-space: normal;
+}
+.quantumviewfiles-module .field-list-files .empty {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.quantumviewfiles-module .field-list-files input[type=checkbox]:checked {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2214%22%20height%3D%2211%22%20viewBox%3D%220%200%2014%2011%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23fff%22%20points%3D%2212%201%205%207.5%202%205%201%205.5%205%2010%2013%201.5%22%20%2F%3E%0A%3C%2Fsvg%3E%0A");
+}
+.quantumviewfiles-module .field-list-files input[type=checkbox]:indeterminate {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Crect%20fill%3D%22%23fff%22%20x%3D%223%22%20y%3D%228%22%20width%3D%2210%22%20height%3D%221%22%20%2F%3E%0A%3C%2Fsvg%3E");
+}
+.quantumviewfiles-module .field-list-files input[type=checkbox]:checked,
+.quantumviewfiles-module .field-list-files input[type=checkbox]:indeterminate {
+    background-color: rgb(35, 132, 211);
+    border-color: transparent;
+}
+.quantumviewfiles-module .field-list-files input[type=checkbox]:not(:disabled) {
+    cursor: pointer;
+}
+.quantumviewfiles-module .field-list-files input[type=checkbox] {
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    overflow: hidden;
+    margin-top: -4px;
+    vertical-align: middle;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    border: 1px solid #ccc;
+    transition: .2s ease-in-out;
+    transition-property: background-color,border;
+}
+.quantumviewfiles-module .field-list-files input[type=checkbox] {
+    box-sizing: border-box;
+    margin: 0;
+    border-radius: 0;
+    font: inherit;
+}
+.quantumviewfiles-module .field-list-files .list-grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -1%;
+}
+.quantumviewfiles-module .field-list-files .list-grid .file-item {
+    margin: 1%;
+    height: 130px;
+    overflow: hidden;
+    outline: 1px solid #efefef;
+}
+.quantumviewfiles-module .field-list-files .list-grid-1-5 .file-item {
+    width: 18%;
+}
+.quantumviewfiles-module .field-list-files .list-grid-1-4 .file-item {
+    width: 23%;
+}
+.quantumviewfiles-module .field-list-files .list-grid-1-3 .file-item {
+    width: 31.3%;
+}
+.quantumviewfiles-module .field-list-files .list-grid .file-item:hover {
+    cursor: pointer;
+}
+.quantumviewfiles-module .field-list-files .list-grid .file-item:hover .file-exs {
+    transition: all 0.2s;
+    transform: scale(1.2);
+}
+.quantumviewfiles-module .field-list-files .list-grid .file-item .import-files-check-file {
+    display: none;
+}
+.quantumviewfiles-module .field-list-files .list-grid .file-item .import-files-check-file:checked ~ .file:before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    margin: 0;
+    left: 8px;
+    top: 8px;
+    border-radius: 50%;
+    background-size: contain;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-image: url("data:image/svg+xml,%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 426.667 426.667' style='enable-background:new 0 0 426.667 426.667;' xml:space='preserve'%3E%3Cpath style='fill:%236AC259;' d='M213.333,0C95.518,0,0,95.514,0,213.333s95.518,213.333,213.333,213.333 c117.828,0,213.333-95.514,213.333-213.333S331.157,0,213.333,0z M174.199,322.918l-93.935-93.931l31.309-31.309l62.626,62.622 l140.894-140.898l31.309,31.309L174.199,322.918z'/%3E%3C/svg%3E%0A");
+    z-index: 2;
+}
+.quantumviewfiles-module .field-list-files .list-grid .file-item .file {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #efefef;
+}
+.quantumviewfiles-module .field-list-files .list-grid .file-item .file .file-exs {
+    width: 100%;
+    height: 100%;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    transition: all 0.2s;
+}
+.quantumviewfiles-module .field-list-files .list-grid .file-item .file .file-exs.file-icons {
+    width: 50%;
+    height: 50%;
+    margin: auto;
+}
+.quantumviewfiles-module .field-list-files .list-grid .file-item .file .file-exs .av-folderlist-label {
+    display: none;
+}
+.quantumviewfiles-module .field-list-files .list-grid .file-item .file .file-name {
+    position: absolute;
+    background: rgba(255,255,255,.8);
+    color: #444444;
+    height: auto;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    width: 100%;
+    font-size: 13px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.quantumviewfiles-module .field-list-files .list-grid .directory-item {
+    margin: 1%;
+}
+.quantumviewfiles-module .field-list-files .list-grid-1-5 .directory-item {
+    width: 18%;
+}
+.quantumviewfiles-module .field-list-files .list-grid-1-4 .directory-item {
+    width: 23%;
+}
+.quantumviewfiles-module .field-list-files .list-grid-1-3 .directory-item {
+    width: 31.3%;
+}
+.quantumviewfiles-module .field-list-files .list-grid .directory-item .directory {
+    width: 100%;
+    height: 130px;
+    position: relative;
+    border: 1px solid #eeeeee;
+    transition: all 0.2s;
+}
+.quantumviewfiles-module .field-list-files .list-grid .directory-item:hover .directory {
+    background: #eeeeee;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.quantumviewfiles-module .field-list-files .list-grid .directory-item .directory .directory-icon {
+    height: 80%;
+    margin: auto;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50% 15%;
+    background-image: url("data:image/svg+xml,%3Csvg version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 58 58' style='enable-background:new 0 0 58 58;' xml:space='preserve'%3E%3Cpath style='fill:%23EFCE4A;' d='M46.324,52.5H1.565c-1.03,0-1.779-0.978-1.51-1.973l10.166-27.871 c0.184-0.682,0.803-1.156,1.51-1.156H56.49c1.03,0,1.51,0.984,1.51,1.973L47.834,51.344C47.65,52.026,47.031,52.5,46.324,52.5z'/%3E%3Cg%3E%3Cpath style='fill:%23EBBA16;' d='M50.268,12.5H25l-5-7H1.732C0.776,5.5,0,6.275,0,7.232V49.96c0.069,0.002,0.138,0.006,0.205,0.01 l10.015-27.314c0.184-0.683,0.803-1.156,1.51-1.156H52v-7.268C52,13.275,51.224,12.5,50.268,12.5z'/%3E%3C/g%3E%3C/svg%3E%0A");
+}
+.quantumviewfiles-module .field-list-files .list-grid .directory-item .directory .directory-name {
+    position: absolute;
+    background: rgba(255,255,255,.6);
+    color: #444444;
+    height: auto;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    font-size: 13px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.quantumviewfiles-module .field-list-files .list-table .file-item {
+    display: flex;
+    align-items: center;
+    padding: 0 6px;
+    border-bottom: 1px solid #ddd;
+    font-size: 13px;
+}
+.quantumviewfiles-module .field-list-files .list-table .file-item:hover {
+    cursor: pointer;
+    background: #eeeeee;
+    transition: all 0.2s;
+}
+.quantumviewfiles-module .field-list-files .list-table .file-item input {
+    margin-right: 5px;
+}
+.quantumviewfiles-module .field-list-files .list-table .file-item input:checked ~ .file {
+    background-color: #fcf8e3;
+    color: #444444;
+}
+.quantumviewfiles-module .field-list-files .list-table .file-item .file {
+    padding: 8px 4px;
+}
+.quantumviewfiles-module .field-list-files .list-table .file .file-exs .av-folderlist-label:after {
+    margin-top: 4px;
+}
+.quantumviewfiles-module .field-list-files .list-table .directory-item {
+    display: flex;
+    align-items: center;
+    padding: 0 6px 0 27px;
+    border-bottom: 1px solid #ddd;
+}
+.quantumviewfiles-module .field-list-files .list-table .directory-item:hover {
+    cursor: pointer;
+    background: #eeeeee;
+    transition: all 0.2s;
+}
+.quantumviewfiles-module .field-list-files .list-table .directory-item .directory {
+    padding: 8px 4px;
+    width: 100%;
+    display: flex;
+    align-self: center;
+    align-items: center;
+    font-size: 13px;
+}
+.quantumviewfiles-module .field-list-files .list-table .directory-item .directory .directory-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-image: url("data:image/svg+xml,%3Csvg version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 58 58' style='enable-background:new 0 0 58 58;' xml:space='preserve'%3E%3Cpath style='fill:%23EFCE4A;' d='M46.324,52.5H1.565c-1.03,0-1.779-0.978-1.51-1.973l10.166-27.871 c0.184-0.682,0.803-1.156,1.51-1.156H56.49c1.03,0,1.51,0.984,1.51,1.973L47.834,51.344C47.65,52.026,47.031,52.5,46.324,52.5z'/%3E%3Cg%3E%3Cpath style='fill:%23EBBA16;' d='M50.268,12.5H25l-5-7H1.732C0.776,5.5,0,6.275,0,7.232V49.96c0.069,0.002,0.138,0.006,0.205,0.01 l10.015-27.314c0.184-0.683,0.803-1.156,1.51-1.156H52v-7.268C52,13.275,51.224,12.5,50.268,12.5z'/%3E%3C/g%3E%3C/svg%3E%0A");
+}
+.quantumviewfiles-module .field-list-files .list-table .directory-item .directory .directory-name {
+    height: 100%;
+    line-height: 14px;
+}
+.quantumviewfiles-module .field-list-files .list-table > div:last-child {
+    border-bottom: none;
+}
+
+.quantumviewfiles-module .loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 100px;
+    text-transform: uppercase;
+    line-height: 100px;
+    text-align: center;
+    color: #444444;
+    font-size: 50px;
+    letter-spacing: 10px;
+    overflow: hidden
+
+}
+.quantumviewfiles-module .loader span {
+    position: absolute;
+    background: #444444;
+}
+.quantumviewfiles-module .loader span:nth-child(1) {
+    width: 100%;
+    height: 4px;
+    top: 0;
+    left: -100%;
+    animation: animate1 2s linear infinite;
+}
+
+.quantumviewfiles-module .loader span:nth-child(3) {
+    width: 100%;
+    height: 4px;
+    bottom: 0;
+    right: -100%;
+    animation: animate3 2s linear infinite;
+}
+
+.quantumviewfiles-module .loader span:nth-child(2) {
+    width: 4px;
+    height: 100%;
+    right: 0;
+    top: -100%;
+    animation: animate2 2s linear infinite;
+}
+.quantumviewfiles-module .loader span:nth-child(4) {
+    width: 4px;
+    height: 100%;
+    left: 0;
+    bottom: -100%;
+    animation: animate4 2s linear infinite;
+}
+@keyframes animate1 {
+    0%
+    {
+        left: -100%;
+    }
+    20%
+    {
+        left: 0;
+    }
+    40%
+    {
+        left: 100%;
+    }
+    60%
+    {
+        left: 100%;
+    }
+    80%
+    {
+        left: 100%;
+    }
+    100%
+    {
+        left: 100%;
+    }
+}
+
+@keyframes animate2 {
+    0%
+    {
+        top: -100%;
+    }
+    20%
+    {
+        top: -100%;
+    }
+    40%
+    {
+        top: 0%;
+    }
+    60%
+    {
+        top: 100%;
+    }
+    80%
+    {
+        top: 100%;
+    }
+    100%
+    {
+        top: 100%;
+    }
+}
+
+
+@keyframes animate3 {
+    0%
+    {
+        right: -100%;
+    }
+    20%
+    {
+        right: -100%;
+    }
+    40%
+    {
+        right: -100%;
+    }
+    60%
+    {
+        right: 0;
+    }
+    80%
+    {
+        right: 100%;
+    }
+    100%
+    {
+        right: 100%;
+    }
+}
+@keyframes animate4 {
+    0%
+    {
+        bottom: -100%;
+    }
+    20%
+    {
+        bottom: -100%;
+    }
+    40%
+    {
+        bottom: -100%;
+    }
+    60%
+    {
+        bottom: -100%;
+    }
+    80%
+    {
+        bottom: 0%;
+    }
+    100%
+    {
+        bottom: 100%;
+    }
+}
+

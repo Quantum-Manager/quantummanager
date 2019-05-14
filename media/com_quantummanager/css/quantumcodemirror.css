@@ -1,0 +1,21 @@
+.quantumcodemirror-module {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    background: #ffffff;
+}
+.quantumcodemirror-module.active {
+    display: block;
+}
+.quantumcodemirror-module .toolbar {
+    padding: 10px 15px;
+    background: #f5f6f7;
+}
+.quantumcodemirror-module .editor {
+    margin: auto;
+    height: 100%;
+}

@@ -1,0 +1,144 @@
+.quantumtreecatalogs-module {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+.quantumtreecatalogs-module .tree-scroll {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    webkit-overflow-scrolling: touch;
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+}
+.quantumtreecatalogs-module ul,
+.quantumtreecatalogs-module .tree-ul {
+    list-style-type: none;
+}
+.quantumtreecatalogs-module .tree-ul  {
+    margin: 0;
+    padding: 0;
+}
+.quantumtreecatalogs-module .tree-caret {
+    cursor: pointer;
+    user-select: none;
+}
+.quantumtreecatalogs-module .tree-nested {
+    display: none;
+    margin-left: 10px;
+}
+.quantumtreecatalogs-module .active {
+    display: block;
+}
+.quantumtreecatalogs-module ul li {
+    font-size: 13px;
+    line-height: 17px;
+    position: relative;
+}
+.quantumtreecatalogs-module ul li span {
+    position: relative;
+    padding-left: 20px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.quantumtreecatalogs-module ul li span.tree-caret {
+    position: absolute;
+    display: inline-block;
+    top: 4px;
+    left: 0;
+    width: 13px;
+    height: 13px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+    line-height: 21px;
+    background-color: #fff;
+    box-shadow: inset 0 0 0 1px #aaa;
+    z-index: 1;
+    cursor: pointer;
+}
+.quantumtreecatalogs-module ul li span.tree-caret:before,
+.quantumtreecatalogs-module ul li span.tree-caret:after {
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: 4px;
+    width: 5px;
+    height: 1px;
+    background-color: #aaa;
+    -webkit-transition: opacity .2s;
+    -moz-transition: opacity .2s;
+    -ms-transition: opacity .2s;
+    transition: opacity .2s;
+}
+.quantumtreecatalogs-module ul li span.tree-caret.tree-caret-down:after {
+    opacity: 0;
+}
+.quantumtreecatalogs-module ul li span.tree-caret:after {
+    transform: rotate(90deg);
+    opacity: 1;
+}
+.quantumtreecatalogs-module ul li span.tree-path {
+    position: relative;
+    display: inline-block;
+    padding-left: 38px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 90%;
+    transition: all 0.2s;
+}
+.quantumtreecatalogs-module ul li span.tree-path:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    transition: all 0.2s;
+}
+.quantumtreecatalogs-module ul li span.tree-path:after {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 18px;
+    bottom: 0;
+    width: 16px;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-image: url("data:image/svg+xml,%3Csvg version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 58 58' style='enable-background:new 0 0 58 58;' xml:space='preserve'%3E%3Cpath style='fill:%23EFCE4A;' d='M46.324,52.5H1.565c-1.03,0-1.779-0.978-1.51-1.973l10.166-27.871 c0.184-0.682,0.803-1.156,1.51-1.156H56.49c1.03,0,1.51,0.984,1.51,1.973L47.834,51.344C47.65,52.026,47.031,52.5,46.324,52.5z'/%3E%3Cg%3E%3Cpath style='fill:%23EBBA16;' d='M50.268,12.5H25l-5-7H1.732C0.776,5.5,0,6.275,0,7.232V49.96c0.069,0.002,0.138,0.006,0.205,0.01 l10.015-27.314c0.184-0.683,0.803-1.156,1.51-1.156H52v-7.268C52,13.275,51.224,12.5,50.268,12.5z'/%3E%3C/g%3E%3C/svg%3E%0A");
+}
+.quantumtreecatalogs-module ul li.active span.tree-path:after {
+    opacity: 1;
+}
+.quantumtreecatalogs-module ul li.active > .tree-path   {
+    font-weight: bold;
+}
+.quantumtreecatalogs-module ul li .tree-delete {
+    display: inline-block;
+    width: 13px;
+    height: 17px;
+    padding: 0;
+    margin-left: 5px;
+}
+.quantumtreecatalogs-module ul li .tree-delete span {
+    padding: 0;
+    width: 12px;
+    height: 14px;
+    margin-bottom: 2px;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='14' viewBox='0 0 12 14' xmlns='http://www.w3.org/2000/svg'%3E%3Crect fill='%23cc0000' x='3' y='0' width='5' height='1' /%3E%3Crect fill='%23cc0000' x='0' y='2' width='11' height='1' /%3E%3Cpath fill='%23cc0000' d='M9,3 L9,13 L2,13 L2,3 L9,3 L9,3 Z M10,2 L9,2 L2,2 L1,2 L1,3 L1,13 L1,14 L2,14 L9,14 L10,14 L10,13 L10,3 L10,2 L10,2 L10,2 Z' /%3E%3Crect fill='%23cc0000' x='4' y='6' width='1' height='5' /%3E%3Crect fill='%23cc0000' x='6' y='6' width='1' height='5' /%3E%3C/svg%3E");    transition: all 0.2s;
+}
+.quantumtreecatalogs-module ul li .tree-delete:hover {
+    cursor: pointer;
+}
+.quantumtreecatalogs-module ul li .tree-delete:hover span {
+    background-image: url("data:image/svg+xml,%0A%3Csvg width='12' height='14' viewBox='0 0 12 14' xmlns='http://www.w3.org/2000/svg'%3E%3Crect fill='%23ddd' x='3' y='0' width='5' height='1' /%3E%3Crect fill='%23ddd' x='0' y='2' width='11' height='1' /%3E%3Cpath fill='%23ddd' d='M9,3 L9,13 L2,13 L2,3 L9,3 L9,3 Z M10,2 L9,2 L2,2 L1,2 L1,3 L1,13 L1,14 L2,14 L9,14 L10,14 L10,13 L10,3 L10,2 L10,2 L10,2 Z' /%3E%3Crect fill='%23ddd' x='4' y='6' width='1' height='5' /%3E%3Crect fill='%23ddd' x='6' y='6' width='1' height='5' /%3E%3C/svg%3E");
+    transition: all 0.2s;
+}

@@ -1,0 +1,129 @@
+.quantumupload-module {
+    background: #fbfbfb;
+}
+.drop-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 10px;
+    min-height: 25px;
+    height: auto;
+    border: 2px dashed #ccc;
+    border-radius: 5px;
+    width: auto;
+    padding: 15px;
+    text-align: center;
+}
+.drop-area.highlight {
+    border-color: #d8d7d8;
+}
+.drop-area .form-upload {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.drop-area .quantummanager-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+.drop-area p {
+    display: inline-block;
+    margin: 0;
+}
+.drop-area .button {
+    display: inline-block;
+    cursor: pointer;
+    color: #4568DC !important;
+    margin: 0 0 0 5px;
+    background-color: transparent !important;
+}
+.drop-area .button:hover {
+    color: #3a5dbe;
+}
+.drop-area .fileElem {
+    display: none;
+}
+.drop-area progress {
+    display: none;
+    width: 100%;
+    margin: 10px 10px 0 10px;
+}
+.drop-area progress {
+    vertical-align: baseline;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 100%;
+    border: 0;
+    background-color: #f8f8f8;
+    margin-bottom: 20px;
+    height: 15px;
+    border-radius: 500px;
+    overflow: hidden;
+}
+* + .drop-area progress {
+    margin-top: 20px;
+}
+.drop-area progress:indeterminate {
+    color: transparent;
+}
+.drop-area progress::-webkit-progress-bar {
+    background-color: #ffffff;
+    border-radius: 500px;
+    overflow: hidden;
+}
+.drop-area progress:indeterminate::-moz-progress-bar {
+    width: 0;
+}
+.drop-area progress::-webkit-progress-value {
+    background: #4568DC;
+    background: -webkit-linear-gradient(to right, #B06AB3, #4568DC);
+    background: linear-gradient(to right, #B06AB3, #4568DC);
+    transition: width 0.6s ease;
+}
+.drop-area progress::-moz-progress-bar {
+    background: #4568DC;
+    background: -webkit-linear-gradient(to right, #B06AB3, #4568DC);
+    background: linear-gradient(to right, #B06AB3, #4568DC);
+}
+.drop-area progress::-ms-fill {
+    background: #4568DC;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #B06AB3, #4568DC);
+    background: linear-gradient(to right, #B06AB3, #4568DC);
+    transition: width 0.6s ease;
+    border: 0;
+}
+.upload-errors {
+    display: none;
+    margin-top: 15px;
+    position: relative;
+    background: #fef4f6;
+    color: #f0506e;
+    padding: 15px 29px 15px 15px;
+}
+.upload-errors div {
+    width: 100%;
+    margin-bottom: 5px;
+}
+.upload-errors .uk-alert-close {
+    position: absolute;
+    top: 17px;
+    right: 15px;
+    color: inherit;
+    opacity: .4;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    overflow: visible;
+    font: inherit;
+    text-transform: none;
+    padding: 0;
+    background-color: transparent;
+    display: inline-block;
+    fill: currentcolor;
+    line-height: 0;
+}
+.upload-errors .uk-alert-close:hover {
+    cursor: pointer;
+}

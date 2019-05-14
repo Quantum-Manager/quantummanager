@@ -1,0 +1,17 @@
+html, body {
+    padding: 0 !important;
+    overflow-y: hidden;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    height: 100% !important;
+}
+
+.quantummanager {
+    width: 99%;
+    height: 99vh !important;
+}

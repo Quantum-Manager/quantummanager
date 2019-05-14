@@ -1,0 +1,194 @@
+.quantumcropperjs-module {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.quantumcropperjs-module.active {
+    display: block;
+}
+.quantumcropperjs-module .toolbar {
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    height: 60px;
+    background: #fbfbfb;
+}
+.quantumcropperjs-module .toolbar > div {
+    display: flex;
+    align-items: center;
+}
+.quantumcropperjs-module .toolbar > div:first-child .quantummanager-icon {
+    margin-right: 4px;
+    width: 12px;
+    height: 12px;
+}
+.quantumcropperjs-module .toolbar > div:last-child {
+    margin-left: auto;
+    justify-content: flex-end;
+}
+.quantumcropperjs-module .toolbar .btn-primary {
+    background: #4568DC;
+    background: -webkit-linear-gradient(to right, #B06AB3, #4568DC);
+    background: linear-gradient(to right, #B06AB3, #4568DC);
+    border: 1px solid transparent;
+}
+.quantumcropperjs-module .toolbar .buttons-toggles input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+}
+.quantumcropperjs-module .toolbar .buttons-methods {
+    display: flex;
+    align-items: center;
+}
+.quantumcropperjs-module .toolbar .buttons-toggles {
+    display: flex;
+    align-items: center;
+}
+.quantumcropperjs-module .toolbar .btn-group {
+    display: flex;
+    align-items: center;
+}
+.quantumcropperjs-module .toolbar .btn {
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    line-height: 0;
+    height: 30px;
+}
+.quantumcropperjs-module .toolbar .buttons-methods {
+    margin-right: 5px;
+}
+.quantumcropperjs-module .toolbar .buttons-toggles .btn {
+    height: 28px;
+}
+.quantumcropperjs-module .toolbar .buttons-methods .btn {
+    position: relative;
+}
+.quantumcropperjs-module .toolbar .quantummanager-icon {
+
+}
+.quantumcropperjs-module .name-file-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 15px;
+    height: 100%;
+}
+.quantumcropperjs-module .name-file-wrap .input-wrapper {
+    /*height: 20px;
+    margin: 0;
+    border-radius: 3px 0 0 3px;*/
+    position: relative;
+}
+.quantumcropperjs-module .name-file-wrap .input-wrapper input {
+    width: 15em;
+    margin: 0;
+    height: 19px;
+    font-size: inherit;
+    font-family: inherit;
+    background-color: #ffffff;
+    padding: 0.35em 0.45em;
+    border-radius: 3px 0 0 3px;
+    border: 1px solid #ccc;
+    transition: background-color 0.3s ease-in-out;
+}
+.quantumcropperjs-module .name-file-wrap .input-wrapper input:focus {
+    outline: none;
+}
+.quantumcropperjs-module .name-file-wrap .input-wrapper input::placeholder {
+    color: hsla(0, 0%, 100%, 0.6);
+}
+.quantumcropperjs-module .name-file-wrap .input-wrapper span {
+    position: absolute;
+    background-color: #B06AB3;
+    transition: transform 0.5s ease;
+}
+.quantumcropperjs-module .name-file-wrap .input-wrapper .bottom,
+.quantumcropperjs-module .name-file-wrap .input-wrapper .top {
+    height: 1px;
+    left: 0;
+    right: 0;
+    transform: scaleX(0);
+}
+.quantumcropperjs-module .name-file-wrap .input-wrapper .left,
+.quantumcropperjs-module .name-file-wrap .input-wrapper .right {
+    width: 1px;
+    top: 0;
+    bottom: 0;
+    transform: scaleY(0);
+}
+.quantumcropperjs-module .name-file-wrap .input-wrapper .bottom {
+    bottom: 0;
+    transform-origin: bottom right;
+}
+.quantumcropperjs-module .name-file-wrap .input-wrapper input:focus ~ .bottom {
+    transform-origin: bottom left;
+    transform: scaleX(1);
+}
+.quantumcropperjs-module .name-file-wrap .input-wrapper .right {
+    right: 0;
+    transform-origin: top right;
+}
+.quantumcropperjs-module .name-file-wrap .input-wrapper input:focus ~ .right {
+    transform-origin: bottom right;
+    transform: scaleY(1);
+}
+.quantumcropperjs-module .name-file-wrap .input-wrapper .top {
+    top: 0;
+    transform-origin: top left;
+}
+.quantumcropperjs-module .name-file-wrap .input-wrapper input:focus ~ .top {
+    transform-origin: top right;
+    transform: scaleX(1);
+}
+.quantumcropperjs-module .name-file-wrap .input-wrapper .left {
+    left: 0;
+    transform-origin: bottom left;
+}
+.quantumcropperjs-module .name-file-wrap .input-wrapper input:focus ~ .left {
+    transform-origin: top left;
+    transform: scaleY(1);
+}
+.quantumcropperjs-module .name-file-wrap select {
+    width: 70px;
+    height: 30px;
+    margin: 0;
+    border-left: 0;
+    border-radius: 0 3px 3px 0;
+    background: #f3f3f3;
+    font-weight: bold;
+}
+.quantumcropperjs-module .editor {
+    margin: auto;
+    height: 100%;
+}
+.quantumcropperjs-module .toolbar-footer {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+.quantumcropperjs-module .toolbar-footer > div {
+}
+.quantumcropperjs-module .toolbar-footer > div .btn {
+    background: rgba(243, 243, 243, .85);
+}

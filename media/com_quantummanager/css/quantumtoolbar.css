@@ -1,0 +1,46 @@
+.quantumtoolbar-module {
+    padding: 2px 0 5px 0;
+    background: #fdfeff;
+    display: flex;
+    flex-wrap: wrap;
+}
+.quantumtoolbar-module > div:last-child {
+    margin-left: auto;
+}
+.quantumtoolbar-module > div {
+    display: flex;
+    align-items: center;
+}
+.quantumtoolbar-module > div > button {
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s;
+    height: 30px;
+}
+.quantumtoolbar-module > div > button.btn-hide {
+    display: none;
+}
+.quantumtoolbar-module > div > button:hover {
+    transition: all 0.2s;
+}
+.quantumtoolbar-module > div > button .quantummanager-icon {
+    margin-right: 5px;
+}
+.quantumtoolbar-module > div > button:first-child {
+    border-radius: 3px 0 0 3px;
+}
+.quantumtoolbar-module > div > button:last-child {
+    border-radius: 0 3px 3px 0;
+}
+.quantumtoolbar-module > div > .btn-primary {
+    background: #4568DC;
+    background: -webkit-linear-gradient(to right, #B06AB3, #4568DC);
+    background: linear-gradient(to right, #B06AB3, #4568DC);
+    border: 1px solid transparent;
+}
+@media screen and (max-width: 1180px) {
+    .quantumtoolbar-module > div > button.hidden-label span:last-child {
+        display: none;
+    }
+}

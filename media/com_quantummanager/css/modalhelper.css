@@ -1,0 +1,9 @@
+.field-media-wrapper .modal-body {
+    max-height: 670px;
+    height: 670px !important;
+    overflow-y: hidden;
+}
+
+.field-media-wrapper .modal-body iframe {
+    height: 670px !important;
+}
