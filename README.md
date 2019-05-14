@@ -4,6 +4,25 @@
 Бесплатный файловый менеджер для Joomla! с помощью которого Вы сможете загружать, редактировать и вставлять в редактор (а так же и поля) файлы.
 Есть возможность переопределить вызовы стандартного файлового менеджера.
 
+### Скриншоты
+#### Вызов из поля типа media
+|||
+| ------------- | ------------- |
+| ![Screenshot Quantum Manager 1](https://hika.su/images/screenshots/quantummanager/1.png)  | ![Screenshot Quantum Manager 2](https://hika.su/images/screenshots/quantummanager/2.png)  |
+| ![Screenshot Quantum Manager 3](https://hika.su/images/screenshots/quantummanager/3.png)  |  |
+
+#### Настройки менеджера
+|||
+| ------------- | ------------- |
+| ![Screenshot Quantum Manager 4](https://hika.su/images/screenshots/quantummanager/4.png)  | ![Screenshot Quantum Manager 5](https://hika.su/images/screenshots/quantummanager/5.png)  |
+
+#### Вставка в редактор
+|||
+| ------------- | ------------- |
+| ![Screenshot Quantum Manager 6](https://hika.su/images/screenshots/quantummanager/6.png)  | ![Screenshot Quantum Manager 5](https://hika.su/images/screenshots/quantummanager/7.png)  |
+| ![Screenshot Quantum Manager 8](https://hika.su/images/screenshots/quantummanager/8.png)  |  |
+
+
 ### Возможности
 - Загружать файлы
 - Менять формат изображениям (jpg, png, webp)
