@@ -2,15 +2,15 @@
 /**
  * @package    quantummanager
  *
- * @author     tsymb <your@email.com>
- * @copyright  A copyright
+ * @author     Cymbal <cymbal@delo-design.ru>
+ * @copyright  Copyright (C) 2019 "Delo Design". All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
- * @link       http://your.url.com
+ * @link       https://delo-design.ru
  */
 
-use Joomla\CMS\Component\ComponentHelper;
-
 defined('_JEXEC') or die;
+
+use Joomla\CMS\Component\ComponentHelper;
 
 ?>
 <div id="j-main-container" class="span11">

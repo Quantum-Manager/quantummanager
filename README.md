@@ -11,16 +11,16 @@
 | ![Screenshot Quantum Manager 1](https://hika.su/images/screenshots/quantummanager/1.png)  | ![Screenshot Quantum Manager 2](https://hika.su/images/screenshots/quantummanager/2.png)  |
 | ![Screenshot Quantum Manager 3](https://hika.su/images/screenshots/quantummanager/3.png)  |  |
 
-#### Настройки менеджера
-|||
-| ------------- | ------------- |
-| ![Screenshot Quantum Manager 4](https://hika.su/images/screenshots/quantummanager/4.png)  | ![Screenshot Quantum Manager 5](https://hika.su/images/screenshots/quantummanager/5.png)  |
-
 #### Вставка в редактор
 |||
 | ------------- | ------------- |
 | ![Screenshot Quantum Manager 6](https://hika.su/images/screenshots/quantummanager/6.png)  | ![Screenshot Quantum Manager 5](https://hika.su/images/screenshots/quantummanager/7.png)  |
 | ![Screenshot Quantum Manager 8](https://hika.su/images/screenshots/quantummanager/8.png)  |  |
+
+#### Настройки
+|||
+| ------------- | ------------- |
+| ![Screenshot Quantum Manager 4](https://hika.su/images/screenshots/quantummanager/4.png)  | ![Screenshot Quantum Manager 5](https://hika.su/images/screenshots/quantummanager/5.png)  |
 
 
 ### Возможности
@@ -40,7 +40,7 @@
 - Простой аудиопеер для проигрывания аудио
 
 ### Архитектура
-Менеджер является составным. Каждая часть является автомной, которая не требует других частей. (На данный момент пока еще не доведена автомность, в ближайших релизах будет исправлено).
+Менеджер является составным. Каждая часть является автономной, которая не требует других частей. (На данный момент пока еще не доведена автономность, в ближайших релизах будет исправлено).
 Все части связаным между собой событиями на javascript, к которым вы можете так же подключаться в своих скриптах, для кастомизации поведения менедежра. (События будут описаны позже)
 
 Части менеджера:
@@ -51,10 +51,12 @@
 - Codemirror (пока не реализовано)
 - Дерево каталогов
 - Поиск (пока не реализовано)
+- Недавно открытые каталоги
+- Закрепленные каталоги
 
 Каждая часть это на стороне Joomla! - поле JForm. На фронте части именуются модулями.
 
-Тем самым Вы можете составлять и комбинировать части менджера как вам удобно в своих формах, которые используют констрктор JForm.
+Тем самым Вы можете составлять и комбинировать части менеджера как Вам удобно в своих формах, которые используют конструктор JForm.
 
 ### Документация
 Будет создана позже.
@@ -72,4 +74,4 @@ GPLv3
 
 ### Поддержка
 - [quantum@hika.su](mailto:quantum@hika.su) (email)
--  [@tsymbalmitia](tg://resolve?domain=tsymbalmitia) (telegram) 
+- [@tsymbalmitia](tg://resolve?domain=tsymbalmitia) (telegram) 

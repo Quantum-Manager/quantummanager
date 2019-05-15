@@ -2,16 +2,16 @@
 /**
  * @package    quantummanager
  *
- * @author     tsymb <your@email.com>
- * @copyright  A copyright
+ * @author     Cymbal <cymbal@delo-design.ru>
+ * @copyright  Copyright (C) 2019 "Delo Design". All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
- * @link       http://your.url.com
+ * @link       https://delo-design.ru
  */
+
+defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\FileLayout;
-
-defined('_JEXEC') or die;
 
 HTMLHelper::_('script', 'com_quantummanager/script.js', array('version' => 'auto', 'relative' => true));
 HTMLHelper::_('stylesheet', 'com_quantummanager/style.css', array('version' => 'auto', 'relative' => true));
