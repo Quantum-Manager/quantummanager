@@ -9,6 +9,7 @@
  */
 
 defined('JPATH_PLATFORM') or die;
+use Joomla\CMS\Language\Text;
 ?>
 
 <div class="quantummanager-module quantumupload-module" data-type="Qantumupload" data-options="directory:<?php echo $displayData['directory'] ?>">
@@ -31,3 +32,10 @@ defined('JPATH_PLATFORM') or die;
     </div>
 
 </div>
+
+
+<script type="text/javascript">
+    window.QuantumuploadLang = {
+        'dragDrop': '<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUPLOAD_DRAG_DROP'); ?>'
+    };
+</script>

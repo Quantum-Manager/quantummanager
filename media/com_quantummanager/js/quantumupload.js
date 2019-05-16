@@ -35,6 +35,7 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
         this.inputFileAll = UploadElement.querySelectorAll(".fileElem");
         this.exs = ['jpg', 'jpeg', 'png', 'gif'];
         this.path = options.directory;
+        Filemanager.element.setAttribute('data-drag-drop-title', QuantumuploadLang.dragDrop);
 
         ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
             this.dropArea.addEventListener(eventName, function (e) {

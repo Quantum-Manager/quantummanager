@@ -25,7 +25,7 @@
     bottom: 0;
 }
 .quantummanager.highlight:before {
-    content: "Бросьте файлы для загрузки";
+    content: attr(data-drag-drop-title);
     display: flex;
     align-items: center;
     justify-content: center;
