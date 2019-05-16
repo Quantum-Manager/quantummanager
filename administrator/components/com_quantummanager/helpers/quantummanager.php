@@ -49,7 +49,6 @@ class QuantummanagerHelper
 				return false;
 			}
 
-
 			$nameSplit = explode('.', $name);
 			if(count($nameSplit) <= 1)
 			{

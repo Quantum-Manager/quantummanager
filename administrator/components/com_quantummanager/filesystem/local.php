@@ -403,7 +403,7 @@ class QuantummanagerFileSystemLocal
 				$data['name'] = isset($data['name']) ? $data['name'] : '';
 				$path = JPATH_ROOT . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($data['path']);
 
-				if(!QuantummanagerHelper::checkFile($file['name'], $file['type']))
+				if(!QuantummanagerHelper::checkFile($nameSplit . '.' . $nameExs, $file['type']))
 				{
 					$output["error"] = Text::_('COM_QUANTUMMANAGER_ERROR_UPLOAD_ACCESS') . ': ' . (empty($file['type']) ? Text::_('COM_QUANTUMMANAGER_EMPTY_MIMETYPE') : $file['type']);
 					return json_encode($output);
