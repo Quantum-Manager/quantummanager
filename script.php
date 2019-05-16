@@ -33,7 +33,21 @@ class Com_QuantummanagerInstallerScript
 	 *
 	 * @return  boolean  True on success
 	 */
-	public function preflight($route, JAdapterInstance $adapter) {}
+	public function preflight($route, JAdapterInstance $adapter) {
+		if (!(version_compare(PHP_VERSION, '5.6.0') >= 0))
+		{
+			JFactory::getApplication()->enqueueMessage(JText::_('COM_QUANTUMMANAGER_WRONG_PHP'), 'error');
+			return false;
+		}
+
+		jimport('joomla.version');
+		$jversion = new JVersion();
+		if (!$jversion->isCompatible('3.7'))
+		{
+			JFactory::getApplication()->enqueueMessage(JText::_('COM_QUANTUMMANAGER_WRONG_JOOMLA'), 'error');
+			return false;
+		}
+	}
 
 	/**
 	 * Called after any type of action

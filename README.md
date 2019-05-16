@@ -65,8 +65,8 @@
 GPLv3
 
 ### Требования
-- Joomla >=3.9
-- PHP >=7
+- Joomla >=3.7
+- PHP >=5.6
 - Библиотека jinterventionimage (https://github.com/Delo-Design/jinterventionimage)
 
 ### Разработчик
