@@ -24,6 +24,8 @@ use Joomla\Filesystem\Folder;
 class QuantummanagerHelper
 {
 
+	public static $cacheMimeType = '';
+
 	/**
 	 * @param $name
 	 * @param $mimeType
@@ -32,8 +34,25 @@ class QuantummanagerHelper
 	public static function checkFile($name, $mimeType)
 	{
 		try {
-			$componentParams = ComponentHelper::getParams('com_quantummanager');
-			$listMimeType = explode("\n", $componentParams->get('mimetype'. file_get_contents(JPATH_SITE . implode(DIRECTORY_SEPARATOR, 'administrator', 'components', 'com_quantummanager', 'mimetype.txt'))));
+
+			if(empty(self::$cacheMimeType))
+			{
+				$componentParams = ComponentHelper::getParams('com_quantummanager');
+				self::$cacheMimeType = $componentParams->get('mimetype');
+
+				if(empty(self::$cacheMimeType) || self::$cacheMimeType === null)
+				{
+					self::$cacheMimeType = file_get_contents(JPATH_SITE . DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, ['administrator', 'components', 'com_quantummanager', 'mimetype.txt']));
+					$componentParams->set('mimetype', self::$cacheMimeType);
+					$component = new stdClass();
+					$component->element = 'com_quantummanager';
+					$component->params = (string) $componentParams;
+					Factory::getDbo()->updateObject('#__extensions', $component, ['element']);
+				}
+
+			}
+
+			$listMimeType = explode("\n", self::$cacheMimeType);
 			$accepMimeType = [];
 
 			foreach ($listMimeType as $value) {
