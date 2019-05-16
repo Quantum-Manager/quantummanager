@@ -77,13 +77,14 @@ class QuantummanagerHelper
 	public static function filterFile($file)
 	{
 		try {
-			if (file_exists($file)) {
+			//TODO доработать фильтрацию
+
+			/*if (file_exists($file)) {
 				file_put_contents(
 					$file,
 					preg_replace(['/<(\?|\%)\=?(php)?/', '/(\%|\?)>/'], ['', ''], file_get_contents($file))
 				);
-
-			}
+			}*/
 		}
 		catch (Exception $e) {
 			echo $e->getMessage();
@@ -106,14 +107,9 @@ class QuantummanagerHelper
 		return $result;
 	}
 
-	public static function buildPath($path)
-	{
-
-	}
-
 	/**
-	 * @param string $path
-	 * @return string
+	 * @param $path
+	 * @return bool|string
 	 */
 	public static function preparePath($path)
 	{
@@ -160,10 +156,28 @@ class QuantummanagerHelper
 			date('U'),
 		], $path);
 
+		$componentParams = ComponentHelper::getParams('com_quantummanager');
+		$pathConfig = $componentParams->get('path', 'images');
+
 		$path = str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
 		$path = preg_replace("#" . JPATH_SITE . "\/root(\/)?#", '', $path);
 		$path = preg_replace("#^root(\/)?#", '', $path);
 		$path = str_replace('..' . DIRECTORY_SEPARATOR, '', $path);
+
+		//если пытаются выйти за пределы папки, то не даем этого сделать
+		if(!preg_match("/^" . str_replace("/", "\/", "("  . JPATH_ROOT  . DIRECTORY_SEPARATOR . ")?" . $pathConfig) .".*?/", $path))
+		{
+			if(preg_match("/.*?" . str_replace("/", "\/", JPATH_ROOT  . DIRECTORY_SEPARATOR . $pathConfig) .".*?/", $path))
+			{
+				$path = JPATH_ROOT . DIRECTORY_SEPARATOR . $pathConfig . str_replace(JPATH_ROOT, '', $path);
+			}
+			else
+			{
+				$path = $pathConfig . str_replace(JPATH_ROOT, '', $path);
+			}
+
+			$path = str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
+		}
 
 		$folders = explode(DIRECTORY_SEPARATOR, $path);
 		$currentTmp = '';
