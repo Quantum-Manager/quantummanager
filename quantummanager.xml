@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <extension type="component" version="3.8" method="upgrade">
 	<name>COM_QUANTUMMANAGER</name>
-	<creationDate>15.05.2019</creationDate>
+	<creationDate>21.12.2018</creationDate>
 	<author>Cymbal</author>
 	<authorEmail>cymbal@delo-design.ru</authorEmail>
 	<authorUrl>https://delo-design.ru</authorUrl>
@@ -11,6 +11,12 @@
 	<description>COM_QUANTUMMANAGER_XML_DESCRIPTION</description>
 
 	<scriptfile>script.php</scriptfile>
+
+	<updateservers>
+		<server type="extension" priority="1" name="Quantum Manager">
+			https://hika.su/update/free/com_quantummanager.xml
+		</server>
+	</updateservers>
 
 	<media folder="media/com_quantummanager" destination="com_quantummanager">
 		<folder>css</folder>
