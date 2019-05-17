@@ -29,7 +29,7 @@ class QuantummanagerControllerQuantumtreecatalogs extends AdminController
 	{
 		$app = Factory::getApplication();
 		$data = $app->input->getArray();
-		$path = JPATH_ROOT . DIRECTORY_SEPARATOR . $data['path'];
+		$path = $data['path'];
 
 		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
 		echo QuantummanagerFileSystemLocal::getDirectories($path);

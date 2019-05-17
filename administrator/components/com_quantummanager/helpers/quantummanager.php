@@ -178,7 +178,7 @@ class QuantummanagerHelper
 		$pathConfig = $componentParams->get('path', 'images');
 
 		$path = str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
-		$path = preg_replace("#" . JPATH_SITE . "\/root(\/)?#", '', $path);
+		$path = preg_replace("#" . JPATH_ROOT . "\/root(\/)?#", '', $path);
 		$path = preg_replace("#^root(\/)?#", '', $path);
 		$path = str_replace('..' . DIRECTORY_SEPARATOR, '', $path);
 
@@ -197,7 +197,9 @@ class QuantummanagerHelper
 			$path = str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
 		}
 
-		$folders = explode(DIRECTORY_SEPARATOR, $path);
+		$pathCurrent = str_replace(JPATH_ROOT, '', $path);
+		$pathCurrent = str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $pathCurrent);
+		$folders = explode(DIRECTORY_SEPARATOR, $pathCurrent);
 		$currentTmp = '';
 
 		foreach ($folders as $tmpFolder)

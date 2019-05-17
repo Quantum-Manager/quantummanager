@@ -54,7 +54,7 @@ class QuantummanagerFileSystemLocal
 	public static function getDirectories($path)
 	{
 		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
-		$path = QuantummanagerHelper::preparePath($path);
+		$path = JPATH_ROOT . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($path);
 		$directories = [];
 		$directories = self::showdir($path, true, true);
 

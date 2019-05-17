@@ -99,6 +99,7 @@ class JFormFieldQuantumCombine extends JFormField
 					'right' => '',
 					'container-bottom' => '',
 					'bottom' => '',
+					'container-bottom-fixed' => '',
 				];
 
 				foreach ($fields as $field => $options)
