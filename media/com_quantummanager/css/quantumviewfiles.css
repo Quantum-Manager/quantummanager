@@ -17,6 +17,7 @@
 }
 .quantumviewfiles-module .filters {
     display: flex;
+    margin-top: 8px;
     margin-bottom: 8px;
     width: 100%;
     height: auto;
@@ -32,11 +33,51 @@
 .quantumviewfiles-module .filters > div:last-child {
     margin-right: 0;
 }
-.quantumviewfiles-module .filters > div input {
+.quantumviewfiles-module .filters .filter-search {
+    display: inline-block;
+    position: relative;
+    max-width: 100%;
+    vertical-align: middle;
+}
+.quantumviewfiles-module .filters .filter-search .uk-form-icon {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 25px;
+    height: 28px;
     margin: 0;
-    height: 14px;
-    line-height: 14px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    color: #999;
+}
+.quantumviewfiles-module .filters .filter-search .uk-icon>* {
+    transform: translate(0, 0);
+}
+.quantumviewfiles-module .filters .filter-search svg {
+    max-width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    width: 16px;
+    height: 16px;
+}
+.quantumviewfiles-module .filters .filter-search input {
+    padding: 0 10px;
+    padding-left: 25px;
+    height: 25px;
+    margin: 0;
     width: 200px;
+    vertical-align: middle;
+    display: inline-block;
+    max-width: 100%;
+    background: #fff;
+    color: #666;
+    border: 1px solid #e5e5e5;
+    transition: .2s ease-in-out;
+    transition-property: color,background-color,border;
+}
+
 }
 .quantumviewfiles-module .breadcumbs {
     margin-top: 0;

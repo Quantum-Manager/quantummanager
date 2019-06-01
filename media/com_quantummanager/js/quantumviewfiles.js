@@ -587,11 +587,11 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
         }
 
         if(find) {
-            if(fm.Quantumtoolbar !== undefined) {
+            if(fm.Quantumtoolbar !== undefined && fm.Quantumtoolbar.buttonsList['viewfilesDelete'] !== undefined) {
                 fm.Quantumtoolbar.buttonsList['viewfilesDelete'].classList.remove('btn-hide');
             }
         } else {
-            if(fm.Quantumtoolbar !== undefined) {
+            if(fm.Quantumtoolbar !== undefined && fm.Quantumtoolbar.buttonsList['viewfilesDelete'] !== undefined) {
                 fm.Quantumtoolbar.buttonsList['viewfilesDelete'].classList.add('btn-hide');
             }
         }
@@ -599,7 +599,8 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
 
     Filemanager.events.add(this, 'updatePath', function (fm, el) {
         //вырубаем кнопки для выделенного
-        if(fm.Quantumtoolbar !== undefined) {
+
+        if(fm.Quantumtoolbar !== undefined && fm.Quantumtoolbar.buttonsList['viewfilesDelete'] !== undefined) {
             fm.Quantumtoolbar.buttonsList['viewfilesDelete'].classList.add('btn-hide');
         }
 

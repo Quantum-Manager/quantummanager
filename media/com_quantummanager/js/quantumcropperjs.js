@@ -9,12 +9,30 @@
 
 window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options) {
 
+    let self = this;
     this.options = options;
     this.cropperjs = '';
     this.buttons = '';
     this.pathFile = '';
     this.file = '';
     this.nameFile = '';
+    this.ImageWidthValue = QuantumCropperjsElement.querySelector('.image-width-value');
+    this.ImageHeightValue = QuantumCropperjsElement.querySelector('.image-height-value');
+    this.CropWidthValue = QuantumCropperjsElement.querySelector('.crop-width-value');
+    this.CropHeightValue = QuantumCropperjsElement.querySelector('.crop-height-value');
+    this.defaultCropperJSOptions =  {
+        responsive: false,
+        viewMode: 1,
+        background: true,
+        ready: function(event) {
+            self.ImageWidthValue.innerHTML = Math.round(this.width) + ' px';
+            self.ImageHeightValue.innerHTML = Math.round(this.height) + ' px';
+        },
+        crop: function(event) {
+            self.CropWidthValue.innerHTML = Math.round(event.detail.width) + ' px';
+            self.CropHeightValue.innerHTML = Math.round(event.detail.height) + ' px';
+        }
+    };
 
     this.init = function () {
         let self = this;
@@ -26,10 +44,6 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             let fileSource;
             let exs;
             let name;
-            let ImageWidthValue = QuantumCropperjsElement.querySelector('.image-width-value');
-            let ImageHeightValue = QuantumCropperjsElement.querySelector('.image-height-value');
-            let CropWidthValue = QuantumCropperjsElement.querySelector('.crop-width-value');
-            let CropHeightValue = QuantumCropperjsElement.querySelector('.crop-height-value');
 
             if(self.file === '') {
                 fileSource = self.nameFile;
@@ -49,21 +63,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             image.setAttribute('src', '/' + Filemanager.data.path + '/' + fileSource + '?' + QuantumUtils.randomInteger(111111, 999999));
             editor.innerHTML = '';
             editor.append(image);
-            self.cropperjs = new Cropper(
-                image,
-                {
-                    responsive: false,
-                    viewMode: 1,
-                    background: true,
-                    ready: function(event) {
-                        ImageWidthValue.innerHTML = Math.round(this.width) + ' px';
-                        ImageHeightValue.innerHTML = Math.round(this.height) + ' px';
-                    },
-                    crop: function(event) {
-                        CropWidthValue.innerHTML = Math.round(event.detail.width) + ' px';
-                        CropHeightValue.innerHTML = Math.round(event.detail.height) + ' px';
-                    }
-            });
+            self.cropperjs = new Cropper(image, self.defaultCropperJSOptions);
             QuantumCropperjsElement.classList.add('active');
             QuantumCropperjsElement.querySelector('.quantumcropperjs-name-file').value = name;
             QuantumCropperjsElement.querySelector('.quantumcropperjs-name-exs').value = exs;
@@ -233,8 +233,6 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             let isRadio;
             let image = QuantumCropperjsElement.querySelector('.editor img');
 
-            console.log(self);
-
             if (!self.cropperjs) {
                 return;
             }
@@ -246,6 +244,8 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             isCheckbox = target.type === 'checkbox';
             isRadio = target.type === 'radio';
 
+            options = self.defaultCropperJSOptions;
+
             if (isCheckbox || isRadio) {
                 if (isCheckbox) {
                     options[target.name] = target.checked;
@@ -253,14 +253,10 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
                     canvasData = cropper.getCanvasData();
 
                     options.ready = function () {
-                        console.log('ready');
                         cropper.setCropBoxData(cropBoxData).setCanvasData(canvasData);
                     };
                 } else {
                     options[target.name] = target.value;
-                    options.ready = function () {
-                        console.log('ready');
-                    };
                 }
                 self.cropperjs.destroy();
                 self.cropperjs = new Cropper(image, options);
