@@ -260,31 +260,31 @@ class QuantummanagerFileSystemLocal
 					continue;
 				}
 
-				//генерация кеша для картинок
+				$fileParse = explode('.', $file);
+				$exs = array_pop($fileParse);
+
+				$fileMeta = [
+					'size' => filesize($directory . DIRECTORY_SEPARATOR . $file),
+					'name' => implode('.', $fileParse),
+					'exs' => $exs,
+					'file' => $file,
+					'fileP' => $file,
+					'dateC' => filemtime($directory . DIRECTORY_SEPARATOR . $file),
+					'dateM' => filemtime($directory . DIRECTORY_SEPARATOR . $file),
+				];
+
 				if(in_array(strtolower($tmpExs[1]), ['jpg', 'png', 'jpeg', 'gif']))
 				{
 					$cacheSource =  JPATH_ROOT . DIRECTORY_SEPARATOR . 'images/com_quantummanager/cache';
-					$cache = $cacheSource;
-					$pathArr = explode('/', $path);
-					for($i=0;$i<count($pathArr);$i++)
-					{
-						$cache .= DIRECTORY_SEPARATOR . $pathArr[$i];
-						if(!file_exists($cache))
-						{
-							Folder::create($cache);
-						}
-
-					}
-
+					$cache = $cacheSource . DIRECTORY_SEPARATOR . $path;
 					if (!file_exists($cache . DIRECTORY_SEPARATOR . $file))
 					{
-						$manager->make($directory . DIRECTORY_SEPARATOR . $file)->resize(null, 320, function ($constraint) {
-							$constraint->aspectRatio();
-						})->save($cache . DIRECTORY_SEPARATOR . $file);
+						$fileMeta['fileP'] = 'index.php?option=com_quantummanager&task=quantumviewfiles.generatePreviewImage&file=' . $file;
 					}
+
 				}
 
-				$filesOutput[] = $file;
+				$filesOutput[] = $fileMeta;
 			}
 
 			return json_encode([
@@ -432,6 +432,38 @@ class QuantummanagerFileSystemLocal
 		}
 
 		return json_encode($output);
+	}
+
+
+	public static function generatePreviewImage($path, $file)
+	{
+		JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
+		$path = QuantummanagerHelper::preparePath($path);
+		$directory = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
+		$manager = JInterventionimage::getInstance();
+		$cacheSource =  JPATH_ROOT . DIRECTORY_SEPARATOR . 'images/com_quantummanager/cache';
+		$cache = $cacheSource;
+		$pathArr = explode('/', $path);
+
+		for($i=0;$i<count($pathArr);$i++)
+		{
+			$cache .= DIRECTORY_SEPARATOR . $pathArr[$i];
+			if(!file_exists($cache))
+			{
+				Folder::create($cache);
+			}
+		}
+
+		if (!file_exists($cache . DIRECTORY_SEPARATOR . $file))
+		{
+			$manager->make($directory . DIRECTORY_SEPARATOR . $file)->resize(null, 320, function ($constraint) {
+				$constraint->aspectRatio();
+			})->save($cache . DIRECTORY_SEPARATOR . $file);
+		}
+
+		$app = Factory::getApplication();
+		$app->redirect(DIRECTORY_SEPARATOR . 'images/com_quantummanager/cache' . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file . '?=' . rand(111111, 999999));
+
 	}
 
 }

@@ -20,12 +20,14 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
     this.history = [];
     this.breadcrumbsLists = [];
     this.breadcrumbsWaitLoad = false;
+    this.searchNameValue = '';
 
     this.init = function() {
         let self = this;
         this.path = this.options.directory;
         this.initBreadcrumbs();
         this.loadDirectory();
+        let searchByName = ViewfilesElement.querySelector('.filters input');
 
         if(!parseInt(self.options.onlyfiles)) {
 
@@ -61,6 +63,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 ev.preventDefault();
             });
 
+
             Filemanager.Quantumtoolbar.buttonAdd('viewfilesCreateDirectory', 'left', 'btn-create-directory hidden-label', QuantumviewfilesLang.buttonCreateDirectory, 'quantummanager-icon-directory', {}, function (ev) {
                 let nameDirectory;
                 nameDirectory = prompt(QuantumviewfilesLang.directoryName, '');
@@ -70,7 +73,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                         Filemanager.events.trigger('reloadPaths', Filemanager);
                     });
                 } else {
-                    alert('Введите имя папки')
+                    alert('Введите имя папки');
                 }
 
                 Filemanager.Quantumtoolbar.trigger('buttonViewfilesCreateDirectory');
@@ -84,7 +87,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
 
                 for(let i=0;i<filesAll.length;i++) {
                     if (filesAll[i].querySelector('input').checked) {
-                        files.push(filesAll[i].querySelector('.file-name').innerHTML);
+                        files.push(filesAll[i].getAttribute('data-file'));
                     }
                 }
 
@@ -109,6 +112,11 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             });
 
         }
+
+        searchByName.addEventListener('keyup', function () {
+            self.searchByName(this.value);
+        });
+
     };
 
     this.loadDirectory = function (path, callback) {
@@ -142,8 +150,8 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             }
 
             for(let i = 0;i<files.length;i++) {
-                let type = files[i].split('.');
-                htmlfilesAndDirectories += "<div class='file-item'><input type=\"checkbox\" class=\"import-files-check-file\"><div class='file'><div class='file-exs icon-file-" + type.pop() + "'><div class='av-folderlist-label'></div></div><div class='file-name'>" + files[i] + "</div></div></div>" ;
+                let type = files[i]['exs'];
+                htmlfilesAndDirectories += "<div class='file-item' data-size='" + files[i]['size'] + "' data-name='" + files[i]['name'] + "' data-exs='" + files[i]['exs'] + "' data-fileP='" + files[i]['fileP'] + "' data-dateC='" + files[i]['dateC'] + "' data-dateM='" + files[i]['dateM'] + "' data-file='" + files[i]['file'] + "'><input type=\"checkbox\" class=\"import-files-check-file\"><div class='file'><div class='file-exs icon-file-" + type + "'><div class='av-folderlist-label'></div></div><div class='file-name'>" + files[i]['file'] + "</div></div></div>" ;
             }
 
             htmlfilesAndDirectories += "</div></div>";
@@ -205,6 +213,11 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 }
             }
 
+            if(self.searchNameValue !== '')
+            {
+                self.searchByName(self.searchNameValue);
+            }
+
             self.buildBreadcrumbs();
 
             if(callback !== undefined) {
@@ -228,6 +241,38 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
 
     this.preoloader = function () {
         ViewfilesElement.querySelector('.view').innerHTML = "<div class=\"loader\">" +  QuantumviewfilesLang.loading + "<span></span><span></span><span></span><span></span></div>";
+    };
+
+    this.searchByName = function (search) {
+        this.searchNameValue = search;
+        let filesAll = ViewfilesElement.querySelectorAll('.field-list-files .file-item');
+        let directoryAll = ViewfilesElement.querySelectorAll('.field-list-files .directory-item');
+
+        if(search === '') {
+            for (let i=0;i<filesAll.length;i++) {
+                filesAll[i].style.display = 'block';
+            }
+            for (let i=0;i<directoryAll.length;i++) {
+                directoryAll[i].style.display = 'block';
+            }
+        } else {
+            for (let i=0;i<filesAll.length;i++) {
+                let nameFile = filesAll[i].querySelector('.file-name').innerHTML;
+                if(nameFile.indexOf(search) !== -1) {
+                    filesAll[i].style.display = 'block';
+                } else {
+                    filesAll[i].style.display = 'none';
+                }
+            }
+            for (let i=0;i<directoryAll.length;i++) {
+                let nameDirectory = directoryAll[i].querySelector('.directory-name').innerHTML;
+                if(nameDirectory.indexOf(search) !== -1) {
+                    directoryAll[i].style.display = 'block';
+                } else {
+                    directoryAll[i].style.display = 'none';
+                }
+            }
+        }
     };
 
     this.initBreadcrumbs = function (callback) {
@@ -474,43 +519,57 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             }
 
             if(this.lastTypeViewFiles === 'list-grid') {
-                let fileName = filesAll[i].querySelector('.file-name').innerHTML;
-                let fileExs = filesAll[i].querySelector('.file-exs');
-                let exs = fileName.split('.').pop();
+                let fileP = filesAll[i].getAttribute('data-fileP');
+                let fileName = filesAll[i].getAttribute('data-name');
+                let fileExs = filesAll[i].getAttribute('data-exs');
+                let filePreview = filesAll[i].querySelector('.file-exs');
                 let exsImage = ['jpg', 'png', 'svg', 'jpeg', 'gif'];
-                if(exsImage.indexOf(exs.toLowerCase()) !== -1) {
-                    let file = "/images/com_quantummanager/cache/" + path.replace('root', path) + '/' + fileName + '?' + QuantumUtils.randomInteger(111111, 999999);
+                if(exsImage.indexOf(fileExs.toLowerCase()) !== -1) {
 
-                    if(exs.toLowerCase() === 'svg') {
-                        file = "/" + path.replace('root', path) + '/' + fileName + '?' + QuantumUtils.randomInteger(111111, 999999);
+                    let file;
+                    let image = document.createElement('img');
+
+                    if(fileP.indexOf('index.php') === -1) {
+                        file = path.replace('root', path) + '/' + fileP;
+                        file = "/images/com_quantummanager/cache/" + file + '?' + QuantumUtils.randomInteger(111111, 999999);
+
+                        if(fileExs.toLowerCase() === 'svg') {
+                            file = "/" + path.replace('root', path) + '/' + fileP + '?' + QuantumUtils.randomInteger(111111, 999999);
+                        }
+
+                    } else {
+                        file = fileP + '&path=' + path + '&v=' + QuantumUtils.randomInteger(111111, 999999);
                     }
 
-                    if(exs.toLowerCase() === 'gif') {
-                        file = "/images/com_quantummanager/cache/" + path.replace('root', path) + '/' + fileName;
-                    }
-
-                    fileExs.style.backgroundImage = "url(" + file + ")";
+                    image.setAttribute('class', 'lazyLoad');
+                    image.setAttribute('data-src', file);
+                    filePreview.innerHTML = '';
+                    filePreview.append(image);
                 } else {
                     let exsAvailable = ['doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'mp3', 'ogg', 'flac', 'pdf', 'zip', 'txt', 'html', 'css', 'js', 'webp'];
-                    if(exsAvailable.indexOf(exs) !== -1) {
-                        let file = "/media/com_quantummanager/images/icons/" + exs + ".svg";
-                        fileExs.style.backgroundImage = "url(" + file + ")";
-                        fileExs.classList.add('file-icons');
+                    if(exsAvailable.indexOf(fileExs) !== -1) {
+                        let file = "/media/com_quantummanager/images/icons/" + fileExs + ".svg";
+                        filePreview.style.backgroundImage = "url(" + file + ")";
+                        filePreview.classList.add('file-icons');
                     } else {
                         let file = "/media/com_quantummanager/images/icons/other.svg";
-                        fileExs.style.backgroundImage = "url(" + file + ")";
-                        fileExs.classList.add('file-icons');
+                        filePreview.style.backgroundImage = "url(" + file + ")";
+                        filePreview.classList.add('file-icons');
                     }
                 }
 
             }
 
             if(this.lastTypeViewFiles === 'list-table') {
-                let fileExs = filesAll[i].querySelector('.file-exs');
-                fileExs.style.backgroundImage = "";
+                let filePreview = filesAll[i].querySelector('.file-exs');
+                filePreview.style.backgroundImage = "";
+                filePreview.innerHTML = '';
             }
 
         }
+
+        this.trigger('afterReloadTypeViewFiles', this);
+
     };
 
     this.trigger = function(event, target) {
@@ -619,6 +678,14 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             //fm.Quantumviewfiles.initBreadcrumbs(fm.Quantumviewfiles.buildBreadcrumbs);
 
         });
+    });
+
+    Filemanager.events.add(this, 'afterReloadTypeViewFiles', function (fm, el) {
+        if(fm.Quantumviewfiles.lastTypeViewFiles === 'list-grid') {
+            let images = fm.Quantumviewfiles.element.querySelectorAll('.lazyLoad');
+            new LazyLoad(images);
+        }
+
     });
 
 };

@@ -31,6 +31,10 @@ window.Quantumtoolbar = function(Filemanager, QuantumToolbarElement, options) {
             return;
         }
 
+        if(this.buttonsList[id] !== undefined) {
+            return;
+        }
+
         let htmlButtons;
         let button = document.createElement('button');
         button.setAttribute('class', 'btn ' + className);

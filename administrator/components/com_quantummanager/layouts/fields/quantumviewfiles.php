@@ -16,20 +16,9 @@ extract($displayData);
 <div class="quantummanager-module quantumviewfiles-module" data-type="Quantumviewfiles" data-options="directory:<?php echo $displayData['directory'] ?>;onlyfiles:<?php echo $displayData['onlyfiles'] ?> ">
     <div class="breadcumbs"></div>
     <div class="filters">
-        <!--
-        <div class="head">
-            Сортировать по
-        </div>
         <div>
-            размеру
+            <input type="text" name="search">
         </div>
-        <div>
-            дате
-        </div>
-        <div>
-            алфавиту
-        </div>
-        -->
     </div>
     <div class="view"></div>
 </div>

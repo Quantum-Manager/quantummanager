@@ -231,4 +231,13 @@ class QuantummanagerHelper
 	}
 
 
+	public static function loadLang()
+	{
+		$lang = Factory::getLanguage();
+		$extension = 'com_quantummanager';
+		$base_dir = JPATH_ROOT . DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, ['administrator', 'components', 'com_quantummanager']);
+		$language_tag = $lang->getTag();
+		$lang->load($extension, $base_dir, $language_tag, true);
+	}
+
 }

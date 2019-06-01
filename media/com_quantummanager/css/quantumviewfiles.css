@@ -16,9 +16,8 @@
     flex: 1 1 auto;
 }
 .quantumviewfiles-module .filters {
-    /*display: flex;*/
-    display: none;
-    margin-bottom: 12px;
+    display: flex;
+    margin-bottom: 8px;
     width: 100%;
     height: auto;
 }
@@ -32,6 +31,12 @@
 }
 .quantumviewfiles-module .filters > div:last-child {
     margin-right: 0;
+}
+.quantumviewfiles-module .filters > div input {
+    margin: 0;
+    height: 14px;
+    line-height: 14px;
+    width: 200px;
 }
 .quantumviewfiles-module .breadcumbs {
     margin-top: 0;
@@ -250,6 +255,18 @@
 .quantumviewfiles-module .field-list-files .list-grid-1-3 .file-item {
     width: 31.3%;
 }
+.quantumviewfiles-module .field-list-files .list-grid-1-4 .file-item {
+    margin: 1%;
+    height: 150px;
+    overflow: hidden;
+    outline: 1px solid #efefef;
+}
+.quantumviewfiles-module .field-list-files .list-grid-1-3 .file-item {
+    margin: 1%;
+    height: 200px;
+    overflow: hidden;
+    outline: 1px solid #efefef;
+}
 .quantumviewfiles-module .field-list-files .list-grid .file-item:hover {
     cursor: pointer;
 }
@@ -296,6 +313,12 @@
     height: 50%;
     margin: auto;
 }
+.quantumviewfiles-module .field-list-files .list-grid .file-item .file .file-exs img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
 .quantumviewfiles-module .field-list-files .list-grid .file-item .file .file-exs .av-folderlist-label {
     display: none;
 }
@@ -339,6 +362,12 @@
     position: relative;
     border: 1px solid #eeeeee;
     transition: all 0.2s;
+}
+.quantumviewfiles-module .field-list-files .list-grid-1-3 .directory-item .directory {
+    height: 200px;
+}
+.quantumviewfiles-module .field-list-files .list-grid-1-4 .directory-item .directory {
+    height: 150px;
 }
 .quantumviewfiles-module .field-list-files .list-grid .directory-item:hover .directory {
     background: #eeeeee;

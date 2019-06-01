@@ -24,20 +24,21 @@ document.addEventListener('DOMContentLoaded' ,function () {
         preveiwFile.appendChild(div);
 
         setTimeout(function () {
-            fmIndex = parseInt(quantumcombineselectfileAll[i].getAttribute('data-index'));
+            fmIndex = parseInt(quantumcombineselectfileAll[i].querySelector('.quantummanager').getAttribute('data-index'));
             QuantummanagerLists[fmIndex].Quantumviewfiles.loadDirectory(currPath);
+            QuantummanagerLists[fmIndex].element.style.display = 'none';
         }, 300);
 
         buttonChange.addEventListener('click', function (ev) {
-            let quantumcombineselectfile = this.closest('.quantummanager');
-            let fmIndex = parseInt(quantumcombineselectfile.getAttribute('data-index'));
+            let quantumcombineselectfile = this.closest('.quantumcombineselectfile');
+            let fmIndex = parseInt(quantumcombineselectfile.querySelector('.quantummanager').getAttribute('data-index'));
             let inputFile = quantumcombineselectfile.querySelector('.input-file');
             let paths = inputFile.value.split('/');
             let nameFile = paths.pop();
             quantumcombineselectfileAll[i].classList.add('change-file');
+            quantumcombineselectfile.querySelector('.quantummanager').style.display = 'block';
 
             setTimeout(function () {
-                console.log(nameFile);
                 QuantummanagerLists[fmIndex].Quantumviewfiles.scrollTopFilesCheck(nameFile);
             }, 400);
 
@@ -46,8 +47,9 @@ document.addEventListener('DOMContentLoaded' ,function () {
     }
 
     QuantumEventsDispatcher.add('clickFile', function (fm) {
-        let inputFile = fm.element.querySelector('.input-file');
-        let preveiwFile = fm.element.querySelector('.preview-file .image');
+        let quantumcombineselectfile = fm.element.closest('.quantumcombineselectfile');
+        let inputFile = quantumcombineselectfile.querySelector('.input-file');
+        let preveiwFile = quantumcombineselectfile.querySelector('.preview-file .image');
         let file = fm.Quantumviewfiles.file;
         let name = fm.Quantumviewfiles.file.querySelector('.file-name').innerHTML;
         let div = document.createElement('div');
@@ -56,7 +58,8 @@ document.addEventListener('DOMContentLoaded' ,function () {
         inputFile.value = fm.Quantumviewfiles.path + '/' + name;
         preveiwFile.innerHTML = '';
         preveiwFile.appendChild(div);
-        fm.element.classList.remove('change-file');
+        quantumcombineselectfile.classList.remove('change-file');
+        fm.element.style.display = 'none';
     });
 
 });

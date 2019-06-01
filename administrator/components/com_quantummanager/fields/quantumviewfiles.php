@@ -95,6 +95,11 @@ class JFormFieldQuantumviewfiles extends JFormField
 				'relative' => true
 			]);
 
+			HTMLHelper::_('script', 'com_quantummanager/lazyload.min.js', [
+				'version' => filemtime(__FILE__),
+				'relative' => true
+			]);
+
 			$field = parent::getInput();
 
 			if($this->standalone)

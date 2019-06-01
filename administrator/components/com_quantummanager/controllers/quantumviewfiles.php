@@ -61,4 +61,23 @@ class QuantummanagerControllerquantumviewfiles extends AdminController
 
 	}
 
+	public function generatePreviewImage()
+	{
+		try {
+			$app = Factory::getApplication();
+			$data = $app->input->getArray();
+			$path = $data['path'];
+			$file = $data['file'];
+
+			JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
+			QuantummanagerFileSystemLocal::generatePreviewImage($path, $file);
+
+			$app->close();
+		}
+		catch (Exception $e)
+		{
+			echo $e->getMessage();
+		}
+	}
+
 }

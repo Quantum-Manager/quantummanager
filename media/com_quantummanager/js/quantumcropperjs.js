@@ -13,6 +13,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
     this.cropperjs = '';
     this.buttons = '';
     this.pathFile = '';
+    this.file = '';
     this.nameFile = '';
 
     this.init = function () {
@@ -22,18 +23,47 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
 
             let image = document.createElement('img');
             let editor = QuantumCropperjsElement.querySelector('.editor');
-            let nameFile = self.nameFile;
-            let name = nameFile.split('.');
-            let exs = name.pop().toLocaleLowerCase();
+            let fileSource;
+            let exs;
+            let name;
+            let ImageWidthValue = QuantumCropperjsElement.querySelector('.image-width-value');
+            let ImageHeightValue = QuantumCropperjsElement.querySelector('.image-height-value');
+            let CropWidthValue = QuantumCropperjsElement.querySelector('.crop-width-value');
+            let CropHeightValue = QuantumCropperjsElement.querySelector('.crop-height-value');
+
+            if(self.file === '') {
+                fileSource = self.nameFile;
+                name = self.nameFile.split('.');
+                exs = name.pop();
+                name = name.join('.');
+            } else {
+                fileSource = self.file.getAttribute('data-file');
+                exs = self.file.getAttribute('data-exs');
+                name = self.file.getAttribute('data-name');
+            }
 
             if(['png', 'jpg', 'jpeg', 'gif', 'bmp'].indexOf(exs) === -1) {
                 return;
             }
 
-            image.setAttribute('src', '/' + Filemanager.data.path + '/' + nameFile + '?' + QuantumUtils.randomInteger(111111, 999999));
+            image.setAttribute('src', '/' + Filemanager.data.path + '/' + fileSource + '?' + QuantumUtils.randomInteger(111111, 999999));
             editor.innerHTML = '';
             editor.append(image);
-            self.cropperjs = new Cropper(image, {responsive: false});
+            self.cropperjs = new Cropper(
+                image,
+                {
+                    responsive: false,
+                    viewMode: 1,
+                    background: true,
+                    ready: function(event) {
+                        ImageWidthValue.innerHTML = Math.round(this.width) + ' px';
+                        ImageHeightValue.innerHTML = Math.round(this.height) + ' px';
+                    },
+                    crop: function(event) {
+                        CropWidthValue.innerHTML = Math.round(event.detail.width) + ' px';
+                        CropHeightValue.innerHTML = Math.round(event.detail.height) + ' px';
+                    }
+            });
             QuantumCropperjsElement.classList.add('active');
             QuantumCropperjsElement.querySelector('.quantumcropperjs-name-file').value = name;
             QuantumCropperjsElement.querySelector('.quantumcropperjs-name-exs').value = exs;
@@ -298,9 +328,9 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
 
     Filemanager.events.add(this, 'clickFile', function (fm, el) {
         let tmpCheck = Filemanager.Quantumviewfiles.file.querySelector('.import-files-check-file');
-        let nameFile = Filemanager.Quantumviewfiles.file.querySelector('.file-name').innerHTML;
-        let exs = nameFile.split('.').pop().toLocaleLowerCase();
-        el.nameFile = nameFile;
+        let file = Filemanager.Quantumviewfiles.file;
+        let exs = file.getAttribute('data-exs').toLocaleLowerCase();
+        el.file = file;
 
         if(!tmpCheck.checked) {
             fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.add('btn-hide');
@@ -328,6 +358,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
                 let nameFile = Filemanager.Qantumupload.filesLists[0];
                 let exs = nameFile.split('.').pop().toLocaleLowerCase();
                 Filemanager.Quantumcropperjs.nameFile = nameFile;
+                Filemanager.Quantumcropperjs.file = '';
 
                 if(['png', 'jpg', 'jpeg'].indexOf(exs) === -1) {
                     return;

@@ -77,6 +77,22 @@ extract($displayData);
         </div>
     </div>
     <div class="editor"></div>
+    <div class="toolbar-sizes">
+        <div><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_TOOLTIP_IMAGE'); ?></div>
+        <div>
+            <span><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_TOOLTIP_WIDTH'); ?>:</span>
+            <span class="image-width-value"></span>
+            <span><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_TOOLTIP_HEIGHT'); ?>:</span>
+            <span class="image-height-value"></span>
+        </div>
+        <div><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_TOOLTIP_CROP'); ?></div>
+        <div>
+            <span><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_TOOLTIP_WIDTH'); ?>:</span>
+            <span class="crop-width-value"></span>
+            <span><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_TOOLTIP_HEIGHT'); ?>:</span>
+            <span class="crop-height-value"></span>
+        </div>
+    </div>
     <div class="toolbar-footer">
         <div class="buttons-methods">
             <div class="btn-group">
