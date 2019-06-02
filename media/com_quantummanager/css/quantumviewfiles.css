@@ -15,6 +15,11 @@
     flex-direction: column;
     flex: 1 1 auto;
 }
+.quantumviewfiles-module .quantumviewfiles-module-heading {
+    display: flex;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
 .quantumviewfiles-module .filters {
     display: flex;
     margin-top: 8px;
@@ -33,13 +38,13 @@
 .quantumviewfiles-module .filters > div:last-child {
     margin-right: 0;
 }
-.quantumviewfiles-module .filters .filter-search {
+.quantumviewfiles-module .filter-search {
     display: inline-block;
     position: relative;
     max-width: 100%;
     vertical-align: middle;
 }
-.quantumviewfiles-module .filters .filter-search .uk-form-icon {
+.quantumviewfiles-module .filter-search .uk-form-icon {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -52,17 +57,17 @@
     align-items: center;
     color: #999;
 }
-.quantumviewfiles-module .filters .filter-search .uk-icon>* {
+.quantumviewfiles-module .filter-search .uk-icon>* {
     transform: translate(0, 0);
 }
-.quantumviewfiles-module .filters .filter-search svg {
+.quantumviewfiles-module .filter-search svg {
     max-width: 100%;
     height: auto;
     box-sizing: border-box;
     width: 16px;
     height: 16px;
 }
-.quantumviewfiles-module .filters .filter-search input {
+.quantumviewfiles-module .filter-search input {
     padding: 0 10px;
     padding-left: 25px;
     height: 25px;
@@ -77,11 +82,8 @@
     transition: .2s ease-in-out;
     transition-property: color,background-color,border;
 }
-
-}
 .quantumviewfiles-module .breadcumbs {
     margin-top: 0;
-    margin-bottom: 10px;
     width: 100%;
     height: auto;
 }
@@ -503,162 +505,3 @@
 .quantumviewfiles-module .field-list-files .list-table > div:last-child {
     border-bottom: none;
 }
-
-.quantumviewfiles-module .loader {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 400px;
-    height: 100px;
-    text-transform: uppercase;
-    line-height: 100px;
-    text-align: center;
-    color: #444444;
-    font-size: 50px;
-    letter-spacing: 10px;
-    overflow: hidden
-
-}
-.quantumviewfiles-module .loader span {
-    position: absolute;
-    background: #444444;
-}
-.quantumviewfiles-module .loader span:nth-child(1) {
-    width: 100%;
-    height: 4px;
-    top: 0;
-    left: -100%;
-    animation: animate1 2s linear infinite;
-}
-
-.quantumviewfiles-module .loader span:nth-child(3) {
-    width: 100%;
-    height: 4px;
-    bottom: 0;
-    right: -100%;
-    animation: animate3 2s linear infinite;
-}
-
-.quantumviewfiles-module .loader span:nth-child(2) {
-    width: 4px;
-    height: 100%;
-    right: 0;
-    top: -100%;
-    animation: animate2 2s linear infinite;
-}
-.quantumviewfiles-module .loader span:nth-child(4) {
-    width: 4px;
-    height: 100%;
-    left: 0;
-    bottom: -100%;
-    animation: animate4 2s linear infinite;
-}
-@keyframes animate1 {
-    0%
-    {
-        left: -100%;
-    }
-    20%
-    {
-        left: 0;
-    }
-    40%
-    {
-        left: 100%;
-    }
-    60%
-    {
-        left: 100%;
-    }
-    80%
-    {
-        left: 100%;
-    }
-    100%
-    {
-        left: 100%;
-    }
-}
-
-@keyframes animate2 {
-    0%
-    {
-        top: -100%;
-    }
-    20%
-    {
-        top: -100%;
-    }
-    40%
-    {
-        top: 0%;
-    }
-    60%
-    {
-        top: 100%;
-    }
-    80%
-    {
-        top: 100%;
-    }
-    100%
-    {
-        top: 100%;
-    }
-}
-
-
-@keyframes animate3 {
-    0%
-    {
-        right: -100%;
-    }
-    20%
-    {
-        right: -100%;
-    }
-    40%
-    {
-        right: -100%;
-    }
-    60%
-    {
-        right: 0;
-    }
-    80%
-    {
-        right: 100%;
-    }
-    100%
-    {
-        right: 100%;
-    }
-}
-@keyframes animate4 {
-    0%
-    {
-        bottom: -100%;
-    }
-    20%
-    {
-        bottom: -100%;
-    }
-    40%
-    {
-        bottom: -100%;
-    }
-    60%
-    {
-        bottom: -100%;
-    }
-    80%
-    {
-        bottom: 0%;
-    }
-    100%
-    {
-        bottom: 100%;
-    }
-}
-

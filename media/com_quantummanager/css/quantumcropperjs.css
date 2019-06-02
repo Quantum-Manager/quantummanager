@@ -23,27 +23,45 @@
     user-select: none;
 }
 .quantumcropperjs-module.active {
-    display: block;
+    display: flex;
+}
+.quantumcropperjs-module .cropper-save {
+    display: none;
+    background: rgba(255,255,255,0.7);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.quantumcropperjs-module .cropper-save .loader {
+    width: 480px;
 }
 .quantumcropperjs-module .toolbar {
-    display: flex;
-    align-items: center;
-    padding: 0 10px;
-    height: 10%;
-    background: #fbfbfb;
+    display: block;
+    position: relative;
+    padding: 25px;
+    width: 15%;
+    min-width: 290px;
+    height: calc(100% - 50px);
+    background: #444;
 }
 .quantumcropperjs-module .toolbar > div {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
 }
 .quantumcropperjs-module .toolbar > div:first-child .quantummanager-icon {
     margin-right: 4px;
     width: 12px;
     height: 12px;
-}
-.quantumcropperjs-module .toolbar > div:last-child {
-    margin-left: auto;
-    justify-content: flex-end;
 }
 .quantumcropperjs-module .toolbar .btn-primary {
     background: #4568DC;
@@ -76,9 +94,10 @@
 .quantumcropperjs-module .toolbar .btn {
     display: flex;
     align-items: center;
-    padding: 0 10px;
+    padding: 10px 20px;
     line-height: 0;
-    height: 30px;
+    height: 37px;
+    font-size: 15px;
 }
 .quantumcropperjs-module .toolbar .buttons-methods {
     margin-right: 5px;
@@ -95,26 +114,29 @@
 .quantumcropperjs-module .name-file-wrap {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-left: 15px;
-    height: 100%;
+    justify-content: stretch;
+}
+.quantumcropperjs-module .name-file-wrap label {
+    width: 100%;
+    color: #fff;
 }
 .quantumcropperjs-module .name-file-wrap .input-wrapper {
-    /*height: 20px;
-    margin: 0;
-    border-radius: 3px 0 0 3px;*/
     position: relative;
+    display: flex;
+    width: calc(100% - 70px);
 }
 .quantumcropperjs-module .name-file-wrap .input-wrapper input {
-    width: 15em;
+    width: 100%;
+    flex: 1;
     margin: 0;
     height: 19px;
     font-size: inherit;
     font-family: inherit;
-    background-color: #ffffff;
+    background-color: #333;
+    color: #fff;
     padding: 0.35em 0.45em;
     border-radius: 3px 0 0 3px;
-    border: 1px solid #ccc;
+    border: 1px solid #333;
     transition: background-color 0.3s ease-in-out;
 }
 .quantumcropperjs-module .name-file-wrap .input-wrapper input:focus {
@@ -178,20 +200,105 @@
     width: 70px;
     height: 30px;
     margin: 0;
-    border-left: 0;
     border-radius: 0 3px 3px 0;
-    background: #f3f3f3;
+    background: #2b2b2b;
+    color: #ffffff;
+    border: 1px solid #2b2b2b;
+    border-left: 0;
     font-weight: bold;
 }
+.quantumcropperjs-module .change-ratio-wrap {
+    margin-top: 25px;
+}
+.quantumcropperjs-module .change-ratio-wrap label {
+    width: 100%;
+    color: #fff;
+}
+.quantumcropperjs-module .change-ratio-wrap .change-ratio {
+    width: 100%;
+    margin: 0;
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #333;
+}
+.quantumcropperjs-module .input-width-height-wrap {
+    justify-content: space-between;
+    margin-top: 25px;
+}
+.quantumcropperjs-module .input-width-height-wrap > label {
+    width: 100%;
+    color: #cbcbcb;
+}
+.quantumcropperjs-module .input-width-height-wrap > div {
+    width: 48%;
+}
+.quantumcropperjs-module .input-width-height-wrap > div label {
+    color: #fff;
+}
+.quantumcropperjs-module .input-width-height-wrap > div > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.quantumcropperjs-module .input-width-height-wrap input[type='text'],
+.quantumcropperjs-module .input-width-height-wrap input[type='number'] {
+    width: 70%;
+    margin: 0;
+    background-color: #333;
+    border: 1px solid #333;
+    color: #fff;
+}
+.quantumcropperjs-module .input-width-height-wrap span {
+    color: #ffffff;
+    text-transform: uppercase;
+    width: 13%;
+}
+.quantumcropperjs-module .input-width-height-wrap .image-width-height-ratio-checkbox {
+    margin-top: 13px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+}
+.quantumcropperjs-module .input-width-height-wrap .image-width-height-ratio-checkbox input {
+    margin: 0;
+    margin-right: 5px;
+}
+.quantumcropperjs-module .button-wrap {
+    margin-top: 35px;
+    justify-content: center;
+}
+.quantumcropperjs-module .button-wrap .btn-save {
+    background: #4568DC;
+    color: #fff;
+    background: -webkit-linear-gradient(to right, #B06AB3, #4568DC);
+    background: linear-gradient(to right, #B06AB3, #4568DC);
+    border: none;
+}
+.quantumcropperjs-module .button-wrap .btn-close {
+    background: #333;
+    color: #fff;
+    border: none;
+}
 .quantumcropperjs-module .editor {
+    position: relative;
     margin: auto;
-    height: 90%;
+    height: 100%;
+    flex: 1;
+}
+.quantumcropperjs-module .editor .cropperjs {
+    position: relative;
+    margin: auto;
+    height: 100%;
 }
 .quantumcropperjs-module .toolbar-sizes {
     position: absolute;
-    bottom: 10px;
-    left: 10px;
-    width: auto;
+    display: block !important;
+    bottom: 15px;
+    width: 65%;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
     padding: 10px;
     border-radius: 5px;
     background: #4568DC;
@@ -202,7 +309,8 @@
 }
 .quantumcropperjs-module .toolbar-sizes > div {
     display: flex;
-    justify-content: space-around;
+    width: 100%;
+    justify-content: center;
     text-transform: uppercase;
     font-size: 10px;
     line-height: 12px;
@@ -224,4 +332,11 @@
 }
 .quantumcropperjs-module .toolbar-footer > div .btn {
     background: rgba(243, 243, 243, .85);
+}
+
+@media screen and (max-width: 800px) {
+    .quantumcropperjs-module .toolbar {
+        width: 30%;
+        min-width: 230px;
+    }
 }

@@ -300,6 +300,166 @@
 }
 
 
+/****************************** Loader ********************************/
+
+.quantummanager .loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 100px;
+    text-transform: uppercase;
+    line-height: 100px;
+    text-align: center;
+    color: #444444;
+    font-size: 50px;
+    letter-spacing: 10px;
+    overflow: hidden
+
+}
+.quantummanager .loader span {
+    position: absolute;
+    background: #444444;
+}
+.quantummanager .loader span:nth-child(1) {
+    width: 100%;
+    height: 4px;
+    top: 0;
+    left: -100%;
+    animation: animate1 2s linear infinite;
+}
+
+.quantummanager .loader span:nth-child(3) {
+    width: 100%;
+    height: 4px;
+    bottom: 0;
+    right: -100%;
+    animation: animate3 2s linear infinite;
+}
+
+.quantummanager .loader span:nth-child(2) {
+    width: 4px;
+    height: 100%;
+    right: 0;
+    top: -100%;
+    animation: animate2 2s linear infinite;
+}
+.quantummanager .loader span:nth-child(4) {
+    width: 4px;
+    height: 100%;
+    left: 0;
+    bottom: -100%;
+    animation: animate4 2s linear infinite;
+}
+@keyframes animate1 {
+    0%
+    {
+        left: -100%;
+    }
+    20%
+    {
+        left: 0;
+    }
+    40%
+    {
+        left: 100%;
+    }
+    60%
+    {
+        left: 100%;
+    }
+    80%
+    {
+        left: 100%;
+    }
+    100%
+    {
+        left: 100%;
+    }
+}
+
+@keyframes animate2 {
+    0%
+    {
+        top: -100%;
+    }
+    20%
+    {
+        top: -100%;
+    }
+    40%
+    {
+        top: 0%;
+    }
+    60%
+    {
+        top: 100%;
+    }
+    80%
+    {
+        top: 100%;
+    }
+    100%
+    {
+        top: 100%;
+    }
+}
+
+
+@keyframes animate3 {
+    0%
+    {
+        right: -100%;
+    }
+    20%
+    {
+        right: -100%;
+    }
+    40%
+    {
+        right: -100%;
+    }
+    60%
+    {
+        right: 0;
+    }
+    80%
+    {
+        right: 100%;
+    }
+    100%
+    {
+        right: 100%;
+    }
+}
+@keyframes animate4 {
+    0%
+    {
+        bottom: -100%;
+    }
+    20%
+    {
+        bottom: -100%;
+    }
+    40%
+    {
+        bottom: -100%;
+    }
+    60%
+    {
+        bottom: -100%;
+    }
+    80%
+    {
+        bottom: 0%;
+    }
+    100%
+    {
+        bottom: 100%;
+    }
+}
+
 @media screen and (max-width: 800px) {
     .quantummanager .quantummanager-container .quantummanager-left .quantummanager-left-toggle {
         display: flex;

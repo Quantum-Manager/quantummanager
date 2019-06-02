@@ -16,31 +16,145 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
     this.pathFile = '';
     this.file = '';
     this.nameFile = '';
+    this.areaSave = QuantumCropperjsElement.querySelector('.cropper-save');
     this.ImageWidthValue = QuantumCropperjsElement.querySelector('.image-width-value');
     this.ImageHeightValue = QuantumCropperjsElement.querySelector('.image-height-value');
     this.CropWidthValue = QuantumCropperjsElement.querySelector('.crop-width-value');
     this.CropHeightValue = QuantumCropperjsElement.querySelector('.crop-height-value');
+    this.canvasSource;
+    this.canvasSourceCtx;
+    this.image;
+    this.imageChange = document.createElement('img');
+    this.checkImageResize = QuantumCropperjsElement.querySelector('.image-width-height-ratio');
+    this.editorCropperJS = QuantumCropperjsElement.querySelector('.editor .cropperjs');
+    this.currentImage;
+    this.changeCropperJS = function () {
+        let canvasData = self.cropperjs.getCanvasData();
+        let canvasCropData = self.cropperjs.getCropBoxData();
+        let widthContainer = self.editorCropperJS.offsetWidth;
+        let heightContainer = self.editorCropperJS.offsetHeight;
+        let canvasWidth = canvasData.width;
+        let canvasWidthCrop = canvasData.width;
+        let canvasHeightCrop = canvasData.height;
+        let canvasHeight = canvasData.height;
+        let resizeCanvas = false;
+        let scaleFactorCrop = self.defaultCropperJSOptions.aspectRatio;
+
+        if(canvasWidth === undefined && canvasHeight === undefined) {
+            return;
+        }
+
+        if(canvasWidth > self.currentImage.width) {
+            let scaleFactor = self.currentImage.width / canvasWidth;
+            canvasWidth = self.currentImage.width;
+            canvasHeight = canvasHeight * scaleFactor;
+            resizeCanvas = true;
+        }
+
+        if(canvasHeight > self.currentImage.height) {
+            let scaleFactor = self.currentImage.height / canvasHeight;
+            canvasHeight = self.currentImage.width;
+            canvasWidth = canvasWidth * scaleFactor;
+            resizeCanvas = true;
+        }
+
+        self.ImageWidthValue.value = Math.round(self.currentImage.width);
+        self.ImageHeightValue.value = Math.round(self.currentImage.height);
+        self.canvasSource = document.createElement('canvas');
+        self.canvasSource.width = self.ImageWidthValue.value;
+        self.canvasSource.height = self.ImageHeightValue.value;
+        self.canvasSourceCtx = self.canvasSource.getContext('2d');
+        self.canvasSourceCtx.drawImage(self.currentImage, 0, 0, self.canvasSource.width, self.canvasSource.height);
+
+        if(resizeCanvas) {
+            let left = self.editorCropperJS.offsetWidth / 2 - canvasWidth / 2;
+            let top = self.editorCropperJS.offsetHeight / 2 - canvasHeight / 2;
+            canvasData.left = left;
+            canvasData.top = top;
+            canvasData.width = canvasWidth;
+            canvasData.height = canvasHeight;
+            canvasCropData.left = left;
+            canvasCropData.top = top;
+            canvasCropData.width = canvasWidth;
+            canvasCropData.height = canvasHeight;
+            self.cropperjs.setCropBoxData(canvasCropData);
+            self.cropperjs.setCanvasData(canvasData);
+        }
+    };
     this.defaultCropperJSOptions =  {
         responsive: false,
         viewMode: 1,
         background: true,
+        aspectRatio: NaN,
+        autoCropArea: 1,
         ready: function(event) {
-            self.ImageWidthValue.innerHTML = Math.round(this.width) + ' px';
-            self.ImageHeightValue.innerHTML = Math.round(this.height) + ' px';
+            self.changeCropperJS();
         },
         crop: function(event) {
-            self.CropWidthValue.innerHTML = Math.round(event.detail.width) + ' px';
-            self.CropHeightValue.innerHTML = Math.round(event.detail.height) + ' px';
+            console.log(event);
+            self.CropWidthValue.value = parseFloat(event.detail.width);
+            self.CropHeightValue.value = parseFloat(event.detail.height);
+            self.CropWidthValue.setAttribute('data-old', self.CropWidthValue.value);
+            self.CropHeightValue.setAttribute('data-old', self.CropHeightValue.value);
         }
     };
 
     this.init = function () {
         let self = this;
+        self.areaSave.style.display = 'none';
+
+        self.ImageWidthValue.addEventListener('change', function () {
+            let editor = QuantumCropperjsElement.querySelector('.editor .cropperjs');
+            let width = parseInt(this.value);
+            let height = self.ImageHeightValue.value;
+            let scaleFactor = 1;
+            this.value = width;
+
+            if(self.checkImageResize.checked) {
+                scaleFactor = width / self.image.width;
+                height = self.image.height * scaleFactor;
+            }
+
+            self.canvasSourceCtx.clearRect(0, 0, self.canvasSource.width, self.canvasSource.height);
+            self.canvasSource.width = width;
+            self.canvasSource.height = height;
+            self.canvasSourceCtx.drawImage(self.image, 0, 0, width, height);
+            self.imageChange.setAttribute('src', self.canvasSourceCtx.canvas.toDataURL());
+            self.cropperjs.destroy();
+            editor.innerHTML = '';
+            self.currentImage = self.imageChange;
+            editor.appendChild(self.imageChange);
+            self.cropperjs = new Cropper(self.imageChange, self.defaultCropperJSOptions);
+        });
+        self.ImageHeightValue.addEventListener('change', function () {
+            let editor = QuantumCropperjsElement.querySelector('.editor .cropperjs');
+            let width = self.ImageWidthValue.value;
+            let height = parseInt(this.value);
+            let scaleFactor = 1;
+            this.value = width;
+
+            if(self.checkImageResize.checked) {
+                scaleFactor = height / self.image.height;
+                width = self.image.width * scaleFactor;
+            }
+
+            self.canvasSourceCtx.clearRect(0, 0, self.canvasSource.width, self.canvasSource.height);
+            self.canvasSource.width = width;
+            self.canvasSource.height = height;
+            self.canvasSourceCtx.drawImage(self.image, 0, 0, width, height);
+            self.imageChange.setAttribute('src', self.canvasSourceCtx.canvas.toDataURL());
+            self.cropperjs.destroy();
+            editor.innerHTML = '';
+            self.currentImage = self.imageChange;
+            editor.appendChild(self.imageChange);
+            self.cropperjs = new Cropper(self.imageChange, self.defaultCropperJSOptions);
+            self.changeCropperJS();
+        });
 
         Filemanager.Quantumtoolbar.buttonAdd('cropperjsEdit', 'left', 'btn-edit btn-hide hidden-label', QuantumviewfilesLang.buttonEdit, 'quantummanager-icon-edit', {}, function (ev) {
 
             let image = document.createElement('img');
-            let editor = QuantumCropperjsElement.querySelector('.editor');
+            let editor = QuantumCropperjsElement.querySelector('.editor .cropperjs');
             let fileSource;
             let exs;
             let name;
@@ -61,7 +175,9 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             }
 
             image.setAttribute('src', '/' + Filemanager.data.path + '/' + fileSource + '?' + QuantumUtils.randomInteger(111111, 999999));
+            self.image = image;
             editor.innerHTML = '';
+            self.currentImage = image;
             editor.append(image);
             self.cropperjs = new Cropper(image, self.defaultCropperJSOptions);
             QuantumCropperjsElement.classList.add('active');
@@ -77,6 +193,8 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             let exs = QuantumCropperjsElement.querySelector('.quantumcropperjs-name-exs').value;
             let result = self.cropperjs.getCroppedCanvas();
             let blob = '';
+
+            self.areaSave.style.display = 'block';
 
             if(exs === 'jpg' || exs === 'jpeg') {
                 blob = result.toDataURL("image/jpeg", 1);
@@ -103,9 +221,11 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
                     Filemanager.events.trigger('reloadPaths', Filemanager);
                     self.cropperjs.destroy();
                     QuantumCropperjsElement.classList.remove('active');
+                    self.areaSave.style.display = 'none';
                 }, 
                 function (response) {
                     console.log('fail');
+                    self.areaSave.style.display = 'none';
                 }
             );
 
@@ -224,43 +344,15 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
                 }
             }
         });
-        QuantumCropperjsElement.querySelector('.buttons-toggles').addEventListener('change', function (event) {
-            let e = event || window.event;
-            let target = e.target || e.srcElement;
-            let cropBoxData;
-            let canvasData;
-            let isCheckbox;
-            let isRadio;
-            let image = QuantumCropperjsElement.querySelector('.editor img');
 
+        QuantumCropperjsElement.querySelector('.change-ratio').addEventListener('change', function (event) {
             if (!self.cropperjs) {
                 return;
             }
 
-            if (target.tagName.toLowerCase() === 'label') {
-                target = target.querySelector('input');
-            }
-
-            isCheckbox = target.type === 'checkbox';
-            isRadio = target.type === 'radio';
-
-            options = self.defaultCropperJSOptions;
-
-            if (isCheckbox || isRadio) {
-                if (isCheckbox) {
-                    options[target.name] = target.checked;
-                    cropBoxData = cropper.getCropBoxData();
-                    canvasData = cropper.getCanvasData();
-
-                    options.ready = function () {
-                        cropper.setCropBoxData(cropBoxData).setCanvasData(canvasData);
-                    };
-                } else {
-                    options[target.name] = target.value;
-                }
-                self.cropperjs.destroy();
-                self.cropperjs = new Cropper(image, options);
-            }
+            self.defaultCropperJSOptions.aspectRatio = parseFloat(this.value);
+            self.cropperjs.destroy();
+            self.cropperjs = new Cropper(self.currentImage, self.defaultCropperJSOptions);
         });
     };
 

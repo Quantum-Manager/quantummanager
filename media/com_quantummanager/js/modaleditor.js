@@ -93,8 +93,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if(check.checked) {
             pathFile = fm.data.path + '/' + name;
-            name.split('.').pop();
-            altFile = name[0];
+            name = name.split('.');
+            name.pop();
+            altFile = name.join('.');
             fm.Quantumtoolbar.buttonsList['insertFileEditor'].classList.remove('btn-hide');
         } else {
             fm.Quantumtoolbar.buttonsList['insertFileEditor'].classList.add('btn-hide');

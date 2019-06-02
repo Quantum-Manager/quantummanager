@@ -27,7 +27,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
         this.path = this.options.directory;
         this.initBreadcrumbs();
         this.loadDirectory();
-        let searchByName = ViewfilesElement.querySelector('.filters input');
+        let searchByName = ViewfilesElement.querySelector('.filter-search input');
 
         if(!parseInt(self.options.onlyfiles)) {
 
@@ -653,6 +653,12 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
     });
 
     Filemanager.events.add(this, 'reloadPaths', function (fm, el) {
+
+        //запоминаем позицию прокрутки в директории
+        if(el.listFiles !== '' && el.listFiles !== null) {
+            el.bufferTopDirectories[el.path] = el.listFiles.scrollTop;
+        }
+
         fm.Quantumviewfiles.initBreadcrumbs(fm.Quantumviewfiles.buildBreadcrumbs);
         fm.Quantumviewfiles.loadDirectory(fm.data.path);
     });
