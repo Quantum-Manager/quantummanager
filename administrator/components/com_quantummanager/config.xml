@@ -33,6 +33,16 @@
 			<option value="0">JNO</option>
 		</field>
 
+		<field name="metafile"
+			   type="radio"
+			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_METAFILE_LABEL"
+			   required="true"
+			   class="btn-group"
+			   default="0">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
 		<field name="help"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_HELP_LABEL"
@@ -154,6 +164,27 @@
 			   required="true"
 			   default="10"
 			   showon="overlay:1"/>
+
+		<field name="custompresetscrop"
+			   type="subform"
+			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_CUSTOMPRESETCROP"
+			   layout="joomla.form.field.subform.repeatable-table"
+			   multiple="true"
+			   min="0"
+			   max="20">
+			<form>
+				<field
+					name="label"
+					type="text"
+					label="COM_QUANTUMMANAGER_CONFIG_IMAGE_CUSTOMPRESETCROP_NAME"
+				/>
+				<field
+					name="ratio"
+					type="number"
+					label="COM_QUANTUMMANAGER_CONFIG_IMAGE_CUSTOMPRESETCROP_RATIO"
+				/>
+			</form>
+		</field>
 
 	</fieldset>
 

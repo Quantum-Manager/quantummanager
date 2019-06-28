@@ -228,6 +228,43 @@ class QuantummanagerFileSystemLocal
 
 	/**
 	 * @param $path
+	 * @param $file
+	 *
+	 *
+	 * @since version
+	 */
+	public static function getMetaFile($path, $file)
+	{
+		$path = QuantummanagerHelper::preparePath($path);
+		$directory = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
+		$filePath = $directory . DIRECTORY_SEPARATOR . $file;
+		$meta = [];
+
+		if(file_exists($filePath))
+		{
+			$tmp = exif_read_data($filePath);
+			foreach ($tmp as $key => $section)
+			{
+				if(is_array($section))
+				{
+					foreach ($section as $name => $val)
+					{
+						$meta[] = "$key.$name: $val";
+					}
+				}
+				else
+				{
+					$meta[] = "$key: $section";
+				}
+			}
+		}
+
+		return json_encode($meta);
+
+	}
+
+	/**
+	 * @param $path
 	 * @return string
 	 */
 	public static function getFiles($path)
@@ -253,14 +290,15 @@ class QuantummanagerFileSystemLocal
 				Folder::create(JPATH_ROOT . DIRECTORY_SEPARATOR . 'images/com_quantummanager/cache');
 			}
 
-			foreach ($files as $file) {
-				$tmpExs = explode('.', $file);
+			foreach ($files as $file)
+			{
+				$fileParse = explode('.', $file);
 
-				if (!isset($tmpExs[1])) {
+				if (count($fileParse) === 1)
+				{
 					continue;
 				}
 
-				$fileParse = explode('.', $file);
 				$exs = array_pop($fileParse);
 
 				$fileMeta = [
@@ -273,7 +311,7 @@ class QuantummanagerFileSystemLocal
 					'dateM' => filemtime($directory . DIRECTORY_SEPARATOR . $file),
 				];
 
-				if(in_array(strtolower($tmpExs[1]), ['jpg', 'png', 'jpeg', 'gif']))
+				if(in_array(strtolower($exs), ['jpg', 'png', 'jpeg', 'gif']))
 				{
 					$cacheSource =  JPATH_ROOT . DIRECTORY_SEPARATOR . 'images/com_quantummanager/cache';
 					$cache = $cacheSource . DIRECTORY_SEPARATOR . $path;
@@ -287,9 +325,18 @@ class QuantummanagerFileSystemLocal
 				$filesOutput[] = $fileMeta;
 			}
 
+			$directoriesOutput = [];
+			foreach ($directories as $value)
+			{
+				if($value !== 'com_quantummanager')
+				{
+					$directoriesOutput[] = $value;
+				}
+			}
+
 			return json_encode([
 				'files' => $filesOutput,
-				'directories' => $directories
+				'directories' => $directoriesOutput
 			]);
 
 		}
@@ -304,7 +351,7 @@ class QuantummanagerFileSystemLocal
 	 * @param array $list
 	 * @return string
 	 */
-	public function delete($path = '', $list = [])
+	public static function delete($path = '', $list = [])
 	{
 		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 
@@ -326,8 +373,10 @@ class QuantummanagerFileSystemLocal
 
 			foreach ($list as $file)
 			{
+
 				if(file_exists($path . DIRECTORY_SEPARATOR . $file))
 				{
+
 					if (is_file($path . DIRECTORY_SEPARATOR . $file))
 					{
 						File::delete($path . DIRECTORY_SEPARATOR . $file);
@@ -351,7 +400,7 @@ class QuantummanagerFileSystemLocal
 	 * @return string
 	 * @throws Exception
 	 */
-	public function converterSave()
+	public static function converterSave()
 	{
 		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 

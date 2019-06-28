@@ -8,10 +8,17 @@
  */
 
 .quantumtoolbar-module {
-    padding: 2px 0 5px 0;
     background: #fdfeff;
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
+}
+.quantumtoolbar-module-muted {
+    background: #e9e6e8;
+}
+.quantumtoolbar-padding-horizontal {
+    padding-left: 15px;
+    padding-right: 15px;
 }
 .quantumtoolbar-module > div:last-child {
     margin-left: auto;
@@ -20,36 +27,71 @@
     display: flex;
     align-items: center;
 }
-.quantumtoolbar-module > div > button {
+.quantumtoolbar-module .left {
+    width: 25%;
+}
+.quantumtoolbar-module .center {
+    width: 50%;
+}
+.quantumtoolbar-module .right {
+    width: 25%;
+    justify-content: flex-end;
+}
+.quantumtoolbar-module button {
     border-radius: 0;
     display: flex;
     align-items: center;
     transition: all 0.2s;
     height: 30px;
+    background: #f4f3f4;
+    border: 1px solid #c6c4c6;
 }
-.quantumtoolbar-module > div > button.btn-hide {
+.quantumtoolbar-module button.btn-hide {
     display: none;
 }
-.quantumtoolbar-module > div > button:hover {
+.quantumtoolbar-module button:hover {
     transition: all 0.2s;
 }
-.quantumtoolbar-module > div > button .quantummanager-icon {
+.quantumtoolbar-module button .quantummanager-icon {
     margin-right: 5px;
 }
-.quantumtoolbar-module > div > button:first-child {
+.quantumtoolbar-module .quantumtoolbar-module-buttons-group {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+}
+.quantumtoolbar-module .quantumtoolbar-module-buttons-group:last-child {
+    margin-right: 0;
+}
+.quantumtoolbar-module .quantumtoolbar-module-buttons-group > button {
+    border-radius: 0;
+}
+.quantumtoolbar-module .quantumtoolbar-module-buttons-group > button:first-child {
     border-radius: 3px 0 0 3px;
 }
-.quantumtoolbar-module > div > button:last-child {
+.quantumtoolbar-module .quantumtoolbar-module-buttons-group > button:last-child {
     border-radius: 0 3px 3px 0;
 }
-.quantumtoolbar-module > div > .btn-primary {
+.quantumtoolbar-module .btn-primary {
     background: #4568DC;
     background: -webkit-linear-gradient(to right, #B06AB3, #4568DC);
     background: linear-gradient(to right, #B06AB3, #4568DC);
     border: 1px solid transparent;
 }
 @media screen and (max-width: 1180px) {
-    .quantumtoolbar-module > div > button.hidden-label span:last-child {
+    .quantumtoolbar-module button.hidden-label span:last-child {
         display: none;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .quantumtoolbar-module .left {
+        width: 25%;
+    }
+    .quantumtoolbar-module .center {
+        width: 65%;
+    }
+    .quantumtoolbar-module .right {
+        width: 10%;
     }
 }

@@ -25,7 +25,7 @@ window.Quantumtoolbar = function(Filemanager, QuantumToolbarElement, options) {
 
     };
 
-    this.buttonAdd = function (id, $position, className, name, icon, attr, callback) {
+    this.buttonAdd = function (id, position, group, className, name, icon, attr, callback) {
 
         if(this.options.buttonsBun.indexOf(id) !== -1) {
             return;
@@ -35,6 +35,7 @@ window.Quantumtoolbar = function(Filemanager, QuantumToolbarElement, options) {
             return;
         }
 
+        let groupHtml = QuantumToolbarElement.querySelector('.' + position + ' .' + group);
         let htmlButtons;
         let button = document.createElement('button');
         button.setAttribute('class', 'btn ' + className);
@@ -44,11 +45,22 @@ window.Quantumtoolbar = function(Filemanager, QuantumToolbarElement, options) {
             attr = {};
         }
 
-        if($position === 'left') {
+        if(groupHtml === null) {
+            let createDivGroup = document.createElement('div');
+            createDivGroup.setAttribute('class', 'quantumtoolbar-module-buttons-group ' + group);
+            QuantumToolbarElement.querySelector('.' + position).append(createDivGroup);
+            groupHtml = QuantumToolbarElement.querySelector('.' + position + ' .' + group);
+        }
+
+        if(position === 'left') {
             htmlButtons = QuantumToolbarElement.querySelector('.left');
         }
 
-        if($position === 'right') {
+        if(position === 'center') {
+            htmlButtons = QuantumToolbarElement.querySelector('.center');
+        }
+
+        if(position === 'right') {
             htmlButtons = QuantumToolbarElement.querySelector('.right');
         }
 
@@ -57,7 +69,7 @@ window.Quantumtoolbar = function(Filemanager, QuantumToolbarElement, options) {
         }
 
         button.addEventListener('click', callback);
-        htmlButtons.append(button);
+        groupHtml.append(button);
         this.buttonsList[id] = button
     };
 

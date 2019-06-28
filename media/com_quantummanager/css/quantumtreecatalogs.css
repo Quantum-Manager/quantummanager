@@ -12,6 +12,9 @@
     height: 100%;
     width: 100%;
 }
+.quantumtreecatalogs-module-muted {
+    background: #f6f6f6;
+}
 .quantumtreecatalogs-module .tree-scroll {
     width: 100%;
     position: absolute;
@@ -32,7 +35,7 @@
 }
 .quantumtreecatalogs-module .tree-ul  {
     margin: 0;
-    padding: 0;
+    padding: 15px;
 }
 .quantumtreecatalogs-module .tree-caret {
     cursor: pointer;

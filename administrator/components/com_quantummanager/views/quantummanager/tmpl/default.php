@@ -13,74 +13,80 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Component\ComponentHelper;
 
 ?>
-<div id="j-main-container" class="span11">
 
-    <?php
+<?php
 
-    try {
-		JLoader::register('JFormFieldQuantumCombine', JPATH_ROOT . '/administrator/components/com_quantummanager/fields/quantumcombine.php');
-		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
-        $folderRoot = QuantummanagerHelper::getFolderRoot();
+try {
+    JLoader::register('JFormFieldQuantumCombine', JPATH_ROOT . '/administrator/components/com_quantummanager/fields/quantumcombine.php');
+    JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+    $folderRoot = QuantummanagerHelper::getFolderRoot();
 
-		$buttonsBun = [];
-		$fields = [
-			'quantumtreecatalogs' => [
-				'directory' => $folderRoot,
-				'position' => 'left',
-			],
-			'quantumupload' => [
-				'directory' => $folderRoot
-			],
-			'quantumtoolbar' => [
-				'buttons' => 'all',
-				'buttonsBun' => '',
-			],
-			'quantumviewfiles' => [
-				'directory' => $folderRoot,
-				'view' => 'list-grid',
-				'onlyfiles' => '0',
-			],
-			'quantumcropperjs' => [
-				'position' => 'bottom'
-            ],
-			/*'quantumcodemirror' => [
-                'position' => 'center'
-            ],*/
-		];
+    $buttonsBun = [];
+    $fields = [
+        'quantumtreecatalogs' => [
+            'directory' => $folderRoot,
+            'position' => 'left',
+            'cssClass' => 'quantumtreecatalogs-module-muted'
+        ],
+        'quantumupload' => [
+            'maxsize' => QuantummanagerHelper::getParamsComponentValue('maxsize'),
+            'dropAreaHidden' => 1,
+            'directory' => $folderRoot
+        ],
+        'quantumtoolbar' => [
+            'position' => 'top',
+            'buttons' => 'all',
+            'buttonsBun' => '',
+            'cssClass' => 'quantummanager-module-height-1-1 quantumtoolbar-module-muted quantumtoolbar-padding-horizontal',
+        ],
+        'quantumviewfiles' => [
+            'directory' => $folderRoot,
+            'view' => 'list-grid',
+            'onlyfiles' => '0',
+            'metafile' => QuantummanagerHelper::getParamsComponentValue('metafile'),
+        ],
+        'quantumcropperjs' => [
+            'position' => 'bottom'
+        ],
+        /*'quantumcodemirror' => [
+            'position' => 'center'
+        ],*/
+    ];
 
-		$actions = QuantummanagerHelper::getActions();
-		if (!$actions->get('core.create'))
-		{
-			$buttonsBun[] = 'viewfilesCreateDirectory';
-			unset($fields['quantumupload']);
-		}
-
-		if (!$actions->get('core.delete'))
-		{
-			unset($fields['quantumcropperjs']);
-		}
-
-		if (!$actions->get('core.delete'))
-		{
-			$buttonsBun[] = 'viewfilesDelete';
-		}
-
-		$optionsForField = [
-			'name' => 'filemanager',
-			'label' => '',
-			'fields' => json_encode($fields)
-		];
-
-		$field = new JFormFieldQuantumCombine();
-		foreach ($optionsForField as $name => $value)
-        {
-			$field->__set($name, $value);
-        }
-		echo $field->getInput();
-	}
-	catch (Exception $e) {
-        echo $e->getMessage();
+    $actions = QuantummanagerHelper::getActions();
+    if (!$actions->get('core.create'))
+    {
+        $buttonsBun[] = 'viewfilesCreateDirectory';
+        unset($fields['quantumupload']);
     }
-    ?>
 
-</div>
+    if (!$actions->get('core.delete'))
+    {
+        unset($fields['quantumcropperjs']);
+    }
+
+    if (!$actions->get('core.delete'))
+    {
+        $buttonsBun[] = 'viewfilesDelete';
+    }
+
+    $optionsForField = [
+        'name' => 'filemanager',
+        'label' => '',
+        'cssClass' => 'quantummanager-full-component-wrap',
+        'fields' => json_encode($fields)
+    ];
+
+    $field = new JFormFieldQuantumCombine();
+    foreach ($optionsForField as $name => $value)
+    {
+        $field->__set($name, $value);
+    }
+    echo $field->getInput();
+
+}
+catch (Exception $e) {
+    echo $e->getMessage();
+}
+?>
+

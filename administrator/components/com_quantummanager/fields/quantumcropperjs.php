@@ -10,6 +10,7 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Filter\OutputFilter;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -52,9 +53,12 @@ class JFormFieldQuantumcropperjs extends JFormField
 	 */
 	protected function getLayoutData()
 	{
+
+
 		return array_merge(parent::getLayoutData(),
 			[
-
+				'paramsComponents' => ComponentHelper::getParams('com_quantummanager'),
+				'cssClass' => $this->cssClass,
 			]
 		);
 	}
@@ -65,6 +69,7 @@ class JFormFieldQuantumcropperjs extends JFormField
 		try {
 
 			$this->__set('standalone', $this->getAttribute('standalone', true));
+			$this->__set('cssClass', $this->getAttribute('cssClass', ''));
 
 			HTMLHelper::_('stylesheet', 'com_quantummanager/main.css', [
 				'version' => filemtime(__FILE__),

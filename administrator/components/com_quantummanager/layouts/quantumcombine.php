@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 extract($displayData);
 ?>
 
-<div class="quantummanager">
+<div class="quantummanager <?php echo $cssClass ?>">
 
 	<?php if(!empty($displayData['top'])) : ?>
         <div class="quantummanager-top">

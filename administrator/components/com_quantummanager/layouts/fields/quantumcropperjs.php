@@ -13,6 +13,7 @@ defined('JPATH_PLATFORM') or die;
 use Joomla\CMS\Language\Text;
 
 extract($displayData);
+$presets = $paramsComponents->get('custompresetscrop');
 ?>
 
 <div class="quantummanager-module quantumcropperjs-module" data-type="Quantumcropperjs" data-options="">
@@ -40,6 +41,11 @@ extract($displayData);
             <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_LABEL_RATIO'); ?></label>
             <select class="change-ratio" name="change-ratio">
                 <option value="NaN" selected="selected"><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_FREE'); ?></option>
+                <?php if(!empty($presets)) : ?>
+                    <?php foreach ($presets as $preset) : ?>
+                        <option value="<?php echo $preset->ratio ?>"><?php echo $preset->label ?></option>
+                    <?php endforeach; ?>
+                <?php endif; ?>
                 <option value="1">1:1</option>
                 <option value="1.7777777777777777">16:9</option>
                 <option value="2">18:9</option>

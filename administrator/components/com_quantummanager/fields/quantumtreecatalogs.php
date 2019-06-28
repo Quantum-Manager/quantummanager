@@ -54,7 +54,8 @@ class JFormFieldQuantumtreecatalogs extends JFormField
 	{
 		return array_merge(parent::getLayoutData(),
 			[
-				'directory' => $this->directory
+				'directory' => $this->directory,
+				'cssClass' => $this->cssClass,
 			]
 		);
 	}
@@ -65,6 +66,7 @@ class JFormFieldQuantumtreecatalogs extends JFormField
 		try {
 
 			$this->__set('standalone', $this->getAttribute('standalone', true));
+			$this->__set('cssClass', $this->getAttribute('cssClass', ''));
 			$this->directory = $this->getAttribute('directory', 'images');
 
 			HTMLHelper::_('stylesheet', 'com_quantummanager/main.css', [

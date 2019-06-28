@@ -14,7 +14,7 @@ extract($displayData);
 $id = rand(111111, 999999);
 ?>
 
-<div class="quantummanager-module quantumviewfiles-module" data-type="Quantumviewfiles" data-options="directory:<?php echo $displayData['directory'] ?>;onlyfiles:<?php echo $displayData['onlyfiles'] ?> ">
+<div class="quantummanager-module quantumviewfiles-module" data-type="Quantumviewfiles" data-options="directory:<?php echo $displayData['directory'] ?>;onlyfiles:<?php echo $displayData['onlyfiles'] ?>;metafile:<?php echo $displayData['metafile'] ?>">
     <div class="quantumviewfiles-module-heading">
         <div class="breadcumbs"></div>
         <div class="filter-search">
@@ -24,7 +24,17 @@ $id = rand(111111, 999999);
         </div>
     </div>
     <div class="filters"></div>
-    <div class="view"></div>
+    <div class="view-wrap">
+        <div class="view"></div>
+
+        <?php if($displayData['metafile'] === '1') :?>
+        <div class="meta-file hidden">
+            <div class="meta-file-list">
+
+            </div>
+        </div>
+        <?php endif; ?>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -33,12 +43,14 @@ $id = rand(111111, 999999);
         'empty': '<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_EMPTY'); ?>',
         'buttonBack': '<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_BUTTON_BACK'); ?>',
         'buttonUp': '<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_BUTTON_UP'); ?>',
+        'buttonUpload': '<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_BUTTON_UPLOAD'); ?>',
         'buttonCreateDirectory': '<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_BUTTON_CREATE_DIRECTORY'); ?>',
         'buttonEdit': '<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_BUTTON_EDIT'); ?>',
         'buttonDelete': '<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_BUTTON_DELETE'); ?>',
         'buttonTable': '<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_BUTTON_TABLE'); ?>',
         'buttonGrid': '<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_BUTTON_GRID'); ?>',
         'directoryName': '<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_DIRECTORY_NAME'); ?>',
+        'directoryNameRequired': '<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_DIRECTORY_NAME_REQUIRED'); ?>',
         'changeGridViews': '<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_CHANGE_GRID_VIEWS'); ?>'
     };
 </script>

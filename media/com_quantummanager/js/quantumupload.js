@@ -20,7 +20,7 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
     this.filesLists = [];
     this.errorsWrap = '';
     this.errorsHtml = '';
-    this.maxsize = 20;
+    this.maxsize = options.maxsize;
     this.exs = '';
 
     this.init = function () {
@@ -84,6 +84,13 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
 
     };
 
+
+    this.selectFiles = function () {
+        for (let i = 0; i < this.inputFileAll.length; i++) {
+            this.inputFileAll[i].click();
+            break;
+        }
+    };
 
     this.initializeProgress = function(numFiles) {
         this.progressBar.style.display = "block";

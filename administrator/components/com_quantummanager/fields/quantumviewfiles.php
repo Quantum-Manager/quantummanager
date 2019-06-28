@@ -55,17 +55,27 @@ class JFormFieldQuantumviewfiles extends JFormField
 		return array_merge(parent::getLayoutData(),
 			[
 				'directory' => $this->directory,
-				'onlyfiles' => $this->onlyfiles
+				'onlyfiles' => $this->onlyfiles,
+				'metafile' => $this->metafile,
+				'cssClass' => $this->cssClass,
 			]
 		);
 	}
 
 
+	/**
+	 *
+	 * @return string
+	 *
+	 * @since version
+	 */
 	public function getInput()
 	{
 		try {
 
 			$this->__set('standalone', $this->getAttribute('standalone', true));
+			$this->__set('cssClass', $this->getAttribute('cssClass', ''));
+			$this->__set('metafile', $this->getAttribute('metafile', '0'));
 			$this->directory = $this->getAttribute('directory', 'images');
 			$this->onlyfiles = $this->getAttribute('onlyfiles', '0');
 

@@ -38,6 +38,17 @@ class JFormFieldQuantumCombine extends JFormField
 	 */
 	protected $renderLabelLayout = 'renderlabel';
 
+	/**
+	 * @return array
+	 */
+	protected function getLayoutData()
+	{
+		return array_merge(parent::getLayoutData(),
+			[
+				'cssClass' => $this->cssClass,
+			]
+		);
+	}
 
 	/**
 	 * Allow to override renderer include paths in child fields

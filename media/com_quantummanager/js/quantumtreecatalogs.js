@@ -168,13 +168,19 @@ window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, o
                     QuantumUtils.insertAfter(deleteDirertory,  self.active.querySelector('.tree-path'));
 
                     deleteDirertory.addEventListener('click', function (ev) {
-                        if(confirm(QuantumtreecatalogsLang.confirmDelete)) {
+                        let deleteNamePath = this.closest('li').querySelector('.tree-path').innerHTML;
+                        if(confirm(QuantumtreecatalogsLang.confirmDelete + ' ' + deleteNamePath + '?')) {
                             let files = [];
                             let pathDelete = Filemanager.data.path.split('/');
                             pathDelete.pop();
                             files.push(this.closest('li').querySelector('.tree-path').innerHTML);
                             jQuery.get("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.delete&path=" + encodeURIComponent(pathDelete.join('/')) + '&list=' + encodeURIComponent(JSON.stringify(files))).done(function (response) {
                                 Filemanager.data.path = pathDelete.join('/');
+
+                                if(localStorage !== undefined) {
+                                    localStorage.setItem('quantummanagerLastDir', Filemanager.data.path);
+                                }
+
                                 Filemanager.events.trigger('reloadPaths', Filemanager);
                             });
                         }

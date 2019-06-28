@@ -151,7 +151,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             self.changeCropperJS();
         });
 
-        Filemanager.Quantumtoolbar.buttonAdd('cropperjsEdit', 'left', 'btn-edit btn-hide hidden-label', QuantumviewfilesLang.buttonEdit, 'quantummanager-icon-edit', {}, function (ev) {
+        Filemanager.Quantumtoolbar.buttonAdd('cropperjsEdit', 'center', 'file-actions', 'btn-edit btn-hide hidden-label', QuantumviewfilesLang.buttonEdit, 'quantummanager-icon-edit', {}, function (ev) {
 
             let image = document.createElement('img');
             let editor = QuantumCropperjsElement.querySelector('.editor .cropperjs');

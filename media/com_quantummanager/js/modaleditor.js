@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     setTimeout(function () {
         for(let i=0;i<QuantummanagerLists.length;i++) {
-            QuantummanagerLists[i].Quantumtoolbar.buttonAdd('insertFileEditor', 'left', 'btn-insert btn-primary btn-hide', 'Вставить файл', 'quantummanager-icon-insert-inverse', {}, function (ev) {
+            QuantummanagerLists[i].Quantumtoolbar.buttonAdd('insertFileEditor', 'center', 'file-actions', 'btn-insert btn-primary btn-hide', QuantumwindowLang.buttonInsert, 'quantummanager-icon-insert-inverse', {}, function (ev) {
 
                 let tag = '',
                     attr = [],

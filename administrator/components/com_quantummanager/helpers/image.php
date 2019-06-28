@@ -145,9 +145,28 @@ class QuantummanagerHelperImage
 	public function resizeFit($file)
 	{
 		JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
+		list($width, $height, $type, $attr) = getimagesize($file);
+		$newWidth = $width;
+		$newHeight = $height;
+		$maxWidth = (int)$this->paramsComponent->get('rezizemaxwidth', 1920);
+		$maxHeight = (int)$this->paramsComponent->get('rezizemaxheight', 1280);
+		$ratio = $width / $height;
+
+		if($width > $maxWidth)
+		{
+			$newWidth = $maxWidth;
+			$newHeight = round($newWidth / $ratio);
+		}
+
+		if($newHeight > $maxHeight)
+		{
+			$newHeight = $maxHeight;
+			$newWidth = round($newHeight * $ratio);
+		}
+
 		$manager = JInterventionimage::getInstance();
 		$manager->make($file)
-			->fit((int)$this->paramsComponent->get('rezizemaxwidth', 1920), (int)$this->paramsComponent->get('rezizemaxheight', 1280))
+			->fit($newWidth, $newHeight)
 			->save($file);
 	}
 

@@ -52,7 +52,10 @@ class JFormFieldQuantumupload extends JFormField
 	{
 		return array_merge(parent::getLayoutData(),
 			[
-				'directory' => $this->directory
+				'directory' => $this->directory,
+				'dropAreaHidden' => $this->dropAreaHidden,
+				'maxsize' => $this->maxsize,
+				'cssClass' => $this->cssClass,
 			]
 		);
 	}
@@ -62,7 +65,10 @@ class JFormFieldQuantumupload extends JFormField
 		try {
 
 			$this->__set('standalone', $this->getAttribute('standalone', true));
+			$this->__set('cssClass', $this->getAttribute('cssClass', ''));
+			$this->__set('maxsize', $this->getAttribute('maxsize', '2'));
 			$this->directory = $this->getAttribute('directory', 'images');
+			$this->dropAreaHidden = $this->getAttribute('dropAreaHidden', '0');
 
 			HTMLHelper::_('stylesheet', 'com_quantummanager/main.css', [
 				'version' => filemtime(__FILE__),

@@ -56,6 +56,7 @@ class JFormFieldQuantumtoolbar extends JFormField
 			[
 				'buttons' => explode(',', $this->buttons),
 				'buttonsBun' => explode(',', $this->buttonsBun),
+				'cssClass' => $this->cssClass,
 			]
 		);
 	}
@@ -68,6 +69,7 @@ class JFormFieldQuantumtoolbar extends JFormField
 			$this->__set('standalone', $this->getAttribute('standalone', true));
 			$this->__set('buttons', $this->getAttribute('buttons', 'all'));
 			$this->__set('buttonsBun', $this->getAttribute('buttonsBun', ','));
+			$this->__set('cssClass', $this->getAttribute('cssClass', ''));
 
 			HTMLHelper::_('stylesheet', 'com_quantummanager/main.css', [
 				'version' => filemtime(__FILE__),

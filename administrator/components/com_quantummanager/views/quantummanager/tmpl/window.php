@@ -11,8 +11,14 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 HTMLHelper::_('stylesheet', 'com_quantummanager/window.css', [
+	'version' => filemtime(__FILE__),
+	'relative' => true
+]);
+
+HTMLHelper::_('script', 'com_quantummanager/window.js', [
 	'version' => filemtime(__FILE__),
 	'relative' => true
 ]);
@@ -24,27 +30,38 @@ HTMLHelper::_('stylesheet', 'com_quantummanager/window.css', [
 try {
 	JLoader::register('JFormFieldQuantumCombine', JPATH_ROOT . '/administrator/components/com_quantummanager/fields/quantumcombine.php');
 	JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+	$folderRoot = QuantummanagerHelper::getFolderRoot();
+
 	$buttonsBun = [];
 	$fields = [
 		'quantumtreecatalogs' => [
-			'directory' => 'images',
+			'directory' => $folderRoot,
 			'position' => 'left',
+			'cssClass' => 'quantumtreecatalogs-module-muted'
 		],
 		'quantumupload' => [
-			'directory' => 'images'
+			'maxsize' => QuantummanagerHelper::getParamsComponentValue('maxsize'),
+			'dropAreaHidden' => 1,
+			'directory' => $folderRoot
 		],
 		'quantumtoolbar' => [
+			'position' => 'top',
 			'buttons' => 'all',
 			'buttonsBun' => '',
+			'cssClass' => 'quantummanager-module-height-1-1 quantumtoolbar-module-muted quantumtoolbar-padding-horizontal',
 		],
 		'quantumviewfiles' => [
-			'directory' => 'images',
+			'directory' => $folderRoot,
 			'view' => 'list-grid',
 			'onlyfiles' => '0',
+			'metafile' => QuantummanagerHelper::getParamsComponentValue('metafile'),
 		],
 		'quantumcropperjs' => [
 			'position' => 'bottom'
 		],
+		/*'quantumcodemirror' => [
+			'position' => 'center'
+		],*/
 	];
 
 	$actions = QuantummanagerHelper::getActions();
@@ -67,6 +84,7 @@ try {
 	$optionsForField = [
 		'name' => 'filemanager',
 		'label' => '',
+		'cssClass' => 'quantummanager-full-wrap',
 		'fields' => json_encode($fields)
 	];
 
@@ -82,4 +100,8 @@ catch (Exception $e) {
 }
 ?>
 
-
+<script type="text/javascript">
+    window.QuantumwindowLang = {
+        'buttonClose': '<?php echo Text::_('COM_QUANTUMMANAGER_WINDOW_CLOSE'); ?>'
+    };
+</script>

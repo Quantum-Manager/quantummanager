@@ -231,6 +231,22 @@ class QuantummanagerHelper
 	}
 
 
+	/**
+	 * @param $name
+	 *
+	 * @return mixed
+	 *
+	 * @since version
+	 */
+	public static function getParamsComponentValue($name)
+	{
+		$componentParams = ComponentHelper::getParams('com_quantummanager');
+		$value = $componentParams->get($name, '');
+
+		return $value;
+	}
+
+
 	public static function loadLang()
 	{
 		$lang = Factory::getLanguage();

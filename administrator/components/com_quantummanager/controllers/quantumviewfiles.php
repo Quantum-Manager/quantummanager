@@ -23,6 +23,7 @@ use Joomla\Filesystem\Folder;
 class QuantummanagerControllerquantumviewfiles extends AdminController
 {
 
+
 	public function createDirectory()
 	{
 		$app = Factory::getApplication();
@@ -33,6 +34,7 @@ class QuantummanagerControllerquantumviewfiles extends AdminController
 
 		$app->close();
 	}
+
 
 	public function getFiles()
 	{
@@ -45,6 +47,17 @@ class QuantummanagerControllerquantumviewfiles extends AdminController
 		$app->close();
 	}
 
+
+	public function getMetaFile()
+	{
+		$app = Factory::getApplication();
+		$data = $app->input->getArray();
+
+		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
+		echo QuantummanagerFileSystemLocal::getMetaFile($data['path'], $data['name']);
+
+		$app->close();
+	}
 
 
 	public function delete()
@@ -60,6 +73,7 @@ class QuantummanagerControllerquantumviewfiles extends AdminController
 		$app->close();
 
 	}
+
 
 	public function generatePreviewImage()
 	{

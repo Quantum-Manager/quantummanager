@@ -12,10 +12,10 @@ defined('JPATH_PLATFORM') or die;
 use Joomla\CMS\Language\Text;
 ?>
 
-<div class="quantummanager-module quantumupload-module" data-type="Qantumupload" data-options="directory:<?php echo $displayData['directory'] ?>">
+<div class="quantummanager-module quantumupload-module" data-type="Qantumupload" data-options="maxsize:<?php echo $displayData['maxsize'] ?>;directory:<?php echo $displayData['directory'] ?>;dropAreaHidden:<?php echo $displayData['dropAreaHidden'] ?>">
 
 	<?php $id = rand(11111, 99999)?>
-    <div class="drop-area">
+    <div class="drop-area <?php if($displayData['dropAreaHidden'] === '1') : ?> drop-area-hidden <?php endif; ?>">
         <div class="form-upload">
             <input type="hidden" class="pathElem" name="path">
             <span class="quantummanager-icon quantummanager-icon-upload"></span>
@@ -23,8 +23,9 @@ use Joomla\CMS\Language\Text;
             <label class="button" for="fileElem-<?= $id ?>"><?= \Joomla\CMS\Language\Text::_("COM_QUANTUMMANAGER_FIELDS_QUANTUMUPLOAD_UPLOAD_SELECT") ?></label>
             <input type="file" id="fileElem-<?= $id ?>" class="fileElem" multiple accept="*">
         </div>
-        <progress class="progress-bar" max="100" value="0"></progress>
     </div>
+
+    <progress class="progress-bar" max="100" value="0"></progress>
 
     <div class="upload-errors">
         <div></div>

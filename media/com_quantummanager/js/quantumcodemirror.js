@@ -16,7 +16,7 @@ window.Quantumcodemirror = function(Filemanager, QuantumcodemirrorElement, optio
     this.init = function () {
         let self = this;
 
-        Filemanager.Quantumtoolbar.buttonAdd('codemirrorEdit', 'left', 'btn-edit btn-hide hidden-label', QuantumviewfilesLang.buttonEdit, 'quantummanager-icon-edit', {}, function (ev) {
+        Filemanager.Quantumtoolbar.buttonAdd('codemirrorEdit', 'center', 'file-actions', 'btn-edit btn-hide hidden-label', QuantumviewfilesLang.buttonEdit, 'quantummanager-icon-edit', {}, function (ev) {
 
             QuantumcodemirrorElement.classList.add('active');
             let image = document.createElement('img');
