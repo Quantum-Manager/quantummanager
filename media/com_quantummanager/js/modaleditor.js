@@ -25,62 +25,71 @@ document.addEventListener('DOMContentLoaded', function () {
         for(let i=0;i<QuantummanagerLists.length;i++) {
             QuantummanagerLists[i].Quantumtoolbar.buttonAdd('insertFileEditor', 'center', 'file-actions', 'btn-insert btn-primary btn-hide', QuantumwindowLang.buttonInsert, 'quantummanager-icon-insert-inverse', {}, function (ev) {
 
-                let tag = '',
-                    attr = [],
-                    figclass = '',
-                    captionclass = '',
-                    // Get the image tag field information
-                    url = pathFile,
-                    alt = altFile,
-                    align = '',
-                    title = '',
-                    caption = '',
-                    c_class = '',
-                    editor = getUrlParameter('e_name');
+                jQuery.get("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getParsePath&path=" + encodeURIComponent(pathFile) + '&v=' + QuantumUtils.randomInteger(111111, 999999)).done(function (response) {
+                    response = JSON.parse(response);
 
-                if (url)
-                {
-                    // Set alt attribute
-                    attr.push('alt="' + alt + '"');
-
-                    // Set align attribute
-                    if (align && !caption)
-                    {
-                        attr.push('class="pull-' + align + '"');
+                    if(response.path === undefined) {
+                        return;
                     }
 
-                    // Set title attribute
-                    if (title)
-                    {
-                        attr.push('title="' + title + '"');
-                    }
+                    let tag = '',
+                        attr = [],
+                        figclass = '',
+                        captionclass = '',
+                        // Get the image tag field information
+                        url = response.path,
+                        alt = altFile,
+                        align = '',
+                        title = '',
+                        caption = '',
+                        c_class = '',
+                        editor = getUrlParameter('e_name');
 
-                    tag = '<img src="' + url + '" ' + attr.join(' ') + '/>';
-
-                    // Process caption
-                    if (caption)
+                    if (url)
                     {
-                        if (align)
+                        // Set alt attribute
+                        attr.push('alt="' + alt + '"');
+
+                        // Set align attribute
+                        if (align && !caption)
                         {
-                            figclass = ' class="pull-' + align + '"';
+                            attr.push('class="pull-' + align + '"');
                         }
 
-                        if (c_class)
+                        // Set title attribute
+                        if (title)
                         {
-                            captionclass = ' class="' + c_class + '"';
+                            attr.push('title="' + title + '"');
                         }
 
-                        tag = '<figure' + figclass + '>' + tag + '<figcaption' + captionclass + '>' + caption + '</figcaption></figure>';
+                        tag = '<img src="' + url + '" ' + attr.join(' ') + '/>';
+
+                        // Process caption
+                        if (caption)
+                        {
+                            if (align)
+                            {
+                                figclass = ' class="pull-' + align + '"';
+                            }
+
+                            if (c_class)
+                            {
+                                captionclass = ' class="' + c_class + '"';
+                            }
+
+                            tag = '<figure' + figclass + '>' + tag + '<figcaption' + captionclass + '>' + caption + '</figcaption></figure>';
+                        }
                     }
-                }
 
-                if (window.Joomla && Joomla.editors.instances.hasOwnProperty(editor)) {
-                    Joomla.editors.instances[editor].replaceSelection(tag)
-                } else {
-                    window.parent.jInsertEditorText(tag, editor);
-                }
+                    if (window.Joomla && Joomla.editors.instances.hasOwnProperty(editor)) {
+                        Joomla.editors.instances[editor].replaceSelection(tag)
+                    } else {
+                        window.parent.jInsertEditorText(tag, editor);
+                    }
 
-                window.parent.jModalClose();
+                    window.parent.jModalClose();
+
+                });
 
                 ev.preventDefault();
             });

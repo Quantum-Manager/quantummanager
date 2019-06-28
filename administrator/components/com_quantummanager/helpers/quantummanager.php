@@ -24,6 +24,10 @@ use Joomla\Filesystem\Folder;
 class QuantummanagerHelper
 {
 
+	/**
+	 * @var string
+	 * @since version
+	 */
 	public static $cacheMimeType = '';
 
 	/**
@@ -132,6 +136,13 @@ class QuantummanagerHelper
 	public static function preparePath($path)
 	{
 		$path = trim($path);
+		$componentParams = ComponentHelper::getParams('com_quantummanager');
+		$pathConfig = self::getParamsComponentValue('path', 'images');
+
+		$path = str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
+		$path = preg_replace("#" . JPATH_ROOT . "\/root?#", $pathConfig, $path);
+		$path = preg_replace("#^root?#", $pathConfig, $path);
+		$path = str_replace('..' . DIRECTORY_SEPARATOR, '', $path);
 
 		if(substr_count($path, '{user_id}'))
 		{
@@ -174,24 +185,38 @@ class QuantummanagerHelper
 			date('U'),
 		], $path);
 
-		$componentParams = ComponentHelper::getParams('com_quantummanager');
-		$pathConfig = $componentParams->get('path', 'images');
-
-		$path = str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
-		$path = preg_replace("#" . JPATH_ROOT . "\/root(\/)?#", '', $path);
-		$path = preg_replace("#^root(\/)?#", '', $path);
-		$path = str_replace('..' . DIRECTORY_SEPARATOR, '', $path);
+		$pathConfigParse = str_replace([
+			'{user_id}',
+			'{item_id}',
+			'{year}',
+			'{month}',
+			'{day}',
+			'{hours}',
+			'{minutes}',
+			'{second}',
+			'{unix}',
+		], [
+			$user->id,
+			$item_id,
+			date('Y'),
+			date('m'),
+			date('d'),
+			date('h'),
+			date('i'),
+			date('s'),
+			date('U'),
+		], $pathConfig);
 
 		//если пытаются выйти за пределы папки, то не даем этого сделать
-		if(!preg_match("/^" . str_replace("/", "\/", "("  . JPATH_ROOT  . DIRECTORY_SEPARATOR . ")?" . $pathConfig) .".*?/", $path))
+		if(!preg_match("/^" . str_replace("/", "\/", "("  . JPATH_ROOT  . DIRECTORY_SEPARATOR . ")?" . $pathConfigParse) .".*?/", $path))
 		{
-			if(preg_match("/.*?" . str_replace("/", "\/", JPATH_ROOT  . DIRECTORY_SEPARATOR . $pathConfig) .".*?/", $path))
+			if(preg_match("/.*?" . str_replace("/", "\/", JPATH_ROOT  . DIRECTORY_SEPARATOR . $pathConfigParse) .".*?/", $path))
 			{
-				$path = JPATH_ROOT . DIRECTORY_SEPARATOR . $pathConfig . str_replace(JPATH_ROOT, '', $path);
+				$path = JPATH_ROOT . DIRECTORY_SEPARATOR . $pathConfigParse . str_replace(JPATH_ROOT, '', $path);
 			}
 			else
 			{
-				$path = $pathConfig . str_replace(JPATH_ROOT, '', $path);
+				$path = str_replace(JPATH_ROOT, '', $path);
 			}
 
 			$path = str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
@@ -199,7 +224,8 @@ class QuantummanagerHelper
 
 		$pathCurrent = str_replace(JPATH_ROOT, '', $path);
 		$pathCurrent = str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $pathCurrent);
-		$folders = explode(DIRECTORY_SEPARATOR, $pathCurrent);
+
+		$folders = explode(DIRECTORY_SEPARATOR, $pathConfigParse);
 		$currentTmp = '';
 
 		foreach ($folders as $tmpFolder)
@@ -233,15 +259,27 @@ class QuantummanagerHelper
 
 	/**
 	 * @param $name
+	 * @param string $default
 	 *
 	 * @return mixed
 	 *
 	 * @since version
 	 */
-	public static function getParamsComponentValue($name)
+	public static function getParamsComponentValue($name, $default = '')
 	{
 		$componentParams = ComponentHelper::getParams('com_quantummanager');
-		$value = $componentParams->get($name, '');
+		$profiles = $componentParams->get('profiles', '');
+		$value = $componentParams->get($name, $default);
+		$groups = Factory::getUser()->groups;
+
+		foreach ($profiles as $key => $profile)
+		{
+			if(in_array((int)$profile->group, $groups) && ($name === $profile->config))
+			{
+				$value = trim($profile->value);
+				break;
+			}
+		}
 
 		return $value;
 	}
@@ -255,5 +293,26 @@ class QuantummanagerHelper
 		$language_tag = $lang->getTag();
 		$lang->load($extension, $base_dir, $language_tag, true);
 	}
+
+	/**
+	 * @param $size
+	 *
+	 * @return string
+	 *
+	 * @since version
+	 */
+	public static function formatFileSize($size) {
+		$a = ["B", "KB", "MB", "GB", "TB", "PB"];
+		$pos = 0;
+
+		while ($size >= 1024)
+		{
+			$size /= 1024;
+			$pos++;
+		}
+
+		return round($size,2)." ".$a[$pos];
+	}
+
 
 }

@@ -60,7 +60,8 @@
 .quantumupload-module progress {
     display: none;
     width: 100%;
-    margin: 10px 10px 0 10px;
+    margin: 10px 10px 0 0;
+    padding: 0 10px 0 10px;
 }
 .quantumupload-module progress {
     vertical-align: baseline;

@@ -75,6 +75,27 @@ class QuantummanagerControllerquantumviewfiles extends AdminController
 	}
 
 
+	public function getParsePath()
+	{
+		try {
+			$app = Factory::getApplication();
+			$data = $app->input->getArray();
+			$path = $data['path'];
+
+			JLoader::register('QuantummanagerHelper', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+			echo json_encode([
+				'path' => QuantummanagerHelper::preparePath($path)
+			]);
+
+			$app->close();
+		}
+		catch (Exception $e)
+		{
+			echo $e->getMessage();
+		}
+	}
+
+
 	public function generatePreviewImage()
 	{
 		try {

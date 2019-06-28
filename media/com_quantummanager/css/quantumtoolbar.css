@@ -31,10 +31,10 @@
     width: 25%;
 }
 .quantumtoolbar-module .center {
-    width: 50%;
+    width: 65%;
 }
 .quantumtoolbar-module .right {
-    width: 25%;
+    width: 10%;
     justify-content: flex-end;
 }
 .quantumtoolbar-module button {
@@ -78,7 +78,7 @@
     background: linear-gradient(to right, #B06AB3, #4568DC);
     border: 1px solid transparent;
 }
-@media screen and (max-width: 1180px) {
+@media screen and (max-width: 1360px) {
     .quantumtoolbar-module button.hidden-label span:last-child {
         display: none;
     }

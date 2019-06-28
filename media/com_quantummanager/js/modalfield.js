@@ -24,13 +24,22 @@ document.addEventListener('DOMContentLoaded', function () {
     setTimeout(function () {
         for(let i=0;i<QuantummanagerLists.length;i++) {
             QuantummanagerLists[i].Quantumtoolbar.buttonAdd('insertFileEditor', 'center', 'file-actions', 'btn-insert btn-primary btn-hide', QuantumwindowLang.buttonInsert, 'quantummanager-icon-insert-inverse', {}, function (ev) {
-                window.parent.jInsertFieldValue(pathFile, getUrlParameter('fieldid'));
 
-                if(window.parent.jModalClose !== undefined) {
-                    window.parent.jModalClose();
-                }
+                jQuery.get("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getParsePath&path=" + encodeURIComponent(pathFile) + '&v=' + QuantumUtils.randomInteger(111111, 999999)).done(function (response) {
+                    response = JSON.parse(response);
 
-                window.parent.jQuery('.modal.in').modal('hide');
+                    if(response.path !== undefined) {
+                        window.parent.jInsertFieldValue(response.path, getUrlParameter('fieldid'));
+
+                        if(window.parent.jModalClose !== undefined) {
+                            window.parent.jModalClose();
+                        }
+
+                        window.parent.jQuery('.modal.in').modal('hide');
+                    }
+
+                });
+
                 ev.preventDefault();
             });
         }

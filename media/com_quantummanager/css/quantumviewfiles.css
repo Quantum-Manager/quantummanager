@@ -203,7 +203,7 @@
 }
 .quantumviewfiles-module .meta-file {
     position: relative;
-    width: 20%;
+    width: 25%;
 }
 .quantumviewfiles-module .meta-file.hidden {
     display: none;
@@ -222,13 +222,40 @@
     -o-transform: translateZ(0);
     transform: translateZ(0);
 }
-.quantumviewfiles-module .meta-file ul {
-    list-style: none;
+.quantumviewfiles-module .meta-file .meta-hidden {
+    display: none;
 }
-.quantumviewfiles-module .meta-file ul li {
-    display: block;
-    padding: 5px;
-    font-size: 14px;
+.quantumviewfiles-module .meta-file .show-all-tags {
+    display: inline-block;
+    padding: 6px;
+    color: #000000;
+}
+.quantumviewfiles-module .meta-file .show-all-tags:hover {
+    color: #444444;
+    cursor: pointer;
+}
+.quantumviewfiles-module .meta-file table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+}
+.quantumviewfiles-module .meta-file table>tr:not(:first-child),
+.quantumviewfiles-module .meta-file table>:not(:first-child)>tr,
+.quantumviewfiles-module .meta-file table>:first-child>tr:not(:first-child) {
+    border-top: 1px solid #e5e5e5;
+}
+.quantumviewfiles-module .meta-file table tr {
+    transition: background-color .1s linear;
+}
+.quantumviewfiles-module .meta-file table td {
+    padding: 6px;
+    vertical-align: middle;
+}
+.quantumviewfiles-module .meta-file table td {
+    width: 50%;
+}
+.quantumviewfiles-module .meta-file table td:last-child {
+    font-weight: bold;
 }
 .quantumviewfiles-module .field-list-files {
     width: 100%;

@@ -75,7 +75,12 @@ window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, o
                 });
             }
 
-            QuantumTreeCatalogsElement.querySelector('.root').closest('li').querySelector('.tree-caret').click();
+            let tmpCaret = QuantumTreeCatalogsElement.querySelector('.root').closest('li').querySelector('.tree-caret');
+
+            if(tmpCaret !== null) {
+                tmpCaret.click();
+            }
+
             Filemanager.Quantumtreecatalogs.directoryScroll(Filemanager.data.path);
 
         });
@@ -128,7 +133,7 @@ window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, o
             html += "</ul></li>";
             return html;
         } else {
-            return "<li><span class='tree-path'>" + directories.path + "</span></li>";
+            return "<li><span class='tree-path " + ((level === 0) ? "root" : "" ) + "'>" + directories.path + "</span></li>";
         }
     };
 

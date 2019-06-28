@@ -51,6 +51,8 @@ $id = rand(111111, 999999);
         'buttonGrid': '<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_BUTTON_GRID'); ?>',
         'directoryName': '<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_DIRECTORY_NAME'); ?>',
         'directoryNameRequired': '<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_DIRECTORY_NAME_REQUIRED'); ?>',
-        'changeGridViews': '<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_CHANGE_GRID_VIEWS'); ?>'
+        'changeGridViews': '<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_CHANGE_GRID_VIEWS'); ?>',
+        'metaFileShow': '<?php echo Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_SHOW'); ?>',
+        'metaFileHide': '<?php echo Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_HIDE'); ?>',
     };
 </script>

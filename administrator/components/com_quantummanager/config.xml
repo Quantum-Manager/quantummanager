@@ -4,11 +4,7 @@
 	<fieldset name="general" label="COM_QUANTUMMANAGER_CONFIG_GENERAL" description="COM_QUANTUMMANAGER_CONFIG_GENERAL_DESC">
 
 		<field name="path"
-			   type="folderlist"
-			   directory=""
-			   filter=""
-			   exclude=""
-			   stripext=""
+			   type="text"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_PATH_LABEL"
 			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_PATH_DESC"
 			   required="true"
@@ -188,6 +184,41 @@
 
 	</fieldset>
 
+	<fieldset name="profiles" label="COM_QUANTUMMANAGER_CONFIG_PROFILES" description="COM_QUANTUMMANAGER_CONFIG_PROFILES_DESC">
+
+		<field name="profiles"
+				type="subform"
+				label="COM_QUANTUMMANAGER_CONFIG_PROFILES_VARIABLES"
+				multiple="true">
+			<form>
+
+				<field
+						name="group"
+						type="sql"
+						label="COM_QUANTUMMANAGER_CONFIG_PROFILES_GROUP"
+						query="SELECT id, title FROM #__usergroups"
+						key_field="id"
+						value_field="title"
+				/>
+
+				<field
+						name="config"
+						type="text"
+						label="COM_QUANTUMMANAGER_CONFIG_PROFILES_CONFIG"
+				/>
+
+				<field
+						name="value"
+						type="textarea"
+						label="COM_QUANTUMMANAGER_CONFIG_PROFILES_VALUE"
+						cols="40"
+						rows="8"
+				/>
+
+			</form>
+		</field>
+
+	</fieldset>
 
 	<fieldset name="permissions" label="JCONFIG_PERMISSIONS_LABEL" description="JCONFIG_PERMISSIONS_DESC">
 

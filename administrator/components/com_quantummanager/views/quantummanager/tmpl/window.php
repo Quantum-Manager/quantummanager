@@ -30,7 +30,8 @@ HTMLHelper::_('script', 'com_quantummanager/window.js', [
 try {
 	JLoader::register('JFormFieldQuantumCombine', JPATH_ROOT . '/administrator/components/com_quantummanager/fields/quantumcombine.php');
 	JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
-	$folderRoot = QuantummanagerHelper::getFolderRoot();
+	//$folderRoot = QuantummanagerHelper::getFolderRoot();
+	$folderRoot = 'root';
 
 	$buttonsBun = [];
 	$fields = [

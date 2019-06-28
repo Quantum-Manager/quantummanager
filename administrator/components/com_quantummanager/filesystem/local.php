@@ -97,7 +97,8 @@ class QuantummanagerFileSystemLocal
 			JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 			$subdir = self::showdir($dir, $folderOnly, $showRoot, $level + 1, $ef);
 			return [
-				'path' => QuantummanagerHelper::getFolderRoot(),
+				//'path' => QuantummanagerHelper::getFolderRoot(),
+				'path' => 'root',
 				'subpath' => $subdir
 			];
 		}
@@ -238,25 +239,87 @@ class QuantummanagerFileSystemLocal
 		$path = QuantummanagerHelper::preparePath($path);
 		$directory = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
 		$filePath = $directory . DIRECTORY_SEPARATOR . $file;
-		$meta = [];
+		$meta = [
+			'global' => [],
+			'find' => [],
+		];
 
 		if(file_exists($filePath))
 		{
-			$tmp = exif_read_data($filePath);
-			foreach ($tmp as $key => $section)
+			$splitFile = explode('.', $file);
+			$exs = mb_strtolower(array_pop($splitFile));
+			$globalInfo[] = [
+				'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_FILENAME'),
+				'value' =>  implode('.', $splitFile),
+			];
+
+			$stat = stat($filePath);
+
+			if($stat !== false)
 			{
-				if(is_array($section))
+				if(isset($stat['mtime']))
 				{
-					foreach ($section as $name => $val)
+					$globalInfo[] = [
+						'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_FILEDATETIME'),
+						'value' => date(Text::_('DATE_FORMAT_LC5'), $stat['mtime'])
+					];
+				}
+
+				if(isset($stat['size']))
+				{
+					$globalInfo[] = [
+						'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_FILESIZE'),
+						'value' => QuantummanagerHelper::formatFileSize((int)$stat['size'])
+					];
+				}
+
+			}
+
+
+			if(in_array($exs, ['jpg', 'jpeg', 'png', 'gif']))
+			{
+				list($width, $height, $type, $attr) = getimagesize($filePath);
+
+				$globalInfo[] = [
+					'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_RESOLUTION'),
+					'value' => $width . ' x ' . $height
+				];
+
+				$tmp = exif_read_data($filePath);
+				foreach ($tmp as $key => $section)
+				{
+					if(is_array($section))
 					{
-						$meta[] = "$key.$name: $val";
+						foreach ($section as $name => $val)
+						{
+							$meta['find'][] = [
+								'key' => $key . '.' . $name,
+								'value' => $val
+							];
+						}
+					}
+					else
+					{
+
+						if(!in_array(mb_strtolower($key), [
+							'filename',
+							'filedatetime',
+							'filesize',
+							'filetype',
+							'mimetype',
+						])) {
+							$meta['find'][] = [
+								'key' => $key,
+								'value' => $section,
+							];
+						}
+
 					}
 				}
-				else
-				{
-					$meta[] = "$key: $section";
-				}
 			}
+
+			$meta['global'] = array_merge($meta['global'], $globalInfo);
+
 		}
 
 		return json_encode($meta);
@@ -274,6 +337,16 @@ class QuantummanagerFileSystemLocal
 			JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
 			$path = QuantummanagerHelper::preparePath($path);
 			$directory = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
+
+			if(!file_exists($directory))
+			{
+				return json_encode([
+					'error' => '0',
+					'message' => 'folder not create',
+				]);
+			}
+
+
 			$filesOutput = [];
 			$files = Folder::files($directory);
 			$directories = Folder::folders($directory);
@@ -311,14 +384,15 @@ class QuantummanagerFileSystemLocal
 					'dateM' => filemtime($directory . DIRECTORY_SEPARATOR . $file),
 				];
 
-				if(in_array(strtolower($exs), ['jpg', 'png', 'jpeg', 'gif']))
+				if(in_array(strtolower($exs), ['jpg', 'png', 'jpeg', 'gif', 'svg']))
 				{
 					$cacheSource =  JPATH_ROOT . DIRECTORY_SEPARATOR . 'images/com_quantummanager/cache';
+					$path = QuantummanagerHelper::preparePath($path);
 					$cache = $cacheSource . DIRECTORY_SEPARATOR . $path;
-					if (!file_exists($cache . DIRECTORY_SEPARATOR . $file))
-					{
+					//if (!file_exists($cache . DIRECTORY_SEPARATOR . $file))
+					//{
 						$fileMeta['fileP'] = 'index.php?option=com_quantummanager&task=quantumviewfiles.generatePreviewImage&file=' . $file;
-					}
+					//}
 
 				}
 
@@ -484,34 +558,56 @@ class QuantummanagerFileSystemLocal
 	}
 
 
+	/**
+	 * @param $path
+	 * @param $file
+	 *
+	 *
+	 * @since version
+	 * @throws Exception
+	 */
 	public static function generatePreviewImage($path, $file)
 	{
-		JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
-		$path = QuantummanagerHelper::preparePath($path);
-		$directory = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
-		$manager = JInterventionimage::getInstance();
-		$cacheSource =  JPATH_ROOT . DIRECTORY_SEPARATOR . 'images/com_quantummanager/cache';
-		$cache = $cacheSource;
-		$pathArr = explode('/', $path);
-
-		for($i=0;$i<count($pathArr);$i++)
-		{
-			$cache .= DIRECTORY_SEPARATOR . $pathArr[$i];
-			if(!file_exists($cache))
-			{
-				Folder::create($cache);
-			}
-		}
-
-		if (!file_exists($cache . DIRECTORY_SEPARATOR . $file))
-		{
-			$manager->make($directory . DIRECTORY_SEPARATOR . $file)->resize(null, 320, function ($constraint) {
-				$constraint->aspectRatio();
-			})->save($cache . DIRECTORY_SEPARATOR . $file);
-		}
-
 		$app = Factory::getApplication();
-		$app->redirect(DIRECTORY_SEPARATOR . 'images/com_quantummanager/cache' . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file . '?=' . rand(111111, 999999));
+		$splitFile = explode('.', $file);
+		$exs = mb_strtolower(array_pop($splitFile));
+
+		if(in_array($exs, ['jpg', 'jpeg', 'png', 'gif']))
+		{
+			JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
+			$path = QuantummanagerHelper::preparePath($path);
+			$directory = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
+			$manager = JInterventionimage::getInstance();
+			$cacheSource =  JPATH_ROOT . DIRECTORY_SEPARATOR . 'images/com_quantummanager/cache';
+			$cache = $cacheSource;
+			$pathArr = explode('/', $path);
+
+			for($i=0;$i<count($pathArr);$i++)
+			{
+				$cache .= DIRECTORY_SEPARATOR . $pathArr[$i];
+				if(!file_exists($cache))
+				{
+					Folder::create($cache);
+				}
+			}
+
+			if (!file_exists($cache . DIRECTORY_SEPARATOR . $file))
+			{
+				$manager->make($directory . DIRECTORY_SEPARATOR . $file)->resize(null, 320, function ($constraint) {
+					$constraint->aspectRatio();
+				})->save($cache . DIRECTORY_SEPARATOR . $file);
+			}
+
+			$app->redirect(DIRECTORY_SEPARATOR . 'images/com_quantummanager/cache' . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file . '?=' . rand(111111, 999999));
+		}
+
+		if(in_array($exs, ['svg']))
+		{
+			$path = QuantummanagerHelper::preparePath($path);
+			$app->redirect(DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file . '?=' . rand(111111, 999999));
+		}
+
+
 
 	}
 

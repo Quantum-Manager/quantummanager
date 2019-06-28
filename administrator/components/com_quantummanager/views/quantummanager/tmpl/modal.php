@@ -48,7 +48,8 @@ if($app->input->get('e_name', '') !== '') {
 	try {
 		JLoader::register('JFormFieldQuantumCombine', JPATH_ROOT . '/administrator/components/com_quantummanager/fields/quantumcombine.php');
 		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
-		$folderRoot = QuantummanagerHelper::getFolderRoot();
+		//$folderRoot = QuantummanagerHelper::getFolderRoot();
+		$folderRoot = 'root';
 
 		$buttonsBun = [];
 		$fields = [
@@ -78,8 +79,8 @@ if($app->input->get('e_name', '') !== '') {
 				'position' => 'bottom'
 			],
 			/*'quantumcodemirror' => [
-                'position' => 'center'
-            ],*/
+				'position' => 'center'
+			],*/
 		];
 
 

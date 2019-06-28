@@ -173,17 +173,27 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
                 return;
             }
 
-            image.setAttribute('src', '/' + Filemanager.data.path + '/' + fileSource + '?' + QuantumUtils.randomInteger(111111, 999999));
-            self.image = image;
-            editor.innerHTML = '';
-            self.currentImage = image;
-            editor.append(image);
-            self.cropperjs = new Cropper(image, self.defaultCropperJSOptions);
-            QuantumCropperjsElement.classList.add('active');
-            QuantumCropperjsElement.querySelector('.quantumcropperjs-name-file').value = name;
-            QuantumCropperjsElement.querySelector('.quantumcropperjs-name-exs').value = exs;
+            jQuery.get("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getParsePath&path=" + encodeURIComponent(Filemanager.data.path) + '&v=' + QuantumUtils.randomInteger(111111, 999999)).done(function (response) {
+                response = JSON.parse(response);
 
-            Filemanager.Quantumtoolbar.trigger('buttonCropperjsEdit');
+                if(response.path === undefined) {
+                    return;
+                }
+
+                image.setAttribute('src', '/' + response.path + '/' + fileSource + '?' + QuantumUtils.randomInteger(111111, 999999));
+                self.image = image;
+                editor.innerHTML = '';
+                self.currentImage = image;
+                editor.append(image);
+                self.cropperjs = new Cropper(image, self.defaultCropperJSOptions);
+                QuantumCropperjsElement.classList.add('active');
+                QuantumCropperjsElement.querySelector('.quantumcropperjs-name-file').value = name;
+                QuantumCropperjsElement.querySelector('.quantumcropperjs-name-exs').value = exs;
+
+                Filemanager.Quantumtoolbar.trigger('buttonCropperjsEdit');
+            });
+
+
             ev.preventDefault();
         });
 
