@@ -91,11 +91,10 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             self.changeCropperJS();
         },
         crop: function(event) {
-            console.log(event);
-            self.CropWidthValue.value = parseFloat(event.detail.width);
-            self.CropHeightValue.value = parseFloat(event.detail.height);
-            self.CropWidthValue.setAttribute('data-old', self.CropWidthValue.value);
-            self.CropHeightValue.setAttribute('data-old', self.CropHeightValue.value);
+            self.CropWidthValue.value = Math.round(parseFloat(event.detail.width));
+            self.CropHeightValue.value = Math.round(parseFloat(event.detail.height));
+            self.CropWidthValue.setAttribute('data-old', parseFloat(event.detail.width));
+            self.CropHeightValue.setAttribute('data-old', parseFloat(event.detail.height));
         }
     };
 
