@@ -57,6 +57,7 @@ class JFormFieldQuantumviewfiles extends JFormField
 				'directory' => $this->directory,
 				'onlyfiles' => $this->onlyfiles,
 				'metafile' => $this->metafile,
+				'hash' => md5(QuantummanagerHelper::preparePath($this->directory)),
 				'cssClass' => $this->cssClass,
 			]
 		);

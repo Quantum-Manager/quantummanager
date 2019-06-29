@@ -9,11 +9,13 @@
 
 .quantumviewfiles-module {
     position: relative;
-    /*height: 80%;*/
     display: flex;
     flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
     flex-direction: column;
+    -webkit-flex-direction: column;
     flex: 1 1 auto;
+    -webkit-flex: 1 1 auto;
 }
 .quantumviewfiles-module .quantumviewfiles-module-heading {
     display: flex;
@@ -21,7 +23,7 @@
     margin-bottom: 10px;
 }
 .quantumviewfiles-module .filters {
-    display: flex;
+    display: none;
     margin-top: 8px;
     margin-bottom: 8px;
     width: 100%;
@@ -62,7 +64,6 @@
 }
 .quantumviewfiles-module .filter-search svg {
     max-width: 100%;
-    height: auto;
     box-sizing: border-box;
     width: 16px;
     height: 16px;
@@ -189,9 +190,10 @@
     transition: display 0.2s ease;
 }
 .quantumviewfiles-module .view-wrap {
-    flex: 2;
     width: 100%;
     display: flex;
+    flex: 1 1 auto;
+    -webkit-flex: 1 1 auto;
 }
 .quantumviewfiles-module .view {
     position: relative;
@@ -199,7 +201,7 @@
     width: 100%;
 }
 .quantumviewfiles-module .meta-file ~ .view {
-    width: 80% ;
+    width: 80%;
 }
 .quantumviewfiles-module .meta-file {
     position: relative;
@@ -259,6 +261,7 @@
 }
 .quantumviewfiles-module .field-list-files {
     width: 100%;
+    height: 100%;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -631,5 +634,14 @@
     .quantumviewfiles-module .field-list-files .list-grid .file-item .file .file-exs img {
         object-fit: contain;
         object-position: center;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .quantumviewfiles-module-heading {
+        flex-wrap: wrap;
+    }
+    .quantumviewfiles-module-heading > * {
+        width: 100%;
     }
 }

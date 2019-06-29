@@ -14,7 +14,7 @@ extract($displayData);
 $id = rand(111111, 999999);
 ?>
 
-<div class="quantummanager-module quantumviewfiles-module" data-type="Quantumviewfiles" data-options="directory:<?php echo $displayData['directory'] ?>;onlyfiles:<?php echo $displayData['onlyfiles'] ?>;metafile:<?php echo $displayData['metafile'] ?>">
+<div class="quantummanager-module quantumviewfiles-module" data-type="Quantumviewfiles" data-options="hash:<?php echo $displayData['hash'] ?>;directory:<?php echo $displayData['directory'] ?>;onlyfiles:<?php echo $displayData['onlyfiles'] ?>;metafile:<?php echo $displayData['metafile'] ?>">
     <div class="quantumviewfiles-module-heading">
         <div class="breadcumbs"></div>
         <div class="filter-search">
