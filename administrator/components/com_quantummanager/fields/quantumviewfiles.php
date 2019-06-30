@@ -52,6 +52,8 @@ class JFormFieldQuantumviewfiles extends JFormField
 	 */
 	protected function getLayoutData()
 	{
+		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+
 		return array_merge(parent::getLayoutData(),
 			[
 				'directory' => $this->directory,

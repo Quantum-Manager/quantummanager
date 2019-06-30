@@ -197,7 +197,7 @@
 }
 .quantumviewfiles-module .view {
     position: relative;
-    height: 100%;
+    height: auto;
     width: 100%;
 }
 .quantumviewfiles-module .meta-file ~ .view {
@@ -253,6 +253,10 @@
     background-color: #efefef;
     border: solid 5px #EFEFEF;
     border-radius: 5px;
+}
+.quantumviewfiles-module .meta-file .meta-preview.meta-preview-folder img {
+    background-color: transparent;
+    border: none;
 }
 .quantumviewfiles-module .meta-file table {
     border-collapse: collapse;

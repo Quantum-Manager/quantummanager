@@ -30,8 +30,8 @@ try {
             'cssClass' => 'quantumtreecatalogs-module-muted'
         ],
         'quantumupload' => [
-            'maxsize' => QuantummanagerHelper::getParamsComponentValue('maxsize'),
-            'dropAreaHidden' => 1,
+            'maxsize' => QuantummanagerHelper::getParamsComponentValue('maxsize', '10'),
+            'dropAreaHidden' => QuantummanagerHelper::getParamsComponentValue('dropareahidden', '0'),
             'directory' => $folderRoot
         ],
         'quantumtoolbar' => [
@@ -44,7 +44,7 @@ try {
             'directory' => $folderRoot,
             'view' => 'list-grid',
             'onlyfiles' => '0',
-            'metafile' => QuantummanagerHelper::getParamsComponentValue('metafile'),
+            'metafile' => QuantummanagerHelper::getParamsComponentValue('metafile' , '1'),
         ],
         'quantumcropperjs' => [
             'position' => 'bottom'

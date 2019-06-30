@@ -9,6 +9,7 @@
 
 window.Qantumupload = function(Filemanager, UploadElement, options) {
 
+    this.options = options;
     this.dropAreaAll = [];
     this.dropAreaAll = [];
     this.inputFileAll = [];
@@ -120,11 +121,7 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
             let file = files[i];
 
             if((file.size  / 1024 / 1024) > this.maxsize) {
-
-                /*vex.dialog.alert({
-                    unsafeMessage: '<b>Файл ' + file.name + ' не должен превышать ' + maxsize + ' мегабайта.</b>'
-                });*/
-
+                alert(QuantumuploadLang.file + file.name + QuantumuploadLang.maxsize + this.maxsize + QuantumuploadLang.megabyte);
                 this.countFiles--;
 
                 if(this.countFiles === 0) {
@@ -137,11 +134,7 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
             let currExs = file.name.split('.');
 
             if(currExs.length === 1) {
-
-                /*vex.dialog.alert({
-                    unsafeMessage: '<b>Файл ' + file.name + ' должен иметь расширение.</b>'
-                });*/
-
+                alert(QuantumuploadLang.file + file.name + QuantumuploadLang.exs);
                 this.countFiles--;
                 return false;
             }

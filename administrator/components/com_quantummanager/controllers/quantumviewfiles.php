@@ -63,13 +63,20 @@ class QuantummanagerControllerquantumviewfiles extends AdminController
 		$app = Factory::getApplication();
 		$data = $app->input->getArray();
 
-		if(!isset($data['path']) || !isset($data['name']))
+		if(!isset($data['path']))
 		{
 			$app->close();
 		}
 
+		$name = '';
+
+		if(isset($data['name']))
+		{
+			$name = $data['name'];
+		}
+
 		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
-		echo QuantummanagerFileSystemLocal::getMetaFile($data['path'], $data['name']);
+		echo QuantummanagerFileSystemLocal::getMetaFile($data['path'], $name);
 
 		$app->close();
 	}
@@ -128,14 +135,19 @@ class QuantummanagerControllerquantumviewfiles extends AdminController
 		try {
 			$app = Factory::getApplication();
 			$data = $app->input->getArray();
+			$file = '';
 
-			if(!isset($data['path']) || !isset($data['file']))
+			if(!isset($data['path']))
 			{
 				$app->close();
 			}
 
 			$path = $data['path'];
-			$file = $data['file'];
+
+			if(isset($data['file']))
+			{
+				$file = $data['file'];
+			}
 
 			JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
 			QuantummanagerFileSystemLocal::generatePreviewImage($path, $file);

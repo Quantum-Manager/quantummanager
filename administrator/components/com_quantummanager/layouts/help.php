@@ -24,7 +24,7 @@ use Joomla\CMS\Language\Text;
 			<a href="https://github.com/Delo-Design/quantummanager/issues" target="_blank"><?php echo Text::_('COM_QUANTUMMANAGER_HELP_QUESTIONS_SHOW'); ?></a>
 		</div>
 		<div>
-			<span>Контакт с автором</span>
+			<span><?php echo Text::_('COM_QUANTUMMANAGER_HELP_AUTHOR'); ?></span>
 			<span><a href="tg://resolve?domain=tsymbalmitia">@tsymbalmitia</a> (telegram)</span>
 			<span>|</span>
 			<span><a href="mailto:quantum@delo-design.ru">quantum@hika.su</a> (email)</span>

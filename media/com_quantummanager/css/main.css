@@ -89,7 +89,7 @@
     flex-direction: column;
 }
 .quantummanager .quantummanager-container .quantummanager-center > div {
-    width: 100%;
+    width: calc(100% - 15px);
 }
 .quantummanager .quantummanager-container .quantummanager-right {
     width: 25%;
@@ -527,6 +527,9 @@
         top: 0;
         background: #fff;
         z-index: 5;
+    }
+    .quantummanager .quantummanager-left ~ .quantummanager-center {
+        padding-left: 20px;
     }
     .quantummanager-left.open {
         left: 0;

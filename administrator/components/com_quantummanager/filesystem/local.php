@@ -238,6 +238,7 @@ class QuantummanagerFileSystemLocal
 	 * @param $path
 	 * @param $file
 	 *
+	 * @return string
 	 *
 	 * @since version
 	 */
@@ -247,104 +248,161 @@ class QuantummanagerFileSystemLocal
 		$path = QuantummanagerHelper::preparePath($path);
 		$directory = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
 		$filePath = $directory . DIRECTORY_SEPARATOR . $file;
-		$meta = [
-			'preview' => [
-				'link' => 'index.php?' . http_build_query([
-					'option' => 'com_quantummanager',
-					'task' => 'quantumviewfiles.generatePreviewImage',
-					'file' => $file,
-					'path' => $sourcePath,
-					'v' => rand(111111, 999999),
-				])
-			],
-			'global' => [],
-			'find' => [],
-		];
+		$meta = [];
 
 		if(file_exists($filePath))
 		{
-			$splitFile = explode('.', $file);
-			$exs = mb_strtolower(array_pop($splitFile));
 
-			$globalInfo[] = [
-				'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_FILENAME'),
-				'value' =>  implode('.', $splitFile),
-			];
-
-			$stat = stat($filePath);
-
-			if($stat !== false)
+			if(is_file($filePath))
 			{
-				if(isset($stat['mtime']))
-				{
-					$globalInfo[] = [
-						'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_FILEDATETIME'),
-						'value' => date(Text::_('DATE_FORMAT_LC5'), $stat['mtime'])
-					];
-				}
+				$meta = [
+					'preview' => [
+						'link' => 'index.php?' . http_build_query([
+								'option' => 'com_quantummanager',
+								'task' => 'quantumviewfiles.generatePreviewImage',
+								'file' => $file,
+								'path' => $sourcePath,
+								'v' => rand(111111, 999999),
+							])
+					],
+					'global' => [],
+					'find' => [],
+				];
 
-				if(isset($stat['size']))
-				{
-					$globalInfo[] = [
-						'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_FILESIZE'),
-						'value' => QuantummanagerHelper::formatFileSize((int)$stat['size'])
-					];
-				}
 
-			}
-
-			if(in_array($exs, ['jpg', 'jpeg', 'png', 'gif']))
-			{
-				list($width, $height, $type, $attr) = getimagesize($filePath);
+				$splitFile = explode('.', $file);
+				$exs = mb_strtolower(array_pop($splitFile));
 
 				$globalInfo[] = [
-					'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_RESOLUTION'),
-					'value' => $width . ' x ' . $height
+					'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_FILENAME'),
+					'value' => implode('.', $splitFile),
 				];
-			}
 
-			if(in_array($exs, ['jpg', 'jpeg']))
+				$stat = stat($filePath);
+
+				if ($stat !== false) {
+					if (isset($stat['mtime'])) {
+						$globalInfo[] = [
+							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_FILEDATETIME'),
+							'value' => date(Text::_('DATE_FORMAT_LC5'), $stat['mtime'])
+						];
+					}
+
+					if (isset($stat['size'])) {
+						$globalInfo[] = [
+							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_FILESIZE'),
+							'value' => QuantummanagerHelper::formatFileSize((int)$stat['size'])
+						];
+					}
+
+				}
+
+				if (in_array($exs, ['jpg', 'jpeg', 'png', 'gif'])) {
+					list($width, $height, $type, $attr) = getimagesize($filePath);
+
+					$globalInfo[] = [
+						'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_RESOLUTION'),
+						'value' => $width . ' x ' . $height
+					];
+				}
+
+
+
+				if (in_array($exs, ['jpg', 'jpeg'])) {
+
+					try
+					{
+						$tmp = exif_read_data($filePath);
+						foreach ($tmp as $key => $section) {
+							if (is_array($section)) {
+								foreach ($section as $name => $val) {
+									$meta['find'][] = [
+										'key' => $key . '.' . $name,
+										'value' => $val
+									];
+								}
+							} else {
+
+								if (!in_array(mb_strtolower($key), [
+									'filename',
+									'filedatetime',
+									'filesize',
+									'filetype',
+									'mimetype',
+								])) {
+									$meta['find'][] = [
+										'key' => $key,
+										'value' => $section,
+									];
+								}
+
+							}
+						}
+					}
+					catch (Exception $e)
+					{
+						echo $e->getMessage();
+					}
+
+				}
+
+				$meta['global'] = array_merge($meta['global'], $globalInfo);
+
+			}
+			else
 			{
 
+				$meta = [
+					'preview' => [
+						'link' => 'index.php?' . http_build_query([
+								'option' => 'com_quantummanager',
+								'task' => 'quantumviewfiles.generatePreviewImage',
+								'file' => $file,
+								'path' => $sourcePath,
+								'v' => rand(111111, 999999),
+							])
+					],
+					'global' => [],
+					'find' => [],
+				];
 
-				$tmp = exif_read_data($filePath);
-				foreach ($tmp as $key => $section)
+				$splitDirectory = explode(DIRECTORY_SEPARATOR, $directory);
+				$directoryName = array_pop($splitDirectory);
+				$files = Folder::files($directory, '');
+				$directories = Folder::folders($directory);
+				$size = 0;
+
+				foreach($files as $file)
 				{
-					if(is_array($section))
-					{
-						foreach ($section as $name => $val)
-						{
-							$meta['find'][] = [
-								'key' => $key . '.' . $name,
-								'value' => $val
-							];
-						}
-					}
-					else
-					{
-
-						if(!in_array(mb_strtolower($key), [
-							'filename',
-							'filedatetime',
-							'filesize',
-							'filetype',
-							'mimetype',
-						])) {
-							$meta['find'][] = [
-								'key' => $key,
-								'value' => $section,
-							];
-						}
-
-					}
+					$size += filesize($directory . DIRECTORY_SEPARATOR . $file);
 				}
-			}
 
-			$meta['global'] = array_merge($meta['global'], $globalInfo);
+				$meta['global'] = [
+					[
+						'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_DIRECTORYNAME'),
+						'value' => $directoryName
+					],
+					[
+						'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_COUNTDORECTORIES'),
+						'value' => count($directories)
+					],
+					[
+						'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_COUNTFILES'),
+						'value' => count($files)
+					],
+					[
+						'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_FILESSIZE'),
+						'value' => QuantummanagerHelper::formatFileSize($size)
+					]
+				];
+
+
+			}
 
 		}
 
-		return json_encode($meta);
+
+		return json_encode($meta, JSON_INVALID_UTF8_IGNORE);
 
 	}
 
@@ -595,6 +653,11 @@ class QuantummanagerFileSystemLocal
 		$exs = mb_strtolower(array_pop($splitFile));
 		$mediaIconsPath = 'media/com_quantummanager/images/icons/';
 		$siteUrl = Uri::root();
+
+		if(empty($file))
+		{
+			$app->redirect($siteUrl . $mediaIconsPath . 'folder.svg');
+		}
 
 		if(in_array($exs, ['jpg', 'jpeg', 'png', 'gif']))
 		{

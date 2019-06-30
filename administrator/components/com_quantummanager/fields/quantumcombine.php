@@ -160,7 +160,8 @@ class JFormFieldQuantumCombine extends JFormField
 			}
 
 		}
-		catch (Exception $e) {
+		catch (Exception $e)
+		{
 			echo $e->getMessage();
 		}
 	}

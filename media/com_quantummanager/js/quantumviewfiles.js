@@ -22,6 +22,8 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
     this.breadcrumbsLists = [];
     this.breadcrumbsWaitLoad = false;
     this.searchNameValue = '';
+    this.cacheMetaPath = '';
+    this.cacheMeta = '';
 
     this.init = function() {
         let self = this;
@@ -56,6 +58,13 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             });
 
             Filemanager.Quantumtoolbar.buttonAdd('viewfilesUp', 'left', 'navigations', 'btn-up hidden-label', QuantumviewfilesLang.buttonUp, 'quantummanager-icon-up', {}, function (ev) {
+
+                if(Filemanager.data.path === undefined)
+                {
+                    ev.preventDefault();
+                    return;
+                }
+
                 let currDirectories = Filemanager.data.path.split('/');
                 if (currDirectories.length > 1) {
                     currDirectories.pop();
@@ -125,10 +134,16 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 ev.preventDefault();
             });
 
-            Filemanager.Quantumtoolbar.buttonAdd('viewfilesUploadFile', 'center', 'file-other', 'btn-upload-file hidden-label', QuantumviewfilesLang.buttonUpload, 'quantummanager-icon-upload', {}, function (ev) {
-                Filemanager.Qantumupload.selectFiles();
-                ev.preventDefault();
-            });
+            if(Filemanager.Qantumupload !== undefined)
+            {
+                if(Filemanager.Qantumupload.options.dropAreaHidden === '1') {
+                    Filemanager.Quantumtoolbar.buttonAdd('viewfilesUploadFile', 'center', 'file-other', 'btn-upload-file hidden-label', QuantumviewfilesLang.buttonUpload, 'quantummanager-icon-upload', {}, function (ev) {
+                        Filemanager.Qantumupload.selectFiles();
+                        ev.preventDefault();
+                    });
+                }
+            }
+
 
         }
 
@@ -207,6 +222,11 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             let prevent = false;
 
             for(let i=0;i<filesAll.length;i++) {
+                filesAll[i].querySelector('.import-files-check-file').addEventListener('click', function (ev) {
+                    self.fileClick(filesAll[i], self);
+                    ev.preventDefault();
+                });
+
                 filesAll[i].addEventListener('click', function () {
                     let element = this;
                     timer = setTimeout(function() {
@@ -250,6 +270,8 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
 
             self.buildBreadcrumbs();
 
+            self.showMetaDirectory(true);
+
             if(callback !== undefined) {
                 callback();
             }
@@ -285,7 +307,8 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             if(find) {
                 self.showMetaFile(findElement);
             } else {
-                self.hideMetaFile();
+                self.showMetaDirectory();
+                //self.hideMeta();
             }
 
         }
@@ -300,7 +323,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
         ViewfilesElement.querySelector('.view').innerHTML = "<div class=\"loader\">" +  QuantumviewfilesLang.loading + "<span></span><span></span><span></span><span></span></div>";
     };
 
-    this.hideMetaFile = function () {
+    this.hideMeta = function () {
         let self = this;
 
         if(self.options.metafile === '1') {
@@ -345,6 +368,94 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
 
                     html += '</div>';
                     self.viewMeta.querySelector('.meta-file-list').innerHTML = html;
+                    let buttonToggleTags = self.viewMeta.querySelector('.show-all-tags');
+
+                    if(buttonToggleTags !== null) {
+                        let metaFind = self.viewMeta.querySelector('.meta-find');
+                        buttonToggleTags.addEventListener('click', function () {
+                            if(this.classList.contains('active')) {
+                                this.classList.remove('active');
+                                this.innerHTML = QuantumviewfilesLang.metaFileShow;
+                                metaFind.classList.add('meta-hidden');
+                            } else {
+                                this.classList.add('active');
+                                this.innerHTML = QuantumviewfilesLang.metaFileHide;
+                                metaFind.classList.remove('meta-hidden');
+                            }
+                        });
+                    }
+
+                } else {
+                    self.viewMeta.classList.add('hidden');
+                }
+            });
+        }
+    };
+
+    this.showMetaDirectory = function (cacheReset) {
+        let self = this;
+
+        if(self.options.metafile === '1') {
+
+            if(cacheReset === null || cacheReset === undefined || cacheReset === false) {
+                if(self.path === self.cacheMetaPath)
+                {
+                    self.viewMeta.querySelector('.meta-file-list').innerHTML =  self.cacheMeta;
+                    let buttonToggleTags = self.viewMeta.querySelector('.show-all-tags');
+
+                    if(buttonToggleTags !== null) {
+                        let metaFind = self.viewMeta.querySelector('.meta-find');
+                        buttonToggleTags.addEventListener('click', function () {
+                            if(this.classList.contains('active')) {
+                                this.classList.remove('active');
+                                this.innerHTML = QuantumviewfilesLang.metaFileShow;
+                                metaFind.classList.add('meta-hidden');
+                            } else {
+                                this.classList.add('active');
+                                this.innerHTML = QuantumviewfilesLang.metaFileHide;
+                                metaFind.classList.remove('meta-hidden');
+                            }
+                        });
+                    }
+
+                    return;
+                }
+            }
+
+            jQuery.get("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getMetaFile&path=" + encodeURIComponent(self.path)).done(function (response) {
+                response = JSON.parse(response);
+                if(response.global !== undefined || response.find !== undefined) {
+                    self.viewMeta.classList.remove('hidden');
+
+                    let html = '<div>';
+
+                    if(response.preview !== undefined) {
+                        html += '<div class="meta-preview meta-preview-folder"><img src="' + response.preview.link + '" /></div>';
+                    }
+
+                    if(response.global !== undefined) {
+                        html += '<table><tbody>';
+                        for (let i in response.global) {
+                            html += '<tr><td>' + response.global[i].key + '</td><td>' + response.global[i].value + '</td></tr>';
+                        }
+                        html += '</tbody></table>';
+                    }
+
+                    if(response.find !== undefined) {
+                        if(Object.keys(response.find).length > 0) {
+                            html += '<span class="show-all-tags">' + QuantumviewfilesLang.metaFileShow + '</span>';
+                            html += '<table class="meta-find meta-hidden"><tbody>';
+                            for (let i in response.find) {
+                                html += '<tr><td>' + response.find[i].key + '</td><td>' + response.find[i].value + '</td></tr>';
+                            }
+                            html += '</tbody></table>';
+                        }
+                    }
+
+                    html += '</div>';
+                    self.viewMeta.querySelector('.meta-file-list').innerHTML = html;
+                    self.cacheMeta = html;
+                    self.cacheMetaPath = self.path;
                     let buttonToggleTags = self.viewMeta.querySelector('.show-all-tags');
 
                     if(buttonToggleTags !== null) {
