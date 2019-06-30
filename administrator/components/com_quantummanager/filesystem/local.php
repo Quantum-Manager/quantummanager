@@ -278,17 +278,24 @@ class QuantummanagerFileSystemLocal
 					'value' => implode('.', $splitFile),
 				];
 
+				$globalInfo[] = [
+					'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_EXS'),
+					'value' => $exs,
+				];
+
 				$stat = stat($filePath);
 
 				if ($stat !== false) {
-					if (isset($stat['mtime'])) {
+					if (isset($stat['mtime']))
+					{
 						$globalInfo[] = [
 							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_FILEDATETIME'),
 							'value' => date(Text::_('DATE_FORMAT_LC5'), $stat['mtime'])
 						];
 					}
 
-					if (isset($stat['size'])) {
+					if (isset($stat['size']))
+					{
 						$globalInfo[] = [
 							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_FILESIZE'),
 							'value' => QuantummanagerHelper::formatFileSize((int)$stat['size'])
@@ -297,7 +304,8 @@ class QuantummanagerFileSystemLocal
 
 				}
 
-				if (in_array($exs, ['jpg', 'jpeg', 'png', 'gif'])) {
+				if (in_array($exs, ['jpg', 'jpeg', 'png', 'gif']))
+				{
 					list($width, $height, $type, $attr) = getimagesize($filePath);
 
 					$globalInfo[] = [
@@ -308,20 +316,25 @@ class QuantummanagerFileSystemLocal
 
 
 
-				if (in_array($exs, ['jpg', 'jpeg'])) {
+				if (in_array($exs, ['jpg', 'jpeg']))
+				{
 
 					try
 					{
 						$tmp = exif_read_data($filePath);
-						foreach ($tmp as $key => $section) {
+						foreach ($tmp as $key => $section)
+						{
 							if (is_array($section)) {
-								foreach ($section as $name => $val) {
+								foreach ($section as $name => $val)
+								{
 									$meta['find'][] = [
 										'key' => $key . '.' . $name,
 										'value' => $val
 									];
 								}
-							} else {
+							}
+							else
+								{
 
 								if (!in_array(mb_strtolower($key), [
 									'filename',
@@ -329,7 +342,8 @@ class QuantummanagerFileSystemLocal
 									'filesize',
 									'filetype',
 									'mimetype',
-								])) {
+								]))
+								{
 									$meta['find'][] = [
 										'key' => $key,
 										'value' => $section,
@@ -453,6 +467,17 @@ class QuantummanagerFileSystemLocal
 				}
 
 				$exs = array_pop($fileParse);
+				$fileDate = filemtime($directory . DIRECTORY_SEPARATOR . $file);
+
+				$stat = stat($directory . DIRECTORY_SEPARATOR . $file);
+
+				if ($stat !== false)
+				{
+					if (isset($stat['mtime']))
+					{
+						$fileDate = $stat['mtime'];
+					}
+				}
 
 				$fileMeta = [
 					'size' => filesize($directory . DIRECTORY_SEPARATOR . $file),
@@ -460,8 +485,8 @@ class QuantummanagerFileSystemLocal
 					'exs' => $exs,
 					'file' => $file,
 					'fileP' => $file,
-					'dateC' => filemtime($directory . DIRECTORY_SEPARATOR . $file),
-					'dateM' => filemtime($directory . DIRECTORY_SEPARATOR . $file),
+					'dateC' => $fileDate,
+					'dateM' => $fileDate,
 				];
 
 				if(in_array(strtolower($exs), ['jpg', 'png', 'jpeg', 'gif', 'svg']))

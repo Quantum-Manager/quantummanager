@@ -348,21 +348,21 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                     }
 
                     if(response.global !== undefined) {
-                        html += '<table><tbody>';
+                        html += '<div class="meta-table">';
                         for (let i in response.global) {
-                            html += '<tr><td>' + response.global[i].key + '</td><td>' + response.global[i].value + '</td></tr>';
+                            html += '<div><div>' + response.global[i].key + '</div><div>' + response.global[i].value + '</div></div>';
                         }
-                        html += '</tbody></table>';
+                        html += '</div>';
                     }
 
                     if(response.find !== undefined) {
                         if(Object.keys(response.find).length > 0) {
                             html += '<span class="show-all-tags">' + QuantumviewfilesLang.metaFileShow + '</span>';
-                            html += '<table class="meta-find meta-hidden"><tbody>';
+                            html += '<div class="meta-table meta-find meta-hidden">';
                             for (let i in response.find) {
-                                html += '<tr><td>' + response.find[i].key + '</td><td>' + response.find[i].value + '</td></tr>';
+                                html += '<div><div>' + response.find[i].key + '</div><div>' + response.find[i].value + '</div></div>';
                             }
-                            html += '</tbody></table>';
+                            html += '</div>';
                         }
                     }
 
@@ -434,9 +434,9 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                     }
 
                     if(response.global !== undefined) {
-                        html += '<table><tbody>';
+                        html += '<div class="meta-table">';
                         for (let i in response.global) {
-                            html += '<tr><td>' + response.global[i].key + '</td><td>' + response.global[i].value + '</td></tr>';
+                            html += '<div><div>' + response.global[i].key + '</div><div>' + response.global[i].value + '</div></div>';
                         }
                         html += '</tbody></table>';
                     }
@@ -444,11 +444,11 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                     if(response.find !== undefined) {
                         if(Object.keys(response.find).length > 0) {
                             html += '<span class="show-all-tags">' + QuantumviewfilesLang.metaFileShow + '</span>';
-                            html += '<table class="meta-find meta-hidden"><tbody>';
+                            html += '<div class="meta-find meta-hidden">';
                             for (let i in response.find) {
-                                html += '<tr><td>' + response.find[i].key + '</td><td>' + response.find[i].value + '</td></tr>';
+                                html += '<div><div>' + response.find[i].key + '</div><div>' + response.find[i].value + '</div></div>';
                             }
-                            html += '</tbody></table>';
+                            html += '</div>';
                         }
                     }
 
@@ -691,6 +691,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
     };
 
     this.reloadTypeViewFiles = function(path) {
+        let self = this;
         let filesAll = ViewfilesElement.querySelectorAll('.field-list-files .file-item');
         let viewFiles = ViewfilesElement.querySelector('.field-list-files .list');
 
@@ -762,6 +763,12 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 let fileExs = filesAll[i].getAttribute('data-exs');
                 let filePreview = filesAll[i].querySelector('.file-exs');
                 let exsImage = ['jpg', 'png', 'svg', 'jpeg', 'gif'];
+                let fields = filesAll[i].querySelector('.fields');
+
+                if(fields !== null) {
+                    fields.remove();
+                }
+
                 if(exsImage.indexOf(fileExs.toLowerCase()) !== -1) {
 
                     let file;
@@ -800,9 +807,20 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             }
 
             if(this.lastTypeViewFiles === 'list-table') {
+                let htmlFields = '';
                 let filePreview = filesAll[i].querySelector('.file-exs');
                 filePreview.style.backgroundImage = "";
                 filePreview.innerHTML = '';
+
+                htmlFields += '<div class="fields">';
+                htmlFields += '<div data-type="size">' + QuantumUtils.bytesToSize(filesAll[i].getAttribute('data-size')) + '</div>';
+                htmlFields += '<div data-type="date">' + QuantumUtils.fromUnixTimeToDate(filesAll[i].getAttribute('data-datec')) + '</div>';
+                htmlFields += '</div>';
+                filesAll[i].innerHTML += htmlFields;
+                filesAll[i].querySelector('.import-files-check-file').addEventListener('click', function (ev) {
+                    self.fileClick(filesAll[i], self);
+                    ev.preventDefault();
+                });
             }
 
         }

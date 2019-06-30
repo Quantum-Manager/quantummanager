@@ -98,6 +98,73 @@ window.QuantumUtils = {
         } else {
             return parent.appendChild(elem);
         }
+    },
+
+    bytesToSize: function(bytes) {
+        bytes = parseInt(bytes);
+        let sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+
+        if (bytes == 0) {
+            return '0 Byte';
+        }
+
+        let i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+        return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+    },
+
+    fromUnixTimeToDate: function(unix_timestamp) {
+        unix_timestamp = parseInt(unix_timestamp);
+        let date = new Date(unix_timestamp * 1000);
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        let seconds = date.getSeconds();
+        let day = date.getDate();
+        let month = date.getMonth() + 1;
+        let year = date.getFullYear();
+
+        if(hours < 10) {
+            hours = "0" + hours;
+        }
+
+        if(minutes < 10) {
+            minutes = "0" + minutes;
+        }
+
+        if(day < 10) {
+            day = "0" + day;
+        }
+
+        if(month < 10) {
+            month = "0" + month;
+        }
+
+        if(year < 10) {
+            year = "0" + year;
+        }
+
+        let formattedTime = day + "-" +  month + "-" +  year + ' ' + hours + ':' + minutes;
+        return formattedTime;
+    },
+
+    toHHMMSS: function (time) {
+        let sec_num = parseInt(time, 10);
+        let hours   = Math.floor(sec_num / 3600);
+        let minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+        let seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+        if (hours < 10) {
+            hours = "0" + hours;
+        }
+
+        if (minutes < 10) {
+            minutes = "0" + minutes;
+        }
+
+        if (seconds < 10) {
+            seconds = "0" + seconds;
+        }
+
+        return hours + ':' + minutes + ':' + seconds;
     }
 
 };
