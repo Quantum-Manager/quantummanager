@@ -11,15 +11,15 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
 
-?>
+$app = Factory::getApplication();
+$app->getSession()->clear('quantummanagerroot');
 
-<?php
 
 try {
     JLoader::register('JFormFieldQuantumCombine', JPATH_ROOT . '/administrator/components/com_quantummanager/fields/quantumcombine.php');
     JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
-    //$folderRoot = QuantummanagerHelper::getFolderRoot();
     $folderRoot = 'root';
 
     $buttonsBun = [];

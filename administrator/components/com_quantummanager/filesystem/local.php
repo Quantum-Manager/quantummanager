@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 
@@ -49,14 +50,18 @@ class QuantummanagerFileSystemLocal
 
 	/**
 	 * @param $path
+	 * @param $root
+	 *
 	 * @return string
+	 *
+	 * @since version
 	 */
-	public static function getDirectories($path)
+	public static function getDirectories($path, $root)
 	{
 		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 		$path = JPATH_ROOT . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($path);
 		$directories = [];
-		$directories = self::showdir($path, true, true);
+		$directories = self::showdir($path, $root,true, true);
 
 		return json_encode([
 			'directories' => $directories
@@ -75,12 +80,14 @@ class QuantummanagerFileSystemLocal
 	protected static function showdir
 	(
 		$dir,
+		$root = '',
 		$folderOnly = false,
 		$showRoot = false,
 		$level = 0,  // do not use!!!
 		$ef = ''     // do not use!!!
 	)
 	{
+
 		$html = '';
 		if ((int)$level == 0)
 		{
@@ -95,10 +102,10 @@ class QuantummanagerFileSystemLocal
 		if ($showRoot && (int)$level == 0)
 		{
 			JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
-			$subdir = self::showdir($dir, $folderOnly, $showRoot, $level + 1, $ef);
+			$subdir = self::showdir($dir, $root, $folderOnly, $showRoot, $level + 1, $ef);
 			return [
 				//'path' => QuantummanagerHelper::getFolderRoot(),
-				'path' => 'root',
+				'path' => $root,
 				'subpath' => $subdir
 			];
 		}
@@ -122,7 +129,7 @@ class QuantummanagerFileSystemLocal
 
 							$folders[] = [
 								'path' => $name,
-								'subpath' => self::showdir($dir . DIRECTORY_SEPARATOR . $name, $folderOnly, $showRoot, $level + 1, $ef)
+								'subpath' => self::showdir($dir . DIRECTORY_SEPARATOR . $name, $root, $folderOnly, $showRoot, $level + 1, $ef)
 							];
 						}
 						else
@@ -236,10 +243,20 @@ class QuantummanagerFileSystemLocal
 	 */
 	public static function getMetaFile($path, $file)
 	{
+		$sourcePath = $path;
 		$path = QuantummanagerHelper::preparePath($path);
 		$directory = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
 		$filePath = $directory . DIRECTORY_SEPARATOR . $file;
 		$meta = [
+			'preview' => [
+				'link' => 'index.php?' . http_build_query([
+					'option' => 'com_quantummanager',
+					'task' => 'quantumviewfiles.generatePreviewImage',
+					'file' => $file,
+					'path' => $sourcePath,
+					'v' => rand(111111, 999999),
+				])
+			],
 			'global' => [],
 			'find' => [],
 		];
@@ -248,6 +265,7 @@ class QuantummanagerFileSystemLocal
 		{
 			$splitFile = explode('.', $file);
 			$exs = mb_strtolower(array_pop($splitFile));
+
 			$globalInfo[] = [
 				'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_FILENAME'),
 				'value' =>  implode('.', $splitFile),
@@ -275,7 +293,6 @@ class QuantummanagerFileSystemLocal
 
 			}
 
-
 			if(in_array($exs, ['jpg', 'jpeg', 'png', 'gif']))
 			{
 				list($width, $height, $type, $attr) = getimagesize($filePath);
@@ -284,6 +301,11 @@ class QuantummanagerFileSystemLocal
 					'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_RESOLUTION'),
 					'value' => $width . ' x ' . $height
 				];
+			}
+
+			if(in_array($exs, ['jpg', 'jpeg']))
+			{
+
 
 				$tmp = exif_read_data($filePath);
 				foreach ($tmp as $key => $section)
@@ -571,6 +593,8 @@ class QuantummanagerFileSystemLocal
 		$app = Factory::getApplication();
 		$splitFile = explode('.', $file);
 		$exs = mb_strtolower(array_pop($splitFile));
+		$mediaIconsPath = 'media/com_quantummanager/images/icons/';
+		$siteUrl = Uri::root();
 
 		if(in_array($exs, ['jpg', 'jpeg', 'png', 'gif']))
 		{
@@ -598,16 +622,21 @@ class QuantummanagerFileSystemLocal
 				})->save($cache . DIRECTORY_SEPARATOR . $file);
 			}
 
-			$app->redirect(DIRECTORY_SEPARATOR . 'images/com_quantummanager/cache' . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file . '?=' . rand(111111, 999999));
+			$app->redirect($siteUrl . 'images/com_quantummanager/cache' . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file . '?=' . rand(111111, 999999));
 		}
 
 		if(in_array($exs, ['svg']))
 		{
 			$path = QuantummanagerHelper::preparePath($path);
-			$app->redirect(DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file . '?=' . rand(111111, 999999));
+			$app->redirect($siteUrl . $path . DIRECTORY_SEPARATOR . $file . '?=' . rand(111111, 999999));
 		}
 
+		if(in_array($exs, ['doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'mp3', 'ogg', 'flac', 'pdf', 'zip', 'txt', 'html', 'css', 'js', 'webp']))
+		{
+			$app->redirect( $siteUrl . $mediaIconsPath . $exs . '.svg');
+		}
 
+		$app->redirect($siteUrl . $mediaIconsPath . 'other.svg');
 
 	}
 

@@ -76,7 +76,7 @@ class JFormFieldQuantumviewfiles extends JFormField
 
 			$this->__set('standalone', $this->getAttribute('standalone', true));
 			$this->__set('cssClass', $this->getAttribute('cssClass', ''));
-			$this->__set('metafile', $this->getAttribute('metafile', '0'));
+			$this->__set('metafile', $this->getAttribute('metafile', '1'));
 			$this->directory = $this->getAttribute('directory', 'images');
 			$this->onlyfiles = $this->getAttribute('onlyfiles', '0');
 

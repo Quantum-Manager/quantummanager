@@ -29,6 +29,11 @@ class QuantummanagerControllerquantumviewfiles extends AdminController
 		$app = Factory::getApplication();
 		$data = $app->input->getArray();
 
+		if(!isset($data['path']) || !isset($data['name']))
+		{
+			$app->close();
+		}
+
 		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
 		echo QuantummanagerFileSystemLocal::createDirectory($data['path'], $data['name']);
 
@@ -40,6 +45,11 @@ class QuantummanagerControllerquantumviewfiles extends AdminController
 	{
 		$app = Factory::getApplication();
 		$data = $app->input->getArray();
+
+		if(!isset($data['path']))
+		{
+			$app->close();
+		}
 
 		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
 		echo QuantummanagerFileSystemLocal::getFiles($data['path']);
@@ -53,6 +63,11 @@ class QuantummanagerControllerquantumviewfiles extends AdminController
 		$app = Factory::getApplication();
 		$data = $app->input->getArray();
 
+		if(!isset($data['path']) || !isset($data['name']))
+		{
+			$app->close();
+		}
+
 		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
 		echo QuantummanagerFileSystemLocal::getMetaFile($data['path'], $data['name']);
 
@@ -64,6 +79,12 @@ class QuantummanagerControllerquantumviewfiles extends AdminController
 	{
 		$app = Factory::getApplication();
 		$data = $app->input->getArray();
+
+		if(!isset($data['path']) || !isset($data['list']))
+		{
+			$app->close();
+		}
+
 		$path = $data['path'];
 		$list = json_decode($data['list']);
 
@@ -80,6 +101,12 @@ class QuantummanagerControllerquantumviewfiles extends AdminController
 		try {
 			$app = Factory::getApplication();
 			$data = $app->input->getArray();
+
+			if(!isset($data['path']))
+			{
+				$app->close();
+			}
+
 			$path = $data['path'];
 
 			JLoader::register('QuantummanagerHelper', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
@@ -101,6 +128,12 @@ class QuantummanagerControllerquantumviewfiles extends AdminController
 		try {
 			$app = Factory::getApplication();
 			$data = $app->input->getArray();
+
+			if(!isset($data['path']) || !isset($data['file']))
+			{
+				$app->close();
+			}
+
 			$path = $data['path'];
 			$file = $data['file'];
 

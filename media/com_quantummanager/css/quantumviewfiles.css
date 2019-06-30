@@ -224,6 +224,9 @@
     -o-transform: translateZ(0);
     transform: translateZ(0);
 }
+.quantumviewfiles-module .meta-file .meta-file-list > div {
+    padding: 10px;
+}
 .quantumviewfiles-module .meta-file .meta-hidden {
     display: none;
 }
@@ -235,6 +238,21 @@
 .quantumviewfiles-module .meta-file .show-all-tags:hover {
     color: #444444;
     cursor: pointer;
+}
+.quantumviewfiles-module .meta-file .meta-preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 180px;
+    margin-bottom: 15px;
+}
+.quantumviewfiles-module .meta-file .meta-preview img {
+    max-height: 100%;
+    height: auto;
+    max-width: 100%;
+    background-color: #efefef;
+    border: solid 5px #EFEFEF;
+    border-radius: 5px;
 }
 .quantumviewfiles-module .meta-file table {
     border-collapse: collapse;

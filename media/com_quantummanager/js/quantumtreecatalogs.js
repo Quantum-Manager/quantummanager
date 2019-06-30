@@ -32,7 +32,7 @@ window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, o
             //Filemanager.data.path = path;
         }
 
-        jQuery.get("/administrator/index.php?option=com_quantummanager&task=quantumtreecatalogs.getDirectories&path=" + encodeURIComponent(path)).done(function (response) {
+        jQuery.get("/administrator/index.php?option=com_quantummanager&task=quantumtreecatalogs.getDirectories&path=" + encodeURIComponent(path) + '&root=' + encodeURIComponent(self.options.directory)).done(function (response) {
 
             response = JSON.parse(response);
             if(response.directories !== undefined) {

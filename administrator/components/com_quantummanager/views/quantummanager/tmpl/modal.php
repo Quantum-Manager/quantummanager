@@ -15,6 +15,16 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
 $app = Factory::getApplication();
+$folder = $app->input->get('folder', '', 'string');
+
+if(!empty($folder))
+{
+    $app->getSession()->set('quantummanagerroot', 'images/' . $folder);
+}
+else
+{
+	$app->getSession()->clear('quantummanagerroot');
+}
 
 HTMLHelper::_('stylesheet', 'com_quantummanager/modal.css', [
 	'version' => filemtime(__FILE__),
@@ -29,6 +39,7 @@ if($app->input->get('e_name', '') !== '') {
 		'version' => filemtime(__FILE__),
 		'relative' => true
 	]);
+
 
 } else {
 

@@ -163,7 +163,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             response = JSON.parse(response);
 
             if(response.error !== undefined) {
-                Filemanager.data.path = 'root';
+                Filemanager.data.path = self.options.directory;
                 self.trigger('updatePath');
                 return;
             }
@@ -268,7 +268,26 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
         if(tmpInput.checked) {
             self.showMetaFile(element);
         } else {
-            self.hideMetaFile();
+
+            let find = false;
+            let findElement;
+
+            let filesAll = ViewfilesElement.querySelectorAll('.field-list-files .file-item');
+            for(let i=0;i<filesAll.length;i++) {
+                let input = filesAll[i].querySelector('.import-files-check-file');
+                if(input.checked) {
+                    find = true;
+                    findElement = filesAll[i];
+                    break;
+                }
+            }
+
+            if(find) {
+                self.showMetaFile(findElement);
+            } else {
+                self.hideMetaFile();
+            }
+
         }
 
     };
@@ -299,7 +318,11 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 if(response.global !== undefined || response.find !== undefined) {
                     self.viewMeta.classList.remove('hidden');
 
-                    let html = '';
+                    let html = '<div>';
+
+                    if(response.preview !== undefined) {
+                        html += '<div class="meta-preview"><img src="' + response.preview.link + '" /></div>';
+                    }
 
                     if(response.global !== undefined) {
                         html += '<table><tbody>';
@@ -320,6 +343,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                         }
                     }
 
+                    html += '</div>';
                     self.viewMeta.querySelector('.meta-file-list').innerHTML = html;
                     let buttonToggleTags = self.viewMeta.querySelector('.show-all-tags');
 
@@ -380,7 +404,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
     this.initBreadcrumbs = function (callback) {
         let self = this;
         let fm = Filemanager;
-        jQuery.get("/administrator/index.php?option=com_quantummanager&task=quantumtreecatalogs.getDirectories&path=" + encodeURIComponent(this.options.directory))
+        jQuery.get("/administrator/index.php?option=com_quantummanager&task=quantumtreecatalogs.getDirectories&path=" + encodeURIComponent(this.options.directory) + '&root=' + encodeURIComponent(this.options.directory))
             .done(function (response) {
                 response = JSON.parse(response);
 

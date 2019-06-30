@@ -10,6 +10,7 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
@@ -23,9 +24,8 @@ HTMLHelper::_('script', 'com_quantummanager/window.js', [
 	'relative' => true
 ]);
 
-?>
-
-<?php
+$app = Factory::getApplication();
+$app->getSession()->clear('quantummanagerroot');
 
 try {
 	JLoader::register('JFormFieldQuantumCombine', JPATH_ROOT . '/administrator/components/com_quantummanager/fields/quantumcombine.php');

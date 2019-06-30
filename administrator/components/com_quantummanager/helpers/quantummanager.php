@@ -28,6 +28,12 @@ class QuantummanagerHelper
 	 * @var string
 	 * @since version
 	 */
+	public static $cachePathRoot = '';
+
+	/**
+	 * @var string
+	 * @since version
+	 */
 	public static $cacheMimeType = '';
 
 	/**
@@ -135,9 +141,28 @@ class QuantummanagerHelper
 	 */
 	public static function preparePath($path)
 	{
+		$session = Factory::getSession();
 		$path = trim($path);
 		$componentParams = ComponentHelper::getParams('com_quantummanager');
-		$pathConfig = self::getParamsComponentValue('path', 'images');
+		$pathConfig = '';
+
+		if(empty(static::$cachePathRoot))
+		{
+			$pathConfig = static::getParamsComponentValue('path', 'images');
+			$pathSession = $session->get('quantummanagerroot', '');
+			static::$cachePathRoot = $pathConfig;
+
+			if(!empty($pathSession))
+			{
+				$pathConfig = $pathSession;
+				static::$cachePathRoot = $pathSession;
+			}
+
+		}
+		else
+		{
+			$pathConfig = static::$cachePathRoot;
+		}
 
 		$path = str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
 		$path = preg_replace("#" . JPATH_ROOT . "\/root?#", $pathConfig, $path);
@@ -208,7 +233,7 @@ class QuantummanagerHelper
 		], $pathConfig);
 
 		//если пытаются выйти за пределы папки, то не даем этого сделать
-		if(!preg_match("/^" . str_replace("/", "\/", "("  . JPATH_ROOT  . DIRECTORY_SEPARATOR . ")?" . $pathConfigParse) .".*?/", $path))
+		if(!preg_match("/^" . str_replace("/", "\/", "\("  . JPATH_ROOT  . DIRECTORY_SEPARATOR . "\)?" . $pathConfigParse) .".*?/", $path))
 		{
 			if(preg_match("/.*?" . str_replace("/", "\/", JPATH_ROOT  . DIRECTORY_SEPARATOR . $pathConfigParse) .".*?/", $path))
 			{
@@ -272,12 +297,15 @@ class QuantummanagerHelper
 		$value = $componentParams->get($name, $default);
 		$groups = Factory::getUser()->groups;
 
-		foreach ($profiles as $key => $profile)
+		if(!empty($profiles))
 		{
-			if(in_array((int)$profile->group, $groups) && ($name === $profile->config))
+			foreach ($profiles as $key => $profile)
 			{
-				$value = trim($profile->value);
-				break;
+				if(in_array((int)$profile->group, $groups) && ($name === $profile->config))
+				{
+					$value = trim($profile->value);
+					break;
+				}
 			}
 		}
 
@@ -293,6 +321,7 @@ class QuantummanagerHelper
 		$language_tag = $lang->getTag();
 		$lang->load($extension, $base_dir, $language_tag, true);
 	}
+
 
 	/**
 	 * @param $size
