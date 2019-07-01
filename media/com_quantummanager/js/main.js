@@ -93,6 +93,16 @@ document.addEventListener('DOMContentLoaded' ,function () {
             filemanager[type] = new window[type](filemanager, modules[j], options);
             filemanager[type].init();
         }
+
+        for(let j=0;j<modules.length;j++) {
+            let type = modules[j].getAttribute('data-type');
+
+            if(filemanager[type].initAfter !== undefined) {
+                filemanager[type].initAfter();
+            }
+
+        }
+
         quantummanagerAll[i].setAttribute('data-index', i);
         QuantummanagerLists.push(filemanager);
         id = id + 1;

@@ -14,6 +14,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Filesystem\Folder;
+use Joomla\Filesystem\Path;
 
 /**
  * Quantummanager helper.
@@ -232,10 +233,13 @@ class QuantummanagerHelper
 			date('U'),
 		], $pathConfig);
 
+		$path = Path::clean($path);
+		$pathConfigParse = Path::clean($pathConfigParse);
+
 		//если пытаются выйти за пределы папки, то не даем этого сделать
-		if(!preg_match("/^" . str_replace("/", "\/", "\("  . JPATH_ROOT  . DIRECTORY_SEPARATOR . "\)?" . $pathConfigParse) .".*?/", $path))
+		if(!preg_match("#^" . str_replace(DIRECTORY_SEPARATOR, "\\" . DIRECTORY_SEPARATOR, "\("  . Path::clean(JPATH_ROOT  . DIRECTORY_SEPARATOR) . "\)?" . $pathConfigParse) .".*?#", $path))
 		{
-			if(preg_match("/.*?" . str_replace("/", "\/", JPATH_ROOT  . DIRECTORY_SEPARATOR . $pathConfigParse) .".*?/", $path))
+			if(preg_match("#.*?" . str_replace(DIRECTORY_SEPARATOR, "\\" . DIRECTORY_SEPARATOR, Path::clean(JPATH_ROOT  . DIRECTORY_SEPARATOR) . $pathConfigParse) .".*?#", $path))
 			{
 				$path = JPATH_ROOT . DIRECTORY_SEPARATOR . $pathConfigParse . str_replace(JPATH_ROOT, '', $path);
 			}

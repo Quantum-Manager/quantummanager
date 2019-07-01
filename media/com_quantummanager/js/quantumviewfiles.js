@@ -134,22 +134,24 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 ev.preventDefault();
             });
 
-            if(Filemanager.Qantumupload !== undefined)
-            {
-                if(Filemanager.Qantumupload.options.dropAreaHidden === '1') {
-                    Filemanager.Quantumtoolbar.buttonAdd('viewfilesUploadFile', 'center', 'file-other', 'btn-upload-file hidden-label', QuantumviewfilesLang.buttonUpload, 'quantummanager-icon-upload', {}, function (ev) {
-                        Filemanager.Qantumupload.selectFiles();
-                        ev.preventDefault();
-                    });
-                }
-            }
-
-
         }
 
         searchByName.addEventListener('keyup', function () {
             self.searchByName(this.value);
         });
+
+    };
+
+    this.initAfter = function () {
+        if(Filemanager.Qantumupload !== undefined)
+        {
+            if(Filemanager.Qantumupload.options.dropAreaHidden === '1') {
+                Filemanager.Quantumtoolbar.buttonAdd('viewfilesUploadFile', 'center', 'file-other', 'btn-upload-file hidden-label', QuantumviewfilesLang.buttonUpload, 'quantummanager-icon-upload', {}, function (ev) {
+                    Filemanager.Qantumupload.selectFiles();
+                    ev.preventDefault();
+                });
+            }
+        }
 
     };
 

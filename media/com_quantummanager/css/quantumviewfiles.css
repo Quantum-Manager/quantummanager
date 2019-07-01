@@ -207,6 +207,7 @@
 .quantumviewfiles-module .meta-file {
     position: relative;
     width: 25%;
+    min-width: 265px;
     margin-top: -45px;
     margin-right: -15px;
     background: #f6f6f6;
