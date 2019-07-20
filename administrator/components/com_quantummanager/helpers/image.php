@@ -171,7 +171,7 @@ class QuantummanagerHelperImage
 	}
 
 	/**
-	 * @param $file
+	 * @param $fileSource
 	 */
 	public function originalSave($fileSource)
 	{

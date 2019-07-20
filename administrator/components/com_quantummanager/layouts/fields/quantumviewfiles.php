@@ -11,7 +11,7 @@
 defined('JPATH_PLATFORM') or die;
 use Joomla\CMS\Language\Text;
 extract($displayData);
-$id = rand(111111, 999999);
+$id = mt_rand(111111, 999999);
 ?>
 
 <div class="quantummanager-module quantumviewfiles-module" data-type="Quantumviewfiles" data-options="hash:<?php echo $displayData['hash'] ?>;directory:<?php echo $displayData['directory'] ?>;onlyfiles:<?php echo $displayData['onlyfiles'] ?>;metafile:<?php echo $displayData['metafile'] ?>">

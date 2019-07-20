@@ -14,13 +14,13 @@ use Joomla\CMS\Language\Text;
 
 <div class="quantummanager-module quantumupload-module" data-type="Qantumupload" data-options="maxsize:<?php echo $displayData['maxsize'] ?>;directory:<?php echo $displayData['directory'] ?>;dropAreaHidden:<?php echo $displayData['dropAreaHidden'] ?>">
 
-	<?php $id = rand(11111, 99999)?>
+	<?php $id = mt_rand(11111, 99999)?>
     <div class="drop-area <?php if($displayData['dropAreaHidden'] === '1') : ?> drop-area-hidden <?php endif; ?>">
         <div class="form-upload">
             <input type="hidden" class="pathElem" name="path">
             <span class="quantummanager-icon quantummanager-icon-upload"></span>
-            <p><?= \Joomla\CMS\Language\Text::_("COM_QUANTUMMANAGER_FIELDS_QUANTUMUPLOAD_UPLOAD_DROP") ?></p>
-            <label class="button" for="fileElem-<?= $id ?>"><?= \Joomla\CMS\Language\Text::_("COM_QUANTUMMANAGER_FIELDS_QUANTUMUPLOAD_UPLOAD_SELECT") ?></label>
+            <p><?php echo \Joomla\CMS\Language\Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUPLOAD_UPLOAD_DROP') ?></p>
+            <label class="button" for="fileElem-<?= $id ?>"><?php echo \Joomla\CMS\Language\Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUPLOAD_UPLOAD_SELECT') ?></label>
             <input type="file" id="fileElem-<?= $id ?>" class="fileElem" multiple accept="*">
         </div>
     </div>

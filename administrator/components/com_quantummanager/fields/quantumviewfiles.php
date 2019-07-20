@@ -139,10 +139,8 @@ class JFormFieldQuantumviewfiles extends JFormField
 				$filemanager = new FileLayout( 'fieldstandalone', JPATH_ROOT . '/administrator/components/com_quantummanager/layouts');
 				return $filemanager->render(['field' => $field]);
 			}
-			else
-			{
-				return $field;
-			}
+
+			return $field;
 		}
 		catch (Exception $e) {
 			echo $e->getMessage();

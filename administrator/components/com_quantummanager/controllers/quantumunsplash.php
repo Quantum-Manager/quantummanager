@@ -58,7 +58,7 @@ class QuantummanagerControllerquantumunsplash extends AdminController
 			]);
 
 			$curlTransport = new CurlTransport(new Registry());
-			$uri = (new Uri());
+			$uri = new Uri();
 			$uri->setScheme('https');
 			$uri->setHost('hika.su/');
 			$uri->setPath('index.php');
@@ -102,7 +102,6 @@ class QuantummanagerControllerquantumunsplash extends AdminController
 	public function downloadTrigger()
 	{
 		$app = Factory::getApplication();
-		$data = Factory::getApplication()->input->getArray();
 		$data = $app->input->getArray();
 
 		$query = http_build_query([
@@ -112,7 +111,7 @@ class QuantummanagerControllerquantumunsplash extends AdminController
 		]);
 
 		$curlTransport = new CurlTransport(new Registry());
-		$uri = (new Uri());
+		$uri = new Uri();
 		$uri->setScheme('https');
 		$uri->setHost('hika.su/');
 		$uri->setPath('index.php');
