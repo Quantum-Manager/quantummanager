@@ -1,10 +1,9 @@
 /**
  * @package    quantummanager
- *
- * @author     Cymbal <cymbal@delo-design.ru>
- * @copyright  Copyright (C) 2019 "Delo Design". All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
- * @link       https://delo-design.ru
+ * @author     Dmitry Tsymbal <cymbal@delo-design.ru>
+ * @copyright  Copyright © 2019 Delo Design & NorrNext. All rights reserved.
+ * @license    GNU General Public License version 3 or later; see license.txt
+ * @link       https://www.norrnext.com
  */
 
 window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options) {

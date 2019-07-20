@@ -1,14 +1,13 @@
 <?php
 /**
  * @package    quantummanager
- *
- * @author     Cymbal <cymbal@delo-design.ru>
- * @copyright  Copyright (C) 2019 "Delo Design". All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
- * @link       https://delo-design.ru
+ * @author     Dmitry Tsymbal <cymbal@delo-design.ru>
+ * @copyright  Copyright © 2019 Delo Design & NorrNext. All rights reserved.
+ * @license    GNU General Public License version 3 or later; see license.txt
+ * @link       https://www.norrnext.com
  */
 
-defined('JPATH_PLATFORM') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
 
@@ -24,22 +23,18 @@ $presets = $paramsComponents->get('custompresetscrop');
         <div class="name-file-wrap">
             <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_LABEL_FILE'); ?></label>
             <div class="input-wrapper">
-	            <label>
-		            <input type="text" placeholder="Input Outline" class="quantumcropperjs-name-file" name="name" >
-	            </label>
-	            <span class="bottom"></span>
+                <input type="text" placeholder="Input Outline" class="quantumcropperjs-name-file" name="name" >
+                <span class="bottom"></span>
                 <span class="right"></span>
                 <span class="top"></span>
                 <span class="left"></span>
             </div>
-	        <label>
-		        <select class="quantumcropperjs-name-exs" name="exs">
-		            <option value="jpg">jpg</option>
-		            <option value="jpeg">jpeg</option>
-		            <option value="png">png</option>
-		            <option value="webp">webp</option>
-		        </select>
-	        </label>
+            <select class="quantumcropperjs-name-exs" name="exs">
+                <option value="jpg">jpg</option>
+                <option value="jpeg">jpeg</option>
+                <option value="png">png</option>
+                <option value="webp">webp</option>
+            </select>
         </div>
         <div class="change-ratio-wrap">
             <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_LABEL_RATIO'); ?></label>

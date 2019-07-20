@@ -69,7 +69,12 @@
     align-items: center;
 }
 
+.quantumunsplash-module .quantumunsplash-module-header label {
+    width: calc(100% - 35px);
+}
+
 .quantumunsplash-module .quantumunsplash-module-header input {
+    width: 100%;
     padding: 0 10px;
     padding-left: 25px;
     height: 35px;
@@ -221,4 +226,12 @@
         max-width: 100%;
     }
 
+}
+
+@media screen and (max-width: 800px) {
+    .quantumunsplash-module .quantumunsplash-module-container .quantumunsplash-module-close {
+        position: absolute;
+        top: 8px;
+        right: 4px;
+    }
 }

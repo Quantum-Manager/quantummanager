@@ -30,13 +30,13 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
             QuantumUnsplashElement.classList.add('active');
             let tmpSearchStr = '';
 
-            if(localStorage !== undefined) {
+            /*if(localStorage !== undefined) {
                 tmpSearchStr = localStorage.getItem('quantumunsplashLastStr');
 
                 if(tmpSearchStr === null) {
                     tmpSearchStr = '';
                 }
-            }
+            }*/
 
             self.inputSearch.value = tmpSearchStr;
             self.inputSearch.focus();
