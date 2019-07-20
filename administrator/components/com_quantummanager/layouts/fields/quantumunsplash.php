@@ -22,7 +22,9 @@ extract($displayData);
     <div class="quantumunsplash-module-container">
 
         <div class="quantumunsplash-module-header">
-            <input name="q" type="text" placeholder="<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_SEARCH'); ?>">
+	        <label>
+		        <input name="q" type="text" placeholder="<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_SEARCH'); ?>">
+	        </label>
         </div>
 
         <div class="quantumunsplash-module-container-search-wrap">
