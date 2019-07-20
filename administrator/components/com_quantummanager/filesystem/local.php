@@ -333,23 +333,18 @@ class QuantummanagerFileSystemLocal
 									];
 								}
 							}
-							else
-								{
-
-								if (!in_array(mb_strtolower($key), [
-									'filename',
-									'filedatetime',
-									'filesize',
-									'filetype',
-									'mimetype',
-								]))
-								{
-									$meta['find'][] = [
-										'key' => $key,
-										'value' => $section,
-									];
-								}
-
+							elseif (!in_array(mb_strtolower($key), [
+								'filename',
+								'filedatetime',
+								'filesize',
+								'filetype',
+								'mimetype',
+							]))
+							{
+								$meta['find'][] = [
+									'key' => $key,
+									'value' => $section,
+								];
 							}
 						}
 					}
@@ -479,12 +474,9 @@ class QuantummanagerFileSystemLocal
 
 				$stat = stat($directory . DIRECTORY_SEPARATOR . $file);
 
-				if ($stat !== false)
+				if (($stat !== false) && isset($stat[ 'mtime' ]))
 				{
-					if (isset($stat['mtime']))
-					{
-						$fileDate = $stat['mtime'];
-					}
+					$fileDate = $stat['mtime'];
 				}
 
 				$fileMeta = [
@@ -737,7 +729,7 @@ class QuantummanagerFileSystemLocal
 
 			if (!file_exists($cache . DIRECTORY_SEPARATOR . $file))
 			{
-				$manager->make($directory . DIRECTORY_SEPARATOR . $file)->resize(null, 320, function ($constraint) {
+				$manager->make($directory . DIRECTORY_SEPARATOR . $file)->resize(null, 320, static function ($constraint) {
 					$constraint->aspectRatio();
 				})->save($cache . DIRECTORY_SEPARATOR . $file);
 			}
@@ -785,16 +777,24 @@ class QuantummanagerFileSystemLocal
 		$lang = Factory::getLanguage();
 		$nameSafe = File::makeSafe($lang->transliterate($name), ['#^\.#', '#\040#']);
 
-		if(!in_array($exs, ['php', 'php7', 'php5', 'php4', 'php3', 'php4', 'phtml', 'phps', 'sh', 'exe']))
+		if(!in_array($exs, [
+				'php',
+				'php7',
+				'php5',
+				'php4',
+				'php3',
+				'php4',
+				'phtml',
+				'phps',
+				'sh',
+				'exe'
+			]) && file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file))
 		{
-			if(file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file))
+			if(rename(JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file, JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $nameSafe . '.' . $exs))
 			{
-				if(rename(JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file, JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $nameSafe . '.' . $exs))
-				{
-					$output = [
-						'status' => 'ok'
-					];
-				}
+				$output = [
+					'status' => 'ok'
+				];
 			}
 		}
 

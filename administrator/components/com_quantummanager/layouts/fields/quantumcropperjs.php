@@ -24,34 +24,40 @@ $presets = $paramsComponents->get('custompresetscrop');
         <div class="name-file-wrap">
             <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_LABEL_FILE'); ?></label>
             <div class="input-wrapper">
-                <input type="text" placeholder="Input Outline" class="quantumcropperjs-name-file" name="name" >
-                <span class="bottom"></span>
+	            <label>
+		            <input type="text" placeholder="Input Outline" class="quantumcropperjs-name-file" name="name" >
+	            </label>
+	            <span class="bottom"></span>
                 <span class="right"></span>
                 <span class="top"></span>
                 <span class="left"></span>
             </div>
-            <select class="quantumcropperjs-name-exs" name="exs">
-                <option value="jpg">jpg</option>
-                <option value="jpeg">jpeg</option>
-                <option value="png">png</option>
-                <option value="webp">webp</option>
-            </select>
+	        <label>
+		        <select class="quantumcropperjs-name-exs" name="exs">
+		            <option value="jpg">jpg</option>
+		            <option value="jpeg">jpeg</option>
+		            <option value="png">png</option>
+		            <option value="webp">webp</option>
+		        </select>
+	        </label>
         </div>
         <div class="change-ratio-wrap">
             <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_LABEL_RATIO'); ?></label>
-            <select class="change-ratio" name="change-ratio">
-                <option value="NaN" selected="selected"><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_FREE'); ?></option>
-                <?php if(!empty($presets)) : ?>
-                    <?php foreach ($presets as $preset) : ?>
-                        <option value="<?php echo $preset->ratio ?>"><?php echo $preset->label ?></option>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-                <option value="1">1:1</option>
-                <option value="1.7777777777777777">16:9</option>
-                <option value="2">18:9</option>
-                <option value="1.3333333333333333">4:3</option>
-                <option value="0.6666666666666666">2:3</option>
-            </select>
+	        <label>
+		        <select class="change-ratio" name="change-ratio">
+		            <option value="NaN" selected="selected"><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_FREE'); ?></option>
+		            <?php if(!empty($presets)) : ?>
+		                <?php foreach ($presets as $preset) : ?>
+		                    <option value="<?php echo $preset->ratio ?>"><?php echo $preset->label ?></option>
+		                <?php endforeach; ?>
+		            <?php endif; ?>
+		            <option value="1">1:1</option>
+		            <option value="1.7777777777777777">16:9</option>
+		            <option value="2">18:9</option>
+		            <option value="1.3333333333333333">4:3</option>
+		            <option value="0.6666666666666666">2:3</option>
+		        </select>
+	        </label>
         </div>
         <div class="input-width-height-wrap">
             <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_TOOLTIP_CROP'); ?></label>
@@ -59,16 +65,20 @@ $presets = $paramsComponents->get('custompresetscrop');
             <div>
                 <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_TOOLTIP_WIDTH'); ?></label>
                 <div>
-                    <input type="number" class="crop-width-value" disabled>
-                    <span>PX</span>
+	                <label>
+		                <input type="number" class="crop-width-value" disabled>
+	                </label>
+	                <span>PX</span>
                 </div>
             </div>
 
             <div>
                 <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_TOOLTIP_HEIGHT'); ?></label>
                 <div>
-                    <input type="number" class="crop-height-value" disabled>
-                    <span>PX</span>
+	                <label>
+		                <input type="number" class="crop-height-value" disabled>
+	                </label>
+	                <span>PX</span>
                 </div>
             </div>
         </div>
@@ -78,16 +88,20 @@ $presets = $paramsComponents->get('custompresetscrop');
             <div>
                 <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_TOOLTIP_WIDTH'); ?></label>
                 <div>
-                    <input type="text" class="image-width-value">
-                    <span>PX</span>
+	                <label>
+		                <input type="text" class="image-width-value">
+	                </label>
+	                <span>PX</span>
                 </div>
             </div>
 
             <div>
                 <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_TOOLTIP_HEIGHT'); ?></label>
                 <div>
-                    <input type="text" class="image-height-value">
-                    <span>PX</span>
+	                <label>
+		                <input type="text" class="image-height-value">
+	                </label>
+	                <span>PX</span>
                 </div>
             </div>
 
