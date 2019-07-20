@@ -37,12 +37,12 @@
     text-align: left;
     line-height: 16px;
     display: inline-block;
-    padding: 0px 0px 0px 7px;
+    padding: 0 0 0 7px;
 }
 
 .contextualMenuItemTip {
     float: right;
-    padding: 0px 0px 0px 50px;
+    padding: 0 0 0 50px;
     text-align: right;
     line-height: 16px;
 }
@@ -51,7 +51,7 @@
     float: right;
     width:16px;
     height: 16px;
-    padding: 1px 0px 0px 7px;
+    padding: 1px 0 0 7px;
 }
 
 .contextualMenuItemOverflow .contextualMenuItemOverflowLine {

@@ -30,7 +30,7 @@
     left: 0;
     right: 0;
     top: 135px;
-    bottom: 0px;
+    bottom: 0;
     height: calc(100% - 163px);
 }
 .quantummanager.highlight:before {
@@ -423,7 +423,7 @@
     }
     40%
     {
-        top: 0%;
+        top: 0;
     }
     60%
     {
@@ -485,7 +485,7 @@
     }
     80%
     {
-        bottom: 0%;
+        bottom: 0;
     }
     100%
     {
@@ -497,7 +497,7 @@
     .quantummanager-full-component-wrap {
         position: relative;
         height: calc(100vh - 175px);
-        top: 0px;
+        top: 0;
         margin-top: -18px;
     }
 }

@@ -58,7 +58,6 @@
     padding-left: 20px;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
-    -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
@@ -90,7 +89,6 @@
     height: 1px;
     background-color: #aaa;
     -webkit-transition: opacity .2s;
-    -moz-transition: opacity .2s;
     -ms-transition: opacity .2s;
     transition: opacity .2s;
 }
