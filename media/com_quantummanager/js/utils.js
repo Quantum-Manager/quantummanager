@@ -165,6 +165,99 @@ window.QuantumUtils = {
         }
 
         return hours + ':' + minutes + ':' + seconds;
+    },
+
+    fallbackCopyTextToClipboard: function(text) {
+        var textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+            var successful = document.execCommand('copy');
+            var msg = successful ? 'successful' : 'unsuccessful';
+            console.log('Fallback: Copying text command was ' + msg);
+        } catch (err) {
+            console.error('Fallback: Oops, unable to copy', err);
+        }
+
+        document.body.removeChild(textArea);
+    },
+
+    copyTextToClipboard: function(text) {
+        if (!navigator.clipboard) {
+            this.fallbackCopyTextToClipboard(text);
+            return;
+        }
+        navigator.clipboard.writeText(text).then(function() {
+            return true;
+        }, function(err) {
+            return false;
+        });
+    },
+
+    alert: function(m) {
+        JSAlert.alert(m);
+    },
+
+    confirm: function(q, callback) {
+        JSAlert.confirm(q).then(function(result) {
+            if (!result) {
+                return;
+            }
+            callback(result);
+        });
+    },
+
+    prompt: function (q, defaultValue, callback) {
+        JSAlert.prompt(q, defaultValue).then(function(result) {
+            if (!result) {
+                return;
+            }
+            callback(result);
+        });
+    },
+
+    windowOpen: function (name, url) {
+        let winSize = this.windowSize();
+        let size = this.getPopUpSize();
+        let centerWidth = (winSize.width - size.width) / 2;
+        let centerHeight = (winSize.height - size.height) / 2;
+        return window.open(url,
+            name,
+            'width=' + size.width +
+            ',height=' + size.height +
+            ',left=' + centerWidth +
+            ',top=' + centerHeight
+        );
+    },
+
+    windowSize: function() {
+        let myWidth = 0,
+            myHeight = 0,
+            size = { width: 0, height: 0 };
+        if (typeof(window.innerWidth) == 'number') {
+            myWidth = window.innerWidth;
+            myHeight = window.innerHeight;
+        } else if (document.documentElement && (document.documentElement.clientWidth || document.documentElement.clientHeight)) {
+            myWidth = document.documentElement.clientWidth;
+            myHeight = document.documentElement.clientHeight;
+        } else if (document.body && (document.body.clientWidth || document.body.clientHeight)) {
+            myWidth = document.body.clientWidth;
+            myHeight = document.body.clientHeight;
+        }
+        size.width = myWidth;
+        size.height = myHeight;
+
+        return size;
+    },
+
+    getPopUpSize: function(el) {
+        let size = this.windowSize();
+        size.width = (size.width/100*90);
+        size.height = (size.height/100*90);
+        return size;
     }
 
 };

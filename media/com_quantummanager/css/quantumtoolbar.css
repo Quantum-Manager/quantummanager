@@ -55,6 +55,9 @@
 .quantumtoolbar-module button .quantummanager-icon {
     margin-right: 5px;
 }
+.quantumtoolbar-module button span {
+    white-space: nowrap;
+}
 .quantumtoolbar-module .quantumtoolbar-module-buttons-group {
     display: flex;
     align-items: center;

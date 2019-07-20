@@ -416,7 +416,15 @@ class QuantummanagerFileSystemLocal
 		}
 
 
-		return json_encode($meta, JSON_INVALID_UTF8_IGNORE);
+		if (defined('JSON_INVALID_UTF8_IGNORE'))
+		{
+			return json_encode($meta, JSON_INVALID_UTF8_IGNORE);
+		}
+		else
+		{
+			return json_encode($meta, 1048576);
+		}
+
 
 	}
 
@@ -663,6 +671,30 @@ class QuantummanagerFileSystemLocal
 	}
 
 
+	public static function downloadFileUnsplash($path, $file, $id)
+	{
+
+		if(preg_match("#^https://images.unsplash.com/.*?#", $file))
+		{
+			JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+			$path = QuantummanagerHelper::preparePath($path);
+
+			$fileContent = file_get_contents($file);
+			$filePath = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
+			$fileName = $id . '.jpg';
+			file_put_contents($filePath . DIRECTORY_SEPARATOR . $fileName, $fileContent);
+
+			JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');
+			$image = new QuantummanagerHelperImage;
+			$image->afterUpload($filePath . DIRECTORY_SEPARATOR . $fileName);
+
+		}
+
+
+
+	}
+
+
 	/**
 	 * @param $path
 	 * @param $file
@@ -727,5 +759,47 @@ class QuantummanagerFileSystemLocal
 		$app->redirect($siteUrl . $mediaIconsPath . 'other.svg');
 
 	}
+
+
+	/**
+	 * @param $path
+	 * @param $file
+	 * @param string $name
+	 *
+	 * @return string
+	 *
+	 * @since version
+	 * @throws Exception
+	 */
+	public static function renameFile($path, $file, $name = '')
+	{
+		JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
+		$path = QuantummanagerHelper::preparePath($path);
+		$app = Factory::getApplication();
+		$splitFile = explode('.', $file);
+		$exs = mb_strtolower(array_pop($splitFile));
+		$output = [
+			'status' => 'fail'
+		];
+
+		$lang = Factory::getLanguage();
+		$nameSafe = File::makeSafe($lang->transliterate($name), ['#^\.#', '#\040#']);
+
+		if(!in_array($exs, ['php', 'php7', 'php5', 'php4', 'php3', 'php4', 'phtml', 'phps', 'sh', 'exe']))
+		{
+			if(file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file))
+			{
+				if(rename(JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file, JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $nameSafe . '.' . $exs))
+				{
+					$output = [
+						'status' => 'ok'
+					];
+				}
+			}
+		}
+
+		return json_encode($output);
+	}
+
 
 }

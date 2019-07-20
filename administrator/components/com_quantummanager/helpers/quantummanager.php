@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 use Joomla\Filesystem\Folder;
 use Joomla\Filesystem\Path;
 
@@ -138,9 +139,14 @@ class QuantummanagerHelper
 
 	/**
 	 * @param $path
-	 * @return bool|string
+	 * @param bool $host
+	 *
+	 * @return mixed|null|string|string[]
+	 *
+	 * @since version
+	 * @throws Exception
 	 */
-	public static function preparePath($path)
+	public static function preparePath($path, $host = false)
 	{
 		$session = Factory::getSession();
 		$path = trim($path);
@@ -264,6 +270,11 @@ class QuantummanagerHelper
 			{
 				Folder::create(JPATH_ROOT . $currentTmp);
 			}
+		}
+
+		if($host)
+		{
+			$path = Uri::root() . '/' . $path;
 		}
 
 		return $path;

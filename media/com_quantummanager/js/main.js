@@ -29,11 +29,13 @@ window.QuantumEvents = function () {
 
 
     this.trigger = function (event, filemanager, target) {
+        let returns = [];
         for (let i=0;i<this.listEvents.length;i++) {
             if(this.listEvents[i].n === event) {
-                this.listEvents[i].c(filemanager, this.listEvents[i].e, target);
+                returns.push(this.listEvents[i].c(filemanager, this.listEvents[i].e, target));
             }
         }
+        return returns;
     };
 
 };

@@ -303,8 +303,20 @@
     text-align: center;
     padding: 40px 50px;
 }
+.quantumviewfiles-module .field-list-files {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 .quantumviewfiles-module .field-list-files .active {
     background: #f3dd8c73;
+}
+.quantumviewfiles-module .field-list-files .file-item .file {
+    pointer-events: none;
+    -webkit-user-drag: none;
 }
 .quantumviewfiles-module .field-list-files .file {
     width: 50%;
@@ -381,7 +393,11 @@
 .quantumviewfiles-module .field-list-files .list-grid {
     display: flex;
     flex-wrap: wrap;
+    align-items: self-start;
+    justify-content: flex-start;
+    align-content: flex-start;
     margin-left: -1%;
+    min-height: 100%;
 }
 .quantumviewfiles-module .field-list-files .list-grid .file-item {
     margin: 1%;
@@ -496,9 +512,16 @@
     transform: scale(1.2);
 }*/
 .quantumviewfiles-module .field-list-files .list-grid .directory-item {
+    height: 130px;
     margin: 1%;
     padding-bottom: 40px;
     transition: all 0.2s;
+}
+.quantumviewfiles-module .field-list-files .list-grid-1-4 .directory-item {
+    height: 150px;
+}
+.quantumviewfiles-module .field-list-files .list-grid-1-3 .directory-item {
+    height: 200px;
 }
 .quantumviewfiles-module .field-list-files .list-grid-1-5 .directory-item {
     width: 18%;
@@ -555,6 +578,9 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+.quantumviewfiles-module .field-list-files .list-table {
+    min-height: 100%;
 }
 .quantumviewfiles-module .field-list-files .list-table .file-item {
     display: flex;
@@ -640,6 +666,24 @@
 }
 
 @media screen and (max-width: 800px) {
+    .quantumviewfiles-module .field-list-files .list-grid  .directory-item {
+        height: 135px;
+    }
+    .quantumviewfiles-module .field-list-files .list-grid-1-4 .directory-item {
+        height: 155px;
+    }
+    .quantumviewfiles-module .field-list-files .list-grid-1-3 .directory-item {
+        height: 210px;
+    }
+    .quantumviewfiles-module .field-list-files .list-grid .directory-item .directory {
+        height: 122px;
+    }
+    .quantumviewfiles-module .field-list-files .list-grid-1-4 .directory-item .directory {
+        height: 143px;
+    }
+    .quantumviewfiles-module .field-list-files .list-grid-1-3 .directory-item .directory {
+        height: 191px;
+    }
     .quantumviewfiles-module .field-list-files .list-grid .file-item {
         height: 82px;
     }

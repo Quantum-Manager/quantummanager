@@ -85,6 +85,11 @@ class JFormFieldQuantumupload extends JFormField
 				'relative' => true
 			]);
 
+			HTMLHelper::_('script', 'com_quantummanager/jsalert.min.js', [
+				'version' => filemtime(__FILE__),
+				'relative' => true
+			]);
+
 			HTMLHelper::_('script', 'com_quantummanager/utils.js', [
 				'version' => filemtime(__FILE__),
 				'relative' => true

@@ -115,10 +115,16 @@ class QuantummanagerControllerquantumviewfiles extends AdminController
 			}
 
 			$path = $data['path'];
+			$host = '';
+
+			if(isset($data['host']))
+			{
+				$host = $data['host'];
+			}
 
 			JLoader::register('QuantummanagerHelper', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 			echo json_encode([
-				'path' => QuantummanagerHelper::preparePath($path)
+				'path' => QuantummanagerHelper::preparePath($path, $host)
 			]);
 
 			$app->close();
@@ -129,6 +135,38 @@ class QuantummanagerControllerquantumviewfiles extends AdminController
 		}
 	}
 
+
+	public function renameFile()
+	{
+		try {
+			$app = Factory::getApplication();
+			$data = $app->input->getArray();
+			$file = '';
+
+			if(!isset($data['path']) && !isset($data['file']) && !isset($data['name']))
+			{
+				$app->close();
+			}
+
+			if(empty($data['path']) || empty($data['file']) || empty($data['name']))
+			{
+				$app->close();
+			}
+
+			$path = $data['path'];
+			$file = $data['file'];
+			$name = $data['name'];
+
+			JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
+			echo QuantummanagerFileSystemLocal::renameFile($path, $file, $name);
+
+			$app->close();
+		}
+		catch (Exception $e)
+		{
+			echo $e->getMessage();
+		}
+	}
 
 	public function generatePreviewImage()
 	{

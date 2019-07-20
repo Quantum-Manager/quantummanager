@@ -1,0 +1,228 @@
+.quantumunsplash-module {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background: #ffffff;
+}
+
+.quantumunsplash-module.active {
+    display: block;
+}
+
+.quantumunsplash-module .quantumunsplash-save {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background: rgba(255,255,255,0.7);
+}
+
+.quantumunsplash-module .quantumunsplash-save .loader {
+    width: 480px;
+}
+
+.quantumunsplash-module .quantumunsplash-module-container {
+    position: relative;
+    width: 1200px;
+    height: 100%;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+    flex-direction: column;
+    -webkit-flex-direction: column;
+    flex: 1 1 auto;
+    -webkit-flex: 1 1 auto;
+    justify-content: flex-end;
+}
+
+.quantumunsplash-module .quantumunsplash-module-container .quantumunsplash-module-close {
+    position: absolute;
+    top: 10px;
+    right: -105px;
+}
+
+.quantumunsplash-module .quantumunsplash-module-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.quantumunsplash-module .quantumunsplash-module-header input {
+    padding: 0 10px;
+    padding-left: 25px;
+    height: 35px;
+    margin: 0;
+    flex: 1;
+    font-size: 17px;
+    vertical-align: middle;
+    display: inline-block;
+    max-width: 100%;
+    background: #fff;
+    color: #666;
+    border: 1px solid #e5e5e5;
+    transition: .2s ease-in-out;
+    transition-property: color,background-color,border;
+}
+
+.quantumunsplash-module .quantumunsplash-module-container-search-wrap {
+    position: relative;
+    width: 100%;
+    height: calc(100% - 50px);
+}
+
+.quantumunsplash-module .quantumunsplash-module-container-search {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    webkit-overflow-scrolling: touch;
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.quantumunsplash-module .quantumunsplash-module-search {
+    margin-top: -1%;
+    margin-left: -1%;
+    margin-right: 0.5%;
+}
+
+.quantumunsplash-module .quantumunsplash-module-search .grid-sizer,
+.quantumunsplash-module .quantumunsplash-module-search .grid-item
+{
+    width: 31.3%;
+    margin: 1%;
+}
+
+.quantumunsplash-module .quantumunsplash-module-search .grid-item:hover {
+    cursor: pointer;
+}
+
+.quantumunsplash-module .quantumunsplash-module-search .grid-item--width2 {
+    width: 64.6%;
+}
+
+.quantumunsplash-module .quantumunsplash-module-search .unsplash-meta-wrap {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    transition: background-image 0.3s ease;
+}
+
+.quantumunsplash-module .quantumunsplash-module-search .grid-item:hover .unsplash-meta-wrap {
+    background-image: linear-gradient(rgba(0,0,0,0) 70%, rgba(0,0,0,.3));
+}
+
+.quantumunsplash-module .quantumunsplash-module-search .unsplash-meta {
+    display: flex;
+    width: 100%;
+    padding: 10px 20px;
+    justify-content: space-between;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.2s ease-in;
+}
+
+.quantumunsplash-module .quantumunsplash-module-search .grid-item:hover .unsplash-meta {
+    opacity: 1;
+}
+
+.quantumunsplash-module .quantumunsplash-module-search .unsplash-meta .unsplash-like {
+    display: inline-block;
+    color: #ffffff;
+}
+
+.quantumunsplash-module .quantumunsplash-module-search .unsplash-meta .unsplash-like .quantummanager-icon {
+    margin-right: 5px;
+}
+
+.quantumunsplash-module .quantumunsplash-module-search .unsplash-meta .unsplash-user {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.quantumunsplash-module .quantumunsplash-module-search .unsplash-meta .unsplash-user-avatar {
+    width: 30px;
+    height: 30px;
+    margin-right: 13px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+}
+
+.quantumunsplash-module .quantumunsplash-module-search .unsplash-meta a:hover {
+    color: #eeeeee;
+    cursor: pointer;
+}
+
+.quantumunsplash-module .quantumunsplash-module-search .unsplash-meta .unsplash-user-name {
+    color: #ffffff;
+    font-size: 15px;
+}
+
+.quantumunsplash-module .quantumunsplash-module-load-page {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    min-height: 45px;
+}
+
+.quantumunsplash-module .quantumunsplash-module-load-page .btn {
+    display: none;
+    padding: 12px 25px;
+    font-size: 17px;
+}
+
+.quantumunsplash-module .quantumunsplash-module-load-page.active .btn {
+    display: inline-block;
+}
+
+@media screen and (max-width: 1200px) {
+
+    .quantumunsplash-module .quantumunsplash-module-container {
+        max-width: 100%;
+    }
+
+}

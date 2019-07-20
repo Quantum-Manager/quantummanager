@@ -19,18 +19,18 @@ use Joomla\CMS\Layout\FileLayout;
 /**
  * Class JFormFieldQuantumtreecatalogs
  */
-class JFormFieldQuantumtreecatalogs extends JFormField
+class JFormFieldQuantumunsplash extends JFormField
 {
 
 	/**
 	 * @var string
 	 */
-	public $type = 'QuantumTreeCatalogs';
+	public $type = 'QuantumUnsplash';
 
 	/**
 	 * @var string
 	 */
-	protected $layout = 'quantumtreecatalogs';
+	protected $layout = 'quantumunsplash';
 
 
 	/**
@@ -54,7 +54,6 @@ class JFormFieldQuantumtreecatalogs extends JFormField
 	{
 		return array_merge(parent::getLayoutData(),
 			[
-				'directory' => $this->directory,
 				'cssClass' => $this->cssClass,
 			]
 		);
@@ -67,14 +66,13 @@ class JFormFieldQuantumtreecatalogs extends JFormField
 
 			$this->__set('standalone', $this->getAttribute('standalone', true));
 			$this->__set('cssClass', $this->getAttribute('cssClass', ''));
-			$this->directory = $this->getAttribute('directory', 'images');
 
 			HTMLHelper::_('stylesheet', 'com_quantummanager/main.css', [
 				'version' => filemtime(__FILE__),
 				'relative' => true
 			]);
 
-			HTMLHelper::_('stylesheet', 'com_quantummanager/quantumtreecatalogs.css', [
+			HTMLHelper::_('stylesheet', 'com_quantummanager/quantumunsplash.css', [
 				'version' => filemtime(__FILE__),
 				'relative' => true
 			]);
@@ -84,17 +82,17 @@ class JFormFieldQuantumtreecatalogs extends JFormField
 				'relative' => true
 			]);
 
-			HTMLHelper::_('script', 'com_quantummanager/jsalert.min.js', [
-				'version' => filemtime(__FILE__),
-				'relative' => true
-			]);
-
 			HTMLHelper::_('script', 'com_quantummanager/utils.js', [
 				'version' => filemtime(__FILE__),
 				'relative' => true
 			]);
 
-			HTMLHelper::_('script', 'com_quantummanager/quantumtreecatalogs.js', [
+			HTMLHelper::_('script', 'com_quantummanager/quantumunsplash.js', [
+				'version' => filemtime(__FILE__),
+				'relative' => true
+			]);
+
+			HTMLHelper::_('script', 'com_quantummanager/masonry.min.js', [
 				'version' => filemtime(__FILE__),
 				'relative' => true
 			]);
