@@ -125,7 +125,7 @@ class JFormFieldQuantumCombine extends JFormField
 						'standalone' => false
 					]);
 
-					$dataAttributes = array_map(function($value, $key)
+					$dataAttributes = array_map(static function($value, $key)
 					{
 						return $key.'="'.$value.'"';
 					}, array_values($optionsForField), array_keys($optionsForField));
@@ -136,7 +136,7 @@ class JFormFieldQuantumCombine extends JFormField
 					}
 
 					$fieldObject = new $classField;
-					$fieldObject->setup(new SimpleXMLElement("<field name=\"upload-files\" type=\"" . $field . "\" " . implode(' ', $dataAttributes) . " />"), '');
+					$fieldObject->setup(new SimpleXMLElement('<field name="upload-files" type="' . $field . '" ' . implode(' ', $dataAttributes) . ' />'), '');
 					$htmlFields[$position] .= $fieldObject->getInput();
 
 
@@ -154,10 +154,8 @@ class JFormFieldQuantumCombine extends JFormField
 				return $filemanager->render(array_merge($this->getLayoutData(), $htmlFields));
 
 			}
-			else
-			{
-				return '';
-			}
+
+			return '';
 
 		}
 		catch (Exception $e)

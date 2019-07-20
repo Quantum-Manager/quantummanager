@@ -69,7 +69,7 @@ class QuantummanagerHelper
 
 			foreach ($listMimeType as $value) {
 				$type = trim($value);
-				if(!preg_match("/^#.*?/", $type))
+				if(!preg_match('/^#.*?/', $type))
 				{
 					$accepMimeType[] = $type;
 				}
@@ -172,8 +172,8 @@ class QuantummanagerHelper
 		}
 
 		$path = str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
-		$path = preg_replace("#" . JPATH_ROOT . "\/root?#", $pathConfig, $path);
-		$path = preg_replace("#^root?#", $pathConfig, $path);
+		$path = preg_replace('#' . JPATH_ROOT . "\/root?#", $pathConfig, $path);
+		$path = preg_replace('#^root?#', $pathConfig, $path);
 		$path = str_replace('..' . DIRECTORY_SEPARATOR, '', $path);
 
 		if(substr_count($path, '{user_id}'))
@@ -243,9 +243,9 @@ class QuantummanagerHelper
 		$pathConfigParse = Path::clean($pathConfigParse);
 
 		//если пытаются выйти за пределы папки, то не даем этого сделать
-		if(!preg_match("#^" . str_replace(DIRECTORY_SEPARATOR, "\\" . DIRECTORY_SEPARATOR, "\("  . Path::clean(JPATH_ROOT  . DIRECTORY_SEPARATOR) . "\)?" . $pathConfigParse) .".*?#", $path))
+		if(!preg_match('#^' . str_replace(DIRECTORY_SEPARATOR, "\\" . DIRECTORY_SEPARATOR, "\("  . Path::clean(JPATH_ROOT  . DIRECTORY_SEPARATOR) . "\)?" . $pathConfigParse) . '.*?#', $path))
 		{
-			if(preg_match("#.*?" . str_replace(DIRECTORY_SEPARATOR, "\\" . DIRECTORY_SEPARATOR, Path::clean(JPATH_ROOT  . DIRECTORY_SEPARATOR) . $pathConfigParse) .".*?#", $path))
+			if(preg_match('#.*?' . str_replace(DIRECTORY_SEPARATOR, "\\" . DIRECTORY_SEPARATOR, Path::clean(JPATH_ROOT  . DIRECTORY_SEPARATOR) . $pathConfigParse) . '.*?#', $path))
 			{
 				$path = JPATH_ROOT . DIRECTORY_SEPARATOR . $pathConfigParse . str_replace(JPATH_ROOT, '', $path);
 			}
@@ -257,8 +257,10 @@ class QuantummanagerHelper
 			$path = str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
 		}
 
-		$pathCurrent = str_replace(JPATH_ROOT, '', $path);
-		$pathCurrent = str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $pathCurrent);
+		$pathCurrent = str_replace([
+			JPATH_ROOT,
+			DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR
+		], [ '', DIRECTORY_SEPARATOR ], $path);
 
 		$folders = explode(DIRECTORY_SEPARATOR, $pathConfigParse);
 		$currentTmp = '';
@@ -346,7 +348,7 @@ class QuantummanagerHelper
 	 * @since version
 	 */
 	public static function formatFileSize($size) {
-		$a = ["B", "KB", "MB", "GB", "TB", "PB"];
+		$a = [ 'B', 'KB', 'MB', 'GB', 'TB', 'PB' ];
 		$pos = 0;
 
 		while ($size >= 1024)
@@ -355,7 +357,7 @@ class QuantummanagerHelper
 			$pos++;
 		}
 
-		return round($size,2)." ".$a[$pos];
+		return round($size,2). ' ' . $a[ $pos];
 	}
 
 

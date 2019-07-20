@@ -29,7 +29,7 @@ class QuantummanagerControllerquantumviewfiles extends AdminController
 		$app = Factory::getApplication();
 		$data = $app->input->getArray();
 
-		if(!isset($data['path']) || !isset($data['name']))
+		if(!isset($data[ 'path' ], $data[ 'name' ]))
 		{
 			$app->close();
 		}
@@ -87,7 +87,7 @@ class QuantummanagerControllerquantumviewfiles extends AdminController
 		$app = Factory::getApplication();
 		$data = $app->input->getArray();
 
-		if(!isset($data['path']) || !isset($data['list']))
+		if(!isset($data[ 'path' ], $data[ 'list' ]))
 		{
 			$app->close();
 		}
