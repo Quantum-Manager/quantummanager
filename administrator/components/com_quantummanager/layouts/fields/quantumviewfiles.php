@@ -38,6 +38,9 @@ $id = mt_rand(111111, 999999);
 
 <script type="text/javascript">
     window.QuantumviewfilesLang = {
+        'ok': '<?php echo Text::_('COM_QUANTUMMANAGER_WINDOW_OK'); ?>',
+        'close': '<?php echo Text::_('COM_QUANTUMMANAGER_WINDOW_CLOSE'); ?>',
+        'cancel': '<?php echo Text::_('COM_QUANTUMMANAGER_WINDOW_CANCEL'); ?>',
         'loading': '<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_LOADING'); ?>',
         'empty': '<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_EMPTY'); ?>',
         'buttonBack': '<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_BUTTON_BACK'); ?>',
@@ -59,5 +62,13 @@ $id = mt_rand(111111, 999999);
         'contextCopyLink': '<?php echo Text::_('COM_QUANTUMMANAGER_CONTEXT_COPY_LINK'); ?>',
         'contextPreviewFile': '<?php echo Text::_('COM_QUANTUMMANAGER_CONTEXT_PREVIEW_FILE'); ?>',
         'contextDelete': '<?php echo Text::_('COM_QUANTUMMANAGER_CONTEXT_DELETE'); ?>',
+        'help': '<?php echo Text::_('COM_QUANTUMMANAGER_HELP'); ?>',
+        'helpText': '<?php echo Text::_('COM_QUANTUMMANAGER_HELP_TEXT'); ?>',
+        'helpCopyright': '<?php echo Text::_('COM_QUANTUMMANAGER_HELP_COPYRIGHT'); ?>',
+        'helpLove': '<?php echo Text::_('COM_QUANTUMMANAGER_HELP_LOVE'); ?>',
+        'helpButtonProductPage': '<?php echo Text::_('COM_QUANTUMMANAGER_HELP_BUTTON_PRODUCT_PAGE'); ?>',
+        'helpButtonDocumentation': '<?php echo Text::_('COM_QUANTUMMANAGER_HELP_BUTTON_DOCUMENTATION'); ?>',
+        'helpButtonSupport': '<?php echo Text::_('COM_QUANTUMMANAGER_HELP_BUTTON_SUPPORT'); ?>',
+        'helpButtonReview': '<?php echo Text::_('COM_QUANTUMMANAGER_HELP_BUTTON_REVIEW'); ?>',
     };
 </script>

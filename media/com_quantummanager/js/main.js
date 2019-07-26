@@ -109,25 +109,15 @@ document.addEventListener('DOMContentLoaded' ,function () {
         id = id + 1;
 
 
-        let quantummanagerHelp = filemanager.element.querySelector('.quantummanager-help');
-        let helpButtonClose = filemanager.element.querySelector('.quantummanager-help .btn');
+        let quantummanagerHelp = filemanager.element.querySelector('.quantummanager-jedreview');
+        let helpButtonClose = filemanager.element.querySelector('.quantummanager-jedreview .btn-close');
         if(quantummanagerHelp !== null) {
-            if(localStorage !== undefined) {
-                let quantummanagerHelpShow = localStorage.getItem('QuantummanagerHelp');
-                if(quantummanagerHelpShow === null) {
-                    helpButtonClose.addEventListener('click', function (ev) {
-                        if(localStorage !== undefined) {
-                            localStorage.setItem('QuantummanagerHelp', 1);
-                        }
-                        quantummanagerHelp.remove();
-                        ev.preventDefault();
-                    });
-                    quantummanagerHelp.style.display = 'block';
-                } else {
-                    quantummanagerHelp.remove();
-                }
-            }
-
+            QuantumUtils.replaceImgToSvg('.quantummanager-jedreview');
+            helpButtonClose.addEventListener('click', function (ev) {
+                quantummanagerHelp.remove();
+                jQuery.get("/administrator/index.php?option=com_quantummanager&task=quantummanager.hideJedReview");
+                ev.preventDefault();
+            });
         }
     }
 

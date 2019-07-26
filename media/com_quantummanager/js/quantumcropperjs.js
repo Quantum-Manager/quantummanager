@@ -482,7 +482,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
                 type: 'normal',
                 label: QuantumviewfilesLang.buttonEdit,
                 tip: '',
-                icon: '/media/com_quantummanager/images/contextmenu/edit.svg',
+                icon: '/media/com_quantummanager/images/icons/action/create-new-pencil-button.svg',
                 onClick: function() {
                     let file = Filemanager.Quantumviewfiles.fileContext;
                     let exs = file.getAttribute('data-exs').toLocaleLowerCase();

@@ -2,11 +2,11 @@
 <extension type="component" version="3.8" method="upgrade">
 	<name>COM_QUANTUMMANAGER</name>
 	<creationDate>21.12.2018</creationDate>
-	<author>Cymbal</author>
+	<author>Tsymbal</author>
 	<authorEmail>cymbal@delo-design.ru</authorEmail>
-	<authorUrl>https://delo-design.ru</authorUrl>
-	<copyright>Copyright (C) 2019 "Delo Design". All rights reserved.</copyright>
-	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorUrl>https://www.norrnext.com</authorUrl>
+	<copyright>Copyright © 2019 Delo Design &amp; NorrNext. All rights reserved.</copyright>
+	<license>GNU General Public License version 3 or later; see license.txt</license>
 	<version>1.1.6</version>
 	<description>COM_QUANTUMMANAGER_XML_DESCRIPTION</description>
 

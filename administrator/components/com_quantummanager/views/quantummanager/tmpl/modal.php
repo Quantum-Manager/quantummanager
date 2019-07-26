@@ -58,7 +58,6 @@ if($app->input->get('e_name', '') !== '') {
 	try {
 		JLoader::register('JFormFieldQuantumCombine', JPATH_ROOT . '/administrator/components/com_quantummanager/fields/quantumcombine.php');
 		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
-		//$folderRoot = QuantummanagerHelper::getFolderRoot();
 		$folderRoot = 'root';
 
 		$buttonsBun = [];
@@ -83,11 +82,11 @@ if($app->input->get('e_name', '') !== '') {
 				'directory' => $folderRoot,
 				'view' => 'list-grid',
 				'onlyfiles' => '0',
-				'metafile' => QuantummanagerHelper::getParamsComponentValue('metafile', 1),
+				'metafile' => QuantummanagerHelper::getParamsComponentValue('metafile' , '1'),
 			],
 			'quantumcropperjs' => [
 				'position' => 'bottom'
-			],
+			]
 			/*'quantumcodemirror' => [
 				'position' => 'center'
 			],*/
@@ -137,7 +136,10 @@ if($app->input->get('e_name', '') !== '') {
 
 <script type="text/javascript">
     window.QuantumwindowLang = {
-        'buttonInsert': '<?php echo Text::_('COM_QUANTUMMANAGER_WINDOW_INSERT'); ?>'
+        'buttonInsert': '<?php echo Text::_('COM_QUANTUMMANAGER_WINDOW_INSERT'); ?>',
+        'inputAlt': '<?php echo Text::_('COM_QUANTUMMANAGER_WINDOW_ALT'); ?>',
+        'inputWidth': '<?php echo Text::_('COM_QUANTUMMANAGER_WINDOW_WIDTH'); ?>',
+        'inputHeight': '<?php echo Text::_('COM_QUANTUMMANAGER_WINDOW_HEIGHT'); ?>',
     };
 </script>
 

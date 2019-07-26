@@ -31,7 +31,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             type: 'normal',
             label: QuantumviewfilesLang.contextReload,
             tip: '',
-            icon: '/media/com_quantummanager/images/contextmenu/reload.svg',
+            icon: '/media/com_quantummanager/images/icons/action/refresh-button.svg',
             onClick: function(){
                 Filemanager.events.trigger('reloadPaths', Filemanager);
             }
@@ -44,7 +44,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             type: 'normal',
             label: QuantumviewfilesLang.contextPreviewFile,
             tip: '',
-            icon: '/media/com_quantummanager/images/contextmenu/view.svg',
+            icon: '/media/com_quantummanager/images/icons/action/visibility-button.svg',
             onClick: function(){
                 jQuery.get("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getParsePath&path=" + encodeURIComponent(Filemanager.data.path) + '&host=on&v=' + QuantumUtils.randomInteger(111111, 999999)).done(function (response) {
                     response = JSON.parse(response);
@@ -60,7 +60,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             type: 'normal',
             label: QuantumviewfilesLang.contextRename,
             tip: '',
-            icon: '/media/com_quantummanager/images/contextmenu/edit.svg',
+            icon: '/media/com_quantummanager/images/icons/action/create-new-pencil-button.svg',
             onClick: function() {
 
                 QuantumUtils.prompt(QuantumviewfilesLang.fileName, self.fileContext.getAttribute('data-name'), function (result) {
@@ -82,14 +82,27 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             type: 'normal',
             label: QuantumviewfilesLang.contextCopyLink,
             tip: '',
-            icon: '/media/com_quantummanager/images/contextmenu/link.svg',
+            icon: '/media/com_quantummanager/images/icons/action/link-button.svg',
             onClick: function(){
                 jQuery.get("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getParsePath&path=" + encodeURIComponent(Filemanager.data.path) + '&host=on&v=' + QuantumUtils.randomInteger(111111, 999999)).done(function (response) {
                     response = JSON.parse(response);
                     if(response.path === undefined) {
                         return;
                     }
-                    QuantumUtils.copyTextToClipboard(response.path + '/' + self.fileContext.getAttribute('data-file'));
+
+                    let file = response.path + '/' + self.fileContext.getAttribute('data-file');
+                    let buttonsId = 'button-' + QuantumUtils.randomInteger(111111, 999999);
+                    QuantumUtils.alert('<input type="text" value="' + file + '" class="input-copy" /><button style="display: none" data-clipboard-text="' + file + '" class="' + buttonsId + '"></button>', [
+                        {
+                            name: QuantumviewfilesLang.contextCopyLink,
+                            callback: function () {
+                                let button = document.querySelector('.' + buttonsId);
+                                new ClipboardJS(button);
+                                button.click();
+                            }
+                        },
+                    ]);
+
                 });
             }
         },
@@ -97,7 +110,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             type: 'normal',
             label: QuantumviewfilesLang.contextDelete,
             tip: '',
-            icon: '/media/com_quantummanager/images/contextmenu/trash.svg',
+            icon: '/media/com_quantummanager/images/icons/action/rubbish-bin-delete-button.svg',
             onClick: function() {
                 let files = [];
                 files.push(self.fileContext.getAttribute('data-file'));
@@ -245,6 +258,38 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             }
         }
 
+        Filemanager.Quantumtoolbar.buttonAdd('viewfilesHelp', 'right', 'file-other', 'btn-back hidden-label', QuantumviewfilesLang.help, 'quantummanager-icon-info', {}, function (ev) {
+            QuantumUtils.alert('<div class="quantummanager-about"><div class="text">' + QuantumviewfilesLang.helpText + '</div><div class="copyright">' + QuantumviewfilesLang.helpCopyright + '</div><div class="love">' + QuantumviewfilesLang.helpLove + ' <img src="/media/com_quantummanager/images/icons/action/favorite-heart-button.svg" class="svg" /></div>', [
+                {
+                    name: QuantumviewfilesLang.helpButtonProductPage,
+                    callback: function () {
+                        QuantumUtils.openInNewTab('https://www.norrnext.com/quantum-manager');
+                    }
+                },
+                {
+                    name: QuantumviewfilesLang.helpButtonDocumentation,
+                    callback: function () {
+                        QuantumUtils.openInNewTab('https://www.norrnext.com/docs/joomla-extensions/quantum-manager');
+                    }
+                },
+                {
+                    name: QuantumviewfilesLang.helpButtonSupport,
+                    callback: function () {
+                        QuantumUtils.openInNewTab('https://www.norrnext.com/forum/quantum-manager');
+                    }
+                },
+                {
+                    name: QuantumviewfilesLang.helpButtonReview,
+                    callback: function () {
+                        QuantumUtils.openInNewTab('https://extensions.joomla.org/extension/quantum-manager/');
+                    }
+                }
+            ]);
+            setTimeout(function () {
+                QuantumUtils.replaceImgToSvg('.quantummanager-about .love');
+            }, 100);
+        });
+
     };
 
     this.loadDirectory = function (path, callback) {
@@ -316,10 +361,6 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             self.fileMenu.hide();
 
             for(let i=0;i<filesAll.length;i++) {
-                filesAll[i].querySelector('.import-files-check-file').addEventListener('click', function (ev) {
-                    self.fileClick(filesAll[i], self);
-                    ev.preventDefault();
-                });
 
                 /*filesAll[i].addEventListener('click', function () {
                     let element = this;
@@ -445,8 +486,9 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
         let tmpInput = element.closest('.file-item').querySelector('.import-files-check-file');
         tmpInput.checked = true;
         qvf.file = element;
-        qvf.trigger('clickFile', element);
+        self.ds.addSelection(element);
         self.showMetaFile(element);
+        qvf.trigger('clickFile', element);
     };
 
 
@@ -993,16 +1035,17 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                     filePreview.innerHTML = '';
                     filePreview.append(image);
                 } else {
-                    let exsAvailable = ['doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'mp3', 'ogg', 'flac', 'pdf', 'zip', 'txt', 'html', 'css', 'js', 'webp'];
-                    if(exsAvailable.indexOf(fileExs) !== -1) {
-                        let file = "/media/com_quantummanager/images/icons/" + fileExs + ".svg";
-                        filePreview.style.backgroundImage = "url(" + file + ")";
-                        filePreview.classList.add('file-icons');
+                    let file = "/media/com_quantummanager/images/icons/files/" + fileExs + ".svg";
+                    filePreview.style.backgroundImage = "url(" + file + ")";
+                    filePreview.classList.add('file-icons');
+
+                    /*if(exsAvailable.indexOf(fileExs) !== -1) {
+
                     } else {
-                        let file = "/media/com_quantummanager/images/icons/other.svg";
+                        let file = "/media/com_quantummanager/images/icons/files/other.svg";
                         filePreview.style.backgroundImage = "url(" + file + ")";
                         filePreview.classList.add('file-icons');
-                    }
+                    }*/
                 }
 
             }
@@ -1022,10 +1065,6 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                     filesAll[i].innerHTML += htmlFields;
                 }
 
-                filesAll[i].querySelector('.import-files-check-file').addEventListener('click', function (ev) {
-                    self.fileClick(filesAll[i], self);
-                    ev.preventDefault();
-                });
             }
 
         }

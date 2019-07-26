@@ -24,6 +24,8 @@ document.addEventListener('DOMContentLoaded', function () {
         for(let i=0;i<QuantummanagerLists.length;i++) {
             QuantummanagerLists[i].Quantumtoolbar.buttonAdd('insertFileEditor', 'center', 'file-actions', 'btn-insert btn-primary btn-hide', QuantumwindowLang.buttonInsert, 'quantummanager-icon-insert-inverse', {}, function (ev) {
 
+                let fm = QuantummanagerLists[i];
+
                 jQuery.get("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getParsePath&path=" + encodeURIComponent(pathFile) + '&v=' + QuantumUtils.randomInteger(111111, 999999)).done(function (response) {
                     response = JSON.parse(response);
 
@@ -42,10 +44,30 @@ document.addEventListener('DOMContentLoaded', function () {
                         title = '',
                         caption = '',
                         c_class = '',
-                        editor = getUrlParameter('e_name');
+                        editor = getUrlParameter('e_name'),
+                        altInput = fm.Quantumviewfiles.element.querySelector('.modal-form-insert [name="alt"]'),
+                        widthInput = fm.Quantumviewfiles.element.querySelector('.modal-form-insert [name="width"]'),
+                        heightInput = fm.Quantumviewfiles.element.querySelector('.modal-form-insert [name="height"]');
 
-                    if (url)
-                    {
+                    if(altInput !== null) {
+                        if(altInput.value !== '') {
+                            alt = altInput.value;
+                        }
+                    }
+
+                    if(widthInput !== null) {
+                        if(widthInput.value !== '') {
+                            attr.push("width='" + widthInput.value + "'")
+                        }
+                    }
+
+                    if(heightInput !== null) {
+                        if(heightInput.value !== '') {
+                            attr.push("height='" + heightInput.value + "'")
+                        }
+                    }
+
+                    if (url) {
                         // Set alt attribute
                         attr.push('alt="' + alt + '"');
 
@@ -98,15 +120,41 @@ document.addEventListener('DOMContentLoaded', function () {
     QuantumEventsDispatcher.add('clickFile', function (fm) {
         let name = fm.Quantumviewfiles.file.querySelector('.file-name').innerHTML;
         let check = fm.Quantumviewfiles.file.querySelector('.import-files-check-file');
+        let form = fm.Quantumviewfiles.element.querySelector('.modal-form-insert');
+
+        if(form === null) {
+            let html = document.createElement('div');
+            html.setAttribute('class', 'modal-form-insert');
+            html.innerHTML = '<input type="text" name="alt" value="" placeholder="' + QuantumwindowLang.inputAlt + '"><input type="number" name="width" value="" placeholder="' + QuantumwindowLang.inputWidth + '"><input type="number" name="height" value="" placeholder="' + QuantumwindowLang.inputHeight + '">';
+            fm.Quantumviewfiles.element.appendChild(html);
+            form = html;
+        }
 
         if(check.checked) {
+
             pathFile = fm.data.path + '/' + name;
             name = name.split('.');
             name.pop();
             altFile = name.join('.');
             fm.Quantumtoolbar.buttonsList['insertFileEditor'].classList.remove('btn-hide');
+            form.classList.add('active');
         } else {
             fm.Quantumtoolbar.buttonsList['insertFileEditor'].classList.add('btn-hide');
+            form.classList.remove('active');
+        }
+    });
+
+    QuantumEventsDispatcher.add('updatePath', function (fm) {
+        let form = fm.Quantumviewfiles.element.querySelector('.modal-form-insert');
+        if(form !== null) {
+            form.classList.remove('active');
+        }
+    });
+
+    QuantumEventsDispatcher.add('reloadPaths', function (fm) {
+        let form = fm.Quantumviewfiles.element.querySelector('.modal-form-insert');
+        if(form !== null) {
+            form.classList.remove('active');
         }
     });
 
@@ -125,8 +173,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function getUrlParameter(name) {
         name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-        var results = regex.exec(location.search);
+        let regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        let results = regex.exec(location.search);
         return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
     }
 

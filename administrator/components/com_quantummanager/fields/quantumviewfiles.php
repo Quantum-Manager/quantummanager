@@ -106,6 +106,11 @@ class JFormFieldQuantumviewfiles extends JFormField
 				'relative' => true
 			]);
 
+			HTMLHelper::_('script', 'com_quantummanager/clipboard.min.js', [
+				'version' => filemtime(__FILE__),
+				'relative' => true
+			]);
+
 			HTMLHelper::_('script', 'com_quantummanager/utils.js', [
 				'version' => filemtime(__FILE__),
 				'relative' => true

@@ -150,6 +150,67 @@ class QuantummanagerFileSystemLocal
 
 
 	/**
+	 * @param $dir
+	 * @param int $level
+	 *
+	 * @return array|int
+	 *
+	 * @since version
+	 */
+	protected static function getSizeDirectory($dir, $level = 0)
+	{
+		$directories = Folder::folders($dir);
+		$files = Folder::files($dir, '');
+		$size = 0;
+		$sizeCurrent = 0;
+		$filesCount = count($files);
+		$directoriesCount = count($directories);
+
+		foreach($files as $file)
+		{
+			$size += filesize($dir . DIRECTORY_SEPARATOR . $file);
+			$sizeCurrent += filesize($dir . DIRECTORY_SEPARATOR . $file);
+		}
+
+		if($level === -1)
+		{
+			return [
+				'size' => $size,
+				'directoriesCount' => count($directories),
+				'filesCount' => count($files)
+			];
+		}
+
+		foreach($directories as $directory)
+		{
+			$search = self::getSizeDirectory($dir . DIRECTORY_SEPARATOR . $directory, $level + 1);
+			$size += $search['size'];
+			$filesCount += $search['filesCount'];
+			$directoriesCount += $search['directoriesCount'];
+		}
+
+		if($level === 0)
+		{
+			return [
+				'size' => $size,
+				'sizeCurrent' => $sizeCurrent,
+				'directoriesCount' => $directoriesCount,
+				'directoriesCountCurrent' => count($directories),
+				'filesCount' => $filesCount,
+				'filesCountCurrent' => count($files),
+			];
+		}
+		else
+		{
+			return [
+				'size' => $size,
+				'directoriesCount' => $directoriesCount,
+				'filesCount' => $filesCount
+			];
+		}
+	}
+
+	/**
 	 * @throws Exception
 	 */
 	public static function upload()
@@ -376,33 +437,65 @@ class QuantummanagerFileSystemLocal
 
 				$splitDirectory = explode(DIRECTORY_SEPARATOR, $directory);
 				$directoryName = array_pop($splitDirectory);
-				$files = Folder::files($directory, '');
-				$directories = Folder::folders($directory);
-				$size = 0;
+				$extended = (int)QuantummanagerHelper::getParamsComponentValue('metafileextended', 0);
 
-				foreach($files as $file)
+				if($extended)
 				{
-					$size += filesize($directory . DIRECTORY_SEPARATOR . $file);
+					$size = self::getSizeDirectory($directory);
+					$meta['global'] = [
+						[
+							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_DIRECTORYNAME'),
+							'value' => $directoryName
+						],
+						[
+							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_COUNTDORECTORIES'),
+							'value' => $size['directoriesCount']
+						],
+						[
+							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_COUNTDORECTORIES_CURRENT'),
+							'value' => $size['directoriesCountCurrent']
+						],
+						[
+							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_COUNTFILES'),
+							'value' => $size['filesCount']
+						],
+						[
+							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_COUNTFILES_CURRENT'),
+							'value' => $size['filesCountCurrent']
+						],
+						[
+							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_FILESSIZE'),
+							'value' => QuantummanagerHelper::formatFileSize($size['size'])
+						],
+						[
+							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_FILESSIZE_CURRENT'),
+							'value' => QuantummanagerHelper::formatFileSize($size['sizeCurrent'])
+						]
+					];
+				}
+				else
+				{
+					$size = self::getSizeDirectory($directory, -1);
+					$meta['global'] = [
+						[
+							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_DIRECTORYNAME'),
+							'value' => $directoryName
+						],
+						[
+							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_COUNTDORECTORIES_CURRENT'),
+							'value' => $size['directoriesCount']
+						],
+						[
+							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_COUNTFILES_CURRENT'),
+							'value' => $size['filesCount']
+						],
+						[
+							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_FILESSIZE_CURRENT'),
+							'value' => QuantummanagerHelper::formatFileSize($size['size'])
+						]
+					];
 				}
 
-				$meta['global'] = [
-					[
-						'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_DIRECTORYNAME'),
-						'value' => $directoryName
-					],
-					[
-						'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_COUNTDORECTORIES'),
-						'value' => count($directories)
-					],
-					[
-						'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_COUNTFILES'),
-						'value' => count($files)
-					],
-					[
-						'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_FILESSIZE'),
-						'value' => QuantummanagerHelper::formatFileSize($size)
-					]
-				];
 
 
 			}
@@ -660,16 +753,32 @@ class QuantummanagerFileSystemLocal
 	}
 
 
+	/**
+	 * @param $path
+	 * @param $file
+	 * @param $id
+	 *
+	 * @return false|string
+	 *
+	 * @throws Exception
+	 * @since version
+	 */
 	public static function downloadFileUnsplash($path, $file, $id)
 	{
 
+		$output = [];
 		if(preg_match('#^https://images.unsplash.com/.*?#', $file))
 		{
+
+			@ini_set('memory_limit', '256M');
+
 			JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+			$lang = Factory::getLanguage();
 			$path = QuantummanagerHelper::preparePath($path);
 
 			$fileContent = file_get_contents($file);
 			$filePath = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
+			$id = File::makeSafe($lang->transliterate($id), ['#^\.#', '#\040#']);;
 			$fileName = $id . '.jpg';
 			file_put_contents($filePath . DIRECTORY_SEPARATOR . $fileName, $fileContent);
 
@@ -677,9 +786,11 @@ class QuantummanagerFileSystemLocal
 			$image = new QuantummanagerHelperImage;
 			$image->afterUpload($filePath . DIRECTORY_SEPARATOR . $fileName);
 
+			$output['name'] = $fileName;
+
 		}
 
-
+		return json_encode($output);
 
 	}
 
@@ -697,7 +808,7 @@ class QuantummanagerFileSystemLocal
 		$app = Factory::getApplication();
 		$splitFile = explode('.', $file);
 		$exs = mb_strtolower(array_pop($splitFile));
-		$mediaIconsPath = 'media/com_quantummanager/images/icons/';
+		$mediaIconsPath = 'media/com_quantummanager/images/icons/files/';
 		$siteUrl = Uri::root();
 
 		if(empty($file))
@@ -740,12 +851,7 @@ class QuantummanagerFileSystemLocal
 			$app->redirect($siteUrl . $path . DIRECTORY_SEPARATOR . $file . '?=' . mt_rand(111111, 999999));
 		}
 
-		if(in_array($exs, ['doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'mp3', 'ogg', 'flac', 'pdf', 'zip', 'txt', 'html', 'css', 'js', 'webp']))
-		{
-			$app->redirect( $siteUrl . $mediaIconsPath . $exs . '.svg');
-		}
-
-		$app->redirect($siteUrl . $mediaIconsPath . 'other.svg');
+		$app->redirect( $siteUrl . $mediaIconsPath . $exs . '.svg');
 
 	}
 

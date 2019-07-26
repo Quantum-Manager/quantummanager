@@ -1,10 +1,9 @@
 /**
  * @package    quantummanager
- *
- * @author     Cymbal <cymbal@delo-design.ru>
- * @copyright  Copyright (C) 2019 "Delo Design". All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
- * @link       https://delo-design.ru
+ * @author     Dmitry Tsymbal <cymbal@delo-design.ru>
+ * @copyright  Copyright © 2019 Delo Design & NorrNext. All rights reserved.
+ * @license    GNU General Public License version 3 or later; see license.txt
+ * @link       https://www.norrnext.com
  */
 
 .quantumtoolbar-module {
@@ -76,9 +75,7 @@
     border-radius: 0 3px 3px 0;
 }
 .quantumtoolbar-module .btn-primary {
-    background: #4568DC;
-    background: -webkit-linear-gradient(to right, #B06AB3, #4568DC);
-    background: linear-gradient(to right, #B06AB3, #4568DC);
+    background: #11a811;
     border: 1px solid transparent;
 }
 @media screen and (max-width: 1360px) {

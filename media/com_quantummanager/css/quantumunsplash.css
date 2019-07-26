@@ -1,3 +1,11 @@
+/**
+ * @package    quantummanager
+ * @author     Dmitry Tsymbal <cymbal@delo-design.ru>
+ * @copyright  Copyright © 2019 Delo Design & NorrNext. All rights reserved.
+ * @license    GNU General Public License version 3 or later; see license.txt
+ * @link       https://www.norrnext.com
+ */
+
 .quantumunsplash-module {
     display: none;
     position: absolute;
@@ -55,7 +63,7 @@
 
 .quantumunsplash-module .quantumunsplash-module-container .quantumunsplash-module-close {
     position: absolute;
-    top: 10px;
+    top: 8px;
     right: -105px;
 }
 
@@ -169,8 +177,23 @@
 }
 
 .quantumunsplash-module .quantumunsplash-module-search .unsplash-meta .unsplash-like {
-    display: inline-block;
+    display: flex;
+    align-items: center;
     color: #ffffff;
+}
+
+.quantumunsplash-module .quantumunsplash-module-search .unsplash-meta .unsplash-like img {
+    display: none;
+}
+
+.quantumunsplash-module .quantumunsplash-module-search .unsplash-meta .unsplash-like svg {
+    width: 14px;
+    height: 14px;
+    margin-right: 4px;
+}
+
+.quantumunsplash-module .quantumunsplash-module-search .unsplash-meta .unsplash-like svg > * {
+    fill: #fff;
 }
 
 .quantumunsplash-module .quantumunsplash-module-search .unsplash-meta .unsplash-like .quantummanager-icon {

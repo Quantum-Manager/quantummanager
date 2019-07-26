@@ -117,7 +117,7 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
 
                 let like = document.createElement('div');
                 like.setAttribute('class', 'unsplash-like');
-                like.innerHTML = "<span class='quantummanager-icon quantummanager-icon-like-inverse'></span>";
+                like.innerHTML = "<img class='svg' src='/media/com_quantummanager/images/icons/action/favorite-heart-button.svg'></img>";
                 like.innerHTML += "<span class='unsplash-like-count'>" + response.results[i]['likes'] + "</span>";
                 meta.appendChild(like);
 
@@ -141,6 +141,8 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
                 container.appendChild(elem);
                 self.masnry.appended(elem);
 
+                QuantumUtils.replaceImgToSvg('.quantumunsplash-module-search');
+
                 elem.addEventListener('click', function (ev) {
 
                     if(ev.target.tagName === 'SPAN') {
@@ -148,8 +150,6 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
                     }
 
                     let element = this;
-                    self.filename = element.getAttribute('data-id') + '.jpg';
-
                     self.areaSave.style.display = 'block';
 
                     jQuery.get("/administrator/index.php?option=com_quantummanager&task=quantumunsplash.downloadTrigger&id=" + encodeURIComponent(element.getAttribute('data-id')));
@@ -158,6 +158,12 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
                         + '&file=' + encodeURIComponent(element.getAttribute('data-url'))
                         + '&id=' + encodeURIComponent(element.getAttribute('data-id'))
                     ).done(function (response) {
+                        response = JSON.parse(response);
+
+                        if(response.name !== undefined) {
+                            self.filename = response.name;
+                        }
+
                         QuantumUnsplashElement.classList.remove('active');
                         self.areaSave.style.display = 'none';
                         Filemanager.events.trigger('unsplashComplete', Filemanager);

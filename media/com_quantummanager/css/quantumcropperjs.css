@@ -1,10 +1,9 @@
 /**
  * @package    quantummanager
- *
- * @author     Cymbal <cymbal@delo-design.ru>
- * @copyright  Copyright (C) 2019 "Delo Design". All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
- * @link       https://delo-design.ru
+ * @author     Dmitry Tsymbal <cymbal@delo-design.ru>
+ * @copyright  Copyright © 2019 Delo Design & NorrNext. All rights reserved.
+ * @license    GNU General Public License version 3 or later; see license.txt
+ * @link       https://www.norrnext.com
  */
 
 .quantumcropperjs-module {
@@ -62,9 +61,7 @@
     height: 12px;
 }
 .quantumcropperjs-module .toolbar .btn-primary {
-    background: #4568DC;
-    background: -webkit-linear-gradient(to right, #B06AB3, #4568DC);
-    background: linear-gradient(to right, #B06AB3, #4568DC);
+    background: #11C111;
     border: 1px solid transparent;
 }
 .quantumcropperjs-module .toolbar .buttons-toggles input {
@@ -145,7 +142,7 @@
 }
 .quantumcropperjs-module .name-file-wrap .input-wrapper span {
     position: absolute;
-    background-color: #B06AB3;
+    background-color: #11a811;
     transition: transform 0.5s ease;
 }
 .quantumcropperjs-module .name-file-wrap .input-wrapper .bottom,
@@ -266,10 +263,8 @@
     justify-content: center;
 }
 .quantumcropperjs-module .button-wrap .btn-save {
-    background: #4568DC;
+    background: #11a811;
     color: #fff;
-    background: -webkit-linear-gradient(to right, #B06AB3, #4568DC);
-    background: linear-gradient(to right, #B06AB3, #4568DC);
     border: none;
 }
 .quantumcropperjs-module .button-wrap .btn-close {
@@ -299,10 +294,8 @@
     right: 0;
     padding: 10px;
     border-radius: 5px;
-    background: #4568DC;
+    background: #11a811;
     color: #fff;
-    background: -webkit-linear-gradient(to right, #B06AB3, #4568DC);
-    background: linear-gradient(to right, #B06AB3, #4568DC);
     opacity: 0.9;
 }
 .quantumcropperjs-module .toolbar-sizes > div {

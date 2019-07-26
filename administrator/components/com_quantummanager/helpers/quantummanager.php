@@ -9,12 +9,15 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Cache\Cache;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Filesystem\Folder;
 use Joomla\Filesystem\Path;
+use Joomla\Registry\Registry;
 
 /**
  * Quantummanager helper.
@@ -275,7 +278,7 @@ class QuantummanagerHelper
 
 		if($host)
 		{
-			$path = Uri::root() . '/' . $path;
+			$path = Uri::root() . $path;
 		}
 
 		return $path;
@@ -357,6 +360,65 @@ class QuantummanagerHelper
 		}
 
 		return round($size,2). ' ' . $a[ $pos];
+	}
+
+
+	/**
+	 * @param $name
+	 * @param $value
+	 *
+	 *
+	 * @since version
+	 */
+	public static function setComponentsParams($name, $value)
+	{
+		$params = ComponentHelper::getParams('com_quantummanager');
+		$params->set($name, $value);
+
+		$componentid = ComponentHelper::getComponent('com_quantummanager')->id;
+		$table = Table::getInstance('extension');
+		$table->load($componentid);
+		$table->bind(['params' => $params->toString()]);
+
+		if (!$table->check())
+		{
+			echo $table->getError();
+			return false;
+		}
+
+		if (!$table->store())
+		{
+			echo $table->getError();
+			return false;
+		}
+
+		self::cleanCache('_system', 0);
+		self::cleanCache('_system', 1);
+
+	}
+
+
+	/**
+	 * Clean the cache
+	 *
+	 * @param   string   $group      The cache group
+	 * @param   integer  $client_id  The ID of the client
+	 *
+	 * @return  void
+	 *
+	 * @since   3.2
+	 */
+	public static function cleanCache($group = null, $client_id = 0)
+	{
+		$conf = Factory::getConfig();
+
+		$options = [
+			'defaultgroup' => !is_null($group) ? $group : Factory::getApplication()->input->get('option'),
+			'cachebase' => $client_id ? JPATH_ADMINISTRATOR . '/cache' : $conf->get('cache_path', JPATH_SITE . '/cache')
+		];
+
+		$cache = Cache::getInstance('callback', $options);
+		$cache->clean();
 	}
 
 

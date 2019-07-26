@@ -1,10 +1,9 @@
 /**
  * @package    quantummanager
- *
- * @author     Cymbal <cymbal@delo-design.ru>
- * @copyright  Copyright (C) 2019 "Delo Design". All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
- * @link       https://delo-design.ru
+ * @author     Dmitry Tsymbal <cymbal@delo-design.ru>
+ * @copyright  Copyright © 2019 Delo Design & NorrNext. All rights reserved.
+ * @license    GNU General Public License version 3 or later; see license.txt
+ * @link       https://www.norrnext.com
  */
 
 .quantumtreecatalogs-module {
@@ -123,7 +122,7 @@
     width: 16px;
     background-repeat: no-repeat;
     background-position: 50% 50%;
-    background-image: url("data:image/svg+xml,%3Csvg version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 58 58' style='enable-background:new 0 0 58 58;' xml:space='preserve'%3E%3Cpath style='fill:%23EFCE4A;' d='M46.324,52.5H1.565c-1.03,0-1.779-0.978-1.51-1.973l10.166-27.871 c0.184-0.682,0.803-1.156,1.51-1.156H56.49c1.03,0,1.51,0.984,1.51,1.973L47.834,51.344C47.65,52.026,47.031,52.5,46.324,52.5z'/%3E%3Cg%3E%3Cpath style='fill:%23EBBA16;' d='M50.268,12.5H25l-5-7H1.732C0.776,5.5,0,6.275,0,7.232V49.96c0.069,0.002,0.138,0.006,0.205,0.01 l10.015-27.314c0.184-0.683,0.803-1.156,1.51-1.156H52v-7.268C52,13.275,51.224,12.5,50.268,12.5z'/%3E%3C/g%3E%3C/svg%3E%0A");
+    background-image: url("../images/icons/files/folder.svg");
 }
 .quantumtreecatalogs-module ul li.active span.tree-path:after {
     opacity: 1;
@@ -141,14 +140,13 @@
 .quantumtreecatalogs-module ul li .tree-delete span {
     padding: 0;
     width: 12px;
-    height: 14px;
-    margin-bottom: 2px;
-    background-image: url("data:image/svg+xml,%3Csvg width='12' height='14' viewBox='0 0 12 14' xmlns='http://www.w3.org/2000/svg'%3E%3Crect fill='%23cc0000' x='3' y='0' width='5' height='1' /%3E%3Crect fill='%23cc0000' x='0' y='2' width='11' height='1' /%3E%3Cpath fill='%23cc0000' d='M9,3 L9,13 L2,13 L2,3 L9,3 L9,3 Z M10,2 L9,2 L2,2 L1,2 L1,3 L1,13 L1,14 L2,14 L9,14 L10,14 L10,13 L10,3 L10,2 L10,2 L10,2 Z' /%3E%3Crect fill='%23cc0000' x='4' y='6' width='1' height='5' /%3E%3Crect fill='%23cc0000' x='6' y='6' width='1' height='5' /%3E%3C/svg%3E");    transition: all 0.2s;
+    height: 12px;
+    margin-bottom: 3px;
+    transition: all 0.2s;
 }
 .quantumtreecatalogs-module ul li .tree-delete:hover {
     cursor: pointer;
 }
 .quantumtreecatalogs-module ul li .tree-delete:hover span {
-    background-image: url("data:image/svg+xml,%0A%3Csvg width='12' height='14' viewBox='0 0 12 14' xmlns='http://www.w3.org/2000/svg'%3E%3Crect fill='%23ddd' x='3' y='0' width='5' height='1' /%3E%3Crect fill='%23ddd' x='0' y='2' width='11' height='1' /%3E%3Cpath fill='%23ddd' d='M9,3 L9,13 L2,13 L2,3 L9,3 L9,3 Z M10,2 L9,2 L2,2 L1,2 L1,3 L1,13 L1,14 L2,14 L9,14 L10,14 L10,13 L10,3 L10,2 L10,2 L10,2 Z' /%3E%3Crect fill='%23ddd' x='4' y='6' width='1' height='5' /%3E%3Crect fill='%23ddd' x='6' y='6' width='1' height='5' /%3E%3C/svg%3E");
     transition: all 0.2s;
 }

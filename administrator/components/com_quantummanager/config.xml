@@ -39,6 +39,17 @@
 			<option value="0">JNO</option>
 		</field>
 
+		<field name="metafileextended"
+			   type="radio"
+			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_METAFILE_EXTENDED_LABEL"
+			   required="true"
+			   class="btn-group"
+			   default="0"
+			   showon="metafile:1">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
 		<field name="dropareahidden"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_DROPAREAHIDDEN_LABEL"
@@ -52,6 +63,16 @@
 		<field name="help"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_HELP_LABEL"
+			   required="true"
+			   class="btn-group"
+			   default="1">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field name="review"
+			   type="radio"
+			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_REVIEW_LABEL"
 			   required="true"
 			   class="btn-group"
 			   default="1">

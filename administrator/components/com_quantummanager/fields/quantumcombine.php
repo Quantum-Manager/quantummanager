@@ -95,6 +95,11 @@ class JFormFieldQuantumCombine extends JFormField
 					]);
 				}
 
+				HTMLHelper::_('script', 'com_quantummanager/utils.js', [
+					'version' => filemtime(__FILE__),
+					'relative' => true
+				]);
+
 				HTMLHelper::_('script', 'com_quantummanager/combine.js', [
 					'version' => filemtime(__FILE__),
 					'relative' => true
@@ -141,9 +146,9 @@ class JFormFieldQuantumCombine extends JFormField
 
 				}
 
-				if((int)$componentParams->get('help', 1))
+				if((int)$componentParams->get('review', 1))
 				{
-					$htmlFields['container-bottom-fixed'] .= (new FileLayout( 'help', JPATH_ROOT . '/administrator/components/com_quantummanager/layouts'))->render();
+					$htmlFields['container-bottom-fixed'] .= (new FileLayout( 'jedreview', JPATH_ROOT . '/administrator/components/com_quantummanager/layouts'))->render();
 				}
 
 				JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
@@ -161,6 +166,7 @@ class JFormFieldQuantumCombine extends JFormField
 		{
 			echo $e->getMessage();
 		}
+
 	}
 
 

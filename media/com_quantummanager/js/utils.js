@@ -58,7 +58,7 @@ window.QuantumUtils = {
 
     serialize: function(obj) {
         let str = [];
-        for (var p in obj) {
+        for (let p in obj) {
             if (obj.hasOwnProperty(p)) {
                 str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
             }
@@ -167,15 +167,15 @@ window.QuantumUtils = {
     },
 
     fallbackCopyTextToClipboard: function(text) {
-        var textArea = document.createElement("textarea");
+        let textArea = document.createElement("textarea");
         textArea.value = text;
         document.body.appendChild(textArea);
         textArea.focus();
         textArea.select();
 
         try {
-            var successful = document.execCommand('copy');
-            var msg = successful ? 'successful' : 'unsuccessful';
+            let successful = document.execCommand('copy');
+            let msg = successful ? 'successful' : 'unsuccessful';
             console.log('Fallback: Copying text command was ' + msg);
         } catch (err) {
             console.error('Fallback: Oops, unable to copy', err);
@@ -184,20 +184,18 @@ window.QuantumUtils = {
         document.body.removeChild(textArea);
     },
 
-    copyTextToClipboard: function(text) {
-        if (!navigator.clipboard) {
-            this.fallbackCopyTextToClipboard(text);
-            return;
-        }
-        navigator.clipboard.writeText(text).then(function() {
-            return true;
-        }, function(err) {
-            return false;
-        });
-    },
+    alert: function(m, buttons) {
+        let alert = JSAlert.alert(m);
 
-    alert: function(m) {
-        JSAlert.alert(m);
+        if(typeof buttons === 'object') {
+            for(let i=0;i<buttons.length;i++) {
+                alert.addButton(buttons[i].name).then(function() {
+                    buttons[i].callback();
+                });
+            }
+        }
+
+        return alert;
     },
 
     confirm: function(q, callback) {
@@ -257,6 +255,42 @@ window.QuantumUtils = {
         size.width = (size.width/100*90);
         size.height = (size.height/100*90);
         return size;
+    },
+
+    openInNewTab: function(url) {
+        let win = window.open(url, '_blank');
+        win.focus();
+    },
+
+    replaceImgToSvg: function(element) {
+        jQuery(element + ' img.svg').each(function(){
+            let $img = jQuery(this);
+            let imgID = $img.attr('id');
+            let imgClass = $img.attr('class');
+            let imgURL = $img.attr('src');
+
+            jQuery.get(imgURL, function(data) {
+                // Get the SVG tag, ignore the rest
+                var $svg = jQuery(data).find('svg');
+
+                // Add replaced image's ID to the new SVG
+                if(typeof imgID !== 'undefined') {
+                    $svg = $svg.attr('id', imgID);
+                }
+                // Add replaced image's classes to the new SVG
+                if(typeof imgClass !== 'undefined') {
+                    $svg = $svg.attr('class', imgClass+' replaced-svg');
+                }
+
+                // Remove any invalid XML tags as per http://validator.w3.org
+                $svg = $svg.removeAttr('xmlns:a');
+
+                // Replace image with new SVG
+                $img.replaceWith($svg);
+
+            }, 'xml');
+
+        });
     }
 
 };
