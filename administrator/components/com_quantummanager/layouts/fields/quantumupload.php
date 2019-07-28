@@ -36,10 +36,10 @@ use Joomla\CMS\Language\Text;
 
 <script type="text/javascript">
     window.QuantumuploadLang = {
-        'dragDrop': '<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUPLOAD_DRAG_DROP'); ?>',
-        'file': '<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUPLOAD_UPLOAD_ERROR_FILE'); ?>',
-        'megabyte': '<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUPLOAD_UPLOAD_ERROR_MEGABITE'); ?>',
-        'maxsize': '<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUPLOAD_UPLOAD_ERROR_MAXSIZE'); ?>',
-        'exs': '<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUPLOAD_UPLOAD_ERROR_EXS'); ?>',
+        'dragDrop': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUPLOAD_DRAG_DROP'); ?>",
+        'file': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUPLOAD_UPLOAD_ERROR_FILE'); ?>",
+        'megabyte': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUPLOAD_UPLOAD_ERROR_MEGABITE'); ?>",
+        'maxsize': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUPLOAD_UPLOAD_ERROR_MAXSIZE'); ?>",
+        'exs': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUPLOAD_UPLOAD_ERROR_EXS'); ?>",
     };
 </script>

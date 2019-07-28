@@ -33,7 +33,7 @@ class Com_QuantummanagerInstallerScript
 	 * @return  boolean  True on success
 	 */
 	public function preflight($route, JAdapterInstance $adapter) {
-		if (!(version_compare(PHP_VERSION, '7.2.0') >= 0))
+		if (!(version_compare(PHP_VERSION, '7.1.0') >= 0))
 		{
 			JFactory::getApplication()->enqueueMessage(JText::_('COM_QUANTUMMANAGER_WRONG_PHP'), 'error');
 			return false;
