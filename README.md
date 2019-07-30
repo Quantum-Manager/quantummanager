@@ -88,7 +88,26 @@ GPLv3
 - Библиотека jinterventionimage (https://github.com/Delo-Design/jinterventionimage)
 
 ### Разработчик
+
+Разработчик
 Компания "Деловой дизайн" https://delo-design.ru
+NorrNext - https://www.norrnext.com
+
+Официальная информация:
+- [Страница продукта на русском](https://hika.su/rasshireniya/quantum-manager)
+- [Страница продукта на английском](https://www.norrnext.com/quantum-manager)
+- [Страница на JED](https://extensions.joomla.org/extension/quantum-manager/)
+
+[Форум поддержки на русском](https://www.norrnext.com/forum/quantum-manager-ru)
+
+
+
+English:
+Quantum is a free file and media manager for Joomla.   
+- [Product official page](https://www.norrnext.com/quantum-manager)
+- [Quantum in JED](https://extensions.joomla.org/extension/quantum-manager/)
+- [Localizations](https://www.norrnext.com/quantum-manager-localizations)
+- [Support](https://www.norrnext.com/forum/quantum-manager)
 
 ### Поддержка
 - [quantum@hika.su](mailto:quantum@hika.su) (email)
