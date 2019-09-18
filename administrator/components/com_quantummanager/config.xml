@@ -228,12 +228,12 @@
 
 		<field name="overlay"
 			   type="radio"
-			   label="Накладывать водяной знак"
+			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_LABEL"
 			   required="true"
 			   default="0"
 			   class="btn-group">
-			<option value="1">Автоматически</option>
-			<option value="2">Кнопкой</option>
+			<option value="1">COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_AUTO_LABEL</option>
+			<option value="2">COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_BUTTON_LABEL</option>
 			<option value="0">JNO</option>
 		</field>
 

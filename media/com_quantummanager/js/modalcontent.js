@@ -151,8 +151,9 @@ document.addEventListener('DOMContentLoaded', function () {
         fm.Quantumtoolbar.buttonsList['insertFileEditor'].classList.add('btn-hide');
 
         let form = fm.Quantumviewfiles.element.querySelector('.modal-form-insert');
+
         if(form !== null) {
-            form.classList.add('active');
+            form.classList.remove('active');
         }
 
     });
@@ -162,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         let form = fm.Quantumviewfiles.element.querySelector('.modal-form-insert');
         if(form !== null) {
-            form.classList.add('active');
+            form.classList.remove('active');
         }
 
     });

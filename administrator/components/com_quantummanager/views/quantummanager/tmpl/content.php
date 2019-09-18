@@ -26,8 +26,7 @@ else
 }
 
 HTMLHelper::_('stylesheet', 'com_quantummanager/modal.css', [
-	//'version' => filemtime(__FILE__),
-	'version' => rand(111111, 999999),
+	'version' => filemtime(__FILE__),
 	'relative' => true
 ]);
 

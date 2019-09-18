@@ -1091,7 +1091,26 @@ class QuantummanagerFileSystemLocal
 	public static function setWatermark($path, $scope, $list)
 	{
 		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
-		$path = QuantummanagerHelper::preparePath($path, false, $scope);
+		JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');
+
+		$path = QuantummanagerHelper::preparePath( $path, false, $scope);
+		$image = new QuantummanagerHelperImage;
+
+		foreach ($list as $file)
+		{
+			$pathFile = JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file;
+
+			$info = pathinfo($pathFile);
+
+			if(isset($info['extension']) && (!in_array(mb_strtolower($info['extension']), ['jpg', 'jpeg', 'png', 'webp'])))
+			{
+				continue;
+			}
+
+			$image->resizeWatermark($pathFile);
+			$image->reloadCache($pathFile);
+		}
+
 	}
 
 

@@ -21,6 +21,11 @@ class QuantummanagerHelperImage
 
 	public $paramsComponent;
 
+	public function __construct()
+	{
+		$this->paramsComponent = ComponentHelper::getParams('com_quantummanager');
+	}
+
 	/**
 	 * @param $file
 	 * @param array $options
@@ -46,8 +51,6 @@ class QuantummanagerHelperImage
 			$defaultOptions[$key] = $value;
 		}
 
-		$this->paramsComponent = ComponentHelper::getParams('com_quantummanager');
-
 		if($this->paramsComponent->get('original', 0) && (int)$defaultOptions['original'])
 		{
 			$this->originalSave($file);
@@ -58,7 +61,7 @@ class QuantummanagerHelperImage
 			$this->resizeFit($file);
 		}
 
-		if($this->paramsComponent->get('overlay', 0) && (int)$defaultOptions['overlay'])
+		if((int)$this->paramsComponent->get('overlay', 0) === 1 && (int)$defaultOptions['overlay'])
 		{
 			$this->resizeWatermark($file);
 		}
@@ -128,9 +131,11 @@ class QuantummanagerHelperImage
 				$watermark = $manager->make($logo);
 				$image->insert($watermark, $position);
 
+				$image->save($file);
+
 			}
 
-			$image->save($file);
+
 		}
 		catch (Exception $e) {
 			echo $e->getMessage();
@@ -202,7 +207,7 @@ class QuantummanagerHelperImage
 	{
 		try
 		{
-			$cacheSource =  JPATH_ROOT . DIRECTORY_SEPARATOR . 'images/com_quantummanager/cache';
+			$cacheSource =  JPATH_ROOT . DIRECTORY_SEPARATOR . 'cache/com_quantummanager';
 			$cache = $cacheSource . DIRECTORY_SEPARATOR . str_replace(JPATH_SITE . DIRECTORY_SEPARATOR,'', $file);
 			if(file_exists($cache))
 			{

@@ -435,6 +435,10 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
         fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.remove('btn-hide');
     });
 
+    Filemanager.events.add(this, 'reloadPaths', function (fm, el, target) {
+        fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.add('btn-hide');
+    });
+
     Filemanager.events.add(this, 'updatePath', function (fm, el, target) {
         fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.add('btn-hide');
     });
