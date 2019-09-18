@@ -15,3 +15,17 @@
 .field-media-wrapper .modal-body iframe {
     height: 670px !important;
 }
+
+.quantummanager-modal-sbox-window {
+    position: fixed !important;
+    top: 10% !important;
+    left: 10% !important;
+    width: 80% !important;
+    height: 80% !important;
+    padding: 0 !important;
+}
+
+.quantummanager-modal-sbox-window iframe {
+    width: 100% !important;
+    height: 100% !important;
+}

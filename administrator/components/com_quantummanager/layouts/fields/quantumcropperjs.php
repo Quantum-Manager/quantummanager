@@ -113,31 +113,18 @@ $presets = $paramsComponents->get('custompresetscrop');
     </div>
     <div class="editor">
         <div class="cropperjs"></div>
-        <!--
+
         <div class="toolbar-footer">
             <div class="buttons-methods">
 
                 <div class="btn-group">
-                    <button type="button" class="btn quantummanager-tooltip" data-method="zoom" data-option="0.1" data-tooltip="<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_ZOOM_IN'); ?>">
-                        <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="cropper.zoom(0.1)">
-                            <span class="quantummanager-icon quantummanager-icon-zoom-in"></span>
-                        </span>
-                    </button>
-                    <button type="button" class="btn quantummanager-tooltip" data-method="zoom" data-option="-0.1" data-tooltip="<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_ZOOM_OUT'); ?>">
-                        <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="cropper.zoom(-0.1)">
-                            <span class="quantummanager-icon quantummanager-icon-zoom-out"></span>
-                        </span>
-                    </button>
-                </div>
-
-                <div class="btn-group">
-                    <button type="button" class="btn quantummanager-tooltip" data-method="rotate" data-option="-45" data-tooltip="<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_ROTATE_LEFT'); ?>">
-                        <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="cropper.rotate(-45)">
+                    <button type="button" class="btn quantummanager-tooltip" data-method="rotate" data-option="-90" data-tooltip="<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_ROTATE_LEFT'); ?>">
+                        <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="cropper.rotate(-90)">
                             <span class="quantummanager-icon quantummanager-icon-rotate-left"></span>
                         </span>
                     </button>
-                    <button type="button" class="btn quantummanager-tooltip" data-method="rotate" data-option="45" data-tooltip="<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_ROTATE_RIGHT'); ?>">
-                        <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="cropper.rotate(45)">
+                    <button type="button" class="btn quantummanager-tooltip" data-method="rotate" data-option="90" data-tooltip="<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_ROTATE_RIGHT'); ?>">
+                        <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="cropper.rotate(90)">
                             <span class="quantummanager-icon quantummanager-icon-rotate-right"></span>
                         </span>
                     </button>
@@ -158,6 +145,6 @@ $presets = $paramsComponents->get('custompresetscrop');
 
             </div>
         </div>
-        -->
+
     </div>
 </div>

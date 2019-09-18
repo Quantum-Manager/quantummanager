@@ -127,8 +127,8 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             self.currentImage = self.imageChange;
             editor.appendChild(self.imageChange);
             self.cropperjs = new Cropper(self.imageChange, self.defaultCropperJSOptions);
-
         });
+
         self.ImageHeightValue.addEventListener('change', function () {
             let editor = QuantumCropperjsElement.querySelector('.editor .cropperjs');
             let width = self.ImageWidthValue.value;
@@ -153,6 +153,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             self.cropperjs = new Cropper(self.imageChange, self.defaultCropperJSOptions);
             self.changeCropperJS();
         });
+
         self.CropWidthValue.addEventListener('change', function () {
             //let canvasCropData = self.cropperjs.getCropBoxData();
             //canvasCropData.width = parseInt(this.value);
@@ -218,6 +219,83 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             self.cropperjs.destroy();
             QuantumCropperjsElement.classList.remove('active');
             event.preventDefault();
+        });
+
+        QuantumCropperjsElement.querySelector('.buttons-methods').addEventListener('click', function (event) {
+            let e = event || window.event;
+            let target = e.target || e.srcElement;
+            let result;
+            let cropped;
+            let input;
+            let data;
+
+            if (!self.cropperjs) {
+                return;
+            }
+
+            while (target !== this) {
+                if (target.getAttribute('data-method')) {
+                    break;
+                }
+
+                target = target.parentNode;
+            }
+
+            if (target === this || target.disabled || target.className.indexOf('disabled') > -1) {
+                return;
+            }
+
+            data = {
+                method: target.getAttribute('data-method'),
+                target: target.getAttribute('data-target'),
+                option: target.getAttribute('data-option') || undefined,
+                secondOption: target.getAttribute('data-second-option') || undefined
+            };
+
+            cropped = self.cropperjs;
+
+            if (data.method) {
+                if (typeof data.target !== 'undefined') {
+                    input = document.querySelector(data.target);
+
+                    if (!target.hasAttribute('data-option') && data.target && input) {
+                        try {
+                            data.option = JSON.parse(input.value);
+                        } catch (e) {
+                            console.log(e.message);
+                        }
+                    }
+                }
+
+                switch (data.method) {
+                    case 'rotate':
+                        if (cropped && self.defaultCropperJSOptions.viewMode > 0) {
+                            self.cropperjs.clear();
+                        }
+
+                        break;
+
+                }
+
+                result = self.cropperjs[data.method](data.option, data.secondOption);
+
+                switch (data.method) {
+                    case 'rotate':
+                        if (cropped && self.defaultCropperJSOptions.viewMode > 0) {
+                            self.cropperjs.crop();
+                        }
+
+                        break;
+                }
+
+                if (typeof result === 'object' && result !== self.cropperjs && input) {
+                    try {
+                        input.value = JSON.stringify(result);
+                    } catch (e) {
+                        console.log(e.message);
+                    }
+                }
+            }
         });
 
         QuantumCropperjsElement.querySelector('.change-ratio').addEventListener('change', function (event) {
@@ -389,6 +467,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
     QuantumEventsDispatcher.add(this, 'addContextMenuFile', function (fm, el) {
         return [
             {
+                writeable: 1,
                 fileExs: ['png', 'jpg', 'jpeg'],
                 type: 'normal',
                 label: QuantumviewfilesLang.buttonEdit,

@@ -82,6 +82,7 @@ if($app->input->get('e_name', '') !== '') {
 				'directory' => $folderRoot,
 				'view' => 'list-grid',
 				'onlyfiles' => '0',
+				'watermark' => QuantummanagerHelper::getParamsComponentValue('overlay' , 0) > 0 ? '1' : '0',
 				'metafile' => QuantummanagerHelper::getParamsComponentValue('metafile' , '1'),
 			],
 			'quantumcropperjs' => [

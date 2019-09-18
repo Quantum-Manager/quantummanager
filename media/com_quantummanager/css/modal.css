@@ -28,19 +28,27 @@ body {
     display: none;
     position: fixed;
     background: #ddd;
-    width: calc(100% - 60px);
+    width: 100%;
+    left: 0;
+    right: 0;
     bottom: 0;
-    justify-content: flex-start;
-    padding: 5px;
     margin-bottom: 0;
 }
 
 .modal-form-insert.active {
-    display: flex;
-    flex-wrap: wrap;
+    display: block;
 }
 
-.modal-form-insert > input {
+.modal-form-insert > div {
+    max-width: 1024px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding: 10px 0;
+}
+
+.modal-form-insert > div > input {
     display: inline-block;
     width: 29%;
     margin: 1% !important;

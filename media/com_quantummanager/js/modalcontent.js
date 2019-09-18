@@ -70,48 +70,54 @@ document.addEventListener('DOMContentLoaded', function () {
         let file = fm.Quantumviewfiles.file;
 
         if(file === undefined) {
+
+            let form = fm.Quantumviewfiles.element.querySelector('.modal-form-insert');
+            if(form !== null) {
+                form.classList.remove('active');
+            }
+
             fm.Quantumtoolbar.buttonsList['insertFileEditor'].classList.add('btn-hide');
             return;
         }
 
         let name = file.querySelector('.file-name').innerHTML;
         let check = file.querySelector('.import-files-check-file');
-        let form = fm.Quantumviewfiles.element.querySelector('.modal-form-insert');
+        let oldForm = fm.Quantumviewfiles.element.querySelector('.modal-form-insert');
 
-        if(form === null) {
-            let oldForm = fm.Quantumviewfiles.element.querySelector('.modal-form-insert');
-
-            if(oldForm !== null) {
-                oldForm.remove();
-            }
-
-            if(formFields[fm.data.scope] === undefined) {
-                return;
-            }
-
-            let fields = formFields[fm.data.scope];
-            let html = document.createElement('form');
-            html.setAttribute('class', 'modal-form-insert');
-
-            for(let i in fields) {
-                html.innerHTML += '<input data-default="' + fields[i].default + '" type="' + fields[i].type +'" name="{' + fields[i].nametemplate + '}" value="" placeholder="' + fields[i].name + '" />';
-            }
-
-            fm.Quantumviewfiles.element.appendChild(html);
-            form = html;
+        if(oldForm !== null) {
+            oldForm.remove();
         }
+
+        if(formFields[fm.data.scope] === undefined) {
+            return;
+        }
+
+        let fields = formFields[fm.data.scope];
+        let html = '';
+        let form = document.createElement('form');
+        form.setAttribute('class', 'modal-form-insert active');
+
+        html = "<div>";
+
+        for(let i in fields) {
+            html += '<input data-default="' + fields[i].default + '" type="' + fields[i].type +'" name="{' + fields[i].nametemplate + '}" value="" placeholder="' + fields[i].name + '">';
+        }
+        html += "</div>";
+        form.innerHTML = html;
+
+        fm.Quantumviewfiles.element.appendChild(form);
 
         if(check.checked) {
             pathFile = fm.data.path + '/' + name;
             name = name.split('.');
             name.pop();
-            altFile = name.join('.');
             fm.Quantumtoolbar.buttonsList['insertFileEditor'].classList.remove('btn-hide');
             form.classList.add('active');
         } else {
             fm.Quantumtoolbar.buttonsList['insertFileEditor'].classList.add('btn-hide');
             form.classList.remove('active');
         }
+
     });
 
     QuantumEventsDispatcher.add('updatePath', function (fm) {
@@ -143,10 +149,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     QuantumEventsDispatcher.add('reloadPaths', function (fm) {
         fm.Quantumtoolbar.buttonsList['insertFileEditor'].classList.add('btn-hide');
+
+        let form = fm.Quantumviewfiles.element.querySelector('.modal-form-insert');
+        if(form !== null) {
+            form.classList.add('active');
+        }
+
     });
 
     QuantumEventsDispatcher.add('updatePath', function (fm) {
         fm.Quantumtoolbar.buttonsList['insertFileEditor'].classList.add('btn-hide');
+
+        let form = fm.Quantumviewfiles.element.querySelector('.modal-form-insert');
+        if(form !== null) {
+            form.classList.add('active');
+        }
+
     });
 
     function getUrlParameter(name) {

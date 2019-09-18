@@ -58,6 +58,8 @@ $id = mt_rand(111111, 999999);
         'changeGridViews': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_CHANGE_GRID_VIEWS'); ?>",
         'metaFileShow': "<?php echo Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_SHOW'); ?>",
         'metaFileHide': "<?php echo Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_HIDE'); ?>",
+        'metaSelectCount': "<?php echo Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_SELECT_COUNT'); ?>",
+        'metaSelectSize': "<?php echo Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_SELECT_SIZE'); ?>",
         'contextReload': "<?php echo Text::_('COM_QUANTUMMANAGER_CONTEXT_RELOAD'); ?>",
         'contextRename': "<?php echo Text::_('COM_QUANTUMMANAGER_CONTEXT_RENAME'); ?>",
         'contextCopyLink': "<?php echo Text::_('COM_QUANTUMMANAGER_CONTEXT_COPY_LINK'); ?>",

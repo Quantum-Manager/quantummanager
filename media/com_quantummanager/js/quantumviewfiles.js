@@ -44,6 +44,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
     this.directoryContext = '';
     this.menuItemsDirectories = [
         {
+            writeable: 1,
             type: 'normal',
             label: QuantumviewfilesLang.contextRename,
             tip: '',
@@ -67,6 +68,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             }
         },
         {
+            writeable: 1,
             type: 'normal',
             label: QuantumviewfilesLang.contextDelete,
             tip: '',
@@ -83,6 +85,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
     this.fileContext = '';
     this.menuItemsFile = [
         {
+            writeable: 0,
             type: 'normal',
             label: QuantumviewfilesLang.contextPreviewFile,
             tip: '',
@@ -99,6 +102,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             }
         },
         {
+            writeable: 1,
             type: 'normal',
             label: QuantumviewfilesLang.contextRename,
             tip: '',
@@ -121,6 +125,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             }
         },
         {
+            writeable: 0,
             type: 'normal',
             label: QuantumviewfilesLang.contextCopyLink,
             tip: '',
@@ -149,6 +154,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             }
         },
         {
+            writeable: 1,
             type: 'normal',
             label: QuantumviewfilesLang.contextDelete,
             tip: '',
@@ -449,7 +455,9 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                     self.fileContext = filesAll[i];
                     self.contextMenu.clear();
                     let exs = self.fileContext.getAttribute('data-exs').toLocaleLowerCase();
-                    let tmpContextMenu = self.menuItemsFile;
+                    let writeable = parseInt(self.fileContext.getAttribute('data-iswritable'));
+                    let tmpContextMenu = [];
+                    let tmpContextMenuSource = self.menuItemsFile;
                     let addContextMenu = self.trigger('addContextMenuFile');
                     let tmpAddContextMenu = [];
 
@@ -461,9 +469,22 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                                 continue;
                             }
 
+                            if(writeable !== addContextMenu[i][0].writeable) {
+                                continue;
+                            }
+
                             tmpAddContextMenu = tmpAddContextMenu.concat(addContextMenu[i]);
                         }
 
+                    }
+
+                    for(let i = 0; i < tmpContextMenuSource.length;i++) {
+
+                        if((writeable === 0) && (tmpContextMenuSource[i].writeable === 1)) {
+                            continue;
+                        }
+
+                        tmpAddContextMenu = tmpAddContextMenu.concat(tmpContextMenuSource[i]);
                     }
 
                     tmpContextMenu = tmpAddContextMenu.concat(tmpContextMenu);
@@ -501,9 +522,20 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                     directoriesAll[i].addEventListener('contextmenu',function(ev) {
                         self.directoryContext = directoriesAll[i];
                         self.contextMenu.clear();
-                        let tmpContextMenu = self.menuItemsDirectories;
+                        let writeable = parseInt(self.directoryContext.getAttribute('data-iswritable'));
+                        let tmpContextMenu = [];
+                        let tmpContextMenuSource = self.menuItemsDirectories;
                         let addContextMenu = self.trigger('addContextMenuDirectory');
                         let tmpAddContextMenu = [];
+
+                        for(let i = 0; i < tmpContextMenuSource.length;i++) {
+
+                            if((writeable === 0) && (tmpContextMenuSource[i].writeable === 1)) {
+                                continue;
+                            }
+
+                            tmpContextMenu = tmpContextMenu.concat(tmpContextMenuSource[i]);
+                        }
 
                         if(addContextMenu !== undefined && (typeof addContextMenu === 'object')) {
 
@@ -519,7 +551,10 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                             self.contextMenu.add(new ContextualItem(tmpContextMenu[i]));
                         }
 
-                        self.contextMenu.show(ev);
+                        if(tmpContextMenu.length > 0) {
+                            self.contextMenu.show(ev);
+                        }
+
                         ev.preventDefault();
                     });
                 }
@@ -586,8 +621,6 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                             self.metaReset = true;
                             self.showMetaDirectory();
                         }
-
-                        console.log(self.file);
 
                         self.trigger('clickFile', self.file);
                     }
@@ -888,8 +921,8 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             let html = '<div>';
             html += '<div class="meta-preview meta-preview-album">' + imgs + '</div>';
             html += '<div class="meta-table">';
-            html += '<div><div>Выделенных файлов</div><div>' + countElement + '</div></div>';
-            html += '<div><div>Размер файлов</div><div>' + QuantumUtils.bytesToSize(size) + '</div></div>';
+            html += '<div><div>' + QuantumviewfilesLang.metaSelectCount + '</div><div>' + countElement + '</div></div>';
+            html += '<div><div>' + QuantumviewfilesLang.metaSelectSize + '</div><div>' + QuantumUtils.bytesToSize(size) + '</div></div>';
             html += '</tbody></table>';
             html += '</div>';
 
