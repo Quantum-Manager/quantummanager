@@ -16,7 +16,7 @@ window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, o
         this.loadDirectory();
     };
 
-    this.loadDirectory = function (path, callback) {
+    this.loadDirectory = function (path, callback, reload) {
 
         let self = this;
 
@@ -26,58 +26,78 @@ window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, o
             this.path = path;
         }
 
+        if (reload === null || reload === undefined) {
+            reload = false;
+        }
+
 
         if (Filemanager.data.path === undefined || Filemanager.data.path !== path) {
             //Filemanager.data.path = path;
         }
 
-        jQuery.get("/administrator/index.php?option=com_quantummanager&task=quantumtreecatalogs.getDirectories&path=" + encodeURIComponent(path) + '&root=' + encodeURIComponent(self.options.directory)).done(function (response) {
+        jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumtreecatalogs.getDirectories&path=" + encodeURIComponent(path) + '&root=' + encodeURIComponent(self.options.directory))).done(function (response) {
 
             response = JSON.parse(response);
-            if(response.directories !== undefined) {
-                let html = "<ul class=\"tree-ul\">" + self.directoriesPrepare(response.directories, 0) + "</ul>";
-                QuantumTreeCatalogsElement.querySelector('.tree-scroll').innerHTML = html;
+            if(response.directories === undefined) {
+                return false;
             }
 
-            let toggler = QuantumTreeCatalogsElement.querySelectorAll(".tree-caret");
-            let treePaths = QuantumTreeCatalogsElement.querySelectorAll(".tree-path");
-            let timer = 0;
-            let delay = 200;
-            let prevent = false;
-
-
-            for (let i=0;i<toggler.length;i++) {
-                toggler[i].addEventListener("click", function() {
-                    this.parentElement.querySelector(".tree-nested").classList.toggle("active");
-                    this.classList.toggle("tree-caret-down");
-                });
+            if(reload) {
+                QuantumTreeCatalogsElement.querySelector('.tree-scroll').innerHTML = '';
             }
 
-            for (let i=0;i<treePaths.length;i++) {
-                treePaths[i].addEventListener("click", function(ev) {
-                    let element = this;
-                    timer = setTimeout(function() {
-                        if (!prevent) {
-                            self.treePathsClick(element, self);
-                        }
-                        prevent = false;
-                    }, delay);
-                });
-            }
+            for(var i=0;i<response.directories.length;i++) {
 
-            for (let i=0;i<treePaths.length;i++) {
-                treePaths[i].addEventListener("dblclick", function(ev) {
-                    let element = this;
-                    clearTimeout(timer);
-                    prevent = true;
-                    self.treePathsDblclick(element, self);
-                });
-            }
+                let html = "<ul class=\"tree-ul root-scope\" data-scope='" + response.directories[i]['scopeid'] + "'>" + self.directoriesPrepare(response.directories[i], 0) + "</ul>";
 
-            let tmpCaret = QuantumTreeCatalogsElement.querySelector('.root').closest('li').querySelector('.tree-caret');
+                QuantumTreeCatalogsElement.querySelector('.tree-scroll').innerHTML += html;
 
-            if(tmpCaret !== null) {
-                tmpCaret.click();
+                let toggler = QuantumTreeCatalogsElement.querySelectorAll(".tree-caret");
+                let treePaths = QuantumTreeCatalogsElement.querySelectorAll(".tree-path");
+                let timer = 0;
+                let delay = 200;
+                let prevent = false;
+
+
+                for (let i=0;i<toggler.length;i++) {
+                    toggler[i].addEventListener("click", function() {
+                        this.parentElement.querySelector(".tree-nested").classList.toggle("active");
+                        this.classList.toggle("tree-caret-down");
+                    });
+                }
+
+                for (let i=0;i<treePaths.length;i++) {
+                    treePaths[i].addEventListener("click", function(ev) {
+                        let element = this;
+                        timer = setTimeout(function() {
+                            if (!prevent) {
+                                self.treePathsClick(element, self);
+                            }
+                            prevent = false;
+                        }, delay);
+                    });
+                }
+
+                for (let i=0;i<treePaths.length;i++) {
+                    treePaths[i].addEventListener("dblclick", function(ev) {
+                        let element = this;
+                        clearTimeout(timer);
+                        prevent = true;
+                        self.treePathsDblclick(element, self);
+                    });
+                }
+
+                let tmpRoot = QuantumTreeCatalogsElement.querySelector('[data-scope="' + Filemanager.data.scope + '"] .root');
+
+                if(tmpRoot !== null) {
+                    let tmpCaret = tmpRoot.closest('li').querySelector('.tree-caret');
+
+                    if(tmpCaret !== null) {
+                        tmpCaret.click();
+                    }
+
+                }
+
             }
 
             Filemanager.Quantumtreecatalogs.directoryScroll(Filemanager.data.path);
@@ -91,6 +111,7 @@ window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, o
 
     this.treePathsClick = function (element, qte) {
 
+        let scope = element.closest('.root-scope').getAttribute('data-scope');
         let pathFind = [];
         let currLi = element.closest('li');
         let maxI = 500;
@@ -102,11 +123,18 @@ window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, o
             }
 
             if(currLi.querySelector('.tree-path').classList.contains('root')) {
-                pathFind.push(currLi.querySelector('.tree-path').innerHTML);
+                pathFind.push(currLi.querySelector('.tree-path').getAttribute('data-path'));
                 Filemanager.data.path = pathFind.reverse().join('/');
+
+                if(Filemanager.data.scope !== scope) {
+                    Filemanager.data.scope = scope;
+                    qte.trigger('updateScope');
+                }
+
 
                 if(localStorage !== undefined) {
                     localStorage.setItem('quantummanagerLastDir', Filemanager.data.path);
+                    localStorage.setItem('quantummanagerScope', Filemanager.data.scope);
                 }
 
                 qte.trigger('clickTreeDirectory', this);
@@ -124,100 +152,113 @@ window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, o
     };
 
     this.directoriesPrepare = function (directories, level) {
+        let title = '';
+        if(directories.title !== undefined) {
+            title = directories.title;
+        } else {
+            title = directories.path;
+        }
+
         if(directories.subpath !== undefined && directories.subpath.length > 0) {
-            let html = "<li><span class=\"tree-caret\"></span> <span class='tree-path " + ((level === 0) ? "root" : "" ) + " '>" + directories.path + "</span> <ul class='tree-nested'>";
+            let html = "<li><span class=\"tree-caret\"></span> <span data-path='" + directories.path + "' class='tree-path " + ((level === 0) ? "root" : "" ) + " '>" + title + "</span> <ul class='tree-nested'>";
             for(let i=0;i<directories.subpath.length;i++) {
                 html += this.directoriesPrepare(directories.subpath[i], level + 1);
             }
             html += "</ul></li>";
             return html;
         } else {
-            return "<li><span class='tree-path " + ((level === 0) ? "root" : "" ) + "'>" + directories.path + "</span></li>";
+            return "<li><span data-path='" + directories.path + "' class='tree-path " + ((level === 0) ? "root" : "" ) + "'>" + title + "</span></li>";
         }
     };
 
 
     this.directoryScroll = function (pathSource) {
         let self = this;
-        let li = QuantumTreeCatalogsElement.querySelector('.root').closest('li');
-        let pathFind = li.querySelector('.tree-path').innerHTML;
+        let li = QuantumTreeCatalogsElement.querySelector('[data-scope="' + Filemanager.data.scope + '"] .root').closest('li');
+        let pathFind = li.querySelector('.tree-path').getAttribute('data-path');
 
         if(li === null) {
             return;
         }
 
         let findPathInLists = function (li, pathParent) {
-            let nestedLi = li.querySelectorAll('.tree-nested > li');
-            for(let i=0;i<nestedLi.length;i++) {
-                let currPathFind = pathParent + '/' + nestedLi[i].querySelector('.tree-path').innerHTML;
-                if(currPathFind === pathSource) {
-                    let lastLi = nestedLi[i];
-                    let top = 0;
-                    let deleteDirertory = document.createElement('div');
-                    let deleteDirectoryIcon = document.createElement('span');
-                    deleteDirertory.setAttribute('class', 'tree-delete');
-                    deleteDirectoryIcon.setAttribute('class', 'quantummanager-icon quantummanager-icon-delete');
-                    deleteDirertory.append(deleteDirectoryIcon);
+            let nestedUl = li.querySelectorAll('.tree-nested');
+            for(let j=0;j<nestedUl.length;j++) {
+                let nestedLi = nestedUl[j].children;
+                for(let i=0;i<nestedLi.length;i++) {
+                    let currPathFind = pathParent + '/' + nestedLi[i].querySelector('.tree-path').innerHTML;
+                    if(currPathFind === pathSource) {
+                        let lastLi = nestedLi[i];
+                        let top = 0;
+                        let deleteDirertory = document.createElement('div');
+                        let deleteDirectoryIcon = document.createElement('span');
+                        deleteDirertory.setAttribute('class', 'tree-delete');
+                        deleteDirectoryIcon.setAttribute('class', 'quantummanager-icon quantummanager-icon-delete');
+                        deleteDirertory.append(deleteDirectoryIcon);
 
-                    if(self.active !== '') {
-                        let deleteActive = self.active.querySelector('.tree-delete');
-                        if(deleteActive !== null) {
-                            self.active.querySelector('.tree-delete').remove();
+                        if(self.active !== '') {
+                            let deleteActive = self.active.querySelector('.tree-delete');
+                            if(deleteActive !== null) {
+                                self.active.querySelector('.tree-delete').remove();
+                            }
+                            self.active.classList.remove('active');
                         }
-                        self.active.classList.remove('active');
-                    }
 
-                    self.active = nestedLi[i];
-                    self.active.classList.add('active');
-                    QuantumUtils.insertAfter(deleteDirertory,  self.active.querySelector('.tree-path'));
+                        self.active = nestedLi[i];
+                        self.active.classList.add('active');
+                        QuantumUtils.insertAfter(deleteDirertory,  self.active.querySelector('.tree-path'));
 
-                    deleteDirertory.addEventListener('click', function (ev) {
-                        let deleteNamePath = this.closest('li').querySelector('.tree-path').innerHTML;
-                        let selfThis = this;
+                        deleteDirertory.addEventListener('click', function (ev) {
+                            let deleteNamePath = this.closest('li').querySelector('.tree-path').innerHTML;
+                            let selfThis = this;
 
-                        QuantumUtils.confirm(QuantumtreecatalogsLang.confirmDelete + ' ' + deleteNamePath + '?', function (result) {
-                            let files = [];
-                            let pathDelete = Filemanager.data.path.split('/');
-                            pathDelete.pop();
-                            files.push(selfThis.closest('li').querySelector('.tree-path').innerHTML);
-                            jQuery.get("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.delete&path=" + encodeURIComponent(pathDelete.join('/')) + '&list=' + encodeURIComponent(JSON.stringify(files))).done(function (response) {
-                                Filemanager.data.path = pathDelete.join('/');
+                            QuantumUtils.confirm(QuantumtreecatalogsLang.confirmDelete + ' ' + deleteNamePath + '?', function (result) {
+                                let files = [];
+                                let pathDelete = Filemanager.data.path.split('/');
+                                pathDelete.pop();
+                                files.push(selfThis.closest('li').querySelector('.tree-path').innerHTML);
+                                jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.delete&path=" + encodeURIComponent(pathDelete.join('/')) + '&list=' + encodeURIComponent(JSON.stringify(files)) + '&scope=' + encodeURIComponent(Filemanager.data.scope))).done(function (response) {
+                                    Filemanager.data.path = pathDelete.join('/');
 
-                                if(localStorage !== undefined) {
-                                    localStorage.setItem('quantummanagerLastDir', Filemanager.data.path);
-                                }
+                                    if(localStorage !== undefined) {
+                                        localStorage.setItem('quantummanagerLastDir', Filemanager.data.path);
+                                    }
 
-                                Filemanager.events.trigger('reloadPaths', Filemanager);
+                                    Filemanager.events.trigger('reloadPaths', Filemanager);
+                                });
                             });
+
+                            ev.preventDefault();
                         });
 
-                        ev.preventDefault();
-                    });
+                        //top = lastLi.closest('.root-scope').offsetTop;
 
-                    while(true) {
-                        let carret = lastLi.querySelector('.tree-caret');
-                        if(carret !== null) {
-                            if(!carret.classList.contains('tree-caret-down')) {
-                                carret.click();
+                        while(true) {
+
+                            if(lastLi === null) {
+                                break;
                             }
-                        }
-                        top += lastLi.offsetTop;
-                        lastLi = lastLi.closest('ul').closest('li');
 
-                        if(lastLi.querySelector('.tree-path').classList.contains('root')) {
-                            break;
+                            let carret = lastLi.querySelector('.tree-caret');
+                            if(carret !== null) {
+                                if(!carret.classList.contains('tree-caret-down')) {
+                                    carret.click();
+                                }
+                            }
+
+                            top += lastLi.offsetTop;
+                            lastLi = lastLi.closest('ul').closest('li');
+
                         }
 
+                        QuantumTreeCatalogsElement.querySelector('.tree-scroll').scrollTop = top - 25;
+                        return;
+                    } else {
+                        findPathInLists(nestedLi[i], currPathFind)
                     }
-
-                    //QuantumTreeCatalogsElement.querySelector('.tree-scroll').scrollTop = top - 25;
-
-                } else {
-                    findPathInLists(nestedLi[i], currPathFind)
                 }
             }
         };
-
         //если рут, если нет, запускаем поиск
         if(pathFind === pathSource) {
 
@@ -233,7 +274,15 @@ window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, o
             self.active = li;
             self.active.classList.add('active');
 
-            QuantumTreeCatalogsElement.querySelector('.tree-scroll').scrollTop = 0;
+            let carret = self.active.querySelector('.tree-caret');
+            if(carret !== null) {
+                if(!carret.classList.contains('tree-caret-down')) {
+                    carret.click();
+                }
+            }
+
+            QuantumTreeCatalogsElement.querySelector('.tree-scroll').scrollTop = self.active.closest('.root-scope').offsetTop - 25;
+
         } else {
             findPathInLists(li, pathFind);
         }
@@ -249,11 +298,11 @@ window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, o
     });
 
     QuantumEventsDispatcher.add(this, 'uploadComplete', function (fm, el) {
-        fm.Quantumtreecatalogs.loadDirectory();
+        fm.Quantumtreecatalogs.loadDirectory(this.path, function () {}, true);
     });
 
     QuantumEventsDispatcher.add(this, 'reloadPaths', function (fm, el) {
-        fm.Quantumtreecatalogs.loadDirectory();
+        fm.Quantumtreecatalogs.loadDirectory(this.path, function () {}, true);
     });
 
 };

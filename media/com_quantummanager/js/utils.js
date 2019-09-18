@@ -8,6 +8,14 @@
 
 window.QuantumUtils = {
 
+    getFullUrl: function(url) {
+        let prefix = '';
+        if(QuantumSettings.urlBase !== undefined) {
+            prefix = QuantumSettings.urlBase;
+        }
+        return prefix + url;
+    },
+
     ajax: function (typeRequest, url, data, headers, callbackSuccess, callbackFail) {
         let xhr = new XMLHttpRequest();
         let formData = new FormData();

@@ -3,19 +3,83 @@
 
 	<fieldset name="general" label="COM_QUANTUMMANAGER_CONFIG_GENERAL" description="COM_QUANTUMMANAGER_CONFIG_GENERAL_DESC">
 
-		<field name="path"
-			   type="text"
-			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_PATH_LABEL"
-			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_PATH_DESC"
-			   required="true"
-			   default="images"
+		<field type="quantumconfigdescription"
+			   label=""
+			   fromText="COM_QUANTUMMANAGER_CONFIG_GENERAL_PATH_DESC"
+			   addfieldpath="/administrator/components/com_quantummanager/fields"
 		/>
+
+		<field name="scopes"
+			   type="subform"
+			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_SCOPES_LABEL"
+			   buttons=" "
+			   multiple="true"
+			   default='{"scopes0":{"id":"images","title":"Images","enable":"1","path":"images"},"scopes1":{"id":"docs","title":"Docs","enable":"0","path":"docs"},"scopes2":{"id":"music","title":"Music","enable":"0","path":"music"},"scopes3":{"id":"videos","title":"Videos","enable":"0","path":"videos"}}'
+			   addfieldpath="/administrator/components/com_quantummanager/fields">
+			<form>
+				<field
+						name="id"
+						type="hidden"
+						label="ID"
+				/>
+				<field
+						name="title"
+						type="quantumconfigscopetitle"
+						label="COM_QUANTUMMANAGER_CONFIG_GENERAL_SCOPES_NAME_LABEL"
+						disabled="disabled"
+				/>
+				<field name="enable"
+					   type="radio"
+					   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_SCOPES_ENABLE_LABEL"
+					   class="btn-group"
+					   default="1">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+				<field
+						name="path"
+						type="quantumconfigpath"
+						label="COM_QUANTUMMANAGER_CONFIG_GENERAL_SCOPES_PATH_LABEL"
+				/>
+			</form>
+		</field>
+
+		<field name="scopescustom"
+			   type="subform"
+			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_SCOPES_CUSTOM_LABEL"
+			   multiple="true"
+			   addfieldpath="/administrator/components/com_quantummanager/fields">
+			<form>
+				<field
+						name="title"
+						type="text"
+						label="COM_QUANTUMMANAGER_CONFIG_GENERAL_SCOPES_NAME_LABEL"
+				/>
+				<field
+						name="path"
+						type="quantumconfigpath"
+						label="COM_QUANTUMMANAGER_CONFIG_GENERAL_SCOPES_PATH_LABEL"
+				/>
+				<field
+						name="id"
+						type="hidden"
+						label="ID"
+				/>
+			</form>
+		</field>
 
 		<field name="maxsize"
 			   type="text"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_MAXSIZE_LABEL"
 			   required="true"
 			   default="10"
+		/>
+
+		<field name="maxsizefilename"
+			   type="number"
+			   required="true"
+			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_MAXSIZEFILENAME_LABEL"
+			   default="63"
 		/>
 
 		<field name="postfix"
@@ -65,7 +129,7 @@
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_MEDIAREDIRECT_LABEL"
 			   required="true"
 			   class="btn-group"
-			   default="0">
+			   default="1">
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
@@ -123,6 +187,18 @@
 			<option value="0">JNO</option>
 		</field>
 
+		<field name="originalresize"
+			   type="radio"
+			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_ORIGINALRESIZE_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_ORIGINALRESIZE_DESC"
+			   required="true"
+			   class="btn-group"
+			   default="0"
+			   showon="original:1">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
 		<field name="resize"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_RESIZE_LABEL"
@@ -152,11 +228,12 @@
 
 		<field name="overlay"
 			   type="radio"
-			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_LABEL"
+			   label="Накладывать водяной знак"
 			   required="true"
 			   default="0"
 			   class="btn-group">
-			<option value="1">JYES</option>
+			<option value="1">Автоматически</option>
+			<option value="2">Кнопкой</option>
 			<option value="0">JNO</option>
 		</field>
 
@@ -165,7 +242,7 @@
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_FILE_LABEL"
 			   folder="images"
 			   default="images/joomla_black.png"
-			   showon="overlay:1"
+			   showon="overlay!:0"
 		/>
 
 		<field name="overlaypercent"
@@ -174,7 +251,7 @@
 			   required="true"
 			   class="btn-group"
 			   default="0"
-			   showon="overlay:1">
+			   showon="overlay!:0">
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
@@ -184,7 +261,7 @@
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_PERCENT_VALUE_LABEL"
 			   default="10"
 			   class="input-xlarge"
-			   showon="overlaypercent:1[AND]overlay:1"
+			   showon="overlaypercent:1[AND]overlay!:0"
 		/>
 
 		<field name="overlaypos"
@@ -192,7 +269,7 @@
 			   required="true"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_POS_LABEL"
 			   default="topleft"
-			   showon="overlay:1"
+			   showon="overlay!:0"
 		>
 			<option value="top-left">Top Left</option>
 			<option value="top">Top center</option>
@@ -211,7 +288,7 @@
 			   class="input-xlarge"
 			   required="true"
 			   default="10"
-			   showon="overlay:1"/>
+			   showon="overlay!:0"/>
 
 		<field name="custompresetscrop"
 			   type="subform"

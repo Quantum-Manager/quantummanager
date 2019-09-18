@@ -9,7 +9,7 @@
 .quantumupload-module {
     background: #fbfbfb;
 }
-.drop-area {
+.quantumupload-module .drop-area {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -22,39 +22,44 @@
     width: auto;
     padding: 15px;
     text-align: center;
+    transition: all 0.2s ease;
 }
-.drop-area.drop-area-hidden {
+.quantumupload-module  .drop-area.drop-area-hidden {
     display: none;
 }
-.drop-area.highlight {
+.quantumupload-module  .drop-area.highlight {
     border-color: #d8d7d8;
 }
-.drop-area .form-upload {
+.quantumupload-module .drop-area .form-upload {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.drop-area .quantummanager-icon {
+.quantumupload-module .drop-area .quantummanager-icon {
     width: 20px;
     height: 20px;
     margin-right: 5px;
 }
-.drop-area p {
+.quantumupload-module .drop-area p {
     display: inline-block;
     margin: 0;
 }
-.drop-area .button {
+.quantumupload-module .drop-area .button {
     display: inline-block;
     cursor: pointer;
     color: #4568DC !important;
     margin: 0 0 0 5px;
     background-color: transparent !important;
 }
-.drop-area .button:hover {
+.quantumupload-module .drop-area .button:hover {
     color: #3a5dbe;
 }
-.drop-area .fileElem {
+.quantumupload-module .drop-area .fileElem {
     display: none;
+}
+.quantumupload-module .drop-area:hover {
+    cursor: pointer;
+    background: #eeeeee;
 }
 .quantumupload-module progress {
     display: none;

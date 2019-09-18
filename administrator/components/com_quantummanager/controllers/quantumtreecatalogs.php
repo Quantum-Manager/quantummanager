@@ -23,7 +23,6 @@ use Joomla\Filesystem\Folder;
 class QuantummanagerControllerQuantumtreecatalogs extends AdminController
 {
 
-
 	public function getDirectories()
 	{
 		$app = Factory::getApplication();
@@ -35,6 +34,7 @@ class QuantummanagerControllerQuantumtreecatalogs extends AdminController
 		}
 
 		$path = $data['path'];
+		$scope = isset($data['scope']) ? $data['scope'] : '';
 		$rootSplit = explode('/',  $data['root']);
 
 		if(isset($rootSplit[0]))
@@ -46,8 +46,13 @@ class QuantummanagerControllerQuantumtreecatalogs extends AdminController
 			$root = '';
 		}
 
+		if(empty($scope))
+		{
+			$scope = 'all';
+		}
+
 		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
-		echo QuantummanagerFileSystemLocal::getDirectories($path, $root);
+		echo QuantummanagerFileSystemLocal::getScopesDirectories($scope, $path, $root);
 
 		$app->close();
 	}

@@ -10,6 +10,8 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
+
 ?>
 
 <div class="quantummanager-jedreview">
@@ -19,11 +21,11 @@ use Joomla\CMS\Language\Text;
 		</div>
 		<div>
             <a class="stars" href="https://extensions.joomla.org/extension/quantum-manager/">
-                <img class="svg" src="/media/com_quantummanager/images/icons/action/rate-star-button.svg" />
-                <img class="svg" src="/media/com_quantummanager/images/icons/action/rate-star-button.svg" />
-                <img class="svg" src="/media/com_quantummanager/images/icons/action/rate-star-button.svg" />
-                <img class="svg" src="/media/com_quantummanager/images/icons/action/rate-star-button.svg" />
-                <img class="svg" src="/media/com_quantummanager/images/icons/action/rate-star-button.svg" />
+                <img class="svg" src="<?php echo Uri::root(true) ?>/media/com_quantummanager/images/icons/action/rate-star-button.svg" />
+                <img class="svg" src="<?php echo Uri::root(true) ?>/media/com_quantummanager/images/icons/action/rate-star-button.svg" />
+                <img class="svg" src="<?php echo Uri::root(true) ?>/media/com_quantummanager/images/icons/action/rate-star-button.svg" />
+                <img class="svg" src="<?php echo Uri::root(true) ?>/media/com_quantummanager/images/icons/action/rate-star-button.svg" />
+                <img class="svg" src="<?php echo Uri::root(true) ?>/media/com_quantummanager/images/icons/action/rate-star-button.svg" />
             </a>
             <a href="https://extensions.joomla.org/extension/quantum-manager/" class="btn" target="_blank"><?php echo Text::_('COM_QUANTUMMANAGER_JEDREIVIEW_REIVEW'); ?></a>
         </div>

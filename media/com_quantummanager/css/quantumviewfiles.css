@@ -280,6 +280,82 @@
 }
 .quantumviewfiles-module .meta-file .meta-table > div > div:last-child {
     font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.quantumviewfiles-module .meta-file .meta-preview-album {
+    position: relative;
+    width: 80%;
+    max-height: 250px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+}
+.quantumviewfiles-module .meta-file .meta-preview-album img {
+    width: 100%;
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    border: 4px solid #FFF;
+    object-fit: contain;
+    object-position: center;
+    background-color: #eee;
+    -moz-box-shadow: 0 0 4px #ddd;
+    -webkit-box-shadow: 0 0 4px #ddd;
+    box-shadow: 0 0 4px #ddd;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    -moz-transition: all 1s;
+    -o-transition: all 1s;
+    -webkit-transition: all 1s;
+    transition: all 1s;
+    -moz-transform-origin: 50% 50% 50%;
+    -ms-transform-origin: 50% 50% 50%;
+    -webkit-transform-origin: 50% 50% 50%;
+    transform-origin: 50% 50% 50%;
+}
+.quantumviewfiles-module .meta-file .meta-preview-album img:first-child {
+    position: relative;
+    z-index: 1000;
+}
+.quantumviewfiles-module .meta-file .meta-preview-album img:first-child + img {
+    -moz-transform: rotate(-4deg);
+    -ms-transform: rotate(-4deg);
+    -webkit-transform: rotate(-4deg);
+    transform: rotate(-4deg);
+}
+.quantumviewfiles-module .meta-file .meta-preview-album img:last-child {
+    -moz-transform: rotate(4deg);
+    -ms-transform: rotate(4deg);
+    -webkit-transform: rotate(4deg);
+    transform: rotate(4deg);
+}
+.quantumviewfiles-module .meta-file .meta-preview-album:hover {
+    width: 85%;
+}
+.quantumviewfiles-module .meta-file .meta-preview-album:hover img:first-child {
+    z-index: 3000;
+}
+.quantumviewfiles-module .meta-file .meta-preview-album:hover img:first-child + img {
+    left: -60px;
+    -moz-transform: rotate(-20deg);
+    -ms-transform: rotate(-20deg);
+    -webkit-transform: rotate(-20deg);
+    transform: rotate(-20deg);
+}
+.quantumviewfiles-module .meta-file .meta-preview-album:hover img:last-child {
+    left: 60px;
+    -moz-transform: rotate(20deg);
+    -ms-transform: rotate(20deg);
+    -webkit-transform: rotate(20deg);
+    transform: rotate(20deg);
 }
 .quantumviewfiles-module .field-list-files {
     width: 100%;
@@ -505,6 +581,23 @@
     -ms-user-select: none;
     user-select: none;
 }
+.quantumviewfiles-module .field-list-files .list-grid .file-item.lock {
+    position: relative;
+}
+.quantumviewfiles-module .field-list-files .list-grid .file-item.lock:before {
+    display: block;
+    content: "";
+    position: absolute;
+    left: 35px;
+    top: 5px;
+    width: 25px;
+    height: 25px;
+    background-size: contain;
+    background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='iso-8859-1'%3F%3E%3C!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E%3C!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'%3E%3Csvg version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='535.5px' height='535.5px' viewBox='0 0 535.5 535.5' style='enable-background:new 0 0 535.5 535.5;' xml:space='preserve' %3E%3Cg%3E%3Cg id='lock'%3E%3Cpath d='M420.75,178.5h-25.5v-51c0-71.4-56.1-127.5-127.5-127.5c-71.4,0-127.5,56.1-127.5,127.5v51h-25.5c-28.05,0-51,22.95-51,51 v255c0,28.05,22.95,51,51,51h306c28.05,0,51-22.95,51-51v-255C471.75,201.45,448.8,178.5,420.75,178.5z M267.75,408 c-28.05,0-51-22.95-51-51s22.95-51,51-51s51,22.95,51,51S295.8,408,267.75,408z M346.8,178.5H188.7v-51 c0-43.35,35.7-79.05,79.05-79.05c43.35,0,79.05,35.7,79.05,79.05V178.5z'/%3E%3C/g%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3C/svg%3E%0A");
+}
+.quantumviewfiles-module .field-list-files .list-grid .file-item.lock .file-exs {
+    opacity: .6;
+}
 /*.quantumviewfiles-module .field-list-files .list-grid .file-item:hover .file-name {
     transition: all 0.2s;
     transform: scale(1.2);
@@ -579,6 +672,23 @@
     -ms-user-select: none;
     user-select: none;
 }
+.quantumviewfiles-module .field-list-files .list-grid .directory-item.lock {
+    position: relative;
+}
+.quantumviewfiles-module .field-list-files .list-grid .directory-item.lock:before {
+    display: block;
+    content: "";
+    position: absolute;
+    left: 35px;
+    top: 5px;
+    width: 25px;
+    height: 25px;
+    background-size: contain;
+    background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='iso-8859-1'%3F%3E%3C!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E%3C!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'%3E%3Csvg version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='535.5px' height='535.5px' viewBox='0 0 535.5 535.5' style='enable-background:new 0 0 535.5 535.5;' xml:space='preserve' %3E%3Cg%3E%3Cg id='lock'%3E%3Cpath d='M420.75,178.5h-25.5v-51c0-71.4-56.1-127.5-127.5-127.5c-71.4,0-127.5,56.1-127.5,127.5v51h-25.5c-28.05,0-51,22.95-51,51 v255c0,28.05,22.95,51,51,51h306c28.05,0,51-22.95,51-51v-255C471.75,201.45,448.8,178.5,420.75,178.5z M267.75,408 c-28.05,0-51-22.95-51-51s22.95-51,51-51s51,22.95,51,51S295.8,408,267.75,408z M346.8,178.5H188.7v-51 c0-43.35,35.7-79.05,79.05-79.05c43.35,0,79.05,35.7,79.05,79.05V178.5z'/%3E%3C/g%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3C/svg%3E%0A");
+}
+.quantumviewfiles-module .field-list-files .list-grid .directory-item.lock .directory-icon {
+    opacity: .6;
+}
 .quantumviewfiles-module .field-list-files .list-table {
     min-height: 100%;
 }
@@ -595,6 +705,7 @@
     transition: all 0.2s;
 }
 .quantumviewfiles-module .field-list-files .list-table .file-item input {
+    display: none;
     margin-right: 5px;
 }
 .quantumviewfiles-module .field-list-files .list-table .file-item input:checked ~ .file {
@@ -606,7 +717,22 @@
     color: #444444;
 }
 .quantumviewfiles-module .field-list-files .list-table .file-item .file {
-    padding: 8px 4px;
+    position: relative;
+    padding: 8px 4px 8px 25px;
+}
+.quantumviewfiles-module .field-list-files .list-table .file-item .file:before {
+    position: absolute;
+    content: "";
+    left: 0;
+    width: 15px;
+    height: 15px;
+    border: 1px solid #dddddd;
+}
+.quantumviewfiles-module .field-list-files .list-table .file-item input:checked ~ .file:before {
+    border: 1px solid;
+    background-color: #444;
+    background-size: cover;
+    background-image: url("data:image/svg+xml,%3Csvg version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='448.8px' height='448.8px' viewBox='0 0 448.8 448.8' style='enable-background:new 0 0 448.8 448.8;' xml:space='preserve' %3E%3Cg%3E%3Cg fill='%23fff' id='check'%3E%3Cpolygon points='142.8,323.85 35.7,216.75 0,252.45 142.8,395.25 448.8,89.25 413.1,53.55 '/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 .quantumviewfiles-module .field-list-files .list-table .file .file-exs .av-folderlist-label:after {
     margin-top: 4px;
@@ -633,11 +759,12 @@
 .quantumviewfiles-module .field-list-files .list-table .directory-item .directory .directory-icon {
     width: 16px;
     height: 16px;
+    margin-top: -2px;
     margin-right: 4px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: 50% 50%;
-    background-image: url("data:image/svg+xml,%3Csvg version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 58 58' style='enable-background:new 0 0 58 58;' xml:space='preserve'%3E%3Cpath style='fill:%23EFCE4A;' d='M46.324,52.5H1.565c-1.03,0-1.779-0.978-1.51-1.973l10.166-27.871 c0.184-0.682,0.803-1.156,1.51-1.156H56.49c1.03,0,1.51,0.984,1.51,1.973L47.834,51.344C47.65,52.026,47.031,52.5,46.324,52.5z'/%3E%3Cg%3E%3Cpath style='fill:%23EBBA16;' d='M50.268,12.5H25l-5-7H1.732C0.776,5.5,0,6.275,0,7.232V49.96c0.069,0.002,0.138,0.006,0.205,0.01 l10.015-27.314c0.184-0.683,0.803-1.156,1.51-1.156H52v-7.268C52,13.275,51.224,12.5,50.268,12.5z'/%3E%3C/g%3E%3C/svg%3E%0A");
+    background-image: url(../images/icons/files/folder.svg);
 }
 .quantumviewfiles-module .field-list-files .list-table .directory-item .directory .directory-name {
     height: 100%;
@@ -664,6 +791,7 @@
     background-size: cover;
     background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg' data-svg='more'%3E%3Ccircle cx='3' cy='10' r='2'%3E%3C/circle%3E%3Ccircle cx='10' cy='10' r='2'%3E%3C/circle%3E%3Ccircle cx='17' cy='10' r='2'%3E%3C/circle%3E%3C/svg%3E");
 }
+
 
 @media screen and (max-width: 800px) {
     .quantumviewfiles-module .field-list-files .list-grid  .directory-item {

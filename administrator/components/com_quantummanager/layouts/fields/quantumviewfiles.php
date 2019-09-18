@@ -13,7 +13,7 @@ extract($displayData);
 $id = mt_rand(111111, 999999);
 ?>
 
-<div class="quantummanager-module quantumviewfiles-module" data-type="Quantumviewfiles" data-options="hash:<?php echo $displayData['hash'] ?>;directory:<?php echo $displayData['directory'] ?>;onlyfiles:<?php echo $displayData['onlyfiles'] ?>;metafile:<?php echo $displayData['metafile'] ?>">
+<div class="quantummanager-module quantumviewfiles-module" data-type="Quantumviewfiles" data-options="hash:<?php echo $displayData['hash'] ?>;directory:<?php echo $displayData['directory'] ?>;onlyfiles:<?php echo $displayData['onlyfiles'] ?>;metafile:<?php echo $displayData['metafile'] ?>;watermark:<?php echo $displayData['watermark'] ?>">
     <div class="quantumviewfiles-module-heading">
         <div class="breadcumbs"></div>
         <div class="filter-search">
@@ -48,6 +48,7 @@ $id = mt_rand(111111, 999999);
         'buttonUpload': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_BUTTON_UPLOAD'); ?>",
         'buttonCreateDirectory': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_BUTTON_CREATE_DIRECTORY'); ?>",
         'buttonEdit': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_BUTTON_EDIT'); ?>",
+        'buttonWatermark': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_BUTTON_WATERMARK'); ?>",
         'buttonDelete': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_BUTTON_DELETE'); ?>",
         'buttonTable': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_BUTTON_TABLE'); ?>",
         'buttonGrid': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_BUTTON_GRID'); ?>",

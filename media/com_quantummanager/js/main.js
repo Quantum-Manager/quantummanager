@@ -69,6 +69,7 @@ window.QuantumEventsDispatcher = {
 document.addEventListener('DOMContentLoaded' ,function () {
     let quantummanagerAll = document.querySelectorAll('.quantummanager');
     let id = 0;
+    let scopesEnabled = QuantumSettings.scopeEnabled.split(',');
 
     for (let i=0;i<quantummanagerAll.length;i++) {
         let modules = quantummanagerAll[i].querySelectorAll('.quantummanager-module');
@@ -77,6 +78,23 @@ document.addEventListener('DOMContentLoaded' ,function () {
         filemanager.events = new QuantumEvents;
         filemanager.element = quantummanagerAll[i];
         filemanager.data = {};
+        filemanager.data.scope = 'images';
+
+        if(localStorage !== undefined) {
+            let scope = localStorage.getItem('quantummanagerScope');
+
+            if(scope !== null) {
+                filemanager.data.scope = scope;
+            }
+        }
+
+        if(scopesEnabled.length === 0) {
+            return;
+        }
+
+        if(scopesEnabled.indexOf(filemanager.data.scope) === -1) {
+            filemanager.data.scope = scopesEnabled[0];
+        }
 
         for(let j=0;j<modules.length;j++) {
             let type = modules[j].getAttribute('data-type');
@@ -115,16 +133,14 @@ document.addEventListener('DOMContentLoaded' ,function () {
             QuantumUtils.replaceImgToSvg('.quantummanager-jedreview');
             helpButtonClose.addEventListener('click', function (ev) {
                 quantummanagerHelp.remove();
-                jQuery.get("/administrator/index.php?option=com_quantummanager&task=quantummanager.hideJedReview");
+                jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantummanager.hideJedReview"));
                 ev.preventDefault();
             });
         }
+
     }
 
     QuantumEventsDispatcher.build();
-
-
-
 
 });
 

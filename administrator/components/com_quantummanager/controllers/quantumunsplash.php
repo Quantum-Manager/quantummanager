@@ -81,17 +81,18 @@ class QuantummanagerControllerquantumunsplash extends AdminController
 		$data = Factory::getApplication()->input->getArray();
 		$file = $data['file'];
 
-		if(!isset($data['file']))
+		if(!isset($data['file'], $data['path'], $data['scope']))
 		{
 			$app->close();
 		}
 
 		$path = $data['path'];
+		$scope = $data['scope'];
 		$file = $data['file'];
 		$id = $data['id'];
 
 		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
-		echo QuantummanagerFileSystemLocal::downloadFileUnsplash($path, $file, $id);
+		echo QuantummanagerFileSystemLocal::downloadFileUnsplash($path, $scope, $file, $id);
 
 		$app->close();
 

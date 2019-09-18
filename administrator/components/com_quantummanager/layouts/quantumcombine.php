@@ -9,6 +9,13 @@
 
 defined('_JEXEC') or die;
 extract($displayData);
+
+$scopeEnabled = [];
+foreach($scopes as $scope)
+{
+	$scopeEnabled[] = $scope->id;
+}
+
 ?>
 
 <div class="quantummanager <?php echo $cssClass ?>">
@@ -68,3 +75,10 @@ extract($displayData);
 	<?php endif; ?>
 
 </div>
+
+<script type="text/javascript">
+    window.QuantumSettings = {
+        urlBase: '<?php echo $urlBase ?>',
+        scopeEnabled: '<?php echo implode(',', $scopeEnabled) ?>',
+    }
+</script>

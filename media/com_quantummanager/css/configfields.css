@@ -1,0 +1,16 @@
+.quantumconfig-quantumconfigpath-inputs {
+    display: flex;
+    align-items: center;
+}
+
+.quantumconfig-quantumconfigpath-inputs span {
+    display: inline-block;
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+.quantumconfig-quantumconfigpath-desc {
+    margin-top: 15px;
+    font-size: 14px;
+    line-height: 17px;
+}

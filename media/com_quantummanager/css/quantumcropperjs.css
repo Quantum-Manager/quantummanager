@@ -229,6 +229,7 @@
 }
 .quantumcropperjs-module .input-width-height-wrap > div label {
     color: #fff;
+    margin: 0;
 }
 .quantumcropperjs-module .input-width-height-wrap > div > div {
     display: flex;
@@ -237,7 +238,7 @@
 }
 .quantumcropperjs-module .input-width-height-wrap input[type='text'],
 .quantumcropperjs-module .input-width-height-wrap input[type='number'] {
-    width: 70%;
+    width: 80%;
     margin: 0;
     background-color: #333;
     border: 1px solid #333;
@@ -245,7 +246,7 @@
 }
 .quantumcropperjs-module .input-width-height-wrap span {
     color: #ffffff;
-    text-transform: uppercase;
+    text-transform: lowercase;
     width: 13%;
 }
 .quantumcropperjs-module .input-width-height-wrap .image-width-height-ratio-checkbox {
@@ -271,6 +272,9 @@
     background: #333;
     color: #fff;
     border: none;
+}
+.quantumcropperjs-module .toolbar > div > div > label {
+    margin-bottom: 5px;
 }
 .quantumcropperjs-module .editor {
     position: relative;
@@ -325,6 +329,32 @@
     background: rgba(243, 243, 243, .85);
 }
 
+.cropper-point {
+    width: 10px !important;
+    height: 10px !important;
+}
+.cropper-point.point-nw {
+    left: 0;
+    top: 0;
+}
+.cropper-point.point-n {
+    top: 0;
+}
+.cropper-point.point-ne {
+    right: 0;
+    top: 0;
+}
+.cropper-point.point-sw {
+    bottom: 0;
+    left: 0;
+}
+.cropper-point.point-s {
+    bottom: 0;
+}
+.cropper-point.point-se {
+    bottom: 0;
+    right: 0;
+}
 @media screen and (max-width: 800px) {
     .quantumcropperjs-module .toolbar {
         width: 30%;

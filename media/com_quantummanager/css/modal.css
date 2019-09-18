@@ -30,16 +30,18 @@ body {
     background: #ddd;
     width: calc(100% - 60px);
     bottom: 0;
-    justify-content: space-between;
-    padding: 15px;
+    justify-content: flex-start;
+    padding: 5px;
+    margin-bottom: 0;
 }
 
 .modal-form-insert.active {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .modal-form-insert > input {
     display: inline-block;
-    width: 28%;
-    margin: 0 !important;
+    width: 29%;
+    margin: 1% !important;
 }

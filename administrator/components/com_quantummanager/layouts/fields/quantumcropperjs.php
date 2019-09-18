@@ -113,6 +113,7 @@ $presets = $paramsComponents->get('custompresetscrop');
     </div>
     <div class="editor">
         <div class="cropperjs"></div>
+        <!--
         <div class="toolbar-footer">
             <div class="buttons-methods">
 
@@ -157,5 +158,6 @@ $presets = $paramsComponents->get('custompresetscrop');
 
             </div>
         </div>
+        -->
     </div>
 </div>

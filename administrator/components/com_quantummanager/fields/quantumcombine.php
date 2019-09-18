@@ -15,6 +15,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Layout\FileLayout;
+use Joomla\CMS\Uri\Uri;
 
 /**
  * Class JFormFieldQuantumUpload
@@ -42,9 +43,14 @@ class JFormFieldQuantumCombine extends JFormField
 	 */
 	protected function getLayoutData()
 	{
+		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+		$scopes = QuantummanagerHelper::getAllScope();
+
 		return array_merge(parent::getLayoutData(),
 			[
 				'cssClass' => $this->cssClass,
+				'urlBase' => Uri::root(true),
+				'scopes' => $scopes,
 			]
 		);
 	}

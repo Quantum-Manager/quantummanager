@@ -368,6 +368,13 @@
     height: 14px;
     background-image: url("../images/icons/action/mark-as-favorite-star.svg");
 }
+.quantummanager-icon-watermark {
+    width: 14px;
+    height: 14px;
+    background-image: url("../images/icons/action/automatic-brightness.svg");
+}
+
+
 
 
 /****************************** Loader ********************************/

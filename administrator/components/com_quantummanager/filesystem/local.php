@@ -21,10 +21,15 @@ class QuantummanagerFileSystemLocal
 
 	/**
 	 * @param $path
+	 * @param $scope
 	 * @param $name
-	 * @return string
+	 *
+	 * @return false|string
+	 *
+	 * @throws Exception
+	 * @since version
 	 */
-	public static function createDirectory($path, $name)
+	public static function createDirectory($path, $scope, $name)
 	{
 		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 
@@ -34,17 +39,76 @@ class QuantummanagerFileSystemLocal
 			return json_encode(['fail']);
 		}
 
-		$path = JPATH_SITE . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($path);
+		$path = JPATH_SITE . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($path, false, $scope);
 		$lang = Factory::getLanguage();
 
 		if(file_exists($path))
 		{
-			Folder::create($path . DIRECTORY_SEPARATOR . File::makeSafe($lang->transliterate($name), ['#^\.#', '#\040#']));
+			$nameForSafe = preg_replace('#[\-]{2,}#isu','-', str_replace(' ', '-', $name));
+			Folder::create($path . DIRECTORY_SEPARATOR . File::makeSafe($lang->transliterate($nameForSafe), ['#^\.#', '#\040#']));
 			return json_encode(['ok']);
 		}
 
 		return json_encode(['fail']);
 
+	}
+
+
+	/**
+	 * @param string $scopeSource
+	 * @param $path
+	 * @param $root
+	 *
+	 * @return false|string
+	 *
+	 * @throws Exception
+	 * @since version
+	 */
+	public static function getScopesDirectories($scopeSource = 'all', $path, $root)
+	{
+		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+		$scopes = QuantummanagerHelper::getAllScope();
+
+		if($scopeSource === 'all')
+		{
+			foreach ($scopes as $scope)
+			{
+				$path = $scope->path;
+				$path = DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($path);
+				$pathArr = explode(DIRECTORY_SEPARATOR, $path);
+				$pathCurr = '';
+
+				//создаем области, если их нету
+				foreach($pathArr as $iValue)
+				{
+					$pathCurr .= DIRECTORY_SEPARATOR . $iValue;
+					if(!file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $pathCurr))
+					{
+						Folder::create(JPATH_ROOT . DIRECTORY_SEPARATOR . $pathCurr);
+					}
+				}
+
+				$directories[] = self::showdir(JPATH_ROOT . DIRECTORY_SEPARATOR . $path, $root, $scope->title, $scope->id, true, true);
+			}
+		}
+		else
+		{
+			foreach ($scopes as $scope)
+			{
+				if($scope->id === $scopeSource)
+				{
+					$path = $scope->path;
+					$path = JPATH_ROOT . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($path);
+					$directories[] = self::showdir($path, $root, $scope->title, $scope->id, true, true);
+					break;
+				}
+			}
+		}
+
+
+		return json_encode([
+			'directories' => $directories
+		]);
 	}
 
 	/**
@@ -60,7 +124,7 @@ class QuantummanagerFileSystemLocal
 		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 		$path = JPATH_ROOT . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($path);
 
-		$directories = self::showdir($path, $root,true, true);
+		$directories = self::showdir($path, $root,'',true, true);
 
 		return json_encode([
 			'directories' => $directories
@@ -71,6 +135,7 @@ class QuantummanagerFileSystemLocal
 	/**
 	 * @param        $dir
 	 * @param string $root
+	 * @param string $scope
 	 * @param bool   $folderOnly
 	 * @param bool   $showRoot
 	 * @param int    $level
@@ -82,6 +147,8 @@ class QuantummanagerFileSystemLocal
 	(
 		$dir,
 		$root = '',
+		$scopeTitle = '',
+		$scopeId = '',
 		$folderOnly = false,
 		$showRoot = false,
 		$level = 0,  // do not use!!!
@@ -103,10 +170,12 @@ class QuantummanagerFileSystemLocal
 		if ($showRoot && (int)$level == 0)
 		{
 			JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
-			$subdir = self::showdir($dir, $root, $folderOnly, $showRoot, $level + 1, $ef);
+			$subdir = self::showdir($dir, $root, $scopeTitle, $scopeId, $folderOnly, $showRoot, $level + 1, $ef);
 			return [
 				//'path' => QuantummanagerHelper::getFolderRoot(),
 				'path' => $root,
+				'title' => $scopeTitle,
+				'scopeid' => $scopeId,
 				'subpath' => $subdir
 			];
 		}
@@ -121,15 +190,12 @@ class QuantummanagerFileSystemLocal
 
 				foreach ($list as $name)
 				{
-					if (is_dir($dir . DIRECTORY_SEPARATOR . $name)) {
-
-						if($name === 'com_quantummanager') {
-							continue;
-						}
+					if (is_dir($dir . DIRECTORY_SEPARATOR . $name))
+					{
 
 						$folders[] = [
 							'path' => $name,
-							'subpath' => self::showdir($dir . DIRECTORY_SEPARATOR . $name, $root, $folderOnly, $showRoot, $level + 1, $ef)
+							'subpath' => self::showdir($dir . DIRECTORY_SEPARATOR . $name, $root, $scopeTitle, $scopeId, $folderOnly, $showRoot, $level + 1, $ef)
 						];
 					}
 					else
@@ -215,11 +281,13 @@ class QuantummanagerFileSystemLocal
 	 */
 	public static function upload()
 	{
-		try {
+		try
+		{
 			JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 
 			$actions = QuantummanagerHelper::getActions();
-			if (!$actions->get('core.create')) {
+			if (!$actions->get('core.create'))
+			{
 				return json_encode(['fail']);
 			}
 
@@ -229,13 +297,16 @@ class QuantummanagerFileSystemLocal
 			$files = $app->input->files->getArray();
 			foreach ($files as $file) {
 
-				if ($file['error'] == 4) {
+				if ($file['error'] == 4)
+				{
 					continue;
 				}
 
-				if ($file['error']) {
+				if ($file['error'])
+				{
 
-					switch ($file['error']) {
+					switch ($file['error'])
+					{
 						case 1:
 							$output[ 'error' ] = Text::_('COM_QUANTUMMANAGER_FILE_TO_LARGE_THAN_PHP_INI_ALLOWS');
 							break;
@@ -248,34 +319,52 @@ class QuantummanagerFileSystemLocal
 							$output[ 'error' ] = Text::_('COM_QUANTUMMANAGER_ERROR_PARTIAL_UPLOAD');
 					}
 
-				} else {
+				}
+				else
+				{
 					$componentParams = ComponentHelper::getParams('com_quantummanager');
 					$lang = Factory::getLanguage();
 					$nameSplit = explode('.', $file['name']);
 					$nameExs = mb_strtolower(array_pop($nameSplit));
-					$nameSafe = File::makeSafe($lang->transliterate(implode('-', $nameSplit)), ['#^\.#', '#\040#']) . ((int)$componentParams->get('postfix', 0) ? ('_p' . mt_rand(11111, 99999)) : '');
+					$nameForSafe = preg_replace('#[\-]{2,}#isu','-', str_replace(' ', '-', implode('_', $nameSplit)));
+					$nameForSafe = File::makeSafe($lang->transliterate($nameForSafe), ['#^\.#', '#\040#']);
+					$maxSizeFileName = (int) QuantummanagerHelper::getParamsComponentValue('maxsizefilename', 63);
+
+					if(mb_strlen($nameForSafe) > $maxSizeFileName)
+					{
+						$nameSafe = mb_substr($nameForSafe, 0, 63) . '_p' . mt_rand(11111, 99999);
+					}
+					else
+					{
+						$nameSafe =  $nameForSafe . ((int)$componentParams->get('postfix', 0) ? ('_p' . mt_rand(11111, 99999)) : '');
+					}
+
 					$uploadedFileName = $nameSafe . '.' . $nameExs;
 					$exs = explode(',', 'jpg,jpeg,png,gif');
 					$type = preg_replace("/\/.*?$/isu", '', $file['type']);
 					$data['name'] = isset($data['name']) ? $data['name'] : '';
-					$path = JPATH_ROOT . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($data['path']);
+					$path = JPATH_ROOT . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($data['path'], false, $data['scope']);
 
-					if (!QuantummanagerHelper::checkFile($file['name'], $file['type'])) {
+					if (!QuantummanagerHelper::checkFile($file['name'], $file['type']))
+					{
 						$output[ 'error' ] = Text::_('COM_QUANTUMMANAGER_ERROR_UPLOAD_ACCESS') . ': ' . (empty($file[ 'type']) ? Text::_('COM_QUANTUMMANAGER_EMPTY_MIMETYPE') : $file[ 'type']);
 						return json_encode($output);
 					}
 
-					if (!file_exists($path)) {
+					if (!file_exists($path))
+					{
 						Folder::create($path);
 					}
 
-					if (File::upload($file['tmp_name'], $path . DIRECTORY_SEPARATOR . $uploadedFileName)) {
+					if (File::upload($file['tmp_name'], $path . DIRECTORY_SEPARATOR . $uploadedFileName))
+					{
 
 						QuantummanagerHelper::filterFile($path . DIRECTORY_SEPARATOR . $uploadedFileName);
 
 						$output[ 'name' ] = $uploadedFileName;
 
-						if ($type === 'image') {
+						if ($type === 'image')
+						{
 							JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');
 							$image = new QuantummanagerHelperImage;
 							$image->afterUpload($path . DIRECTORY_SEPARATOR . $uploadedFileName);
@@ -288,7 +377,8 @@ class QuantummanagerFileSystemLocal
 
 			return json_encode($output);
 		}
-		catch (Exception $e) {
+		catch (Exception $e)
+		{
 			echo $e->getMessage();
 		}
 	}
@@ -302,10 +392,11 @@ class QuantummanagerFileSystemLocal
 	 *
 	 * @since version
 	 */
-	public static function getMetaFile($path, $file)
+	public static function getMetaFile($path, $scope, $file)
 	{
 		$sourcePath = $path;
-		$path = QuantummanagerHelper::preparePath($path);
+		$path = QuantummanagerHelper::preparePath($path, false, $scope);
+
 		$directory = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
 		$filePath = $directory . DIRECTORY_SEPARATOR . $file;
 		$meta = [];
@@ -321,6 +412,7 @@ class QuantummanagerFileSystemLocal
 								'option' => 'com_quantummanager',
 								'task' => 'quantumviewfiles.generatePreviewImage',
 								'file' => $file,
+								'scope' => $scope,
 								'path' => $sourcePath,
 								'v' => mt_rand(111111, 999999),
 							])
@@ -427,6 +519,7 @@ class QuantummanagerFileSystemLocal
 								'option' => 'com_quantummanager',
 								'task' => 'quantumviewfiles.generatePreviewImage',
 								'file' => $file,
+								'scope' => $scope,
 								'path' => $sourcePath,
 								'v' => mt_rand(111111, 999999),
 							])
@@ -517,12 +610,13 @@ class QuantummanagerFileSystemLocal
 	 * @param $path
 	 * @return string
 	 */
-	public static function getFiles($path)
+	public static function getFiles($path, $scopeName)
 	{
 		try {
 
 			JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
-			$path = QuantummanagerHelper::preparePath($path);
+			$path = QuantummanagerHelper::preparePath($path, false, $scopeName);
+
 			$directory = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
 
 			if(!file_exists($directory))
@@ -540,14 +634,9 @@ class QuantummanagerFileSystemLocal
 			$manager = JInterventionimage::getInstance();
 
 			//создаем кеш для файлов
-			if(!file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . 'images/com_quantummanager'))
+			if(!file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . 'cache/com_quantummanager'))
 			{
-				Folder::create(JPATH_ROOT . DIRECTORY_SEPARATOR . 'images/com_quantummanager');
-			}
-
-			if(!file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . 'images/com_quantummanager/cache'))
-			{
-				Folder::create(JPATH_ROOT . DIRECTORY_SEPARATOR . 'images/com_quantummanager/cache');
+				Folder::create(JPATH_ROOT . DIRECTORY_SEPARATOR . 'cache/com_quantummanager');
 			}
 
 			foreach ($files as $file)
@@ -571,6 +660,7 @@ class QuantummanagerFileSystemLocal
 
 				$fileMeta = [
 					'size' => filesize($directory . DIRECTORY_SEPARATOR . $file),
+					'is_writable' => (int)is_writable($directory . DIRECTORY_SEPARATOR . $file),
 					'name' => implode('.', $fileParse),
 					'exs' => $exs,
 					'file' => $file,
@@ -581,14 +671,10 @@ class QuantummanagerFileSystemLocal
 
 				if(in_array(strtolower($exs), ['jpg', 'png', 'jpeg', 'gif', 'svg']))
 				{
-					$cacheSource =  JPATH_ROOT . DIRECTORY_SEPARATOR . 'images/com_quantummanager/cache';
+					$cacheSource =  JPATH_ROOT . DIRECTORY_SEPARATOR . 'cache/com_quantummanager';
 					$path = QuantummanagerHelper::preparePath($path);
 					$cache = $cacheSource . DIRECTORY_SEPARATOR . $path;
-					//if (!file_exists($cache . DIRECTORY_SEPARATOR . $file))
-					//{
-						$fileMeta['fileP'] = 'index.php?option=com_quantummanager&task=quantumviewfiles.generatePreviewImage&file=' . $file;
-					//}
-
+					$fileMeta['fileP'] = 'index.php?option=com_quantummanager&task=quantumviewfiles.generatePreviewImage&scope=' . $scopeName . '&file=' . $file;
 				}
 
 				$filesOutput[] = $fileMeta;
@@ -597,10 +683,10 @@ class QuantummanagerFileSystemLocal
 			$directoriesOutput = [];
 			foreach ($directories as $value)
 			{
-				if($value !== 'com_quantummanager')
-				{
-					$directoriesOutput[] = $value;
-				}
+				$directoriesOutput[] = [
+					'name' => $value,
+					'is_writable' => (int)is_writable($directory . DIRECTORY_SEPARATOR . $value),
+				];
 			}
 
 			return json_encode([
@@ -617,10 +703,15 @@ class QuantummanagerFileSystemLocal
 
 	/**
 	 * @param string $path
+	 * @param $scope
 	 * @param array $list
-	 * @return string
+	 *
+	 * @return false|string
+	 *
+	 * @throws Exception
+	 * @since version
 	 */
-	public static function delete($path = '', $list = [])
+	public static function delete($path = '', $scope, $list = [])
 	{
 		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 
@@ -635,7 +726,7 @@ class QuantummanagerFileSystemLocal
 			$list = [];
 		}
 
-		$path = JPATH_SITE . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($path);
+		$path = JPATH_SITE . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($path, false, $scope);
 
 		if(file_exists($path))
 		{
@@ -719,7 +810,7 @@ class QuantummanagerFileSystemLocal
 				$exs = explode(',', 'jpg,jpeg,png,gif');
 				$type = preg_replace("/\/.*?$/isu", '', $file['type']);
 				$data['name'] = isset($data['name']) ? $data['name'] : '';
-				$path = JPATH_ROOT . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($data['path']);
+				$path = JPATH_ROOT . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($data['path'], false, $data['scope']);
 
 				if(!QuantummanagerHelper::checkFile($nameSplit . '.' . $nameExs, $file['type']))
 				{
@@ -735,13 +826,27 @@ class QuantummanagerFileSystemLocal
 				if (File::upload($file['tmp_name'], $path . DIRECTORY_SEPARATOR . $uploadedFileName))
 				{
 					QuantummanagerHelper::filterFile($path . DIRECTORY_SEPARATOR . $uploadedFileName);
-
 					$output[ 'name' ] = $uploadedFileName;
+					$originalresize = (int)QuantummanagerHelper::getParamsComponentValue('originalresize', 0);
 
-					if($type === 'image') {
+					if($originalresize)
+					{
+						if(file_exists($path . DIRECTORY_SEPARATOR . '_original' . DIRECTORY_SEPARATOR . $uploadedFileName))
+						{
+							File::delete($path . DIRECTORY_SEPARATOR . '_original' . DIRECTORY_SEPARATOR . $uploadedFileName);
+							File::copy(
+								$path . DIRECTORY_SEPARATOR . $uploadedFileName,
+								$path . DIRECTORY_SEPARATOR . '_original' . DIRECTORY_SEPARATOR . $uploadedFileName
+							);
+						}
+					}
+
+					if($type === 'image')
+					{
 						JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');
 						$image = new QuantummanagerHelperImage;
-						$image->afterUpload($path . DIRECTORY_SEPARATOR . $uploadedFileName, ['resize' => 0]);
+						//$image->afterUpload($path . DIRECTORY_SEPARATOR . $uploadedFileName, ['resize' => 0]);
+						$image->afterUpload($path . DIRECTORY_SEPARATOR . $uploadedFileName);
 					}
 
 				}
@@ -763,7 +868,7 @@ class QuantummanagerFileSystemLocal
 	 * @throws Exception
 	 * @since version
 	 */
-	public static function downloadFileUnsplash($path, $file, $id)
+	public static function downloadFileUnsplash($path, $scope, $file, $id)
 	{
 
 		$output = [];
@@ -774,7 +879,7 @@ class QuantummanagerFileSystemLocal
 
 			JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 			$lang = Factory::getLanguage();
-			$path = QuantummanagerHelper::preparePath($path);
+			$path = QuantummanagerHelper::preparePath($path, false, $scope);
 
 			$fileContent = file_get_contents($file);
 			$filePath = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
@@ -803,7 +908,7 @@ class QuantummanagerFileSystemLocal
 	 * @since version
 	 * @throws Exception
 	 */
-	public static function generatePreviewImage($path, $file)
+	public static function generatePreviewImage($path, $scope, $file)
 	{
 		$app = Factory::getApplication();
 		$splitFile = explode('.', $file);
@@ -818,11 +923,12 @@ class QuantummanagerFileSystemLocal
 
 		if(in_array($exs, ['jpg', 'jpeg', 'png', 'gif']))
 		{
+
 			JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
-			$path = QuantummanagerHelper::preparePath($path);
+			$path = QuantummanagerHelper::preparePath($path, false, $scope);
 			$directory = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
 			$manager = JInterventionimage::getInstance();
-			$cacheSource =  JPATH_ROOT . DIRECTORY_SEPARATOR . 'images/com_quantummanager/cache';
+			$cacheSource =  JPATH_ROOT . DIRECTORY_SEPARATOR . 'cache/com_quantummanager';
 			$cache = $cacheSource;
 			$pathArr = explode('/', $path);
 
@@ -842,12 +948,12 @@ class QuantummanagerFileSystemLocal
 				})->save($cache . DIRECTORY_SEPARATOR . $file);
 			}
 
-			$app->redirect($siteUrl . 'images/com_quantummanager/cache' . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file . '?=' . mt_rand(111111, 999999));
+			$app->redirect($siteUrl . 'cache/com_quantummanager' . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file . '?=' . mt_rand(111111, 999999));
 		}
 
 		if($exs === 'svg')
 		{
-			$path = QuantummanagerHelper::preparePath($path);
+			$path = QuantummanagerHelper::preparePath($path, false, $scope);
 			$app->redirect($siteUrl . $path . DIRECTORY_SEPARATOR . $file . '?=' . mt_rand(111111, 999999));
 		}
 
@@ -866,10 +972,10 @@ class QuantummanagerFileSystemLocal
 	 * @since version
 	 * @throws Exception
 	 */
-	public static function renameFile($path, $file, $name = '')
+	public static function renameFile($path, $scope, $file, $name = '')
 	{
-		JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
-		$path = QuantummanagerHelper::preparePath($path);
+		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+		$path = QuantummanagerHelper::preparePath($path, false, $scope);
 		$app = Factory::getApplication();
 		$splitFile = explode('.', $file);
 		$exs = mb_strtolower(array_pop($splitFile));
@@ -902,6 +1008,90 @@ class QuantummanagerFileSystemLocal
 		}
 
 		return json_encode($output);
+	}
+
+	/**
+	 * @param $path
+	 * @param $file
+	 * @param string $name
+	 *
+	 * @return string
+	 *
+	 * @since version
+	 * @throws Exception
+	 */
+	public static function renameDirectory($path, $scope, $oldName, $name = '')
+	{
+		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+		$path = QuantummanagerHelper::preparePath($path, false, $scope);
+		$app = Factory::getApplication();
+		$output = [
+			'status' => 'fail'
+		];
+
+		$lang = Factory::getLanguage();
+		$nameSafe = File::makeSafe($lang->transliterate($name), ['#^\.#', '#\040#']);
+
+		if(rename(JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $oldName, JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $nameSafe))
+		{
+			$output = [
+				'status' => 'ok'
+			];
+		}
+
+		return json_encode($output);
+	}
+
+
+	/**
+	 * @param $path
+	 * @param $file
+	 *
+	 * @return false|string
+	 *
+	 * @throws Exception
+	 * @since version
+	 */
+	public static function getImageForCrop($path, $scope, $file)
+	{
+		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+		$path = QuantummanagerHelper::preparePath($path, false, $scope);
+		$originalresize = (int)QuantummanagerHelper::getParamsComponentValue('originalresize', 0);
+		$output = [];
+
+		if($originalresize)
+		{
+			if(file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . '_original' . DIRECTORY_SEPARATOR . $file))
+			{
+				$output['path'] = $path . '/_original/' . $file;
+			}
+			else
+			{
+				$output['path'] = $path . '/' . $file;
+			}
+		}
+		else
+		{
+			$output['path'] = $path . '/' . $file;
+		}
+
+		return json_encode($output);
+	}
+
+
+	/**
+	 * @param $path
+	 * @param $scope
+	 * @param $list
+	 *
+	 *
+	 * @throws Exception
+	 * @since version
+	 */
+	public static function setWatermark($path, $scope, $list)
+	{
+		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+		$path = QuantummanagerHelper::preparePath($path, false, $scope);
 	}
 
 

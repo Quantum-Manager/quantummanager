@@ -10,33 +10,39 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\AdminController;
-use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 
 /**
- * Quantummanager Controller.
- *
- * @package  quantummanager
- * @since    1.0
+ * Class QuantummanagerControllerQuantumconverter
  */
-class QuantummanagerControllerQuantumupload extends AdminController
+class QuantummanagerControllerQuantumcropperjs extends AdminController
 {
 
-
-	public function upload()
+	public function getImageForCrop()
 	{
 		$app = Factory::getApplication();
 		$data = $app->input->getArray();
 
-		if(!isset($data['path'], $data['scope']))
+		if(!isset($data['path'],  $data['scope'], $data['file']))
 		{
 			$app->close();
 		}
 
 		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
-		echo QuantummanagerFileSystemLocal::upload();
+		echo QuantummanagerFileSystemLocal::getImageForCrop($data['path'],  $data['scope'], $data['file']);
+
+		$app->close();
+	}
+
+
+	public function save()
+	{
+
+		$app = Factory::getApplication();
+
+		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
+		echo QuantummanagerFileSystemLocal::converterSave();
 
 		$app->close();
 	}

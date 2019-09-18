@@ -142,13 +142,15 @@ class QuantummanagerHelper
 	/**
 	 * @param $path
 	 * @param bool $host
+	 * @param string $scopeName
+	 * @param bool $pathUnix
 	 *
-	 * @return mixed|null|string|string[]
+	 * @return string
 	 *
-	 * @since version
 	 * @throws Exception
+	 * @since version
 	 */
-	public static function preparePath($path, $host = false)
+	public static function preparePath($path, $host = false, $scopeName = '', $pathUnix = false)
 	{
 		$session = Factory::getSession();
 		$path = trim($path);
@@ -157,7 +159,8 @@ class QuantummanagerHelper
 
 		if(empty(static::$cachePathRoot))
 		{
-			$pathConfig = static::getParamsComponentValue('path', 'images');
+			$scope = self::getScope($scopeName);
+			$pathConfig = $scope->path;
 			$pathSession = $session->get('quantummanagerroot', '');
 			static::$cachePathRoot = $pathConfig;
 
@@ -276,12 +279,17 @@ class QuantummanagerHelper
 			}
 		}
 
+		if($pathUnix)
+		{
+			$path = str_replace("\\",'/', $path);
+		}
+
 		if($host)
 		{
 			$path = Uri::root() . $path;
 		}
 
-		return $path;
+		return trim($path,DIRECTORY_SEPARATOR);
 	}
 
 
@@ -360,6 +368,173 @@ class QuantummanagerHelper
 		}
 
 		return round($size,2). ' ' . $a[ $pos];
+	}
+
+
+	/**
+	 * @param $scopeName
+	 *
+	 *
+	 * @throws Exception
+	 * @since version
+	 */
+	public static function getScope($scopeName)
+	{
+
+		self::checkScopes();
+
+		if($scopeName === '' || $scopeName === 'null')
+		{
+			$scopeName = 'images';
+		}
+
+		$scopes = self::getParamsComponentValue('scopes', []);
+		$scopesCustom = self::getParamsComponentValue('scopescustom', []);
+
+		if(count((array)$scopes) === 0)
+		{
+			$scopes = self::getDefaultScopes();
+		}
+
+		if(count((array)$scopesCustom) > 0)
+		{
+			$scopes = (object) array_merge((array) $scopes, (array) $scopesCustom);
+		}
+
+		foreach ($scopes as $scope)
+		{
+			if($scope->id === $scopeName)
+			{
+				return $scope;
+			}
+		}
+	}
+
+
+	/**
+	 * @param int $enabled
+	 *
+	 * @return array|object
+	 *
+	 * @since version
+	 */
+	public static function getAllScope($enabled = 1)
+	{
+		self::checkScopes();
+
+		$session = Factory::getSession();
+		$pathSession = $session->get('quantummanagerroot', '');
+		$scopesOutput = [];
+
+		if(empty($pathSession))
+		{
+			$scopes = self::getParamsComponentValue('scopes', []);
+			$scopesCustom = self::getParamsComponentValue('scopescustom', []);
+
+			if(count((array)$scopes) === 0)
+			{
+				$scopes = self::getDefaultScopes();
+			}
+
+			foreach ($scopes as $scope)
+			{
+				$scope->title = Text::_('COM_QUANTUMMANAGER_SCOPE_' . mb_strtoupper($scope->id));
+			}
+
+			if (count((array)$scopesCustom) > 0)
+			{
+				$scopes = (object)array_merge((array)$scopes, (array)$scopesCustom);
+			}
+
+			foreach ($scopes as $scope)
+			{
+
+				if (isset($scope->enable))
+				{
+					if((string)$enabled === '1')
+					{
+						if (!(int)$scope->enable)
+						{
+							continue;
+						}
+					}
+
+				}
+
+				$scopesOutput[] = $scope;
+			}
+		}
+		else
+		{
+			$scopesOutput = (object) [
+				(object)[
+					'title' => Text::_('COM_QUANTUMMANAGER_SCOPE_FOLDER'),
+					'id' => 'quantummanagerroot',
+					'path' => $pathSession
+				]
+			];
+		}
+
+		return $scopesOutput;
+	}
+
+
+	public static function checkScopes()
+	{
+		$scopesCustom = self::getParamsComponentValue('scopescustom', []);
+		$scopeFail = false;
+		$lang = Factory::getLanguage();
+
+		foreach ($scopesCustom as $scope)
+		{
+			if(empty($scope->id))
+			{
+				$scopeFail = true;
+				$scope->id = str_replace(' ', '', $lang->transliterate($scope->title));
+			}
+		}
+
+		if($scopeFail)
+		{
+			self::setComponentsParams('scopescustom', $scopesCustom);
+		}
+
+	}
+
+	/**
+	 *
+	 * @return array
+	 *
+	 * @since version
+	 */
+	public static function getDefaultScopes()
+	{
+		return [
+			(object)[
+				'id' => 'images',
+				'title' => 'Images',
+				'path' => 'images',
+				'enable' => 1,
+			],
+			(object)[
+				'id' => 'docs',
+				'title' => 'docs',
+				'path' => 'docs',
+				'enable' => 0,
+			],
+			(object)[
+				'id' => 'music',
+				'title' => 'music',
+				'path' => 'music',
+				'enable' => 0,
+			],
+			(object)[
+				'id' => 'videos',
+				'title' => 'videos',
+				'path' => 'videos',
+				'enable' => 0,
+			],
+		];
 	}
 
 

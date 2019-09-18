@@ -82,7 +82,7 @@ class QuantummanagerHelperImage
 			if(file_exists($file) && file_exists($fileWatermark))
 			{
 				JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
-				$manager = JInterventionimage::getInstance();
+				$manager = JInterventionimage::getInstance(['driver' => $this->getNameDriver()]);
 				$fileString = imagecreatefromstring(file_get_contents($file));
 				$image = $manager->make($fileString);
 				$logo = imagecreatefromstring(file_get_contents($fileWatermark));
@@ -163,7 +163,7 @@ class QuantummanagerHelperImage
 			$newWidth = round($newHeight * $ratio);
 		}
 
-		$manager = JInterventionimage::getInstance();
+		$manager = JInterventionimage::getInstance(['driver' => $this->getNameDriver()]);
 		$manager->make($file)
 			->fit($newWidth, $newHeight)
 			->save($file);
@@ -200,7 +200,8 @@ class QuantummanagerHelperImage
 	 */
 	public function reloadCache($file)
 	{
-		try {
+		try
+		{
 			$cacheSource =  JPATH_ROOT . DIRECTORY_SEPARATOR . 'images/com_quantummanager/cache';
 			$cache = $cacheSource . DIRECTORY_SEPARATOR . str_replace(JPATH_SITE . DIRECTORY_SEPARATOR,'', $file);
 			if(file_exists($cache))
@@ -208,9 +209,26 @@ class QuantummanagerHelperImage
 				File::delete($cache);
 			}
 		}
-		catch (Exception $e) {
+		catch (Exception $e)
+		{
 			echo $e->getMessage();
 		}
+	}
+
+	/**
+	 *
+	 * @return string
+	 *
+	 * @since version
+	 */
+	public function getNameDriver()
+	{
+		if (extension_loaded('imagick'))
+		{
+			return 'imagick';
+		}
+
+		return 'gd';
 	}
 
 

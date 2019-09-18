@@ -10,9 +10,9 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
 
     this.options = options;
     this.dropAreaAll = [];
-    this.dropAreaAll = [];
     this.inputFileAll = [];
     this.dropArea = '';
+    this.dropAreaInput = '';
     this.progressBar = '';
     this.uploadProgress = [];
     this.countFiles = 0;
@@ -32,6 +32,7 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
         this.inputFile = UploadElement.querySelector(".fileElem");
         this.errorsWrap = UploadElement.querySelector(".upload-errors");
         this.dropArea = UploadElement.closest(".quantummanager");
+        this.dropAreaInput = UploadElement.querySelector('.drop-area');
         this.inputFileAll = UploadElement.querySelectorAll(".fileElem");
         this.exs = ['jpg', 'jpeg', 'png', 'gif'];
         this.path = options.directory;
@@ -76,11 +77,19 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
             }, false);
         }
 
+        this.dropAreaInput.addEventListener('click', function (ev) {
+            if(ev.target.tagName.toLowerCase() === 'div') {
+                for (let i = 0; i < self.inputFileAll.length; i++) {
+                    self.inputFileAll[i].click();
+                    break;
+                }
+            }
+        });
+
         let closeError = self.errorsWrap.querySelector('.upload-errors-close');
         closeError.addEventListener('click', function () {
             self.errorsWrap.style.display = "none";
         });
-
 
     };
 
@@ -110,6 +119,11 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
     };
 
     this.uploadFiles = function(files) {
+
+        if(files === null || files.length === 0) {
+            return;
+        }
+
         files = [...files];
         this.initializeProgress(files.length);
         this.errorsHtml = '';
@@ -141,7 +155,7 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
 
             let self = this;
             let fm = Filemanager;
-            let url = "/administrator/index.php?option=com_quantummanager&task=quantumupload.upload&path=" + encodeURIComponent(Filemanager.data.path);
+            let url = QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumupload.upload&path=" + encodeURIComponent(Filemanager.data.path) + "&scope=" + encodeURIComponent(Filemanager.data.scope));
             let xhr = new XMLHttpRequest();
             let formData = new FormData();
             xhr.open('POST', url, true);

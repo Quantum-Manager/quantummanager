@@ -28,6 +28,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
     this.editorCropperJS = QuantumCropperjsElement.querySelector('.editor .cropperjs');
     this.currentImage;
     this.changeCropperJS = function () {
+
         let canvasData = self.cropperjs.getCanvasData();
         let canvasCropData = self.cropperjs.getCropBoxData();
         let widthContainer = self.editorCropperJS.offsetWidth;
@@ -57,6 +58,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             resizeCanvas = true;
         }
 
+
         self.ImageWidthValue.value = Math.round(self.currentImage.width);
         self.ImageHeightValue.value = Math.round(self.currentImage.height);
         self.canvasSource = document.createElement('canvas');
@@ -72,19 +74,22 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             canvasData.top = top;
             canvasData.width = canvasWidth;
             canvasData.height = canvasHeight;
+            canvasData.aspectRatio = scaleFactorCrop;
             canvasCropData.left = left;
             canvasCropData.top = top;
             canvasCropData.width = canvasWidth;
             canvasCropData.height = canvasHeight;
-            self.cropperjs.setCropBoxData(canvasCropData);
-            self.cropperjs.setCanvasData(canvasData);
+            //self.cropperjs.setCropBoxData(canvasCropData);
+            //self.cropperjs.setCanvasData(canvasData);
         }
+
     };
     this.defaultCropperJSOptions =  {
         responsive: false,
         viewMode: 1,
         background: true,
         aspectRatio: NaN,
+        autoCrop: true,
         autoCropArea: 1,
         ready: function(event) {
             self.changeCropperJS();
@@ -107,7 +112,6 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             let height = self.ImageHeightValue.value;
             let scaleFactor = 1;
             this.value = width;
-
             if(self.checkImageResize.checked) {
                 scaleFactor = width / self.image.width;
                 height = self.image.height * scaleFactor;
@@ -123,6 +127,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             self.currentImage = self.imageChange;
             editor.appendChild(self.imageChange);
             self.cropperjs = new Cropper(self.imageChange, self.defaultCropperJSOptions);
+
         });
         self.ImageHeightValue.addEventListener('change', function () {
             let editor = QuantumCropperjsElement.querySelector('.editor .cropperjs');
@@ -147,6 +152,12 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             editor.appendChild(self.imageChange);
             self.cropperjs = new Cropper(self.imageChange, self.defaultCropperJSOptions);
             self.changeCropperJS();
+        });
+        self.CropWidthValue.addEventListener('change', function () {
+            //let canvasCropData = self.cropperjs.getCropBoxData();
+            //canvasCropData.width = parseInt(this.value);
+            //self.cropperjs.setCropBoxData(canvasCropData);
+            //console.log(this.value);
         });
 
         Filemanager.Quantumtoolbar.buttonAdd('cropperjsEdit', 'center', 'file-actions', 'btn-edit btn-hide hidden-label', QuantumviewfilesLang.buttonEdit, 'quantummanager-icon-edit', {}, function (ev) {
@@ -179,10 +190,11 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
                 blob = result.toDataURL("image/webp", 1);
             }
 
-            QuantumUtils.ajaxFile('/administrator/index.php', {
+            QuantumUtils.ajaxFile(QuantumUtils.getFullUrl('/administrator/index.php'), {
                     'option': 'com_quantummanager',
-                    'task': 'quantumconverter.save',
+                    'task': 'quantumcropperjs.save',
                     'path': Filemanager.data.path,
+                    'scope': Filemanager.data.scope,
                     'name': name,
                     'exs': exs
                 },
@@ -206,115 +218,6 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             self.cropperjs.destroy();
             QuantumCropperjsElement.classList.remove('active');
             event.preventDefault();
-        });
-
-        QuantumCropperjsElement.querySelector('.buttons-methods').addEventListener('click', function (event) {
-            let e = event || window.event;
-            let target = e.target || e.srcElement;
-            let result;
-            let cropped;
-            let input;
-            let data;
-
-            if (!self.cropperjs) {
-                return;
-            }
-
-            while (target !== this) {
-                if (target.getAttribute('data-method')) {
-                    break;
-                }
-
-                target = target.parentNode;
-            }
-
-            if (target === this || target.disabled || target.className.indexOf('disabled') > -1) {
-                return;
-            }
-
-            data = {
-                method: target.getAttribute('data-method'),
-                target: target.getAttribute('data-target'),
-                option: target.getAttribute('data-option') || undefined,
-                secondOption: target.getAttribute('data-second-option') || undefined
-            };
-
-            cropped = self.cropperjs;
-
-            if (data.method) {
-                if (typeof data.target !== 'undefined') {
-                    input = document.querySelector(data.target);
-
-                    if (!target.hasAttribute('data-option') && data.target && input) {
-                        try {
-                            data.option = JSON.parse(input.value);
-                        } catch (e) {
-                            console.log(e.message);
-                        }
-                    }
-                }
-
-                switch (data.method) {
-                    case 'rotate':
-                        if (cropped && options.viewMode > 0) {
-                            self.cropperjs.clear();
-                        }
-
-                        break;
-
-                    case 'getCroppedCanvas':
-                        try {
-                            data.option = JSON.parse(data.option);
-                        } catch (e) {
-                            console.log(e.message);
-                        }
-
-                        if (uploadedImageType === 'image/jpeg') {
-                            if (!data.option) {
-                                data.option = {};
-                            }
-
-                            data.option.fillColor = '#fff';
-                        }
-
-                        break;
-                }
-
-                result = self.cropperjs[data.method](data.option, data.secondOption);
-
-                switch (data.method) {
-                    case 'rotate':
-                        if (cropped && options.viewMode > 0) {
-                            self.cropperjs.crop();
-                        }
-
-                        break;
-
-                    case 'scaleX':
-                    case 'scaleY':
-                        target.setAttribute('data-option', -data.option);
-                        break;
-
-                    case 'destroy':
-                        self.cropperjs = null;
-
-                        if (uploadedImageURL) {
-                            URL.revokeObjectURL(uploadedImageURL);
-                            uploadedImageURL = '';
-                            image.src = originalImageURL;
-                        }
-
-                        break;
-                }
-
-                if (typeof result === 'object' && result !== self.cropperjs && input) {
-                    try {
-                        input.value = JSON.stringify(result);
-                    } catch (e) {
-                        console.log(e.message);
-                    }
-                }
-            }
         });
 
         QuantumCropperjsElement.querySelector('.change-ratio').addEventListener('change', function (event) {
@@ -342,7 +245,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             name = name.join('.');
         } else {
             fileSource = self.file.getAttribute('data-file');
-            exs = self.file.getAttribute('data-exs');
+            exs = self.file.getAttribute('data-exs').toLowerCase();
             name = self.file.getAttribute('data-name');
         }
 
@@ -350,14 +253,14 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             return;
         }
 
-        jQuery.get("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getParsePath&path=" + encodeURIComponent(Filemanager.data.path) + '&v=' + QuantumUtils.randomInteger(111111, 999999)).done(function (response) {
+        jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumcropperjs.getImageForCrop&path=" + encodeURIComponent(Filemanager.data.path) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&file=' + encodeURIComponent(fileSource) + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
             response = JSON.parse(response);
 
             if(response.path === undefined) {
                 return;
             }
 
-            image.setAttribute('src', '/' + response.path + '/' + fileSource + '?' + QuantumUtils.randomInteger(111111, 999999));
+            image.setAttribute('src', QuantumUtils.getFullUrl('/' + response.path + '?' + QuantumUtils.randomInteger(111111, 999999)));
             self.image = image;
             editor.innerHTML = '';
             self.currentImage = image;
@@ -366,6 +269,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             QuantumCropperjsElement.classList.add('active');
             QuantumCropperjsElement.querySelector('.quantumcropperjs-name-file').value = name;
             QuantumCropperjsElement.querySelector('.quantumcropperjs-name-exs').value = exs;
+
         });
 
     };
@@ -429,8 +333,15 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
     };
 
     Filemanager.events.add(this, 'clickFile', function (fm, el) {
-        let tmpCheck = Filemanager.Quantumviewfiles.file.querySelector('.import-files-check-file');
+
         let file = Filemanager.Quantumviewfiles.file;
+
+        if(file === undefined) {
+            fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.add('btn-hide');
+            return;
+        }
+
+        let tmpCheck = Filemanager.Quantumviewfiles.file.querySelector('.import-files-check-file');
         let exs = file.getAttribute('data-exs').toLocaleLowerCase();
         el.file = file;
 
@@ -482,7 +393,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
                 type: 'normal',
                 label: QuantumviewfilesLang.buttonEdit,
                 tip: '',
-                icon: '/media/com_quantummanager/images/icons/action/create-new-pencil-button.svg',
+                icon: QuantumUtils.getFullUrl('/media/com_quantummanager/images/icons/action/create-new-pencil-button.svg'),
                 onClick: function() {
                     let file = Filemanager.Quantumviewfiles.fileContext;
                     let exs = file.getAttribute('data-exs').toLocaleLowerCase();

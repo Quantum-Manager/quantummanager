@@ -16,8 +16,25 @@ use Joomla\Filesystem\Folder;
 /**
  * Class QuantummanagerControllerQuantumconverter
  */
-class QuantummanagerControllerQuantumconverter extends AdminController
+class QuantummanagerControllerQuantumcroppr extends AdminController
 {
+
+	public function getImageForCrop()
+	{
+		$app = Factory::getApplication();
+		$data = $app->input->getArray();
+
+		if(!isset($data['path'],  $data['scope'], $data['file']))
+		{
+			$app->close();
+		}
+
+		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
+		echo QuantummanagerFileSystemLocal::getImageForCrop($data['path'],  $data['scope'], $data['file']);
+
+		$app->close();
+	}
+
 
 	public function save()
 	{
@@ -28,7 +45,6 @@ class QuantummanagerControllerQuantumconverter extends AdminController
 		echo QuantummanagerFileSystemLocal::converterSave();
 
 		$app->close();
-
 	}
 
 }

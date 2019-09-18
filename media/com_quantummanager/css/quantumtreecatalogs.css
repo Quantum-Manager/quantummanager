@@ -16,6 +16,7 @@
 }
 .quantumtreecatalogs-module .tree-scroll {
     width: 100%;
+    padding-top: 15px;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -34,7 +35,11 @@
 }
 .quantumtreecatalogs-module .tree-ul  {
     margin: 0;
-    padding: 15px;
+    padding: 0 15px;
+}
+.quantumtreecatalogs-module .root-scope > li > .tree-path {
+    text-transform: uppercase;
+    font-weight: 500;
 }
 .quantumtreecatalogs-module .tree-caret {
     cursor: pointer;
@@ -42,7 +47,7 @@
 }
 .quantumtreecatalogs-module .tree-nested {
     display: none;
-    margin-left: 10px;
+    margin-left: 19px;
 }
 .quantumtreecatalogs-module .active {
     display: block;
@@ -64,7 +69,7 @@
 .quantumtreecatalogs-module ul li span.tree-caret {
     position: absolute;
     display: inline-block;
-    top: 4px;
+    top: 2px;
     left: 0;
     width: 13px;
     height: 13px;
@@ -107,6 +112,10 @@
     overflow: hidden;
     max-width: 90%;
     transition: all 0.2s;
+    color: gray;
+}
+.quantumtreecatalogs-module ul li.active > span.tree-path {
+    color: black;
 }
 .quantumtreecatalogs-module ul li span.tree-path:hover {
     cursor: pointer;

@@ -42,6 +42,7 @@ extract($displayData);
 
 <script type="text/javascript">
     window.QuantumunsplashLang = {
+        'notFound': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_NOTFOUND'); ?>",
         'button': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_BUTTON'); ?>",
         'buttonLoad': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_BUTTON_LOAD'); ?>",
         'save': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_SAVE'); ?>",

@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
         for(let i=0;i<QuantummanagerLists.length;i++) {
             QuantummanagerLists[i].Quantumtoolbar.buttonAdd('insertFileEditor', 'center', 'file-actions', 'btn-insert btn-primary btn-hide', QuantumwindowLang.buttonInsert, 'quantummanager-icon-insert-inverse', {}, function (ev) {
 
-                jQuery.get("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getParsePath&path=" + encodeURIComponent(pathFile) + '&v=' + QuantumUtils.randomInteger(111111, 999999)).done(function (response) {
+                jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getParsePath&path=" + encodeURIComponent(pathFile) + '&scope=' + QuantummanagerLists[i].data.scope + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
                     response = JSON.parse(response);
 
                     if(response.path !== undefined) {
@@ -45,8 +45,15 @@ document.addEventListener('DOMContentLoaded', function () {
     }, 300);
 
     QuantumEventsDispatcher.add('clickFile', function (fm) {
-        let name = fm.Quantumviewfiles.file.querySelector('.file-name').innerHTML;
-        let check = fm.Quantumviewfiles.file.querySelector('.import-files-check-file');
+        let file = fm.Quantumviewfiles.file;
+
+        if(file === undefined) {
+            fm.Quantumtoolbar.buttonsList['insertFileEditor'].classList.add('btn-hide');
+            return;
+        }
+
+        let name = file.querySelector('.file-name').innerHTML;
+        let check = file.querySelector('.import-files-check-file');
 
         if(check.checked) {
             pathFile = fm.data.path + '/' + name;
@@ -57,6 +64,14 @@ document.addEventListener('DOMContentLoaded', function () {
             fm.Quantumtoolbar.buttonsList['insertFileEditor'].classList.add('btn-hide');
         }
 
+    });
+
+    QuantumEventsDispatcher.add('reloadPaths', function (fm) {
+        fm.Quantumtoolbar.buttonsList['insertFileEditor'].classList.add('btn-hide');
+    });
+
+    QuantumEventsDispatcher.add('updatePath', function (fm) {
+        fm.Quantumtoolbar.buttonsList['insertFileEditor'].classList.add('btn-hide');
     });
 
     QuantumEventsDispatcher.add('uploadComplete', function (fm) {
