@@ -251,7 +251,7 @@
 
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1425px) {
     .quantumunsplash-module .quantumunsplash-module-container .quantumunsplash-module-close {
         position: absolute;
         top: 8px;

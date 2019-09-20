@@ -55,29 +55,6 @@ $presets = $paramsComponents->get('custompresetscrop');
 	        </label>
         </div>
         <div class="input-width-height-wrap">
-            <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_TOOLTIP_CROP'); ?></label>
-
-            <div>
-                <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_TOOLTIP_WIDTH'); ?></label>
-                <div>
-	                <label>
-		                <input type="number" class="crop-width-value" disabled>
-	                </label>
-	                <span>PX</span>
-                </div>
-            </div>
-
-            <div>
-                <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_TOOLTIP_HEIGHT'); ?></label>
-                <div>
-	                <label>
-		                <input type="number" class="crop-height-value" disabled>
-	                </label>
-	                <span>PX</span>
-                </div>
-            </div>
-        </div>
-        <div class="input-width-height-wrap">
             <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_TOOLTIP_IMAGE'); ?></label>
 
             <div>
@@ -102,6 +79,7 @@ $presets = $paramsComponents->get('custompresetscrop');
 
             <label class="image-width-height-ratio-checkbox"><input type="checkbox" class="image-width-height-ratio" checked="checked"> <?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_LABEL_SAVE_RATIO'); ?></label>
         </div>
+
         <div class="button-wrap btn-group">
             <button class="btn btn-save">
                 <span><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_SAVE'); ?></span>
@@ -109,6 +87,33 @@ $presets = $paramsComponents->get('custompresetscrop');
             <button class="btn btn-close">
                 <span><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_CLOSE'); ?></span>
             </button>
+        </div>
+
+        <div class="input-width-height-wrap input-width-height-wrap-rows input-width-height-wrap-bottom">
+            <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_TOOLTIP_CROP'); ?></label>
+
+            <div>
+                <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_TOOLTIP_WIDTH'); ?>:</label>
+                <div>
+                    <label>
+                        <!--<input type="number" class="crop-width-value" disabled>-->
+                        <span class="crop-width-value"></span>
+                        <span>PX</span>
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_TOOLTIP_HEIGHT'); ?>:</label>
+                <div>
+                    <label>
+                        <!--<input type="number" class="crop-height-value" disabled>-->
+                        <span class="crop-height-value"></span>
+                        <span>PX</span>
+                    </label>
+
+                </div>
+            </div>
         </div>
     </div>
     <div class="editor">

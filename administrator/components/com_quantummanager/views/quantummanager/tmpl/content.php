@@ -33,8 +33,7 @@ HTMLHelper::_('stylesheet', 'com_quantummanager/modal.css', [
 HTMLHelper::_('jquery.framework');
 
 HTMLHelper::_('script', 'com_quantummanager/modalcontent.js', [
-	//'version' => filemtime(__FILE__),
-	'version' => rand(111111, 999999),
+	'version' => filemtime(__FILE__),
 	'relative' => true
 ]);
 
@@ -46,7 +45,9 @@ HTMLHelper::_('script', 'com_quantummanager/modalcontent.js', [
     JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
     JLoader::register('QuantummanagercontentHelper', JPATH_ROOT . '/plugins/editors-xtd/quantummanagercontent/helper.php');
 
+    QuantummanagercontentHelper::loadLang();
     $fieldsForContentPlugin = QuantummanagercontentHelper::getFieldsForScopes();
+    $groups = Factory::getUser()->groups;
 
 	try {
 
@@ -125,6 +126,7 @@ HTMLHelper::_('script', 'com_quantummanager/modalcontent.js', [
 	catch (Exception $e) {
 		echo $e->getMessage();
 	}
+
 ?>
 
 
@@ -139,7 +141,11 @@ HTMLHelper::_('script', 'com_quantummanager/modalcontent.js', [
         'buttonInsert': '<?php echo Text::_('COM_QUANTUMMANAGER_WINDOW_INSERT'); ?>',
         'inputAlt': '<?php echo Text::_('COM_QUANTUMMANAGER_WINDOW_ALT'); ?>',
         'inputWidth': '<?php echo Text::_('COM_QUANTUMMANAGER_WINDOW_WIDTH'); ?>',
-        'inputHeight': '<?php echo Text::_('COM_QUANTUMMANAGER_WINDOW_HEIGHT'); ?>',
+        'defaultScope': '<?php echo Text::_('PLG_BUTTON_QUANTUMMANAGERCONTENT_SCOPES_NAME_DEFAULT'); ?>',
+        'defaultName': '<?php echo Text::_('PLG_BUTTON_QUANTUMMANAGERCONTENT_SCOPES_DOCS_FIELDSFORM_NAME_NAME'); ?>',
+        'defaultNameValue': '<?php echo Text::_('PLG_BUTTON_QUANTUMMANAGERCONTENT_SCOPES_IMAGES_FIELDSFORM_DEFAULT_NAME'); ?>',
+        'helpTemplate': '<?php echo Text::_('PLG_BUTTON_QUANTUMMANAGERCONTENT_HELP_TEMPLATE'); ?>',
+        'helpSettings': '<?php echo in_array('2', $groups) || in_array('8', $groups) ? Text::_('PLG_BUTTON_QUANTUMMANAGERCONTENT_HELP_SETTINGS') : '' ?>',
     };
 </script>
 

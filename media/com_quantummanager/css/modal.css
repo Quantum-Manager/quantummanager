@@ -19,6 +19,10 @@ body {
     height: 100% !important;
 }
 
+#system-message-container {
+    padding: 0 !important;
+}
+
 .quantummanager {
     width: 100%;
     height: 100vh !important;
@@ -46,6 +50,15 @@ body {
     flex-wrap: wrap;
     justify-content: flex-start;
     padding: 10px 0;
+}
+
+.modal-form-insert-footer {
+    display: block !important;
+    padding: 0 0 5px 0 !important;
+    text-align: center;
+    justify-content: center !important;
+    font-size: 12px;
+    line-height: 14px;
 }
 
 .modal-form-insert > div > input {

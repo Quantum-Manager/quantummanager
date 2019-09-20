@@ -95,8 +95,8 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             self.changeCropperJS();
         },
         crop: function(event) {
-            self.CropWidthValue.value = Math.round(parseFloat(event.detail.width));
-            self.CropHeightValue.value = Math.round(parseFloat(event.detail.height));
+            self.CropWidthValue.innerHTML = Math.round(parseFloat(event.detail.width));
+            self.CropHeightValue.innerHTML = Math.round(parseFloat(event.detail.height));
             self.CropWidthValue.setAttribute('data-old', parseFloat(event.detail.width));
             self.CropHeightValue.setAttribute('data-old', parseFloat(event.detail.height));
         }
@@ -154,12 +154,6 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             self.changeCropperJS();
         });
 
-        self.CropWidthValue.addEventListener('change', function () {
-            //let canvasCropData = self.cropperjs.getCropBoxData();
-            //canvasCropData.width = parseInt(this.value);
-            //self.cropperjs.setCropBoxData(canvasCropData);
-            //console.log(this.value);
-        });
 
         Filemanager.Quantumtoolbar.buttonAdd('cropperjsEdit', 'center', 'file-actions', 'btn-edit btn-hide hidden-label', QuantumviewfilesLang.buttonEdit, 'quantummanager-icon-edit', {}, function (ev) {
             self.startCropperjs();

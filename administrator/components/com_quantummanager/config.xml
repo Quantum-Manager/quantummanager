@@ -3,10 +3,16 @@
 
 	<fieldset name="general" label="COM_QUANTUMMANAGER_CONFIG_GENERAL" description="COM_QUANTUMMANAGER_CONFIG_GENERAL_DESC">
 
-		<field type="quantumconfigdescription"
-			   label=""
-			   fromText="COM_QUANTUMMANAGER_CONFIG_GENERAL_PATH_DESC"
-			   addfieldpath="/administrator/components/com_quantummanager/fields"
+		<field type="note"
+			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_DOCS_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_DOCS_DESC"
+			   class="alert alert-info"
+		/>
+
+		<field type="note"
+			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_PATH_VARIABLES_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_PATH_DESC"
+			   class="alert alert-info"
 		/>
 
 		<field name="scopes"

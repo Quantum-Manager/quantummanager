@@ -88,21 +88,34 @@ document.addEventListener('DOMContentLoaded', function () {
             oldForm.remove();
         }
 
-        if(formFields[fm.data.scope] === undefined) {
-            return;
-        }
-
-        let fields = formFields[fm.data.scope];
+        let fields;
+        let titleScope = '';
         let html = '';
         let form = document.createElement('form');
         form.setAttribute('class', 'modal-form-insert active');
 
-        html = "<div>";
-
-        for(let i in fields) {
-            html += '<input data-default="' + fields[i].default + '" type="' + fields[i].type +'" name="{' + fields[i].nametemplate + '}" value="" placeholder="' + fields[i].name + '">';
+        if(formFields[fm.data.scope] !== undefined) {
+            fields = formFields[fm.data.scope]['fieldsform'];
+            titleScope = formFields[fm.data.scope]['title'];
+        } else {
+            fields = {};
+            titleScope = QuantumwindowLang.defaultScope;
         }
+
+        html = "<div class='modal-form-insert-fields'>";
+
+        if(Object.keys(fields).length > 0) {
+            for(let i in fields) {
+                html += '<input data-default="' + fields[i].default + '" type="' + fields[i].type +'" name="{' + fields[i].nametemplate + '}" value="" placeholder="' + fields[i].name + '">';
+            }
+        } else {
+            html += '<input data-default="' + QuantumwindowLang.defaultNameValue + '" type="text" name="{name}" value="" placeholder="' + QuantumwindowLang.defaultName + '">';
+        }
+
+
         html += "</div>";
+        html += '<div class="modal-form-insert-footer">' + QuantumwindowLang.helpTemplate + '<b>' + titleScope + '</b>' + '. ' +  QuantumwindowLang.helpSettings + '</div>';
+
         form.innerHTML = html;
 
         fm.Quantumviewfiles.element.appendChild(form);
@@ -118,20 +131,6 @@ document.addEventListener('DOMContentLoaded', function () {
             form.classList.remove('active');
         }
 
-    });
-
-    QuantumEventsDispatcher.add('updatePath', function (fm) {
-        let form = fm.Quantumviewfiles.element.querySelector('.modal-form-insert');
-        if(form !== null) {
-            form.classList.remove('active');
-        }
-    });
-
-    QuantumEventsDispatcher.add('reloadPaths', function (fm) {
-        let form = fm.Quantumviewfiles.element.querySelector('.modal-form-insert');
-        if(form !== null) {
-            form.classList.remove('active');
-        }
     });
 
     QuantumEventsDispatcher.add('uploadComplete', function (fm) {

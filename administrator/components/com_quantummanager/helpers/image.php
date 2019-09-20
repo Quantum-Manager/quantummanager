@@ -93,8 +93,6 @@ class QuantummanagerHelperImage
 				$logoHeight = imagesy($logo);
 				$imageWidth = imagesx($fileString);
 				$imageHeight = imagesy($fileString);
-				$imageX = $padding;
-				$imageY = $padding;
 
 				if((int)$this->paramsComponent->get('overlaypercent', 0))
 				{
@@ -129,7 +127,7 @@ class QuantummanagerHelperImage
 				}
 
 				$watermark = $manager->make($logo);
-				$image->insert($watermark, $position);
+				$image->insert($watermark, $position, $padding, $padding);
 
 				$image->save($file);
 

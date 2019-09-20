@@ -220,6 +220,11 @@
     justify-content: space-between;
     margin-top: 25px;
 }
+
+.input-width-height-wrap-bottom {
+    position: absolute;
+    bottom: 25px
+}
 .quantumcropperjs-module .input-width-height-wrap > label {
     width: 100%;
     color: #cbcbcb;
@@ -258,6 +263,16 @@
 .quantumcropperjs-module .input-width-height-wrap .image-width-height-ratio-checkbox input {
     margin: 0;
     margin-right: 5px;
+}
+.input-width-height-wrap-rows > div {
+    display: flex;
+    align-items: center;
+}
+.input-width-height-wrap-rows > div > label {
+    margin-right: 5px !important;
+}
+.input-width-height-wrap-rows > div label {
+    margin-bottom: 0 !important;
 }
 .quantumcropperjs-module .button-wrap {
     margin-top: 35px;
