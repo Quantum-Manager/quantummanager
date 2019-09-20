@@ -12,12 +12,6 @@
 
 	<scriptfile>script.php</scriptfile>
 
-	<updateservers>
-		<server type="extension" priority="1" name="Quantum Manager">
-			https://hika.su/update/free/com_quantummanager.xml
-		</server>
-	</updateservers>
-
 	<media folder="media/com_quantummanager" destination="com_quantummanager">
 		<folder>css</folder>
 		<folder>images</folder>

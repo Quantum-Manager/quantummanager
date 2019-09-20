@@ -130,16 +130,6 @@
 			<option value="0">JNO</option>
 		</field>
 
-		<field name="mediaredirect"
-			   type="radio"
-			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_MEDIAREDIRECT_LABEL"
-			   required="true"
-			   class="btn-group"
-			   default="1">
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
-		</field>
-
 		<field name="help"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_HELP_LABEL"
