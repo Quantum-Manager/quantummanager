@@ -6,37 +6,29 @@
  * @link       https://www.norrnext.com
  */
 
-window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) {
+window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
 
     this.options = options;
+    this.element = QuantumPixbayElement;
     this.filename = '';
     this.currentPage = 0;
     this.totalPage = 0;
     this.searchStr = '';
     self.masnry = '';
-    this.areaSave = QuantumUnsplashElement.querySelector('.quantumunsplash-save');
-    this.inputSearch = QuantumUnsplashElement.querySelector('.quantumunsplash-module-header input');
-    this.pageWrap = QuantumUnsplashElement.querySelector('.quantumunsplash-module-load-page');
-    this.pageButton = QuantumUnsplashElement.querySelector('.quantumunsplash-module-load-page button');
-    this.closeButton = QuantumUnsplashElement.querySelector('.quantumunsplash-module-close');
+    this.areaSave = QuantumPixbayElement.querySelector('.quantumpixabay-save');
+    this.inputSearch = QuantumPixbayElement.querySelector('.quantumpixabay-module-header input');
+    this.pageWrap = QuantumPixbayElement.querySelector('.quantumpixabay-module-load-page');
+    this.pageButton = QuantumPixbayElement.querySelector('.quantumpixabay-module-load-page button');
+    this.closeButton = QuantumPixbayElement.querySelector('.quantumpixabay-module-close');
 
     this.init = function () {
         let self = this;
 
         self.areaSave.style.display = 'none';
 
-        Filemanager.Quantumtoolbar.buttonAdd('unsplashSearch', 'right', 'file-other', 'btn-unsplash-search hidden-label', QuantumunsplashLang.button, 'quantummanager-icon-unsplash', {}, function (ev) {
-            QuantumUnsplashElement.classList.add('active');
+        Filemanager.Quantumtoolbar.buttonAdd('pixabaySearch', 'right', 'file-other', 'btn-pixabay-search hidden-label', QuantumpixabayLang.button, 'quantummanager-icon-pixabay', {}, function (ev) {
+            QuantumPixbayElement.classList.add('active');
             let tmpSearchStr = '';
-
-            /*if(localStorage !== undefined) {
-                tmpSearchStr = localStorage.getItem('quantumunsplashLastStr');
-
-                if(tmpSearchStr === null) {
-                    tmpSearchStr = '';
-                }
-            }*/
-
             self.inputSearch.value = tmpSearchStr;
             self.inputSearch.focus();
             self.search(tmpSearchStr);
@@ -44,7 +36,7 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
         });
 
         self.closeButton.addEventListener('click', function () {
-            QuantumUnsplashElement.classList.remove('active');
+            QuantumPixbayElement.classList.remove('active');
         });
 
         self.pageButton.addEventListener('click', function () {
@@ -62,6 +54,15 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
             }, 0);
         });
 
+        let filterFieldsLi = self.element.querySelectorAll('.filter-field li');
+        for(let i=0;i<filterFieldsLi.length;i++) {
+            filterFieldsLi[i].addEventListener('click', function () {
+                let field = this.closest('.filter-field');
+                field.setAttribute('data-value', this.getAttribute('data-value'));
+                field.querySelector('.quantummanager-dropdown-title').innerHTML = this.innerHTML;
+                self.search(self.searchStr);
+            });
+        }
     };
 
     this.search = function (str, page) {
@@ -78,20 +79,26 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
         }
 
         if(localStorage !== undefined) {
-           localStorage.setItem('quantumunsplashLastStr', self.searchStr);
+           localStorage.setItem('quantumpixabayLastStr', self.searchStr);
         }
 
-        jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumunsplash.search&q=" + encodeURIComponent(str) + '&page=' + encodeURIComponent(page))).done(function (response) {
+        let fieldsForRequest = '';
+        let filterFields = self.element.querySelectorAll('.filter-field');
+        for (let i=0;i<filterFields.length;i++) {
+            fieldsForRequest += '&' + filterFields[i].getAttribute('data-name') + '=' + encodeURIComponent(filterFields[i].getAttribute('data-value'));
+        }
+
+        jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumpixabay.search&q=" + encodeURIComponent(str) + '&page=' + encodeURIComponent(page) + fieldsForRequest)).done(function (response) {
             response = JSON.parse(response);
             self.currentPage = parseInt(page);
             self.totalPage = parseInt(response.totalPage);
 
             let html = '';
-            let container = QuantumUnsplashElement.querySelector('.quantumunsplash-module-search');
+            let container = QuantumPixbayElement.querySelector('.quantumpixabay-module-search');
 
             if(page === 1) {
                 container.innerHTML = '';
-                self.masnry = new Masonry('.quantumunsplash-module-search', {
+                self.masnry = new Masonry('.quantumpixabay-module-search', {
                     itemSelector: '.grid-item',
                     percentPosition: true
                 });
@@ -104,7 +111,7 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
                 container.innerHTML = '';
                 let elem = document.createElement('div');
                 elem.setAttribute('class', 'grid-item');
-                elem.innerHTML = QuantumunsplashLang.notFound;
+                elem.innerHTML = QuantumpixabayLang.notFound;
                 container.appendChild(elem);
                 self.masnry.appended(elem);
 
@@ -113,34 +120,46 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
 
             for(let i=0;i<response.results.length;i++) {
 
+                let dataUrl = '';
                 let elem = document.createElement('div');
+
+                if(response.results[i].vectorURL !== undefined) {
+                    dataUrl = response.results[i].vectorURL;
+                } else {
+                    dataUrl = response.results[i].imageURL;
+                }
+
                 elem.setAttribute('class', 'grid-item');
-                elem.setAttribute('data-url', response.results[i]['urls']['raw']);
+                elem.setAttribute('data-url', dataUrl);
                 elem.setAttribute('data-id', response.results[i]['id']);
 
                 let metaWrap = document.createElement('div');
-                metaWrap.setAttribute('class', 'unsplash-meta-wrap');
+                metaWrap.setAttribute('class', 'pixabay-meta-wrap');
 
                 let meta = document.createElement('div');
-                meta.setAttribute('class', 'unsplash-meta');
+                meta.setAttribute('class', 'pixabay-meta');
 
                 let like = document.createElement('div');
-                like.setAttribute('class', 'unsplash-like');
+                like.setAttribute('class', 'pixabay-like');
                 like.innerHTML = "<img class='svg' src='/media/com_quantummanager/images/icons/action/favorite-heart-button.svg'></img>";
-                like.innerHTML += "<span class='unsplash-like-count'>" + response.results[i]['likes'] + "</span>";
+                like.innerHTML += "<span class='pixabay-like-count'>" + response.results[i]['likes'] + "</span>";
                 meta.appendChild(like);
 
                 let user = document.createElement('div');
-                user.setAttribute('class', 'unsplash-user');
-                user.innerHTML = "<div class='unsplash-user-avatar' style='background-image: url(" + response.results[i]['user']['profile_image']['medium'] + ")'></div>";
-                user.innerHTML += "<a target='_blank' href='https://unsplash.com/@" + response.results[i]['user']['username'] + "?utm_source=" + encodeURIComponent('Quantum Manager') + "&utm_medium=referral'><span class='unsplash-user-name'>" + response.results[i]['user']['last_name'] + " " + response.results[i]['user']['first_name'] + "</span></a>";
+                user.setAttribute('class', 'pixabay-user');
+                user.innerHTML = "<div class='pixabay-user-avatar' style='background-image: url(" + response.results[i]['userImageURL'] + ")'></div>";
+                user.innerHTML += "<span class='pixabay-user-name'>" + response.results[i]['user'] + "</span>";
                 meta.appendChild(user);
 
                 metaWrap.appendChild(meta);
 
                 let image = document.createElement('img');
-                image.setAttribute('src', response.results[i]['urls']['small']);
+                image.setAttribute('src', response.results[i]['webformatURL']);
                 image.onload = function() {
+                    currentLoaded++;
+                };
+
+                image.onerror = function() {
                     currentLoaded++;
                 };
 
@@ -150,7 +169,7 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
                 container.appendChild(elem);
                 self.masnry.appended(elem);
 
-                QuantumUtils.replaceImgToSvg('.quantumunsplash-module-search');
+                QuantumUtils.replaceImgToSvg('.quantumpixabay-module-search');
 
                 elem.addEventListener('click', function (ev) {
 
@@ -161,9 +180,7 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
                     let element = this;
                     self.areaSave.style.display = 'block';
 
-                    jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumunsplash.downloadTrigger&id=" + encodeURIComponent(element.getAttribute('data-id'))));
-
-                    jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumunsplash.download&path=" + encodeURIComponent(Filemanager.data.path) + "&scope=" + encodeURIComponent(Filemanager.data.scope)
+                    jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumpixabay.download&path=" + encodeURIComponent(Filemanager.data.path) + "&scope=" + encodeURIComponent(Filemanager.data.scope)
                         + '&file=' + encodeURIComponent(element.getAttribute('data-url'))
                         + '&id=' + encodeURIComponent(element.getAttribute('data-id'))
                     )).done(function (response) {
@@ -173,11 +190,11 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
                             self.filename = response.name;
                         }
 
-                        QuantumUnsplashElement.classList.remove('active');
+                        QuantumPixbayElement.classList.remove('active');
                         self.areaSave.style.display = 'none';
-                        Filemanager.events.trigger('unsplashComplete', Filemanager);
+                        Filemanager.events.trigger('pixabayComplete', Filemanager);
                     }).fail(function () {
-                        QuantumUnsplashElement.classList.remove('active');
+                        QuantumPixbayElement.classList.remove('active');
                         self.areaSave.style.display = 'none';
                     });
 
@@ -185,6 +202,8 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
                 });
 
             }
+
+            self.masnry.layout();
 
             let intervalLayout = setInterval(function () {
 
@@ -203,10 +222,9 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
 
 
         });
-    }
+    };
 
-
-    Filemanager.events.add(this, 'unsplashComplete', function (fm, el) {
+    Filemanager.events.add(this, 'pixabayComplete', function (fm, el) {
         Filemanager.Quantumviewfiles.loadDirectory(null, function () {
             fm.Quantumviewfiles.scrollTopFilesCheck(Filemanager.Quantumunsplash.filename);
 
@@ -215,7 +233,7 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
             let element;
 
             for(let i=0;i<filesAll.length;i++) {
-                if (Filemanager.Quantumunsplash.filename === filesAll[i].getAttribute('data-file')) {
+                if (Filemanager.Quantumpixabay.filename === filesAll[i].getAttribute('data-file')) {
                     fm.Quantumviewfiles.selectFile(filesAll[i]);
                     find = true;
                 }
@@ -233,7 +251,6 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
 
         });
     });
-
 
 };
 

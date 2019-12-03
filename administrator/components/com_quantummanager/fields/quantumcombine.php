@@ -24,6 +24,12 @@ class JFormFieldQuantumCombine extends JFormField
 {
 
 	/**
+	 * @var array
+	 * @since version
+	 */
+	private $addLayouts = [];
+
+	/**
 	 * @var string
 	 */
 	public $type = 'QuantumCombine';
@@ -64,12 +70,17 @@ class JFormFieldQuantumCombine extends JFormField
 	 */
 	protected function getLayoutPaths()
 	{
-		return [
+		return array_merge($this->addLayouts, [
 			JPATH_ROOT . '/administrator/components/com_quantummanager/layouts/fields',
 			JPATH_ROOT . '/layouts/joomla/form',
-		];
+		]);
 	}
 
+
+	public function addCustomLayoutsPath($layouts)
+	{
+		$this->addLayouts = array_merge($this->addLayouts, $layouts);
+	}
 
 	public function getInput()
 	{
@@ -102,6 +113,11 @@ class JFormFieldQuantumCombine extends JFormField
 				}
 
 				HTMLHelper::_('script', 'com_quantummanager/utils.js', [
+					'version' => filemtime(__FILE__),
+					'relative' => true
+				]);
+
+				HTMLHelper::_('script', 'com_quantummanager/split.min.js', [
 					'version' => filemtime(__FILE__),
 					'relative' => true
 				]);
@@ -161,6 +177,8 @@ class JFormFieldQuantumCombine extends JFormField
 				QuantummanagerHelper::loadLang();
 
 				$filemanager = new FileLayout($this->layout, JPATH_ROOT . '/administrator/components/com_quantummanager/layouts');
+				$filemanager->addIncludePaths($this->getLayoutPaths());
+
 				return $filemanager->render(array_merge($this->getLayoutData(), $htmlFields));
 
 			}

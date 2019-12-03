@@ -172,6 +172,17 @@
 			<option value="0">JNO</option>
 		</field>
 
+		<field name="pixabay"
+			   type="radio"
+			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_PIXABAY_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_PIXABAY_DESC"
+			   required="true"
+			   class="btn-group"
+			   default="1">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
 		<field name="original"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_ORIGINAL_LABEL"

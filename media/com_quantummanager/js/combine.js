@@ -13,7 +13,55 @@ document.addEventListener('DOMContentLoaded' ,function () {
             togglePositions(QuantummanagerLists[i]);
         }
     }, 300);
-    
+
+    if(window.innerWidth > 800) {
+        var splitSizesContainer = [25, 75];
+
+        if(localStorage !== undefined) {
+            if(localStorage.getItem('quantummanagerSplitSizesC') !== null) {
+                splitSizesContainer = JSON.parse(localStorage.getItem('quantummanagerSplitSizesC'));
+            }
+        }
+
+        Split(['.quantummanager-left', '.quantummanager-center'], {
+            sizes: splitSizesContainer,
+            elementStyle: (dimension, size, gutterSize) => ({
+                'flex-basis': `calc(${size}% - ${gutterSize}px)`,
+            }),
+            gutterStyle: (dimension, gutterSize) => ({
+                'flex-basis':  `${gutterSize}px`,
+            }),
+            onDragEnd: function(sizes) {
+                localStorage.setItem('quantummanagerSplitSizesC', JSON.stringify(sizes))
+            },
+        });
+    }
+
+
+
+    var splitSizesContainerToolbar = [25, 60];
+
+    if(localStorage !== undefined) {
+        if(localStorage.getItem('quantummanagerSplitSizesT') !== null) {
+            splitSizesContainerToolbar = JSON.parse(localStorage.getItem('quantummanagerSplitSizesT'));
+        }
+    }
+
+    Split(['.quantumtoolbar-module .left', '.quantumtoolbar-module .center',], {
+        sizes: splitSizesContainerToolbar,
+        elementStyle: (dimension, size, gutterSize) => ({
+            'flex-basis': `calc(${size}% - ${gutterSize}px)`,
+        }),
+        gutterStyle: (dimension, gutterSize) => ({
+            'flex-basis':  `${gutterSize}px`,
+        }),
+        onDragEnd: function(sizes) {
+            localStorage.setItem('quantummanagerSplitSizesT', JSON.stringify(sizes))
+        },
+    });
+
+
+
     function togglePositions(fm) {
         let leftToggle = fm.element.querySelector('.quantummanager-left-toggle');
         let rightToggle = fm.element.querySelector('.quantummanager-right-toggle');
@@ -43,7 +91,6 @@ document.addEventListener('DOMContentLoaded' ,function () {
                 }
             });
         }
-
     }
 
 });

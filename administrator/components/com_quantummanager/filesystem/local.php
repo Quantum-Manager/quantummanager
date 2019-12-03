@@ -295,6 +295,7 @@ class QuantummanagerFileSystemLocal
 			$app = Factory::getApplication();
 			$data = $app->input->getArray();
 			$files = $app->input->files->getArray();
+
 			foreach ($files as $file) {
 
 				if ($file['error'] == 4)
@@ -883,8 +884,50 @@ class QuantummanagerFileSystemLocal
 
 			$fileContent = file_get_contents($file);
 			$filePath = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
-			$id = File::makeSafe($lang->transliterate($id), ['#^\.#', '#\040#']);;
+			$id = File::makeSafe($lang->transliterate($id), ['#^\.#', '#\040#']);
 			$fileName = $id . '.jpg';
+			file_put_contents($filePath . DIRECTORY_SEPARATOR . $fileName, $fileContent);
+
+			JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');
+			$image = new QuantummanagerHelperImage;
+			$image->afterUpload($filePath . DIRECTORY_SEPARATOR . $fileName);
+
+			$output['name'] = $fileName;
+
+		}
+
+		return json_encode($output);
+
+	}
+
+	/**
+	 * @param $path
+	 * @param $file
+	 * @param $id
+	 *
+	 * @return false|string
+	 *
+	 * @throws Exception
+	 * @since version
+	 */
+	public static function downloadFilePixabay($path, $scope, $file, $id)
+	{
+
+		$output = [];
+		if(preg_match('#^https://pixabay.com/.*?#', $file))
+		{
+
+			@ini_set('memory_limit', '256M');
+
+			JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+			$lang = Factory::getLanguage();
+			$path = QuantummanagerHelper::preparePath($path, false, $scope);
+			$fileSplit = explode('.', $file);
+			$exs = array_pop($fileSplit);
+			$fileContent = file_get_contents($file);
+			$filePath = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
+			$id = File::makeSafe($lang->transliterate($id), ['#^\.#', '#\040#']);
+			$fileName = $id . '.' . $exs;
 			file_put_contents($filePath . DIRECTORY_SEPARATOR . $fileName, $fileContent);
 
 			JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');

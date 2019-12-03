@@ -47,8 +47,16 @@ window.Quantumcodemirror = function(Filemanager, QuantumcodemirrorElement, optio
             return;
         }
 
-        console.log(exs);
-        if(['txt', 'svg', 'css', 'js', 'less', 'sass', 'html'].indexOf(exs) === -1) {
+        if([
+            'txt',
+            'xml',
+            'svg',
+            'css',
+            'js',
+            'less',
+            'sass',
+            'html'
+        ].indexOf(exs) === -1) {
             return;
         }
 

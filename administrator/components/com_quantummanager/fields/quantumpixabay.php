@@ -16,17 +16,20 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Layout\FileLayout;
 
 /**
- * Class JFormFieldQuantumUpload
+ * Class JFormFieldQuantumtreecatalogs
  */
-class JFormFieldQuantumupload extends JFormField
+class JFormFieldQuantumpixabay extends JFormField
 {
 
 	/**
 	 * @var string
 	 */
-	public $type = 'QuantumUpload';
+	public $type = 'QuantumPixabay';
 
-	protected $layout = 'quantumupload';
+	/**
+	 * @var string
+	 */
+	protected $layout = 'quantumpixabay';
 
 
 	/**
@@ -43,7 +46,6 @@ class JFormFieldQuantumupload extends JFormField
 		];
 	}
 
-
 	/**
 	 * @return array
 	 */
@@ -51,14 +53,11 @@ class JFormFieldQuantumupload extends JFormField
 	{
 		return array_merge(parent::getLayoutData(),
 			[
-				'scope' => $this->scope,
-				'directory' => $this->directory,
-				'dropAreaHidden' => $this->dropAreaHidden,
-				'maxsize' => $this->maxsize,
 				'cssClass' => $this->cssClass,
 			]
 		);
 	}
+
 
 	public function getInput()
 	{
@@ -66,17 +65,13 @@ class JFormFieldQuantumupload extends JFormField
 
 			$this->__set('standalone', $this->getAttribute('standalone', true));
 			$this->__set('cssClass', $this->getAttribute('cssClass', ''));
-			$this->__set('maxsize', $this->getAttribute('maxsize', '2'));
-			$this->directory = $this->getAttribute('directory', 'images');
-			$this->scope = $this->getAttribute('scope', '');
-			$this->dropAreaHidden = $this->getAttribute('dropAreaHidden', '0');
 
 			HTMLHelper::_('stylesheet', 'com_quantummanager/main.css', [
 				'version' => filemtime(__FILE__),
 				'relative' => true
 			]);
 
-			HTMLHelper::_('stylesheet', 'com_quantummanager/quantumupload.css', [
+			HTMLHelper::_('stylesheet', 'com_quantummanager/quantumpixabay.css', [
 				'version' => filemtime(__FILE__),
 				'relative' => true
 			]);
@@ -86,17 +81,17 @@ class JFormFieldQuantumupload extends JFormField
 				'relative' => true
 			]);
 
-			HTMLHelper::_('script', 'com_quantummanager/jsalert.min.js', [
-				'version' => filemtime(__FILE__),
-				'relative' => true
-			]);
-
 			HTMLHelper::_('script', 'com_quantummanager/utils.js', [
 				'version' => filemtime(__FILE__),
 				'relative' => true
 			]);
 
-			HTMLHelper::_('script', 'com_quantummanager/quantumupload.js', [
+			HTMLHelper::_('script', 'com_quantummanager/quantumpixabay.js', [
+				'version' => filemtime(__FILE__),
+				'relative' => true
+			]);
+
+			HTMLHelper::_('script', 'com_quantummanager/masonry.min.js', [
 				'version' => filemtime(__FILE__),
 				'relative' => true
 			]);

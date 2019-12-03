@@ -21,9 +21,17 @@ extract($displayData);
     <div class="quantumunsplash-module-container">
 
         <div class="quantumunsplash-module-header">
-	        <label>
-		        <input name="q" type="text" placeholder="<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_SEARCH'); ?>">
-	        </label>
+            <div>
+                <label>
+                    <input name="q" type="text" placeholder="<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_SEARCH'); ?>">
+                </label>
+            </div>
+            <div class="header-filters">
+                <div class="fields"></div>
+                <div class="source">
+                    <span><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_LICENSE') ?></span> <a href="https://unsplash.com" target="_blank"><span class="quantummanager-icon quantummanager-icon-unsplash"></span></a>
+                </div>
+            </div>
         </div>
 
         <div class="quantumunsplash-module-container-search-wrap">

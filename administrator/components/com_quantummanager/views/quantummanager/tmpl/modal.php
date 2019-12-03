@@ -100,6 +100,13 @@ if($app->input->get('e_name', '') !== '') {
 			];
 		}
 
+		if((int)QuantummanagerHelper::getParamsComponentValue('pixabay', '1'))
+		{
+			$fields['quantumpixabay'] = [
+				'position' => 'bottom'
+			];
+		}
+
 		$actions = QuantummanagerHelper::getActions();
 		if (!$actions->get('core.create'))
 		{

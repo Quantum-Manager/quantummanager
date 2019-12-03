@@ -48,8 +48,9 @@ try {
         ],
         'quantumcropperjs' => [
             'position' => 'bottom'
-        ]
-        /*'quantumcodemirror' => [
+        ],
+        /*
+        'quantumcodemirror' => [
             'position' => 'center'
         ],*/
     ];
@@ -58,6 +59,13 @@ try {
     {
 		$fields['quantumunsplash'] = [
 			'position' => 'bottom'
+        ];
+    }
+
+    if((int)QuantummanagerHelper::getParamsComponentValue('pixabay', '1'))
+    {
+        $fields['quantumpixabay'] = [
+            'position' => 'bottom'
         ];
     }
 

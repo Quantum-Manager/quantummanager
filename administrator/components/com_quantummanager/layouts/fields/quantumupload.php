@@ -11,7 +11,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 ?>
 
-<div class="quantummanager-module quantumupload-module" data-type="Qantumupload" data-options="maxsize:<?php echo $displayData['maxsize'] ?>;directory:<?php echo $displayData['directory'] ?>;dropAreaHidden:<?php echo $displayData['dropAreaHidden'] ?>">
+<div class="quantummanager-module quantumupload-module" data-type="Qantumupload" data-options="maxsize:<?php echo $displayData['maxsize'] ?>;scope:<?php echo $displayData['scope'] ?>;directory:<?php echo $displayData['directory'] ?>;dropAreaHidden:<?php echo $displayData['dropAreaHidden'] ?>">
 
 	<?php $id = mt_rand(11111, 99999)?>
     <div class="drop-area <?php if($displayData['dropAreaHidden'] === '1') : ?> drop-area-hidden <?php endif; ?>">

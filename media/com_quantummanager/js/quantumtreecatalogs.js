@@ -176,18 +176,24 @@ window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, o
         let self = this;
         let li = QuantumTreeCatalogsElement.querySelector('[data-scope="' + Filemanager.data.scope + '"] .root').closest('li');
         let pathFind = li.querySelector('.tree-path').getAttribute('data-path');
-
+        let findDirectory = false;
         if(li === null) {
             return;
         }
 
         let findPathInLists = function (li, pathParent) {
+
+            if(findDirectory) {
+                return;
+            }
+
             let nestedUl = li.querySelectorAll('.tree-nested');
             for(let j=0;j<nestedUl.length;j++) {
                 let nestedLi = nestedUl[j].children;
                 for(let i=0;i<nestedLi.length;i++) {
                     let currPathFind = pathParent + '/' + nestedLi[i].querySelector('.tree-path').innerHTML;
                     if(currPathFind === pathSource) {
+                        findDirectory = true;
                         let lastLi = nestedLi[i];
                         let top = 0;
                         let deleteDirertory = document.createElement('div');
@@ -284,6 +290,7 @@ window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, o
             QuantumTreeCatalogsElement.querySelector('.tree-scroll').scrollTop = self.active.closest('.root-scope').offsetTop - 25;
 
         } else {
+            findDirectory = false;
             findPathInLists(li, pathFind);
         }
 

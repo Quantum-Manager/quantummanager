@@ -9,22 +9,18 @@
 .quantumtoolbar-module {
     background: #fdfeff;
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: center;
 }
 .quantumtoolbar-module-muted {
     background: #e9e6e8;
 }
-.quantumtoolbar-padding-horizontal {
-    padding-left: 15px;
-    padding-right: 15px;
-}
-.quantumtoolbar-module > div:last-child {
-    margin-left: auto;
-}
 .quantumtoolbar-module > div {
     display: flex;
     align-items: center;
+}
+.quantumtoolbar-module .gutter {
+    height: 100%;
 }
 .quantumtoolbar-module .left {
     width: 25%;
@@ -33,8 +29,14 @@
     width: 65%;
 }
 .quantumtoolbar-module .right {
-    width: 10%;
+    flex: 1;
     justify-content: flex-end;
+}
+.quantumtoolbar-module .left > *:first-child {
+    margin-left: 15px;
+}
+.quantumtoolbar-module .right > *:first-child {
+    margin-right: 15px !important;
 }
 .quantumtoolbar-module button {
     border-radius: 0;

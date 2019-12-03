@@ -16,6 +16,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Uri\Uri;
 
+JFormHelper::loadFieldClass('text');
+
 /**
  * Class JFormFieldQuantumtoolbar
  */

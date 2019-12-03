@@ -331,6 +331,11 @@ class QuantummanagerHelper
 				if(in_array((int)$profile->group, $groups) && ($name === $profile->config))
 				{
 					$value = trim($profile->value);
+
+					if(is_array($default)) {
+						$value = json_decode($value, true);
+					}
+
 					break;
 				}
 			}
@@ -344,7 +349,7 @@ class QuantummanagerHelper
 	{
 		$lang = Factory::getLanguage();
 		$extension = 'com_quantummanager';
-		$base_dir = JPATH_ROOT . DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, ['administrator', 'components', 'com_quantummanager']);
+		$base_dir = JPATH_ROOT . DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR . 'administrator';
 		$language_tag = $lang->getTag();
 		$lang->load($extension, $base_dir, $language_tag, true);
 	}
@@ -403,6 +408,7 @@ class QuantummanagerHelper
 
 		foreach ($scopes as $scope)
 		{
+			$scope = (object)$scope;
 			if($scope->id === $scopeName)
 			{
 				return $scope;
@@ -441,13 +447,15 @@ class QuantummanagerHelper
 				$scope->title = Text::_('COM_QUANTUMMANAGER_SCOPE_' . mb_strtoupper($scope->id));
 			}
 
-			if (count((array)$scopesCustom) > 0)
+			if (!empty($scopesCustom) && count((array)$scopesCustom) > 0)
 			{
 				$scopes = (object)array_merge((array)$scopes, (array)$scopesCustom);
 			}
 
 			foreach ($scopes as $scope)
 			{
+
+				$scope = (object)$scope;
 
 				if (isset($scope->enable))
 				{
