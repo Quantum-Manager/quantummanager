@@ -77,6 +77,7 @@
 		<field name="maxsize"
 			   type="text"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_MAXSIZE_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_MAXSIZE_DESC"
 			   required="true"
 			   default="10"
 		/>
@@ -85,6 +86,7 @@
 			   type="number"
 			   required="true"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_MAXSIZEFILENAME_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_MAXSIZEFILENAME_DESC"
 			   default="63"
 		/>
 
@@ -102,6 +104,7 @@
 		<field name="metafile"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_METAFILE_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_METAFILE_DESC"
 			   required="true"
 			   class="btn-group"
 			   default="1">
@@ -112,6 +115,7 @@
 		<field name="metafileextended"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_METAFILE_EXTENDED_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_METAFILE_EXTENDED_DESC"
 			   required="true"
 			   class="btn-group"
 			   default="0"
@@ -123,6 +127,7 @@
 		<field name="dropareahidden"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_DROPAREAHIDDEN_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_DROPAREAHIDDEN_DESC"
 			   required="true"
 			   class="btn-group"
 			   default="0">
@@ -133,6 +138,7 @@
 		<field name="help"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_HELP_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_HELP_DESC"
 			   required="true"
 			   class="btn-group"
 			   default="1">
@@ -143,6 +149,7 @@
 		<field name="review"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_REVIEW_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_REVIEW_DESC"
 			   required="true"
 			   class="btn-group"
 			   default="1">
@@ -220,6 +227,7 @@
 		<field name="rezizemaxwidth"
 			   type="text"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_RESIZE_MAXWIDTH_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_RESIZE_MAXWIDTH_DESC"
 			   required="true"
 			   default="1980"
 			   showon="resize:1"
@@ -228,6 +236,7 @@
 		<field name="rezizemaxheight"
 			   type="text"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_RESIZE_MAXHEIGHT_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_RESIZE_MAXHEIGHT_DESC"
 			   required="true"
 			   default="1280"
 			   showon="resize:1"
@@ -236,6 +245,7 @@
 		<field name="overlay"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_DESC"
 			   required="true"
 			   default="0"
 			   class="btn-group">
@@ -247,6 +257,7 @@
 		<field name="overlayfile"
 			   type="media"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_FILE_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_FILE_DESC"
 			   folder="images"
 			   default="images/joomla_black.png"
 			   showon="overlay!:0"
@@ -255,17 +266,19 @@
 		<field name="overlaypercent"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_PERCENT_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_PERCENT_DESC"
 			   required="true"
 			   class="btn-group"
 			   default="0"
 			   showon="overlay!:0">
-			<option value="0">JNO</option>
 			<option value="1">JYES</option>
+			<option value="0">JNO</option>
 		</field>
 
 		<field name="overlaypercentvalue"
 			   type="text"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_PERCENT_VALUE_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_PERCENT_VALUE_DESC"
 			   default="10"
 			   class="input-xlarge"
 			   showon="overlaypercent:1[AND]overlay!:0"
@@ -275,6 +288,7 @@
 			   type="list"
 			   required="true"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_POS_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_POS_DESC"
 			   default="topleft"
 			   showon="overlay!:0"
 		>
@@ -292,6 +306,7 @@
 		<field name="overlaypadding"
 			   type="text"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_PADDING_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_PADDING_DESC"
 			   class="input-xlarge"
 			   required="true"
 			   default="10"
