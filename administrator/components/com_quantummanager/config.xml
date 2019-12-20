@@ -271,8 +271,8 @@
 			   class="btn-group"
 			   default="0"
 			   showon="overlay!:0">
-			<option value="0">JNO</option>
 			<option value="1">JYES</option>
+			<option value="0">JNO</option>
 		</field>
 
 		<field name="overlaypercentvalue"
