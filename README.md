@@ -110,5 +110,5 @@ Quantum is a free file and media manager for Joomla.
 - [Support](https://www.norrnext.com/forum/quantum-manager)
 
 ### Поддержка
-- [quantum@hika.su](mailto:quantum@hika.su) (email)
+- [cymbal@delo-design.ru](mailto:cymbal@delo-design.ru) (email)
 - [@tsymbalmitia](tg://resolve?domain=tsymbalmitia) (telegram) 
