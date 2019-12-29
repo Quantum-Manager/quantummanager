@@ -24,7 +24,7 @@ window.Quantumtoolbar = function(Filemanager, QuantumToolbarElement, options) {
 
     };
 
-    this.buttonAdd = function (id, position, group, className, name, icon, attr, callback) {
+    this.buttonAdd = function (id, position, group, className, name, icon, attr, callback, parentButtonWrap) {
 
         if(this.options.buttonsBun.indexOf(id) !== -1) {
             return;
@@ -36,7 +36,9 @@ window.Quantumtoolbar = function(Filemanager, QuantumToolbarElement, options) {
 
         let groupHtml = QuantumToolbarElement.querySelector('.' + position + ' .' + group);
         let htmlButtons;
+        let wrapButton = document.createElement('div');
         let button = document.createElement('button');
+        wrapButton.setAttribute('class', 'btn-wrap');
         button.setAttribute('class', 'btn ' + className);
         button.innerHTML = "<span class='quantummanager-icon " + icon + "'></span><span>" + name + "</span>";
 
@@ -68,8 +70,25 @@ window.Quantumtoolbar = function(Filemanager, QuantumToolbarElement, options) {
         }
 
         button.addEventListener('click', callback);
-        groupHtml.append(button);
-        this.buttonsList[id] = button
+
+
+        if(parentButtonWrap === undefined) {
+            wrapButton.append(button);
+            groupHtml.append(wrapButton);
+        } else {
+            let dropdown = parentButtonWrap.querySelector('.btn-dropdown');
+
+            if(dropdown === null) {
+                dropdown = document.createElement('div');
+                dropdown.setAttribute('class', 'btn-dropdown');
+                parentButtonWrap.append(dropdown);
+            }
+
+            dropdown.append(button);
+        }
+
+        this.buttonsList[id] = button;
+        return this.buttonsList[id];
     };
 
     this.trigger = function(event) {

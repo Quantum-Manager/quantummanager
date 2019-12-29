@@ -61,7 +61,7 @@
     height: 12px;
 }
 .quantumcropperjs-module .toolbar .btn-primary {
-    background: #11C111;
+    background: #78abde;
     border: 1px solid transparent;
 }
 .quantumcropperjs-module .toolbar .buttons-toggles input {
@@ -142,7 +142,7 @@
 }
 .quantumcropperjs-module .name-file-wrap .input-wrapper span {
     position: absolute;
-    background-color: #11a811;
+    background-color: #78abde;
     transition: transform 0.5s ease;
 }
 .quantumcropperjs-module .name-file-wrap .input-wrapper .bottom,
@@ -279,7 +279,7 @@
     justify-content: center;
 }
 .quantumcropperjs-module .button-wrap .btn-save {
-    background: #11a811;
+    background: #78abde;
     color: #fff;
     border: none;
 }
@@ -313,7 +313,7 @@
     right: 0;
     padding: 10px;
     border-radius: 5px;
-    background: #11a811;
+    background: #78abde;
     color: #fff;
     opacity: 0.9;
 }

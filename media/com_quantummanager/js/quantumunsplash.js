@@ -13,7 +13,10 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
     this.currentPage = 0;
     this.totalPage = 0;
     this.searchStr = '';
-    self.masnry = '';
+    this.masonry = '';
+    this.loadPage = false;
+    this.searchWrap = QuantumUnsplashElement.querySelector('.quantumunsplash-module-container-search-wrap .quantumunsplash-module-container-search');
+    this.searchGrid = QuantumUnsplashElement.querySelector('.quantumunsplash-module-container-search-wrap .quantumunsplash-module-container-search .quantumunsplash-module-search');
     this.areaSave = QuantumUnsplashElement.querySelector('.quantumunsplash-save');
     this.inputSearch = QuantumUnsplashElement.querySelector('.quantumunsplash-module-header input');
     this.pageWrap = QuantumUnsplashElement.querySelector('.quantumunsplash-module-load-page');
@@ -62,6 +65,12 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
             }, 0);
         });
 
+        self.searchWrap.addEventListener('scroll', function () {
+            if((self.searchGrid.offsetHeight - (self.searchWrap.scrollTop + self.searchWrap.offsetHeight)) < 400) {
+                self.search(self.searchStr, self.currentPage + 1);
+            }
+        });
+
     };
 
     this.search = function (str, page) {
@@ -77,21 +86,30 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
             page = 1;
         }
 
+        if(page !== 1) {
+            if(this.loadPage) {
+                return;
+            }
+        }
+
         if(localStorage !== undefined) {
            localStorage.setItem('quantumunsplashLastStr', self.searchStr);
         }
+
+        this.loadPage = true;
 
         jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumunsplash.search&q=" + encodeURIComponent(str) + '&page=' + encodeURIComponent(page))).done(function (response) {
             response = JSON.parse(response);
             self.currentPage = parseInt(page);
             self.totalPage = parseInt(response.totalPage);
+            self.loadPage = false;
 
             let html = '';
             let container = QuantumUnsplashElement.querySelector('.quantumunsplash-module-search');
 
             if(page === 1) {
                 container.innerHTML = '';
-                self.masnry = new Masonry('.quantumunsplash-module-search', {
+                self.masonry = new Masonry('.quantumunsplash-module-search', {
                     itemSelector: '.grid-item',
                     percentPosition: true
                 });
@@ -101,12 +119,16 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
             let currentLoaded = 0;
 
             if(response.results.length === 0) {
-                container.innerHTML = '';
-                let elem = document.createElement('div');
-                elem.setAttribute('class', 'grid-item');
-                elem.innerHTML = QuantumunsplashLang.notFound;
-                container.appendChild(elem);
-                self.masnry.appended(elem);
+                if(page === 1) {
+                    container.innerHTML = '';
+                    let elem = document.createElement('div');
+                    elem.setAttribute('class', 'grid-item');
+                    elem.innerHTML = QuantumunsplashLang.notFound;
+                    container.appendChild(elem);
+                    self.masonry.appended(elem);
+                } else {
+                    self.loadPage = true;
+                }
 
                 return;
             }
@@ -148,7 +170,7 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
                 elem.append(metaWrap);
 
                 container.appendChild(elem);
-                self.masnry.appended(elem);
+                self.masonry.appended(elem);
 
                 QuantumUtils.replaceImgToSvg('.quantumunsplash-module-search');
 
@@ -189,7 +211,7 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
             let intervalLayout = setInterval(function () {
 
                 if(currentLoaded === maxLoaded) {
-                    self.masnry.layout();
+                    self.masonry.layout();
                     clearInterval(intervalLayout)
                 }
             }, 100);
@@ -216,17 +238,9 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
 
             for(let i=0;i<filesAll.length;i++) {
                 if (Filemanager.Quantumunsplash.filename === filesAll[i].getAttribute('data-file')) {
-                    fm.Quantumviewfiles.selectFile(filesAll[i]);
+                    fm.Quantumviewfiles.selectFile(filesAll[i], true);
                     find = true;
                 }
-            }
-
-            if(find) {
-                fm.Quantumtoolbar.buttonsList['viewfilesWatermark'].classList.remove('btn-hide');
-                fm.Quantumtoolbar.buttonsList['viewfilesDelete'].classList.remove('btn-hide');
-            } else {
-                fm.Quantumtoolbar.buttonsList['viewfilesWatermark'].classList.add('btn-hide');
-                fm.Quantumtoolbar.buttonsList['viewfilesDelete'].classList.add('btn-hide');
             }
 
             fm.Quantumviewfiles.initBreadcrumbs(fm.Quantumviewfiles.buildBreadcrumbs);

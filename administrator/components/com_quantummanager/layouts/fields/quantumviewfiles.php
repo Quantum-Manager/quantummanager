@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 extract($displayData);
 $id = mt_rand(111111, 999999);
+$document = \Joomla\CMS\Factory::getDocument();
 ?>
 
 <div class="quantummanager-module quantumviewfiles-module" data-type="Quantumviewfiles" data-options="hash:<?php echo $displayData['hash'] ?>;directory:<?php echo $displayData['directory'] ?>;onlyfiles:<?php echo $displayData['onlyfiles'] ?>;metafile:<?php echo $displayData['metafile'] ?>;watermark:<?php echo $displayData['watermark'] ?>">
@@ -22,7 +23,6 @@ $id = mt_rand(111111, 999999);
             <input id="filter-search-<?php echo $id ?>" type="text" name="search" placeholder="<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_FILTER_NAME'); ?>">
         </div>
     </div>
-    <div class="filters"></div>
     <div class="view-wrap">
         <div class="view"></div>
 
@@ -35,6 +35,28 @@ $id = mt_rand(111111, 999999);
         <?php endif; ?>
     </div>
 </div>
+
+<div style="display: none">
+	<?php echo file_get_contents(JPATH_ROOT . DIRECTORY_SEPARATOR . '/media/com_quantummanager/images/icons/file.svg') ?>
+</div>
+
+<?php
+    $mapFileColors = include implode(DIRECTORY_SEPARATOR, [JPATH_ROOT, 'administrator', 'components', 'com_quantummanager', 'layouts', 'mapfilescolors.php']);
+?>
+
+<?php
+    $css = '';
+    $colorDefault = $mapFileColors['default'];
+    $css .= 'svg.svg-icon use.main { fill: ' . $colorDefault[0] . ';} ';
+    $css .= 'svg.svg-icon use.tail { fill: ' . $colorDefault[1] . ';} ';
+    foreach ($mapFileColors as $exs => $color)
+    {
+        $css .= 'svg.svg-icon.'.$exs.' use.main { fill: ' . $color[0] . ';} ';
+        $css .= 'svg.svg-icon.'.$exs.' use.tail { fill: ' . $color[1] . ';} ';
+    }
+    $document->addStyleDeclaration($css);
+
+?>
 
 <script type="text/javascript">
     window.QuantumviewfilesLang = {

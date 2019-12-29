@@ -6,6 +6,7 @@
  * @link       https://www.norrnext.com
  */
 
+window.QuantumManagerLoadComplete = false;
 window.QuantummanagerLists = [];
 
 window.QuantumEvents = function () {
@@ -57,16 +58,26 @@ window.QuantumEventsDispatcher = {
     build: function () {
         for(let j=0;j<this.listEvents.length;j++) {
             for(let i=0;i<QuantummanagerLists.length;i++) {
-                QuantummanagerLists[i].events.listEvents.push(this.listEvents[j]);
+                QuantummanagerLists[i].events.add(this.listEvents[j].e, this.listEvents[j].n, this.listEvents[j].c);
             }
         }
-
+    },
+    trigger: function (event) {
+        for(let i=0;i<QuantummanagerLists.length;i++) {
+            QuantummanagerLists[i].events.trigger(event, QuantummanagerLists[i]);
+        }
     }
 
 };
 
 
 document.addEventListener('DOMContentLoaded' ,function () {
+    window.QuantumManagerLoadComplete = true;
+    window.QuantumManagerInit();
+});
+
+window.QuantumManagerInit = function() {
+
     let quantummanagerAll = document.querySelectorAll('.quantummanager');
     let id = 0;
     let scopesEnabled = QuantumSettings.scopeEnabled.split(',');
@@ -140,7 +151,16 @@ document.addEventListener('DOMContentLoaded' ,function () {
 
     }
 
-    QuantumEventsDispatcher.build();
 
-});
+    let loadQuantum = setInterval(function () {
+        console.log(QuantumManagerLoadComplete);
+        if(QuantumManagerLoadComplete) {
+            QuantumEventsDispatcher.build();
+            QuantumEventsDispatcher.trigger('afterMainInit');
+            clearInterval(loadQuantum)
+        }
+    }, 1);
+
+
+};
 

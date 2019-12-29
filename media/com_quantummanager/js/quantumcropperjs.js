@@ -155,7 +155,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
         });
 
 
-        Filemanager.Quantumtoolbar.buttonAdd('cropperjsEdit', 'center', 'file-actions', 'btn-edit btn-hide hidden-label', QuantumviewfilesLang.buttonEdit, 'quantummanager-icon-edit', {}, function (ev) {
+        Filemanager.Quantumtoolbar.buttonAdd('cropperjsEdit', 'center', 'file-actions', 'btn-edit btn-hide hidden-label', QuantumviewfilesLang.buttonEdit, 'quantummanager-icon-crop', {}, function (ev) {
             self.startCropperjs();
             Filemanager.Quantumtoolbar.trigger('buttonCropperjsEdit');
             ev.preventDefault();
@@ -470,7 +470,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
                 type: 'normal',
                 label: QuantumviewfilesLang.buttonEdit,
                 tip: '',
-                icon: QuantumUtils.getFullUrl('/media/com_quantummanager/images/icons/action/create-new-pencil-button.svg'),
+                icon: QuantumUtils.getFullUrl('/media/com_quantummanager/images/icons/action/crop-tool-button.svg'),
                 onClick: function() {
                     let file = Filemanager.Quantumviewfiles.fileContext;
                     let exs = file.getAttribute('data-exs').toLocaleLowerCase();

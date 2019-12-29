@@ -13,7 +13,7 @@
     align-items: center;
 }
 .quantumtoolbar-module-muted {
-    background: #e9e6e8;
+    background: #F0F0F0;
 }
 .quantumtoolbar-module > div {
     display: flex;
@@ -27,6 +27,8 @@
 }
 .quantumtoolbar-module .center {
     width: 65%;
+    padding-left: 11px;
+    padding-right: 11px;
 }
 .quantumtoolbar-module .right {
     flex: 1;
@@ -77,8 +79,28 @@
     border-radius: 0 3px 3px 0;
 }
 .quantumtoolbar-module .btn-primary {
-    background: #11a811;
+    background: #78abde;
     border: 1px solid transparent;
+}
+.quantumtoolbar-module .btn-wrap {
+    position: relative;
+}
+.quantumtoolbar-module .btn-dropdown {
+    display: none;
+    position: absolute;
+    width: 100%;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 6;
+}
+.quantumtoolbar-module .btn-dropdown .btn {
+    border-top: none;
+}
+.quantumtoolbar-module .btn-dropdown > * {
+    width: 100%;
+}
+.quantumtoolbar-module .btn-wrap:hover .btn-dropdown {
+    display: block;
 }
 @media screen and (max-width: 1360px) {
     .quantumtoolbar-module button.hidden-label span:last-child {
