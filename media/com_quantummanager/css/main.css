@@ -355,6 +355,32 @@
     height: 14px;
     background-image: url("../images/icons/action/save-button.svg");
 }
+.quantummanager-icon-more {
+    width: 14px;
+    height: 14px;
+    background-image: url("../images/icons/action/show-more-button-with-three-dots.svg");
+    transform: rotate(90deg);
+}
+.quantummanager-icon-config {
+    width: 14px;
+    height: 14px;
+    background-image: url("../images/icons/action/settings-cogwheel-button.svg");
+}
+.quantummanager-icon-cut {
+    width: 14px;
+    height: 14px;
+    background-image: url("../images/icons/action/cut-content-button.svg");
+}
+.quantummanager-icon-copy {
+    width: 14px;
+    height: 14px;
+    background-image: url("../images/icons/action/copy-content.svg");
+}
+.quantummanager-icon-paste {
+    width: 14px;
+    height: 14px;
+    background-image: url("../images/icons/action/clipboard-paste-button.svg");
+}
 .quantummanager-icon-close {
     width: 14px;
     height: 14px;

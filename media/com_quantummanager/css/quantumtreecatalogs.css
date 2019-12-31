@@ -93,9 +93,11 @@
     height: 8px;
     background-image: url("data:image/svg+xml,%3Csvg width='4' height='6' viewBox='0 0 4 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.295013 5.295L2.58501 3L0.295013 0.705L1.00001 0L4.00001 3L1.00001 6L0.295013 5.295Z' fill='%23122E4A'/%3E%3C/svg%3E%0A");    background-size: contain;
     background-repeat: no-repeat;
+    transition: transform 0.2s;
 }
 .quantumtreecatalogs-module ul li span.tree-caret.tree-caret-down:before {
-    background-image: url("data:image/svg+xml,%3Csvg width='6' height='4' viewBox='0 0 6 4' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.705 0.295013L3 2.58501L5.295 0.295013L6 1.00001L3 4.00001L-3.08165e-08 1.00001L0.705 0.295013Z' fill='%23122E4A'/%3E%3C/svg%3E%0A");
+    /*background-image: url("data:image/svg+xml,%3Csvg width='6' height='4' viewBox='0 0 6 4' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.705 0.295013L3 2.58501L5.295 0.295013L6 1.00001L3 4.00001L-3.08165e-08 1.00001L0.705 0.295013Z' fill='%23122E4A'/%3E%3C/svg%3E%0A");*/
+    transform: rotate(90deg);
 }
 .quantumtreecatalogs-module ul li span.tree-caret:after {
     transform: rotate(90deg);

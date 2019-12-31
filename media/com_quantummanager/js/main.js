@@ -153,7 +153,6 @@ window.QuantumManagerInit = function() {
 
 
     let loadQuantum = setInterval(function () {
-        console.log(QuantumManagerLoadComplete);
         if(QuantumManagerLoadComplete) {
             QuantumEventsDispatcher.build();
             QuantumEventsDispatcher.trigger('afterMainInit');

@@ -101,10 +101,8 @@ let loadQuantum = setInterval(function () {
 
 
         });
-        console.log(QuantumEventsDispatcher);
+
         clearInterval(loadQuantum);
     }
-
-
 
 }, 1);

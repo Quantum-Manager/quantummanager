@@ -770,6 +770,46 @@ class QuantummanagerFileSystemLocal
 	}
 
 
+	public static function paste($pathFrom, $scopeFrom, $pathTo, $scopeTo, $cut = 0, $list = [])
+	{
+		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+		$actions = QuantummanagerHelper::getActions();
+		if (!$actions->get('core.edit')) {
+			return json_encode(['fail']);
+		}
+
+		if ($list === null)
+		{
+			$list = [];
+		}
+
+		$pathFromCompile = JPATH_SITE . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($pathFrom, false, $scopeFrom);
+		$pathToCompile = JPATH_SITE . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($pathTo, false, $scopeTo);
+		if (file_exists($pathFromCompile) && file_exists($pathToCompile))
+		{
+			foreach ($list as $file)
+			{
+				if (file_exists($pathFromCompile . DIRECTORY_SEPARATOR . $file))
+				{
+					if($cut)
+					{
+						File::move($pathFromCompile . DIRECTORY_SEPARATOR . $file, $pathToCompile . DIRECTORY_SEPARATOR . $file);
+					}
+					else
+					{
+						File::copy($pathFromCompile . DIRECTORY_SEPARATOR . $file, $pathToCompile . DIRECTORY_SEPARATOR . $file);
+					}
+				}
+			}
+
+			return json_encode(['ok']);
+		}
+
+		return json_encode(['fail']);
+
+	}
+
+
 	/**
 	 * @param string $path
 	 * @param $scope

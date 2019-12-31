@@ -48,6 +48,8 @@
     height: 30px;
     background: #f4f3f4;
     border: 1px solid #c6c4c6;
+    font-size: 13px;
+    line-height: 18px;
 }
 .quantumtoolbar-module button.btn-hide {
     display: none;
@@ -86,12 +88,17 @@
     position: relative;
 }
 .quantumtoolbar-module .btn-dropdown {
-    display: none;
+    visibility: hidden;
     position: absolute;
     width: 100%;
     background-color: #f9f9f9;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    transition: visibility 0.1s;
     z-index: 6;
+}
+.quantumtoolbar-module .btn-wrap:hover .btn-dropdown {
+    visibility: visible;
+    /*display: block;*/
 }
 .quantumtoolbar-module .btn-dropdown .btn {
     border-top: none;
@@ -99,8 +106,15 @@
 .quantumtoolbar-module .btn-dropdown > * {
     width: 100%;
 }
-.quantumtoolbar-module .btn-wrap:hover .btn-dropdown {
-    display: block;
+.quantumtoolbar-module .btn-dropdown > .btn-width-small {
+    width: 160px;
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.quantumtoolbar-module .btn-dropdown > .btn-width-small > .quantummanager-icon {
+    min-width: 14px;
+    min-height: 14px;
 }
 @media screen and (max-width: 1360px) {
     .quantumtoolbar-module button.hidden-label span:last-child {

@@ -59,6 +59,7 @@ class JFormFieldQuantumviewfiles extends JFormField
 				'onlyfiles' => $this->onlyfiles,
 				'metafile' => $this->metafile,
 				'watermark' => $this->watermark,
+				'help' => $this->help,
 				'hash' => md5(QuantummanagerHelper::preparePath($this->directory)),
 				'cssClass' => $this->cssClass,
 			]
@@ -80,6 +81,7 @@ class JFormFieldQuantumviewfiles extends JFormField
 			$this->__set('cssClass', $this->getAttribute('cssClass', ''));
 			$this->__set('metafile', $this->getAttribute('metafile', '1'));
 			$this->__set('watermark', $this->getAttribute('watermark', '0'));
+			$this->__set('help', $this->getAttribute('help', '1'));
 			$this->directory = $this->getAttribute('directory', 'images');
 			$this->onlyfiles = $this->getAttribute('onlyfiles', '0');
 

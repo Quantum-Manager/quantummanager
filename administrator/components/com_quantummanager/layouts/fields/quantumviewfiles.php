@@ -14,7 +14,7 @@ $id = mt_rand(111111, 999999);
 $document = \Joomla\CMS\Factory::getDocument();
 ?>
 
-<div class="quantummanager-module quantumviewfiles-module" data-type="Quantumviewfiles" data-options="hash:<?php echo $displayData['hash'] ?>;directory:<?php echo $displayData['directory'] ?>;onlyfiles:<?php echo $displayData['onlyfiles'] ?>;metafile:<?php echo $displayData['metafile'] ?>;watermark:<?php echo $displayData['watermark'] ?>">
+<div class="quantummanager-module quantumviewfiles-module" data-type="Quantumviewfiles" data-options="hash:<?php echo $displayData['hash'] ?>;directory:<?php echo $displayData['directory'] ?>;onlyfiles:<?php echo $displayData['onlyfiles'] ?>;metafile:<?php echo $displayData['metafile'] ?>;watermark:<?php echo $displayData['watermark'] ?>;help:<?php echo $displayData['help'] ?>">
     <div class="quantumviewfiles-module-heading">
         <div class="breadcumbs"></div>
         <div class="filter-search">
@@ -71,6 +71,9 @@ $document = \Joomla\CMS\Factory::getDocument();
         'buttonCreateDirectory': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_BUTTON_CREATE_DIRECTORY'); ?>",
         'buttonEdit': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_BUTTON_EDIT'); ?>",
         'buttonWatermark': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_BUTTON_WATERMARK'); ?>",
+        'buttonPaste': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_BUTTON_PASTE'); ?>",
+        'buttonCopy': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_BUTTON_COPY'); ?>",
+        'buttonCut': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_BUTTON_CUT'); ?>",
         'buttonDelete': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_BUTTON_DELETE'); ?>",
         'buttonTable': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_BUTTON_TABLE'); ?>",
         'buttonGrid': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_BUTTON_GRID'); ?>",
@@ -83,6 +86,7 @@ $document = \Joomla\CMS\Factory::getDocument();
         'metaSelectCount': "<?php echo Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_SELECT_COUNT'); ?>",
         'metaSelectSize': "<?php echo Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_SELECT_SIZE'); ?>",
         'contextReload': "<?php echo Text::_('COM_QUANTUMMANAGER_CONTEXT_RELOAD'); ?>",
+        'contextPaste': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_BUTTON_PASTE'); ?>",
         'contextRename': "<?php echo Text::_('COM_QUANTUMMANAGER_CONTEXT_RENAME'); ?>",
         'contextCopyLink': "<?php echo Text::_('COM_QUANTUMMANAGER_CONTEXT_COPY_LINK'); ?>",
         'contextPreviewFile': "<?php echo Text::_('COM_QUANTUMMANAGER_CONTEXT_PREVIEW_FILE'); ?>",

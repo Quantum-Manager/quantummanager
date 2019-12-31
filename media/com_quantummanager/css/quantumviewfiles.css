@@ -523,7 +523,7 @@
 .quantumviewfiles-module .field-list-files .list-grid .file-item .import-files-check-file {
     display: none;
 }
-.quantumviewfiles-module .field-list-files .list-grid .file-item .import-files-check-file:checked ~ .file:before {
+.quantumviewfiles-module .field-list-files .list-grid .file-item .file:before {
     content: "";
     display: block;
     position: absolute;
@@ -533,12 +533,17 @@
     left: 8px;
     top: 8px;
     border-radius: 50%;
+    background-image: url("data:image/svg+xml,%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 426.667 426.667' style='enable-background:new 0 0 426.667 426.667;' xml:space='preserve'%3E%3Cpath style='fill:%236AC259;' d='M213.333,0C95.518,0,0,95.514,0,213.333s95.518,213.333,213.333,213.333 c117.828,0,213.333-95.514,213.333-213.333S331.157,0,213.333,0z M174.199,322.918l-93.935-93.931l31.309-31.309l62.626,62.622 l140.894-140.898l31.309,31.309L174.199,322.918z'/%3E%3C/svg%3E%0A");
     background-size: contain;
     background-color: #fff;
     background-repeat: no-repeat;
     background-position: 50% 50%;
-    background-image: url("data:image/svg+xml,%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 426.667 426.667' style='enable-background:new 0 0 426.667 426.667;' xml:space='preserve'%3E%3Cpath style='fill:%236AC259;' d='M213.333,0C95.518,0,0,95.514,0,213.333s95.518,213.333,213.333,213.333 c117.828,0,213.333-95.514,213.333-213.333S331.157,0,213.333,0z M174.199,322.918l-93.935-93.931l31.309-31.309l62.626,62.622 l140.894-140.898l31.309,31.309L174.199,322.918z'/%3E%3C/svg%3E%0A");
+    opacity: 0;
+    transition: opacity 0.2s;
     z-index: 2;
+}
+.quantumviewfiles-module .field-list-files .list-grid .file-item .import-files-check-file:checked ~ .file:before {
+    opacity: 1;
 }
 .quantumviewfiles-module .field-list-files .list-grid .file-item .file {
     position: relative;
@@ -581,9 +586,9 @@ svg.svg-icon text {
     background-color: #efefef;
     border: solid 5px #EFEFEF;
     border-radius: 5px;
+    transition: border 0.2s;
 }
 .quantumviewfiles-module .field-list-files .list-grid .file-item:hover .file .file-exs img {
-    transition: all 0.2s;
     border: solid 5px #b3b3b3;
 }
 .quantumviewfiles-module .field-list-files .list-grid .file-item .file .file-exs .av-folderlist-label {

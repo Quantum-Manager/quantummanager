@@ -4,79 +4,29 @@ document.addEventListener('DOMContentLoaded' ,function () {
     let fieldWrap = false;
     let buttonInsert;
     let pathFile;
+    let wrapClick;
 
     document.querySelector('body').addEventListener('click', function (ev) {
-        let flag = false;
-        let el = ev.target;
-        let image = el;
+        wrapClick = ev.target;
+    });
 
-        if(el.tagName.toLowerCase() === 'a') {
-            let find = checkFieldFile(el);
-            if(find.flag) {
-                flag = true;
-                fieldWrap = find.wrap;
-            }
-        }
-
-        if(['svg', 'span'].indexOf(el.tagName.toLowerCase())) {
-            let parent = el.parentElement;
-            let find = checkFieldFile(parent);
-            if(find.flag) {
-                image = parent;
-                fieldWrap = find.wrap;
-                flag = true;
-            }
-        }
-
-        if(flag) {
-            let intervalShowModal = setInterval(function () {
-                let modal = document.querySelector('.uk-modal:not(#quantummanageryoothemepro)');
-                if(modal !== null) {
-                    modal.remove();
-                    clearInterval(intervalShowModal);
-                    showModal();
+    UIkit.util.on('div', 'beforeshow', function (ev) {
+        let element = ev.target;
+        if(element.classList.contains('uk-modal')) {
+            if(element.querySelector('.yo-finder-body') !== null) {
+                element.remove();
+                fieldWrap = wrapClick.closest('div');
+                if(fieldWrap.classList.contains('yo-thumbnail')) {
+                    fieldWrap = fieldWrap.parentElement;
                 }
-            }, 50);
+                setTimeout(function () {
+                    UIkit.modal('.quantummanageryoothemepro').show();
+                }, 200)
+            }
         }
     });
 
     getQuantummanager();
-
-    function showModal() {
-        setTimeout(function () {
-            UIkit.modal('.quantummanageryoothemepro').show();
-        }, 200);
-    }
-
-    function checkFieldFile(el) {
-        let wrap = false;
-        let flag = true;
-        let listClasses = [
-            'uk-placeholder',
-            'uk-text-center',
-            'uk-display-block',
-            'uk-margin-remove'
-        ];
-
-        wrap = el.parentElement;
-
-        for(let i=0;i<listClasses.length;i++) {
-            if(!el.classList.contains(listClasses[i])) {
-                wrap = false;
-                flag = false;
-                break;
-            }
-        }
-
-        if(el.parentElement.classList.contains('yo-thumbnail')) {
-            wrap = el.parentElement.parentElement;
-        }
-
-        return {
-            wrap: wrap,
-            flag: flag
-        };
-    }
 
     function getQuantummanager() {
         let xhr = new XMLHttpRequest();
@@ -162,7 +112,10 @@ document.addEventListener('DOMContentLoaded' ,function () {
                             document.getElementsByTagName("head")[0].appendChild(tag);
                         } else {
                             allScripts--;
-                            eval(scripts[i].innerHTML);
+                            if(scripts[i].innerHTML.indexOf('csrf.token') === -1) {
+                                eval(scripts[i].innerHTML);
+                            }
+
                         }
 
                     }
@@ -188,7 +141,7 @@ document.addEventListener('DOMContentLoaded' ,function () {
                             }
                             fieldWrap = false;
                             UIkit.modal('.quantummanageryoothemepro').hide();
-                    });
+                        });
 
                 });
 
