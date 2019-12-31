@@ -303,6 +303,7 @@ class QuantummanagerFileSystemLocal
 			if($arhiveupload)
 			{
 				$optionsForSafe = [
+					'forbidden_extensions' => QuantummanagerHelper::$forbiddenExtensions,
 					'php_ext_content_extensions' => ['null'],
 				];
 			}
@@ -310,13 +311,13 @@ class QuantummanagerFileSystemLocal
 
 			if(!QuantummanagerHelper::isSafeFile($file, $optionsForSafe))
 			{
-				$output[ 'error' ] = Text::_('COM_QUANTUMMANAGER_ERROR_PARTIAL_UPLOAD');
+				$output['error'] = Text::_('COM_QUANTUMMANAGER_ERROR_PARTIAL_UPLOAD');
 				return json_encode($output);
 			}
 
 			if ($file['error'] == 4)
 			{
-				$output[ 'error' ] = Text::_('COM_QUANTUMMANAGER_ERROR_PARTIAL_UPLOAD');
+				$output['error'] = Text::_('COM_QUANTUMMANAGER_ERROR_PARTIAL_UPLOAD');
 				return json_encode($output);
 			}
 
@@ -326,15 +327,15 @@ class QuantummanagerFileSystemLocal
 				switch ($file['error'])
 				{
 					case 1:
-						$output[ 'error' ] = Text::_('COM_QUANTUMMANAGER_FILE_TO_LARGE_THAN_PHP_INI_ALLOWS');
+						$output['error'] = Text::_('COM_QUANTUMMANAGER_FILE_TO_LARGE_THAN_PHP_INI_ALLOWS');
 						break;
 
 					case 2:
-						$output[ 'error' ] = Text::_('COM_QUANTUMMANAGER_FILE_TO_LARGE_THAN_HTML_FORM_ALLOWS');
+						$output['error'] = Text::_('COM_QUANTUMMANAGER_FILE_TO_LARGE_THAN_HTML_FORM_ALLOWS');
 						break;
 
 					case 3:
-						$output[ 'error' ] = Text::_('COM_QUANTUMMANAGER_ERROR_PARTIAL_UPLOAD');
+						$output['error'] = Text::_('COM_QUANTUMMANAGER_ERROR_PARTIAL_UPLOAD');
 				}
 
 			}
@@ -374,7 +375,7 @@ class QuantummanagerFileSystemLocal
 
 				if (!QuantummanagerHelper::checkFile($file['name'], $file['type']))
 				{
-					$output[ 'error' ] = Text::_('COM_QUANTUMMANAGER_ERROR_UPLOAD_ACCESS') . ': ' . (empty($file[ 'type']) ? Text::_('COM_QUANTUMMANAGER_EMPTY_MIMETYPE') : $file[ 'type']);
+					$output['error'] = Text::_('COM_QUANTUMMANAGER_ERROR_UPLOAD_ACCESS') . ': ' . (empty($file[ 'type']) ? Text::_('COM_QUANTUMMANAGER_EMPTY_MIMETYPE') : $file[ 'type']);
 					return json_encode($output);
 				}
 
@@ -897,15 +898,15 @@ class QuantummanagerFileSystemLocal
 				switch ($file['error'])
 				{
 					case 1:
-						$output[ 'error' ] = Text::_('COM_QUANTUMMANAGER_FILE_TO_LARGE_THAN_PHP_INI_ALLOWS');
+						$output['error'] = Text::_('COM_QUANTUMMANAGER_FILE_TO_LARGE_THAN_PHP_INI_ALLOWS');
 						break;
 
 					case 2:
-						$output[ 'error' ] = Text::_('COM_QUANTUMMANAGER_FILE_TO_LARGE_THAN_HTML_FORM_ALLOWS');
+						$output['error'] = Text::_('COM_QUANTUMMANAGER_FILE_TO_LARGE_THAN_HTML_FORM_ALLOWS');
 						break;
 
 					case 3:
-						$output[ 'error' ] = Text::_('COM_QUANTUMMANAGER_ERROR_PARTIAL_UPLOAD');
+						$output['error'] = Text::_('COM_QUANTUMMANAGER_ERROR_PARTIAL_UPLOAD');
 				}
 
 			}
@@ -917,13 +918,20 @@ class QuantummanagerFileSystemLocal
 				$nameSafe = File::makeSafe($lang->transliterate($nameSplit), ['#^\.#', '#\040#']);
 				$uploadedFileName = $nameSafe . '.' . $nameExs;
 				$exs = explode(',', 'jpg,jpeg,png,gif');
+
+				if(in_array($exs, QuantummanagerHelper::$forbiddenExtensions))
+				{
+					$output['error'] = Text::_('COM_QUANTUMMANAGER_ERROR_PARTIAL_UPLOAD');
+					return $output['error'];
+				}
+
 				$type = preg_replace("/\/.*?$/isu", '', $file['type']);
 				$data['name'] = isset($data['name']) ? $data['name'] : '';
 				$path = JPATH_ROOT . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($data['path'], false, $data['scope']);
 
 				if(!QuantummanagerHelper::checkFile($nameSplit . '.' . $nameExs, $file['type']))
 				{
-					$output[ 'error' ] = Text::_('COM_QUANTUMMANAGER_ERROR_UPLOAD_ACCESS') . ': ' . (empty($file[ 'type']) ? Text::_('COM_QUANTUMMANAGER_EMPTY_MIMETYPE') : $file[ 'type']);
+					$output['error'] = Text::_('COM_QUANTUMMANAGER_ERROR_UPLOAD_ACCESS') . ': ' . (empty($file[ 'type']) ? Text::_('COM_QUANTUMMANAGER_EMPTY_MIMETYPE') : $file[ 'type']);
 					return json_encode($output);
 				}
 
@@ -1157,18 +1165,7 @@ class QuantummanagerFileSystemLocal
 			$nameSafe = $name;
 		}
 
-		if(!in_array($exs, [
-				'php',
-				'php7',
-				'php5',
-				'php4',
-				'php3',
-				'php4',
-				'phtml',
-				'phps',
-				'sh',
-				'exe'
-			]) && file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file))
+		if(!in_array($exs, QuantummanagerHelper::$forbiddenExtensions) && file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file))
 		{
 			if(rename(JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file, JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $nameSafe . '.' . $exs))
 			{
@@ -1176,6 +1173,12 @@ class QuantummanagerFileSystemLocal
 					'status' => 'ok'
 				];
 			}
+		}
+		else
+		{
+			$output = [
+				'status' => 'fail'
+			];
 		}
 
 		return json_encode($output);

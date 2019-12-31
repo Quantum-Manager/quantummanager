@@ -41,6 +41,11 @@ class QuantummanagerHelper
 	 */
 	public static $cacheMimeType = '';
 
+
+	public static $forbiddenExtensions = [
+		'php', 'phps', 'pht', 'phtml', 'php3', 'php4', 'php5', 'php6', 'php7', 'inc', 'pl', 'cgi', 'fcgi', 'java', 'jar', 'py', 'htaccess'
+	];
+
 	/**
 	 * @param $name
 	 * @param $mimeType
