@@ -41,7 +41,6 @@
     margin-right: 15px !important;
 }
 .quantumtoolbar-module button {
-    border-radius: 0;
     display: flex;
     align-items: center;
     transition: all 0.2s;
@@ -50,6 +49,7 @@
     border: 1px solid #c6c4c6;
     font-size: 13px;
     line-height: 18px;
+    border-radius: 0;
 }
 .quantumtoolbar-module button.btn-hide {
     display: none;
@@ -70,15 +70,6 @@
 }
 .quantumtoolbar-module .quantumtoolbar-module-buttons-group:last-child {
     margin-right: 0;
-}
-.quantumtoolbar-module .quantumtoolbar-module-buttons-group > button {
-    border-radius: 0;
-}
-.quantumtoolbar-module .quantumtoolbar-module-buttons-group > button:first-child {
-    border-radius: 3px 0 0 3px;
-}
-.quantumtoolbar-module .quantumtoolbar-module-buttons-group > button:last-child {
-    border-radius: 0 3px 3px 0;
 }
 .quantumtoolbar-module .btn-primary {
     background: #78abde;

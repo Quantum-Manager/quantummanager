@@ -23,7 +23,7 @@ $presets = $paramsComponents->get('custompresetscrop');
         <div class="name-file-wrap">
             <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_LABEL_FILE'); ?></label>
             <div class="input-wrapper">
-                <input type="text" placeholder="Input Outline" class="quantumcropperjs-name-file" name="name" >
+                <input type="text" placeholder="" class="quantumcropperjs-name-file" name="name" >
                 <span class="bottom"></span>
                 <span class="right"></span>
                 <span class="top"></span>

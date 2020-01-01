@@ -73,7 +73,10 @@
     width: 16px;
     height: 16px;
 }
-.quantumviewfiles-module .filter-search input {
+.quantumviewfiles-module .filter-search .input-wrapper {
+    position: relative;
+}
+.quantumviewfiles-module .filter-search .input-wrapper input {
     padding: 0 10px;
     padding-left: 25px;
     height: 25px;
@@ -86,16 +89,71 @@
     color: #666;
     border: 1px solid #e5e5e5;
     transition: .2s ease-in-out;
-    transition-property: color,background-color,border;
+    transition-property: color,background-color,border,width;
 }
+.quantumviewfiles-module .filter-search  .input-wrapper input:focus {
+    outline: none;
+}
+.quantumviewfiles-module .filter-search  .input-wrapper span {
+    position: absolute;
+    background-color: #78abde;
+    transition: transform 0.5s ease;
+}
+.quantumviewfiles-module .filter-search .input-wrapper .bottom,
+.quantumviewfiles-module .filter-search .input-wrapper .top {
+    height: 1px;
+    left: 0;
+    right: 0;
+    transform: scaleX(0);
+}
+.quantumviewfiles-module .filter-search .input-wrapper .left,
+.quantumviewfiles-module .filter-search .input-wrapper .right {
+    width: 1px;
+    top: 0;
+    bottom: 0;
+    transform: scaleY(0);
+}
+.quantumviewfiles-module .filter-search .input-wrapper .bottom {
+    bottom: 0;
+    transform-origin: bottom right;
+}
+.quantumviewfiles-module .filter-search .input-wrapper input:focus ~ .bottom {
+    transform-origin: bottom left;
+    transform: scaleX(1);
+}
+.quantumviewfiles-module .filter-search .input-wrapper .right {
+    right: 0;
+    transform-origin: top right;
+}
+.quantumviewfiles-module .filter-search .input-wrapper input:focus ~ .right {
+    transform-origin: bottom right;
+    transform: scaleY(1);
+}
+.quantumviewfiles-module .filter-search .input-wrapper .top {
+    top: 0;
+    transform-origin: top left;
+}
+.quantumviewfiles-module .filter-search .input-wrapper input:focus ~ .top {
+    transform-origin: top right;
+    transform: scaleX(1);
+}
+.quantumviewfiles-module .filter-search .input-wrapper .left {
+    left: 0;
+    transform-origin: bottom left;
+}
+.quantumviewfiles-module .filter-search .input-wrapper input:focus ~ .left {
+    transform-origin: top left;
+    transform: scaleY(1);
+}
+/*
+.quantumviewfiles-module .filter-search input:focus,
+.quantumviewfiles-module .filter-search input:active {
+    width: 350px;
+}*/
 .quantumviewfiles-module .breadcumbs {
-    margin-top: 0;
-    width: 100%;
-    height: auto;
-}
-.quantumviewfiles-module .breadcumbs ul {
     display: flex;
     flex-wrap: wrap;
+    flex: 1;
     padding: 0;
     margin: 0;
     height: 30px;
@@ -103,24 +161,21 @@
     align-items: center;
     list-style: none;
 }
-.quantumviewfiles-module .breadcumbs > ul {
-}
-.quantumviewfiles-module .breadcumbs > ul > li {
+.quantumviewfiles-module .breadcumbs > li {
     display: flex;
     align-content: center;
     align-items: center;
     position: relative;
+    max-width: 150px;
     line-height: 16px;
     transition: all 0.2s;
 }
-.quantumviewfiles-module .breadcumbs > ul > li:last-child {
-    margin-right: 0;
-}
-.quantumviewfiles-module .breadcumbs > ul > li.carret {
+.quantumviewfiles-module .breadcumbs > li.carret {
     height: 100%;
     padding: 0 2px;
+    flex: none;
 }
-.quantumviewfiles-module .breadcumbs > ul > li.carret > span {
+.quantumviewfiles-module .breadcumbs > li.carret > span {
     display: inline-block;
     width: 20px;
     height: 20px;
@@ -128,10 +183,10 @@
     background-size: cover;
     background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg' data-svg='chevron-right'%3E%3Cpolyline fill='none' stroke='%23000' stroke-width='1.03' points='7 4 13 10 7 16'%3E%3C/polyline%3E%3C/svg%3E");
 }
-.quantumviewfiles-module .breadcumbs > ul > li:last-child:after {
+.quantumviewfiles-module .breadcumbs > li:last-child:after {
     display: none;
 }
-.quantumviewfiles-module .breadcumbs ul li:hover {
+.quantumviewfiles-module .breadcumbs li:hover {
     background-color: #f4f4f4;
     cursor: pointer;
     text-decoration: none;
@@ -139,21 +194,23 @@
     outline: 0;
     transition: all 0.2s;
 }
-.quantumviewfiles-module .breadcumbs > ul > li > span {
+.quantumviewfiles-module .breadcumbs > li > span {
     display: inline-block;
     font-weight: 100;
-    font-size: 21px;
+    font-size: 16px;
     color: #333;
-    padding: 7px 10px;
-    max-width: 150px;
+    padding: 7px 5px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
 }
-.quantumviewfiles-module .breadcumbs ul li.dropdown {
+.quantumviewfiles-module .breadcumbs > li:first-child > span {
+    padding-left: 10px;
+}
+.quantumviewfiles-module .breadcumbs li.dropdown {
     position: relative;
 }
-.quantumviewfiles-module .breadcumbs ul li .dropdown-content {
+.quantumviewfiles-module .breadcumbs li .dropdown-content {
     display: none;
     position: absolute;
     background-color: #f9f9f9;
@@ -167,30 +224,31 @@
     max-height: 320px;
     overflow-x: hidden;
     overflow-y: auto;
+    border-radius: 3px;
     webkit-overflow-scrolling: touch;
     z-index: 1;
     transition: display 0.2s ease;
 }
-.quantumviewfiles-module .breadcumbs ul li .dropdown-content ul {
+.quantumviewfiles-module .breadcumbs li .dropdown-content ul {
     display: inline-block;
     white-space: normal;
     width: 100%;
     padding: 0;
     margin: 0;
 }
-.quantumviewfiles-module .breadcumbs ul li .dropdown-content ul li {
+.quantumviewfiles-module .breadcumbs li .dropdown-content ul li {
     display: inline-block;
     width: 100%;
     padding: 0;
     color: black;
     text-decoration: none;
 }
-.quantumviewfiles-module .breadcumbs ul li .dropdown-content ul li span {
+.quantumviewfiles-module .breadcumbs li .dropdown-content ul li span {
     display: inline-block;
     width: 100%;
     padding: 5px 15px;
 }
-.quantumviewfiles-module .breadcumbs ul li.dropdown:hover .dropdown-content {
+.quantumviewfiles-module .breadcumbs li.dropdown:hover .dropdown-content {
     display: block;
     transition: display 0.2s ease;
 }
@@ -271,6 +329,17 @@
     border: none;
     height: 85%;
 }
+.quantumviewfiles-module .meta-preview-name {
+    margin-bottom: 7px;
+    padding-bottom: 7px;
+    text-align: center;
+    color: #777;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 17px;
+    word-break: break-word;
+    border-bottom: 1px solid #ddddddb5;
+}
 .quantumviewfiles-module .meta-file table {
     border-collapse: collapse;
     border-spacing: 0;
@@ -279,6 +348,7 @@
 .quantumviewfiles-module .meta-file .meta-table > div {
     display: flex;
     align-items: center;
+    color: #777;
     transition: background-color .1s linear;
 }
 .quantumviewfiles-module .meta-file .meta-table > div > div {

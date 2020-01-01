@@ -1010,6 +1010,10 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                         } else {
                             html += '<div class="meta-preview meta-preview-open"><img src="' + response.preview.link + '" /></div>';
                         }
+
+                        if(response.preview.name !== undefined) {
+                            html += '<div class="meta-preview-name">' + response.preview.name + '</div>';
+                        }
                     }
 
                     if(response.global !== undefined) {
@@ -1146,6 +1150,10 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
 
                     if(response.preview !== undefined) {
                         html += '<div class="meta-preview meta-preview-folder"><img src="' + response.preview.link + '" /></div>';
+
+                        if(response.preview.name !== undefined) {
+                            html += '<div class="meta-preview-name">' + response.preview.name + '</div>';
+                        }
                     }
 
                     if(response.global !== undefined) {
@@ -1324,9 +1332,10 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
 
         let currPaths = self.path.split('/');
         let htmlBreadcrumbs = ViewfilesElement.querySelector('.breadcumbs');
-        let html = "<ul class='breadcumbs-ul'>";
+        let html = "";
         let lastElement;
         let clPaths = [];
+        let liDropdown = [];
         let pathAtr = '';
         let title = '';
 
@@ -1395,9 +1404,25 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             }
         }
 
-        html += "</ul>";
+        html += "";
         htmlBreadcrumbs.innerHTML = html;
         clPaths = htmlBreadcrumbs.querySelectorAll('.clPath');
+        liDropdown = htmlBreadcrumbs.querySelectorAll('li.dropdown');
+
+        /*
+        for(let i=0;i<liDropdown.length;i++) {
+            let check = liDropdown[i].querySelector('.dropdown-content');
+            if(check !== null) {
+                //liDropdown[i].addEventListener('mousemove', function (ev) {
+                let coord = liDropdown[i].getBoundingClientRect();
+                let height = liDropdown[i].clientHeight - 2;
+                let dropdown = liDropdown[i].querySelector('.dropdown-content');
+                dropdown.style.left = coord.x + 'px';
+                dropdown.style.top = coord.y + height + 'px';
+                //});
+            }
+
+        }*/
 
         for(let i=0;i<clPaths.length;i++) {
             clPaths[i].addEventListener('click', function (ev) {

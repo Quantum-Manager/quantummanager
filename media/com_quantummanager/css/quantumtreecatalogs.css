@@ -20,8 +20,7 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: auto;
     webkit-overflow-scrolling: touch;
     -webkit-transform: translateZ(0);
     -moz-transform: translateZ(0);
@@ -56,6 +55,7 @@
     font-size: 13px;
     line-height: 17px;
     position: relative;
+    white-space: nowrap;
 }
 .quantumtreecatalogs-module ul li span {
     position: relative;

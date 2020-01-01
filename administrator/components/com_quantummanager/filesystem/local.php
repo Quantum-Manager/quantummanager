@@ -434,6 +434,10 @@ class QuantummanagerFileSystemLocal
 
 			if(is_file($filePath))
 			{
+
+				$splitFile = explode('.', $file);
+				$exs = mb_strtolower(array_pop($splitFile));
+
 				$meta = [
 					'preview' => [
 						'link' => 'index.php?' . http_build_query([
@@ -443,20 +447,18 @@ class QuantummanagerFileSystemLocal
 								'scope' => $scope,
 								'path' => $sourcePath,
 								'v' => mt_rand(111111, 999999),
-							])
+							]),
+						'name' => implode('.', $splitFile) . '.' . $exs
 					],
 					'global' => [],
 					'find' => [],
 				];
 
 
-				$splitFile = explode('.', $file);
-				$exs = mb_strtolower(array_pop($splitFile));
-
-				$globalInfo[] = [
+				/*$globalInfo[] = [
 					'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_FILENAME'),
 					'value' => implode('.', $splitFile) . '.' . $exs,
-				];
+				];*/
 
 				/*$globalInfo[] = [
 					'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_EXS'),
@@ -541,6 +543,11 @@ class QuantummanagerFileSystemLocal
 			else
 			{
 
+				$splitDirectory = explode(DIRECTORY_SEPARATOR, $directory);
+				$directoryName = array_pop($splitDirectory);
+				$extended = (int)QuantummanagerHelper::getParamsComponentValue('metafileextended', 0);
+				$showPath = (int)QuantummanagerHelper::getParamsComponentValue('metafileshowpath', 0);
+
 				$meta = [
 					'preview' => [
 						'link' => 'index.php?' . http_build_query([
@@ -550,25 +557,22 @@ class QuantummanagerFileSystemLocal
 								'scope' => $scope,
 								'path' => $sourcePath,
 								'v' => mt_rand(111111, 999999),
-							])
+							]),
+						'name' => $directoryName
 					],
 					'global' => [],
 					'find' => [],
 				];
 
-				$splitDirectory = explode(DIRECTORY_SEPARATOR, $directory);
-				$directoryName = array_pop($splitDirectory);
-				$extended = (int)QuantummanagerHelper::getParamsComponentValue('metafileextended', 0);
-				$showPath = (int)QuantummanagerHelper::getParamsComponentValue('metafileshowpath', 0);
 
 				if($extended)
 				{
 					$size = self::getSizeDirectory($directory);
 					$meta['global'] = [
-						[
+						/*[
 							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_DIRECTORYNAME'),
 							'value' => $directoryName
-						],
+						],*/
 						[
 							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_COUNTDORECTORIES'),
 							'value' => $size['directoriesCount']
@@ -1074,17 +1078,24 @@ class QuantummanagerFileSystemLocal
 		$exs = mb_strtolower(array_pop($splitFile));
 		$mediaIconsPath = 'media/com_quantummanager/images/icons/';
 		$siteUrl = Uri::root();
+		$path = QuantummanagerHelper::preparePath($path, false, $scope);
 
 		if(empty($file))
 		{
-			$app->redirect($siteUrl . $mediaIconsPath . 'folder.svg');
+			if(self::dirIisEmpty(JPATH_ROOT . DIRECTORY_SEPARATOR . $path))
+			{
+				$app->redirect($siteUrl . $mediaIconsPath . 'folder.svg');
+			}
+			else
+			{
+				$app->redirect($siteUrl . $mediaIconsPath . 'folder-empty.svg');
+			}
 		}
 
 		if(in_array($exs, ['jpg', 'jpeg', 'png', 'gif']))
 		{
 
 			JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
-			$path = QuantummanagerHelper::preparePath($path, false, $scope);
 			$directory = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
 			$manager = JInterventionimage::getInstance();
 			$cacheSource =  JPATH_ROOT . DIRECTORY_SEPARATOR . 'cache/com_quantummanager';
