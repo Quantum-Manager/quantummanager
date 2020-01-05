@@ -68,6 +68,9 @@ class JFormFieldQuantumtreecatalogs extends JFormField
 			$this->__set('cssClass', $this->getAttribute('cssClass', ''));
 			$this->directory = $this->getAttribute('directory', 'images');
 
+			JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+			QuantummanagerHelper::includeScriptHead();
+
 			HTMLHelper::_('stylesheet', 'com_quantummanager/main.css', [
 				'version' => filemtime(__FILE__),
 				'relative' => true

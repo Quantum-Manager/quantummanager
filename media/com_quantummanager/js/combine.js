@@ -8,7 +8,7 @@
 
 let loadQuantum = setInterval(function () {
 
-    if(QuantumEventsDispatcher === undefined) {
+    if(window.QuantumEventsDispatcher === undefined) {
         return;
     } else {
         QuantumEventsDispatcher.add('afterMainInit', function (fm) {

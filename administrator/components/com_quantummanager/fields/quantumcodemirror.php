@@ -67,6 +67,9 @@ class JFormFieldQuantumcodemirror extends JFormField
 			$doc = Factory::getDocument();
 			$this->__set('standalone', $this->getAttribute('standalone', true));
 
+			JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+			QuantummanagerHelper::includeScriptHead();
+
 			HTMLHelper::_('stylesheet', 'com_quantummanager/main.css', [
 				'version' => filemtime(__FILE__),
 				'relative' => true

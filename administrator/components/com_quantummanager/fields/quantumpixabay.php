@@ -66,6 +66,9 @@ class JFormFieldQuantumpixabay extends JFormField
 			$this->__set('standalone', $this->getAttribute('standalone', true));
 			$this->__set('cssClass', $this->getAttribute('cssClass', ''));
 
+			JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+			QuantummanagerHelper::includeScriptHead();
+			
 			HTMLHelper::_('stylesheet', 'com_quantummanager/main.css', [
 				'version' => filemtime(__FILE__),
 				'relative' => true

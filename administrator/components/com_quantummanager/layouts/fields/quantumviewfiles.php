@@ -92,6 +92,7 @@ $document = \Joomla\CMS\Factory::getDocument();
         'metaSelectCount': "<?php echo Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_SELECT_COUNT'); ?>",
         'metaSelectSize': "<?php echo Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_SELECT_SIZE'); ?>",
         'contextReload': "<?php echo Text::_('COM_QUANTUMMANAGER_CONTEXT_RELOAD'); ?>",
+        'contextFolderCreate': "<?php echo Text::_('COM_QUANTUMMANAGER_CONTEXT_FOLDER_CREATE'); ?>",
         'contextPaste': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMVIEWFILES_BUTTON_PASTE'); ?>",
         'contextRename': "<?php echo Text::_('COM_QUANTUMMANAGER_CONTEXT_RENAME'); ?>",
         'contextCopyLink': "<?php echo Text::_('COM_QUANTUMMANAGER_CONTEXT_COPY_LINK'); ?>",

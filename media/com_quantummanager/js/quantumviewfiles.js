@@ -45,6 +45,21 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
         },
         {
             type: 'normal',
+            label: QuantumviewfilesLang.contextFolderCreate,
+            tip: '',
+            icon: QuantumUtils.getFullUrl('/media/com_quantummanager/images/icons/action/folder-symbol.svg'),
+            onClick: function(){
+                QuantumUtils.prompt(QuantumviewfilesLang.directoryName, '', function (nameDirectory) {
+                    jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.createDirectory&path=" + encodeURIComponent(Filemanager.data.path)
+                        + '&name=' + encodeURIComponent(nameDirectory)
+                        + "&scope=" + encodeURIComponent(Filemanager.data.scope))).done(function (response) {
+                        Filemanager.events.trigger('reloadPaths', Filemanager);
+                    });
+                });
+            }
+        },
+        {
+            type: 'normal',
             label: QuantumviewfilesLang.contextPaste,
             tip: '',
             check: function() {
@@ -681,7 +696,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
 
         if(parseInt(this.options.help)) {
             Filemanager.Quantumtoolbar.buttonAdd('viewfilesHelp', 'right', 'file-other', 'btn-back hidden-label', QuantumviewfilesLang.help, 'quantummanager-icon-info', {}, function (ev) {
-                QuantumUtils.alert('<div class="quantummanager-about"><div class="text">' + QuantumviewfilesLang.helpText + '</div><div class="copyright">' + QuantumviewfilesLang.helpCopyright + '</div><div class="copyright-images">' + QuantumviewfilesLang.helpCopyrightImages + '</div><div class="love">' + QuantumviewfilesLang.helpLove + ' <img src="' + QuantumUtils.getFullUrl('/media/com_quantummanager/images/icons/action/favorite-heart-button.svg')+ '" class="svg" /></div>', [
+                QuantumUtils.alert('<div class="quantummanager-about"><div class="text">Quantum 1.4.0 ' + QuantumviewfilesLang.helpText + '</div><div class="copyright">' + QuantumviewfilesLang.helpCopyright + '</div><div class="copyright-images">' + QuantumviewfilesLang.helpCopyrightImages + '</div><div class="love">' + QuantumviewfilesLang.helpLove + ' <img src="' + QuantumUtils.getFullUrl('/media/com_quantummanager/images/icons/action/favorite-heart-button.svg')+ '" class="svg" /></div>', [
                     {
                         name: QuantumviewfilesLang.helpButtonProductPage,
                         callback: function () {
@@ -974,13 +989,11 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
 
 
                         if(setFile) {
-
                             if(elements.length) {
                                 self.file = file;
                             } else {
                                 self.file = undefined;
                             }
-
                         }
 
 
@@ -1420,7 +1433,6 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
         let fm = Filemanager;
         let scope = fm.data.scope;
 
-        //jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumtreecatalogs.getDirectories&path=" + encodeURIComponent(this.options.directory) + "&scope=" + encodeURIComponent(scope) + '&root=' + encodeURIComponent(this.options.directory)))
         jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumtreecatalogs.getDirectories&path=root&scope=" + encodeURIComponent(scope) + '&root=root'))
             .done(function (response) {
                 response = JSON.parse(response);
@@ -1825,6 +1837,13 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
 
         if(fm.Quantumtoolbar !== undefined) {
             for(let i=0;i<self.IdsButtonForFile.length;i++) {
+
+                if(
+                    fm.Quantumtoolbar.buttonsList[self.IdsButtonForFile[i].id] === undefined ||
+                    fm.Quantumtoolbar.buttonsList[self.IdsButtonForFile[i].id] === null
+                ) {
+                    continue;
+                }
 
                 let checkSelect = false;
 

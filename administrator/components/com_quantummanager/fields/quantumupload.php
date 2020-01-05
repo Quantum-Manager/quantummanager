@@ -71,6 +71,9 @@ class JFormFieldQuantumupload extends JFormField
 			$this->scope = $this->getAttribute('scope', '');
 			$this->dropAreaHidden = $this->getAttribute('dropAreaHidden', '0');
 
+			JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+			QuantummanagerHelper::includeScriptHead();
+
 			HTMLHelper::_('stylesheet', 'com_quantummanager/main.css', [
 				'version' => filemtime(__FILE__),
 				'relative' => true

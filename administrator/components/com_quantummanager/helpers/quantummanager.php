@@ -42,9 +42,54 @@ class QuantummanagerHelper
 	public static $cacheMimeType = '';
 
 
+	/**
+	 * @var array
+	 * @since version
+	 */
 	public static $forbiddenExtensions = [
-		'php', 'phps', 'pht', 'phtml', 'php3', 'php4', 'php5', 'php6', 'php7', 'inc', 'pl', 'cgi', 'fcgi', 'java', 'jar', 'py', 'htaccess'
+		'php',
+		'phps',
+		'pht',
+		'phtml',
+		'php3',
+		'php4',
+		'php5',
+		'php6',
+		'php7',
+		'inc',
+		'pl',
+		'cgi',
+		'fcgi',
+		'java',
+		'jar',
+		'py',
+		'htaccess'
 	];
+
+
+	/**
+	 * @var bool
+	 * @since version
+	 */
+	private static $flagScriptHead = false;
+
+
+	/**
+	 *
+	 *
+	 * @since version
+	 */
+	public static function includeScriptHead()
+	{
+		if(!self::$flagScriptHead)
+		{
+
+			Factory::getDocument()
+				->addScriptDeclaration(file_get_contents(JPATH_ROOT . '/media/com_quantummanager/js/dispatcher.js'));
+			self::$flagScriptHead = true;
+		}
+	}
+
 
 	/**
 	 * @param $name

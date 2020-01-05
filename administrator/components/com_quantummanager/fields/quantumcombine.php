@@ -44,12 +44,19 @@ class JFormFieldQuantumCombine extends JFormField
 	 */
 	protected $renderLabelLayout = 'renderlabel';
 
+
+	public function __construct($form = null)
+	{
+		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+		parent::__construct($form);
+	}
+
+
 	/**
 	 * @return array
 	 */
 	protected function getLayoutData()
 	{
-		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 		$scopes = QuantummanagerHelper::getAllScope();
 
 		return array_merge(parent::getLayoutData(),
@@ -86,6 +93,8 @@ class JFormFieldQuantumCombine extends JFormField
 	{
 		try {
 
+			QuantummanagerHelper::includeScriptHead();
+
 			$componentParams = ComponentHelper::getParams('com_quantummanager');
 
 			if(empty($this->fields))
@@ -108,7 +117,8 @@ class JFormFieldQuantumCombine extends JFormField
 				{
 					HTMLHelper::_('script', 'com_quantummanager/' . $this->layout . '.js', [
 						'version' => filemtime(__FILE__),
-						'relative' => true
+						'relative' => true,
+						'defer' => 'defer'
 					]);
 				}
 
