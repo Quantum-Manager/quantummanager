@@ -217,19 +217,23 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
     this.IdsButtonForFile = [
         {
             'id': 'viewfilesWatermark',
-            'exs': ['png', 'jpg', 'jpeg']
+            'exs': ['png', 'jpg', 'jpeg'],
+            'count': 'some'
+        },
+        {
+            'id': 'viewfilesDelete',
+            'count': 'some'
+        },
+        {
+            'id': 'viewfilesCopy',
+            'count': 'some'
+        },
+        {
+            'id': 'viewfilesCut',
+            'count': 'some'
         },
         {
             'id': 'viewfilesFileRename'
-        },
-        {
-            'id': 'viewfilesDelete'
-        },
-        {
-            'id': 'viewfilesCopy'
-        },
-        {
-            'id': 'viewfilesCut'
         },
         {
             'id': 'viewfilesFilePreview'
@@ -1821,8 +1825,22 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
 
         if(fm.Quantumtoolbar !== undefined) {
             for(let i=0;i<self.IdsButtonForFile.length;i++) {
-                if(find) {
 
+                let checkSelect = false;
+
+                if(self.IdsButtonForFile[i].count === undefined) {
+                    if(self.getCountSelected() === 1) {
+                        checkSelect = true;
+                    }
+                } else {
+                    if(self.IdsButtonForFile[i].count === 'some') {
+                        if(self.getCountSelected() >= 1) {
+                            checkSelect = true;
+                        }
+                    }
+                }
+
+                if(find && checkSelect) {
                     if(self.IdsButtonForFile[i].exs !== undefined) {
                         if(self.IdsButtonForFile[i].exs.indexOf(exs) === -1) {
                             fm.Quantumtoolbar.buttonsList[self.IdsButtonForFile[i].id].classList.add('btn-hide');

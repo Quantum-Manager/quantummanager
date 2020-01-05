@@ -408,8 +408,12 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
 
         let file = Filemanager.Quantumviewfiles.file;
 
+        fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.add('btn-hide');
         if(file === undefined) {
-            fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.add('btn-hide');
+            return;
+        }
+
+        if(Filemanager.Quantumviewfiles.getCountSelected() > 1) {
             return;
         }
 
