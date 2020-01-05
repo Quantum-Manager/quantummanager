@@ -423,6 +423,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
         }
 
         if(['png', 'jpg', 'jpeg'].indexOf(exs) === -1) {
+            fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.add('btn-hide');
             return;
         }
 

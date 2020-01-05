@@ -558,7 +558,7 @@ class QuantummanagerFileSystemLocal
 								'path' => $sourcePath,
 								'v' => mt_rand(111111, 999999),
 							]),
-						'name' => $directoryName
+						'name' => $showPath ? (DIRECTORY_SEPARATOR . $path) : $directoryName
 					],
 					'global' => [],
 					'find' => [],
@@ -569,10 +569,6 @@ class QuantummanagerFileSystemLocal
 				{
 					$size = self::getSizeDirectory($directory);
 					$meta['global'] = [
-						/*[
-							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_DIRECTORYNAME'),
-							'value' => $directoryName
-						],*/
 						[
 							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_COUNTDORECTORIES'),
 							'value' => $size['directoriesCount']
@@ -626,13 +622,7 @@ class QuantummanagerFileSystemLocal
 				{
 					$meta['global'] = array_merge($meta['global'], [
 						[
-							//'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_DIRECTORYNAME'),
-							'key' => 'От корня сайта',
-							'value' => $path
-						],
-						[
-							//'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_DIRECTORYNAME'),
-							'key' => 'Полный путь',
+							'key' => '',
 							'value' => JPATH_SITE . DIRECTORY_SEPARATOR . $path
 						]
 					]);

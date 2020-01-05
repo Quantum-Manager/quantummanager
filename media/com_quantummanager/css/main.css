@@ -330,12 +330,9 @@
     height: 14px;
     background-image: url("../images/icons/action/rubbish-bin-delete-button.svg");
 }
-.quantummanager-icon-insert {
-    width: 14px;
-    height: 14px;
-    background-image: url("../images/icons/action/link-button.svg");
-}
-.quantummanager-icon-insert-inverse {
+.quantummanager-icon-insert,
+.quantummanager-icon-insert-inverse,
+.quantummanager-icon-link {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/link-button.svg");
@@ -390,6 +387,11 @@
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/create-new-pencil-button.svg");
+}
+.quantummanager-icon-eye {
+    width: 14px;
+    height: 14px;
+    background-image: url("../images/icons/action/visibility-button.svg");
 }
 .quantummanager-icon-crop {
     width: 14px;

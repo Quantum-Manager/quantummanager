@@ -355,11 +355,16 @@
     width: 50%;
     padding: 6px;
     vertical-align: middle;
+    word-break: break-word;
 }
-.quantumviewfiles-module .meta-file .meta-table > div > div:last-child {
+.quantumviewfiles-module .meta-file .meta-table > div > div:last-child,
+.quantumviewfiles-module .meta-file .meta-table > div.only-value > div {
     font-weight: bold;
     overflow: hidden;
     /*text-overflow: ellipsis;*/
+}
+.quantumviewfiles-module .meta-file .meta-table > div.only-value > div {
+    width: 100%;
 }
 .quantumviewfiles-module .meta-file .meta-preview-album {
     position: relative;

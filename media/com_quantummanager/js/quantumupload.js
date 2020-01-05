@@ -78,7 +78,7 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
         }
 
         this.dropAreaInput.addEventListener('click', function (ev) {
-            if(ev.target.tagName.toLowerCase() === 'div') {
+            if(ev.target.tagName.toLowerCase() !== 'label') {
                 for (let i = 0; i < self.inputFileAll.length; i++) {
                     self.inputFileAll[i].click();
                     break;
