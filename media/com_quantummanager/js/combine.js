@@ -46,7 +46,7 @@ let loadQuantum = setInterval(function () {
             }
 
 
-            let splitSizesContainerToolbar = [25, 60];
+            let splitSizesContainerToolbar = [25, 50];
 
             if(localStorage !== undefined) {
                 if(localStorage.getItem('quantummanagerSplitSizesT') !== null) {
