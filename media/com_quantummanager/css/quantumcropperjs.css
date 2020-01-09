@@ -41,6 +41,16 @@
 .quantumcropperjs-module .cropper-save .loader {
     width: 480px;
 }
+.quantumcropperjs-module input,
+.quantumcropperjs-module select {
+    display: inline-block;
+    height: 18px;
+    padding: 4px 6px;
+    font-size: 13px;
+    line-height: 18px;
+    border-radius: 3px;
+    vertical-align: middle;
+}
 .quantumcropperjs-module .toolbar {
     display: block;
     position: relative;
@@ -73,6 +83,7 @@
     clip: rect(0,0,0,0);
     white-space: nowrap;
     border: 0;
+
 }
 .quantumcropperjs-module .toolbar .buttons-methods {
     display: flex;
@@ -211,6 +222,7 @@
 }
 .quantumcropperjs-module .change-ratio-wrap .change-ratio {
     width: 100%;
+    height: 30px;
     margin: 0;
     background-color: #333;
     color: #fff;
@@ -339,6 +351,13 @@
     text-align: center;
 }
 .quantumcropperjs-module .toolbar-footer > div {
+    display: flex;
+}
+.quantumcropperjs-module .toolbar-footer > div > div {
+    margin-right: 5px;
+}
+.quantumcropperjs-module .toolbar-footer > div > div:last-child {
+    margin-right: 0;
 }
 .quantumcropperjs-module .toolbar-footer > div .btn {
     background: rgba(243, 243, 243, .85);
