@@ -327,11 +327,11 @@ class QuantummanagerFileSystemLocal
 				switch ($file['error'])
 				{
 					case 1:
-						$output['error'] = Text::_('COM_QUANTUMMANAGER_FILE_TO_LARGE_THAN_PHP_INI_ALLOWS');
+						$output['error'] = Text::_('COM_QUANTUMMANAGER_ERROR_FILE_TO_LARGE_THAN_PHP_INI_ALLOWS');
 						break;
 
 					case 2:
-						$output['error'] = Text::_('COM_QUANTUMMANAGER_FILE_TO_LARGE_THAN_HTML_FORM_ALLOWS');
+						$output['error'] = Text::_('COM_QUANTUMMANAGER_ERROR_FILE_TO_LARGE_THAN_HTML_FORM_ALLOWS');
 						break;
 
 					case 3:
@@ -456,12 +456,12 @@ class QuantummanagerFileSystemLocal
 
 
 				/*$globalInfo[] = [
-					'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_FILENAME'),
+					'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_FILENAME'),
 					'value' => implode('.', $splitFile) . '.' . $exs,
 				];*/
 
 				/*$globalInfo[] = [
-					'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_EXS'),
+					'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_EXS'),
 					'value' => $exs,
 				];*/
 
@@ -471,7 +471,7 @@ class QuantummanagerFileSystemLocal
 					if (isset($stat['mtime']))
 					{
 						$globalInfo[] = [
-							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_FILEDATETIME'),
+							'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_FILEDATETIME'),
 							'value' => date(Text::_('DATE_FORMAT_LC5'), $stat['mtime'])
 						];
 					}
@@ -479,7 +479,7 @@ class QuantummanagerFileSystemLocal
 					if (isset($stat['size']))
 					{
 						$globalInfo[] = [
-							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_FILESIZE'),
+							'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_FILESIZE'),
 							'value' => QuantummanagerHelper::formatFileSize((int)$stat['size'])
 						];
 					}
@@ -491,7 +491,7 @@ class QuantummanagerFileSystemLocal
 					list($width, $height, $type, $attr) = getimagesize($filePath);
 
 					$globalInfo[] = [
-						'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_RESOLUTION'),
+						'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_RESOLUTION'),
 						'value' => $width . ' x ' . $height
 					];
 				}
@@ -570,27 +570,27 @@ class QuantummanagerFileSystemLocal
 					$size = self::getSizeDirectory($directory);
 					$meta['global'] = [
 						[
-							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_COUNTDORECTORIES'),
+							'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_COUNTDORECTORIES'),
 							'value' => $size['directoriesCount']
 						],
 						[
-							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_COUNTDORECTORIES_CURRENT'),
+							'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_COUNTDORECTORIES_CURRENT'),
 							'value' => $size['directoriesCountCurrent']
 						],
 						[
-							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_COUNTFILES'),
+							'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_COUNTFILES'),
 							'value' => $size['filesCount']
 						],
 						[
-							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_COUNTFILES_CURRENT'),
+							'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_COUNTFILES_CURRENT'),
 							'value' => $size['filesCountCurrent']
 						],
 						[
-							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_FILESSIZE'),
+							'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_FILESSIZE'),
 							'value' => QuantummanagerHelper::formatFileSize($size['size'])
 						],
 						[
-							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_FILESSIZE_CURRENT'),
+							'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_FILESSIZE_CURRENT'),
 							'value' => QuantummanagerHelper::formatFileSize($size['sizeCurrent'])
 						]
 					];
@@ -600,19 +600,19 @@ class QuantummanagerFileSystemLocal
 					$size = self::getSizeDirectory($directory, -1);
 					$meta['global'] = [
 						[
-							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_DIRECTORYNAME'),
+							'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_DIRECTORYNAME'),
 							'value' => $directoryName
 						],
 						[
-							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_COUNTDORECTORIES_CURRENT'),
+							'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_COUNTDORECTORIES_CURRENT'),
 							'value' => $size['directoriesCount']
 						],
 						[
-							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_COUNTFILES_CURRENT'),
+							'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_COUNTFILES_CURRENT'),
 							'value' => $size['filesCount']
 						],
 						[
-							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_FILESSIZE_CURRENT'),
+							'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_FILESSIZE_CURRENT'),
 							'value' => QuantummanagerHelper::formatFileSize($size['size'])
 						]
 					];
@@ -627,8 +627,6 @@ class QuantummanagerFileSystemLocal
 						]
 					]);
 				}
-
-
 
 
 			}
@@ -892,11 +890,11 @@ class QuantummanagerFileSystemLocal
 				switch ($file['error'])
 				{
 					case 1:
-						$output['error'] = Text::_('COM_QUANTUMMANAGER_FILE_TO_LARGE_THAN_PHP_INI_ALLOWS');
+						$output['error'] = Text::_('COM_QUANTUMMANAGER_ERROR_FILE_TO_LARGE_THAN_PHP_INI_ALLOWS');
 						break;
 
 					case 2:
-						$output['error'] = Text::_('COM_QUANTUMMANAGER_FILE_TO_LARGE_THAN_HTML_FORM_ALLOWS');
+						$output['error'] = Text::_('COM_QUANTUMMANAGER_ERROR_FILE_TO_LARGE_THAN_HTML_FORM_ALLOWS');
 						break;
 
 					case 3:
