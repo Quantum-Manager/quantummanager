@@ -45,8 +45,17 @@ class QuantummanagerFileSystemLocal
 
 		if(file_exists($path))
 		{
-			$nameForSafe = preg_replace('#[\-]{2,}#isu','-', str_replace(' ', '-', $name));
-			Folder::create($path . DIRECTORY_SEPARATOR . File::makeSafe($lang->transliterate($nameForSafe), ['#^\.#', '#\040#']));
+			if(!(int)QuantummanagerHelper::getParamsComponentValue('translit', 0))
+			{
+				$nameForSafe = preg_replace('#[\-]{2,}#isu','-', str_replace(' ', '-', $name));
+				$nameForSafe = File::makeSafe($lang->transliterate($nameForSafe), ['#^\.#', '#\040#']);
+			}
+			else
+			{
+				$nameForSafe = $name;
+			}
+
+			Folder::create($path . DIRECTORY_SEPARATOR . $nameForSafe);
 			return json_encode(['ok']);
 		}
 
