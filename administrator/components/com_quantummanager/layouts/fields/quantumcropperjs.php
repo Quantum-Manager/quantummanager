@@ -77,7 +77,7 @@ $presets = $paramsComponents->get('custompresetscrop');
                 </div>
             </div>
 
-            <label class="image-width-height-ratio-checkbox"><input type="checkbox" class="image-width-height-ratio" checked="checked"> <?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMCROPPERJS_LABEL_SAVE_RATIO'); ?></label>
+            <label class="image-width-height-ratio-checkbox"><input type="checkbox" class="image-width-height-ratio" checked="checked"> <?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_SAVE_RATIO'); ?></label>
         </div>
 
         <div class="button-wrap btn-group">
