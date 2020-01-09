@@ -346,7 +346,7 @@ class QuantummanagerFileSystemLocal
 				$nameSplit = explode('.', $file['name']);
 				$nameExs = mb_strtolower(array_pop($nameSplit));
 
-				if((int)QuantummanagerHelper::getParamsComponentValue('translit', 1))
+				if(!(int)QuantummanagerHelper::getParamsComponentValue('translit', 0))
 				{
 					$nameForSafe = preg_replace('#[\-]{2,}#isu','-', str_replace(' ', '-', implode('_', $nameSplit)));
 					$nameForSafe = File::makeSafe($lang->transliterate($nameForSafe), ['#^\.#', '#\040#']);
@@ -1155,7 +1155,7 @@ class QuantummanagerFileSystemLocal
 
 		$lang = Factory::getLanguage();
 
-		if((int)QuantummanagerHelper::getParamsComponentValue('translit', 1))
+		if(!(int)QuantummanagerHelper::getParamsComponentValue('translit', 0))
 		{
 			$nameSafe = File::makeSafe($lang->transliterate($name), ['#^\.#', '#\040#']);
 		}
@@ -1204,7 +1204,7 @@ class QuantummanagerFileSystemLocal
 
 		$lang = Factory::getLanguage();
 
-		if((int)QuantummanagerHelper::getParamsComponentValue('translit', 1))
+		if(!(int)QuantummanagerHelper::getParamsComponentValue('translit', 0))
 		{
 			$nameSafe = File::makeSafe($lang->transliterate($name), ['#^\.#', '#\040#']);
 		}

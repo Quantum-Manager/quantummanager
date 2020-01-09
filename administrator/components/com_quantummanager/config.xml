@@ -104,9 +104,10 @@
 		<field name="translit"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_TRANSLIT_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_TRANSLIT_DESC"
 			   required="true"
 			   class="btn-group"
-			   default="1">
+			   default="0">
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
