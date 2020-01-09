@@ -153,8 +153,8 @@
 			   required="true"
 			   class="btn-group"
 			   default="0">
-			<option value="1">COM_QUANTUMMANAGER_ACTION_HIDE</option>
 			<option value="0">COM_QUANTUMMANAGER_ACTION_SHOW</option>
+			<option value="1">COM_QUANTUMMANAGER_ACTION_HIDE</option>
 		</field>
 
 		<field name="help"
