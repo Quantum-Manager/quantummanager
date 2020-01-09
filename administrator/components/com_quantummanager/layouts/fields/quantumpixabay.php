@@ -16,31 +16,31 @@ extract($displayData);
 
 <div class="quantummanager-module quantumpixabay-module" data-type="Quantumpixabay" data-options="">
     <div class="quantumpixabay-save">
-        <div class="loader"><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_SAVE'); ?><span></span><span></span><span></span><span></span></div>
+        <div class="loader"><?php echo Text::_('COM_QUANTUMMANAGER_ACTION_SAVEAREA'); ?><span></span><span></span><span></span><span></span></div>
     </div>
     <div class="quantumpixabay-module-container">
 
         <div class="quantumpixabay-module-header">
             <div>
                 <label>
-                    <input name="q" type="text" placeholder="<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_SEARCH'); ?>">
+                    <input name="q" type="text" placeholder="<?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_SEARCH'); ?>">
                 </label>
             </div>
             <div class="header-filters">
                 <div class="fields">
                     <div class="quantummanager-dropdown filter-field" data-name="image_type" data-value="all">
-                        <div class="quantummanager-dropdown-title"><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMPIXABAY_FILTERS_IMAGE_TYPE') ?></div>
+                        <div class="quantummanager-dropdown-title"><?php echo Text::_('COM_QUANTUMMANAGER_QUANTUMPIXABAY_FILTERS_IMAGE_TYPE') ?></div>
                         <div class="quantummanager-dropdown-content">
                             <ul>
-                                <li data-value="all"><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMPIXABAY_FILTERS_ALL') ?></li>
-                                <li data-value="photo"><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMPIXABAY_FILTERS_IMAGE_TYPE_PHOTO') ?></li>
-                                <li data-value="illustration"><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMPIXABAY_FILTERS_IMAGE_TYPE_ILLUSTRATION') ?></li>
-                                <li data-value="vector"><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMPIXABAY_FILTERS_IMAGE_TYPE_VECTOR') ?></li>
+                                <li data-value="all"><?php echo Text::_('COM_QUANTUMMANAGER_ACTION_ALL') ?></li>
+                                <li data-value="photo"><?php echo Text::_('COM_QUANTUMMANAGER_QUANTUMPIXABAY_FILTERS_IMAGE_TYPE_PHOTO') ?></li>
+                                <li data-value="illustration"><?php echo Text::_('COM_QUANTUMMANAGER_QUANTUMPIXABAY_FILTERS_IMAGE_TYPE_ILLUSTRATION') ?></li>
+                                <li data-value="vector"><?php echo Text::_('COM_QUANTUMMANAGER_QUANTUMPIXABAY_FILTERS_IMAGE_TYPE_VECTOR') ?></li>
                             </ul>
                         </div>
                     </div>
                     <div class="quantummanager-dropdown filter-field" data-name="colors" data-value="">
-                        <div class="quantummanager-dropdown-title"><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMPIXABAY_FILTERS_COLORS') ?></div>
+                        <div class="quantummanager-dropdown-title"><?php echo Text::_('COM_QUANTUMMANAGER_QUANTUMPIXABAY_FILTERS_COLORS') ?></div>
                         <div class="quantummanager-dropdown-content">
                             <ul>
                                 <li class="color-all" data-value=""><span class="color-all"></span></li>
@@ -62,18 +62,18 @@ extract($displayData);
                         </div>
                     </div>
                     <div class="quantummanager-dropdown filter-field" data-name="orientation" data-value="all">
-                        <div class="quantummanager-dropdown-title"><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMPIXABAY_FILTERS_ORIENTATION') ?></div>
+                        <div class="quantummanager-dropdown-title"><?php echo Text::_('COM_QUANTUMMANAGER_QUANTUMPIXABAY_FILTERS_ORIENTATION') ?></div>
                         <div class="quantummanager-dropdown-content">
                             <ul>
-                                <li data-value="all"><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMPIXABAY_FILTERS_ALL') ?></li>
-                                <li data-value="horizontal"><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMPIXABAY_FILTERS_ORIENTATION_HORIZONTAL') ?></li>
-                                <li data-value="vertical"><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMPIXABAY_FILTERS_ORIENTATION_VERTICAL') ?></li>
+                                <li data-value="all"><?php echo Text::_('COM_QUANTUMMANAGER_ACTION_ALL') ?></li>
+                                <li data-value="horizontal"><?php echo Text::_('COM_QUANTUMMANAGER_QUANTUMPIXABAY_FILTERS_ORIENTATION_HORIZONTAL') ?></li>
+                                <li data-value="vertical"><?php echo Text::_('COM_QUANTUMMANAGER_QUANTUMPIXABAY_FILTERS_ORIENTATION_VERTICAL') ?></li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="source">
-                    <span><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMPIXABAY_LICENSE') ?></span> <a href="https://pixabay.com" target="_blank"><span class="quantummanager-icon quantummanager-icon-pixabay"></span></a>
+                    <span><?php echo Text::_('COM_QUANTUMMANAGER_QUANTUMPIXABAY_LICENSE') ?></span> <a href="https://pixabay.com" target="_blank"><span class="quantummanager-icon quantummanager-icon-pixabay"></span></a>
                 </div>
             </div>
         </div>
@@ -82,24 +82,24 @@ extract($displayData);
             <div class="quantumpixabay-module-container-search">
                 <div class="quantumpixabay-module-search grid"></div>
                 <div class="quantumpixabay-module-load-page">
-                    <button class="btn"><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_BUTTON_LOAD'); ?></button>
+                    <button class="btn"><?php echo Text::_('COM_QUANTUMMANAGER_ACTION_LOAD'); ?></button>
                 </div>
             </div>
         </div>
 
-        <button class="quantumpixabay-module-close btn"><span class="quantummanager-icon quantummanager-icon-close"></span> <?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_CLOSE'); ?></button>
+        <button class="quantumpixabay-module-close btn"><span class="quantummanager-icon quantummanager-icon-close"></span> <?php echo Text::_('COM_QUANTUMMANAGER_WINDOW_CLOSE'); ?></button>
     </div>
 
 </div>
 
 <script type="text/javascript">
     window.QuantumpixabayLang = {
-        'notFound': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_NOTFOUND'); ?>",
-        'button': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMPIXABAY_BUTTON'); ?>",
-        'buttonLoad': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_BUTTON_LOAD'); ?>",
-        'save': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_SAVE'); ?>",
-        'close': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_CLOSE'); ?>",
-        'search': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_SEARCH'); ?>",
-        'searchHelper': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_SEARCH_HELPER'); ?>",
+        'notFound': "<?php echo Text::_('COM_QUANTUMMANAGER_ALERT_NOTFOUND'); ?>",
+        'button': "<?php echo Text::_('COM_QUANTUMMANAGER_QUANTUMPIXABAY_BUTTON'); ?>",
+        'buttonLoad': "<?php echo Text::_('COM_QUANTUMMANAGER_ACTION_LOAD'); ?>",
+        'save': "<?php echo Text::_('COM_QUANTUMMANAGER_ACTION_SAVE'); ?>",
+        'close': "<?php echo Text::_('COM_QUANTUMMANAGER_ACTION_CLOSE'); ?>",
+        'search': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_SEARCH'); ?>",
+        'searchHelper': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_SEARCH_HELPER'); ?>",
     };
 </script>

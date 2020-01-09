@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 
+$linkStar = Uri::root(true) . '/media/com_quantummanager/images/icons/action/rate-star-button.svg';
 ?>
 
 <div class="quantummanager-jedreview">
@@ -21,16 +22,16 @@ use Joomla\CMS\Uri\Uri;
 		</div>
 		<div>
             <a class="stars" href="https://extensions.joomla.org/extension/quantum-manager/">
-                <img class="svg" src="<?php echo Uri::root(true) ?>/media/com_quantummanager/images/icons/action/rate-star-button.svg" />
-                <img class="svg" src="<?php echo Uri::root(true) ?>/media/com_quantummanager/images/icons/action/rate-star-button.svg" />
-                <img class="svg" src="<?php echo Uri::root(true) ?>/media/com_quantummanager/images/icons/action/rate-star-button.svg" />
-                <img class="svg" src="<?php echo Uri::root(true) ?>/media/com_quantummanager/images/icons/action/rate-star-button.svg" />
-                <img class="svg" src="<?php echo Uri::root(true) ?>/media/com_quantummanager/images/icons/action/rate-star-button.svg" />
+                <img class="svg" src="<?php echo $linkStar ?>" />
+                <img class="svg" src="<?php echo $linkStar ?>" />
+                <img class="svg" src="<?php echo $linkStar ?>" />
+                <img class="svg" src="<?php echo $linkStar ?>" />
+                <img class="svg" src="<?php echo $linkStar ?>" />
             </a>
             <a href="https://extensions.joomla.org/extension/quantum-manager/" class="btn" target="_blank"><?php echo Text::_('COM_QUANTUMMANAGER_JEDREIVIEW_REIVEW'); ?></a>
         </div>
 		<div>
-			<button class="btn btn-close"><?php echo Text::_('COM_QUANTUMMANAGER_JEDREIVIEW_CLOSE'); ?></button>
+			<button class="btn btn-close"><?php echo Text::_('COM_QUANTUMMANAGER_ACTION_HIDE'); ?></button>
 		</div>
 	</div>
 </div>

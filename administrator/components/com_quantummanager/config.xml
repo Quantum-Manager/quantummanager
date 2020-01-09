@@ -118,8 +118,8 @@
 			   required="true"
 			   class="btn-group"
 			   default="1">
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
+			<option value="1">COM_QUANTUMMANAGER_ACTION_SHOW</option>
+			<option value="0">COM_QUANTUMMANAGER_ACTION_HIDE</option>
 		</field>
 
 		<field name="metafileextended"
@@ -130,8 +130,8 @@
 			   class="btn-group"
 			   default="0"
 			   showon="metafile:1">
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
+			<option value="1">COM_QUANTUMMANAGER_ACTION_SHOW</option>
+			<option value="0">COM_QUANTUMMANAGER_ACTION_HIDE</option>
 		</field>
 
 		<field name="metafileshowpath"
@@ -141,8 +141,8 @@
 			   class="btn-group"
 			   default="0"
 			   showon="metafile:1">
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
+			<option value="1">COM_QUANTUMMANAGER_ACTION_SHOW</option>
+			<option value="0">COM_QUANTUMMANAGER_ACTION_HIDE</option>
 		</field>
 
 		<field name="dropareahidden"
@@ -152,8 +152,8 @@
 			   required="true"
 			   class="btn-group"
 			   default="0">
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
+			<option value="1">COM_QUANTUMMANAGER_ACTION_SHOW</option>
+			<option value="0">COM_QUANTUMMANAGER_ACTION_HIDE</option>
 		</field>
 
 		<field name="help"
@@ -163,8 +163,8 @@
 			   required="true"
 			   class="btn-group"
 			   default="1">
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
+			<option value="1">COM_QUANTUMMANAGER_ACTION_SHOW</option>
+			<option value="0">COM_QUANTUMMANAGER_ACTION_HIDE</option>
 		</field>
 
 		<field name="review"
@@ -174,8 +174,8 @@
 			   required="true"
 			   class="btn-group"
 			   default="1">
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
+			<option value="1">COM_QUANTUMMANAGER_ACTION_SHOW</option>
+			<option value="0">COM_QUANTUMMANAGER_ACTION_HIDE</option>
 		</field>
 
 		<field name="arhiveupload"
@@ -185,8 +185,8 @@
 			   required="true"
 			   class="btn-group"
 			   default="0">
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
+			<option value="1">COM_QUANTUMMANAGER_ACTION_ENABLE</option>
+			<option value="0">COM_QUANTUMMANAGER_ACTION_DISABLE</option>
 		</field>
 
 		<field name="mimetype"
@@ -207,8 +207,8 @@
 			   required="true"
 			   class="btn-group"
 			   default="1">
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
+			<option value="1">COM_QUANTUMMANAGER_ACTION_ENABLE</option>
+			<option value="0">COM_QUANTUMMANAGER_ACTION_DISABLE</option>
 		</field>
 
 		<field name="pixabay"
@@ -218,8 +218,8 @@
 			   required="true"
 			   class="btn-group"
 			   default="1">
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
+			<option value="1">COM_QUANTUMMANAGER_ACTION_ENABLE</option>
+			<option value="0">COM_QUANTUMMANAGER_ACTION_DISABLE</option>
 		</field>
 
 		<field name="original"
@@ -252,8 +252,8 @@
 			   required="true"
 			   class="btn-group"
 			   default="0">
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
+			<option value="1">COM_QUANTUMMANAGER_ACTION_ENABLE</option>
+			<option value="0">COM_QUANTUMMANAGER_ACTION_DISABLE</option>
 		</field>
 
 		<field name="rezizemaxwidth"
