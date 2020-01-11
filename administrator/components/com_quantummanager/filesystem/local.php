@@ -88,13 +88,16 @@ class QuantummanagerFileSystemLocal
 				$pathArr = explode(DIRECTORY_SEPARATOR, $path);
 				$pathCurr = '';
 
-				//создаем области, если их нету
-				foreach($pathArr as $iValue)
+				if(!file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $path))
 				{
-					$pathCurr .= DIRECTORY_SEPARATOR . $iValue;
-					if(!file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $pathCurr))
+					//создаем папку для области, если ее нет
+					foreach($pathArr as $iValue)
 					{
-						Folder::create(JPATH_ROOT . DIRECTORY_SEPARATOR . $pathCurr);
+						$pathCurr .= DIRECTORY_SEPARATOR . $iValue;
+						if(!file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $pathCurr))
+						{
+							Folder::create(JPATH_ROOT . DIRECTORY_SEPARATOR . $pathCurr);
+						}
 					}
 				}
 
