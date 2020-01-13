@@ -28,7 +28,7 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
 
         self.areaSave.style.display = 'none';
 
-        Filemanager.Quantumtoolbar.buttonAdd('unsplashSearch', 'right', 'file-other', 'btn-unsplash-search hidden-label', QuantumunsplashLang.button, 'quantummanager-icon-unsplash', {}, function (ev) {
+        Filemanager.Quantumtoolbar.buttonAdd('unsplashSearch', 'right', 'file-other', 'btn-unsplash-search hidden-label', QuantumunsplashLang.button, 'quantummanager-icon-unsplash-short', {}, function (ev) {
             QuantumUnsplashElement.classList.add('active');
             let tmpSearchStr = '';
 
