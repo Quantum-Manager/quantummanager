@@ -86,6 +86,7 @@
     top: 0;
     left: 0;
     bottom: 0;
+    background: #fff;
     border-left: 3px double #e0e0e0;
 }
 .quantummanager .quantummanager-container .quantummanager-left .quantummanager-left-toggle {
