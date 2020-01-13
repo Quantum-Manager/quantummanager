@@ -97,6 +97,7 @@ $document = \Joomla\CMS\Factory::getDocument();
         'contextRename': "<?php echo Text::_('COM_QUANTUMMANAGER_ACTION_RENAME'); ?>",
         'contextCopyLink': "<?php echo Text::_('COM_QUANTUMMANAGER_ACTION_COPY_LINK'); ?>",
         'contextPreviewFile': "<?php echo Text::_('COM_QUANTUMMANAGER_ACTION_PREVIEW_FILE'); ?>",
+        'contextSomeDelete': "<?php echo Text::_('COM_QUANTUMMANAGER_ACTION_SOME_DELETE'); ?>",
         'contextDelete': "<?php echo Text::_('COM_QUANTUMMANAGER_ACTION_DELETE'); ?>",
         'help': "<?php echo Text::_('COM_QUANTUMMANAGER_HELP'); ?>",
         'helpText': "<?php echo Text::_('COM_QUANTUMMANAGER_HELP_TEXT'); ?>",

@@ -415,14 +415,28 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                         }
                     }
 
-                    jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.delete&path=" + encodeURIComponent(Filemanager.data.path) + '&list=' + encodeURIComponent(JSON.stringify(files)) + "&scope=" + encodeURIComponent(Filemanager.data.scope))).done(function (response) {
-                        Filemanager.events.trigger('reloadPaths', Filemanager);
+                    if(files.length === 0) {
+                        return;
+                    }
+
+                    let alert = QuantumviewfilesLang.contextDelete + ' ' + self.file.getAttribute('data-file') + '?';
+
+                    if(files.length > 1) {
+                        alert = QuantumviewfilesLang.contextSomeDelete + '?';
+                    }
+
+                    QuantumUtils.confirm(alert, function (result) {
+                        jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.delete&path=" + encodeURIComponent(Filemanager.data.path) + '&list=' + encodeURIComponent(JSON.stringify(files)) + "&scope=" + encodeURIComponent(Filemanager.data.scope))).done(function (response) {
+                            Filemanager.events.trigger('reloadPaths', Filemanager);
+                        });
+
+                        Filemanager.Quantumviewfiles.showMetaDirectory(true);
+                        Filemanager.Quantumtoolbar.buttonsList['viewfilesDelete'].classList.add('btn-hide');
                     });
 
-                    Filemanager.Quantumviewfiles.showMetaDirectory(true);
-                    Filemanager.Quantumtoolbar.buttonsList['viewfilesDelete'].classList.add('btn-hide');
+
                     Filemanager.Quantumtoolbar.trigger('buttonViewfilesDelete');
-                    ev.preventDefault();
+
                 });
 
             let buttonOther = Filemanager.Quantumtoolbar.buttonAdd(
