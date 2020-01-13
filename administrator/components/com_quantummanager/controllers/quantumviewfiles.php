@@ -22,7 +22,6 @@ use Joomla\Filesystem\Folder;
 class QuantummanagerControllerquantumviewfiles extends AdminController
 {
 
-
 	public function createDirectory()
 	{
 		$app = Factory::getApplication();
@@ -39,7 +38,6 @@ class QuantummanagerControllerquantumviewfiles extends AdminController
 		$app->close();
 	}
 
-
 	public function getFiles()
 	{
 		$app = Factory::getApplication();
@@ -55,7 +53,6 @@ class QuantummanagerControllerquantumviewfiles extends AdminController
 
 		$app->close();
 	}
-
 
 	public function getMetaFile()
 	{
@@ -103,6 +100,41 @@ class QuantummanagerControllerquantumviewfiles extends AdminController
 		$app->close();
 	}
 
+	public function paste()
+	{
+		$app = Factory::getApplication();
+		$data = $app->input->getArray();
+
+		if(!isset(
+			$data['pathFrom'],
+			$data['scopeFrom'],
+			$data['pathTo'],
+			$data['scopeTo'],
+			$data['cut'],
+			$data['list'])
+		)
+		{
+			$app->close();
+		}
+
+		$pathFrom = $data['pathFrom'];
+		$scopeFrom = $data['scopeFrom'];
+		$pathTo = $data['pathTo'];
+		$scopeTo = $data['scopeTo'];
+		$cut = (int)$data['cut'];
+		$list = json_decode($data['list'], JSON_OBJECT_AS_ARRAY);
+
+		if(count($list) === 0)
+		{
+			$app->close();
+		}
+
+		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
+		echo QuantummanagerFileSystemLocal::paste($pathFrom, $scopeFrom, $pathTo, $scopeTo, $cut, $list);
+
+		$app->close();
+	}
+
 	public function delete()
 	{
 		$app = Factory::getApplication();
@@ -123,7 +155,6 @@ class QuantummanagerControllerquantumviewfiles extends AdminController
 		$app->close();
 
 	}
-
 
 	public function getParsePath()
 	{
@@ -157,7 +188,6 @@ class QuantummanagerControllerquantumviewfiles extends AdminController
 			echo $e->getMessage();
 		}
 	}
-
 
 	public function renameFile()
 	{

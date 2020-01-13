@@ -76,6 +76,7 @@ HTMLHelper::_('script', 'com_quantummanager/modalcontent.js', [
 				'view' => 'list-grid',
 				'onlyfiles' => '0',
 				'watermark' => QuantummanagerHelper::getParamsComponentValue('overlay' , 0) > 0 ? '1' : '0',
+				'help' => QuantummanagerHelper::getParamsComponentValue('help' , '1'),
 				'metafile' => QuantummanagerHelper::getParamsComponentValue('metafile' , '1'),
 			],
 			'quantumcropperjs' => [
@@ -152,7 +153,7 @@ HTMLHelper::_('script', 'com_quantummanager/modalcontent.js', [
         'defaultName': '<?php echo Text::_('PLG_BUTTON_QUANTUMMANAGERCONTENT_SCOPES_DOCS_FIELDSFORM_NAME_NAME'); ?>',
         'defaultNameValue': '<?php echo Text::_('PLG_BUTTON_QUANTUMMANAGERCONTENT_SCOPES_IMAGES_FIELDSFORM_DEFAULT_NAME'); ?>',
         'helpTemplate': '<?php echo Text::_('PLG_BUTTON_QUANTUMMANAGERCONTENT_HELP_TEMPLATE'); ?>',
-        'helpSettings': '<?php echo in_array('2', $groups) || in_array('8', $groups) ? Text::_('PLG_BUTTON_QUANTUMMANAGERCONTENT_HELP_SETTINGS') : '' ?>',
+        'helpSettings': '<?php echo in_array('2', $groups) || in_array('8', $groups) ? Text::sprintf('PLG_BUTTON_QUANTUMMANAGERCONTENT_HELP_SETTINGS', 'index.php?' . http_build_query(['option' => 'com_plugins', 'view' => 'plugins', 'filter.search' => Text::_('PLG_BUTTON_QUANTUMMANAGERCONTENT')])) : '' ?>',
     };
 </script>
 

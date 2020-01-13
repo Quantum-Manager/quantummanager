@@ -15,7 +15,6 @@ use Joomla\CMS\Factory;
 $app = Factory::getApplication();
 $app->getSession()->clear('quantummanagerroot');
 
-
 try {
     JLoader::register('JFormFieldQuantumCombine', JPATH_ROOT . '/administrator/components/com_quantummanager/fields/quantumcombine.php');
     JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
@@ -44,7 +43,8 @@ try {
             'view' => 'list-grid',
             'onlyfiles' => '0',
             'watermark' => QuantummanagerHelper::getParamsComponentValue('overlay' , 0) > 0 ? '1' : '0',
-            'metafile' => QuantummanagerHelper::getParamsComponentValue('metafile' , '1'),
+			'help' => QuantummanagerHelper::getParamsComponentValue('help' , '1'),
+			'metafile' => QuantummanagerHelper::getParamsComponentValue('metafile' , '1'),
         ],
         'quantumcropperjs' => [
             'position' => 'bottom'
@@ -104,5 +104,3 @@ try {
 catch (Exception $e) {
     echo $e->getMessage();
 }
-?>
-

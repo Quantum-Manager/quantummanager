@@ -160,14 +160,14 @@ window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, o
         }
 
         if(directories.subpath !== undefined && directories.subpath.length > 0) {
-            let html = "<li><span class=\"tree-caret\"></span> <span data-path='" + directories.path + "' class='tree-path " + ((level === 0) ? "root" : "" ) + " '>" + title + "</span> <ul class='tree-nested'>";
+            let html = "<li><span class=\"tree-caret\"></span> <span data-path='" + directories.path + "' class='tree-path " + ((level === 0) ? "root" : "" ) + " " + (parseInt(directories.is_empty) === 0 ? 'empty' : '') + " '>" + title + "</span> <ul class='tree-nested'>";
             for(let i=0;i<directories.subpath.length;i++) {
                 html += this.directoriesPrepare(directories.subpath[i], level + 1);
             }
             html += "</ul></li>";
             return html;
         } else {
-            return "<li><span data-path='" + directories.path + "' class='tree-path " + ((level === 0) ? "root" : "" ) + "'>" + title + "</span></li>";
+            return "<li><span data-path='" + directories.path + "' class='tree-path " + ((level === 0) ? "root" : "" ) + " " + (parseInt(directories.is_empty) === 0 ? 'empty' : '') + "'>" + title + "</span></li>";
         }
     };
 

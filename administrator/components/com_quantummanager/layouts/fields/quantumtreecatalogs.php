@@ -21,6 +21,6 @@ $cssClass = $displayData['cssClass'];
 
 <script type="text/javascript">
     window.QuantumtreecatalogsLang = {
-        'confirmDelete': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMTREECATALOGS_CONFIRM_DELETE'); ?>"
+        'confirmDelete': "<?php echo Text::_('COM_QUANTUMMANAGER_ALERT_CONFIRM_DELETE'); ?>"
     }
 </script>

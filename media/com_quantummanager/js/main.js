@@ -6,67 +6,13 @@
  * @link       https://www.norrnext.com
  */
 
-window.QuantummanagerLists = [];
-
-window.QuantumEvents = function () {
-
-    this.listEvents = [];
-
-    this.add = function (element, event, callback) {
-        if (typeof element === 'string') {
-            callback = event;
-            event = element;
-            element = null;
-        }
-
-        let eventObj = {};
-        eventObj.n = event;
-        eventObj.e = element;
-        eventObj.c = callback;
-        this.listEvents.push(eventObj);
-    };
-
-
-    this.trigger = function (event, filemanager, target) {
-        let returns = [];
-        for (let i=0;i<this.listEvents.length;i++) {
-            if(this.listEvents[i].n === event) {
-                returns.push(this.listEvents[i].c(filemanager, this.listEvents[i].e, target));
-            }
-        }
-        return returns;
-    };
-
-};
-
-window.QuantumEventsDispatcher = {
-    listEvents: [],
-    add: function (element, event, callback) {
-        if (typeof element === 'string') {
-            callback = event;
-            event = element;
-            element = null;
-        }
-
-        let eventObj = {};
-        eventObj.n = event;
-        eventObj.e = element;
-        eventObj.c = callback;
-        this.listEvents.push(eventObj);
-    },
-    build: function () {
-        for(let j=0;j<this.listEvents.length;j++) {
-            for(let i=0;i<QuantummanagerLists.length;i++) {
-                QuantummanagerLists[i].events.listEvents.push(this.listEvents[j]);
-            }
-        }
-
-    }
-
-};
-
-
 document.addEventListener('DOMContentLoaded' ,function () {
+    window.QuantumManagerLoadComplete = true;
+    window.QuantumManagerInit();
+});
+
+window.QuantumManagerInit = function() {
+
     let quantummanagerAll = document.querySelectorAll('.quantummanager');
     let id = 0;
     let scopesEnabled = QuantumSettings.scopeEnabled.split(',');
@@ -140,7 +86,15 @@ document.addEventListener('DOMContentLoaded' ,function () {
 
     }
 
-    QuantumEventsDispatcher.build();
 
-});
+    let loadQuantum = setInterval(function () {
+        if(QuantumManagerLoadComplete) {
+            QuantumEventsDispatcher.build();
+            QuantumEventsDispatcher.trigger('afterMainInit');
+            clearInterval(loadQuantum)
+        }
+    }, 1);
+
+
+};
 

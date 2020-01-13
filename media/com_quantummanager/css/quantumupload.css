@@ -7,7 +7,7 @@
  */
 
 .quantumupload-module {
-    background: #fbfbfb;
+    background: #F0F0F0;
 }
 .quantumupload-module .drop-area {
     display: flex;
@@ -117,7 +117,7 @@
     position: relative;
     background: #fef4f6;
     color: #f0506e;
-    padding: 15px 29px 15px 15px;
+    padding: 15px 29px 15px 20px;
 }
 .upload-errors div {
     width: 100%;

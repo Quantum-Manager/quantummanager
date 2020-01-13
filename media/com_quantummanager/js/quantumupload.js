@@ -78,7 +78,7 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
         }
 
         this.dropAreaInput.addEventListener('click', function (ev) {
-            if(ev.target.tagName.toLowerCase() === 'div') {
+            if(ev.target.tagName.toLowerCase() !== 'label') {
                 for (let i = 0; i < self.inputFileAll.length; i++) {
                     self.inputFileAll[i].click();
                     break;
@@ -190,6 +190,8 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
                             self.errorsWrap.style.display = "block";
                         }
 
+                        self.trigger('uploadAfter');
+
                     }
 
                 }
@@ -205,6 +207,8 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
                             self.errorsWrap.style.display = "block";
                         }
 
+                        self.trigger('uploadAfter');
+
                     }
 
                 }
@@ -218,6 +222,9 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
 
     };
 
+
+
+
     this.trigger = function(event) {
         Filemanager.events.trigger(event, Filemanager);
     };
@@ -226,6 +233,11 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
         el.path = fm.data.path;
     });
 
+    Filemanager.events.add(this, 'uploadAfter', function (fm, el) {
+        for (let i = 0; i < fm.Qantumupload.inputFileAll.length; i++) {
+            fm.Qantumupload.inputFileAll[i].value = '';
+        }
+    });
 
 };
 

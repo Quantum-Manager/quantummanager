@@ -49,7 +49,9 @@ class Contextual {
      * @param {ContextualItem} item item to add to the contextual menu
      */
     add(item) {
-        this.menuControl.appendChild(item.element);
+        if(item.element !== undefined) {
+            this.menuControl.appendChild(item.element);
+        }
     }
     /**
      * Makes this contextual menu visible
@@ -90,6 +92,13 @@ class ContextualItem {
      * @param {string} [opts.custom]
      */
     constructor(opts) {
+
+        if(opts.check !== undefined) {
+            if(opts.check() === false) {
+                return;
+            }
+        }
+
         switch(opts.type) {
             case 'seperator':
                 this.element = contextualCore.CreateEl(`<li class='contextualJs contextualMenuSeperator'><div></div></li>`);

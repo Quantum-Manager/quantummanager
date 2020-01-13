@@ -155,7 +155,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
         });
 
 
-        Filemanager.Quantumtoolbar.buttonAdd('cropperjsEdit', 'center', 'file-actions', 'btn-edit btn-hide hidden-label', QuantumviewfilesLang.buttonEdit, 'quantummanager-icon-edit', {}, function (ev) {
+        Filemanager.Quantumtoolbar.buttonAdd('cropperjsEdit', 'center', 'file-actions', 'btn-edit btn-hide hidden-label', QuantumviewfilesLang.buttonEdit, 'quantummanager-icon-crop', {}, function (ev) {
             self.startCropperjs();
             Filemanager.Quantumtoolbar.trigger('buttonCropperjsEdit');
             ev.preventDefault();
@@ -408,8 +408,12 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
 
         let file = Filemanager.Quantumviewfiles.file;
 
+        fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.add('btn-hide');
         if(file === undefined) {
-            fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.add('btn-hide');
+            return;
+        }
+
+        if(Filemanager.Quantumviewfiles.getCountSelected() > 1) {
             return;
         }
 
@@ -423,6 +427,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
         }
 
         if(['png', 'jpg', 'jpeg'].indexOf(exs) === -1) {
+            fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.add('btn-hide');
             return;
         }
 
@@ -470,7 +475,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
                 type: 'normal',
                 label: QuantumviewfilesLang.buttonEdit,
                 tip: '',
-                icon: QuantumUtils.getFullUrl('/media/com_quantummanager/images/icons/action/create-new-pencil-button.svg'),
+                icon: QuantumUtils.getFullUrl('/media/com_quantummanager/images/icons/action/crop-tool-button.svg'),
                 onClick: function() {
                     let file = Filemanager.Quantumviewfiles.fileContext;
                     let exs = file.getAttribute('data-exs').toLocaleLowerCase();

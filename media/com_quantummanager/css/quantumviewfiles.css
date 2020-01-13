@@ -18,8 +18,12 @@
 }
 .quantumviewfiles-module .quantumviewfiles-module-heading {
     display: flex;
-    margin-top: 5px;
-    margin-bottom: 10px;
+    flex-direction: row-reverse;
+    height: 30px;
+    background: #F0F0F0;
+    margin: 0 -14px 0 0;
+    padding: 0px 4px 9px 18px;
+    border-bottom: 1px solid #ddddddb5;
 }
 .quantumviewfiles-module .filters {
     display: none;
@@ -40,7 +44,8 @@
     margin-right: 0;
 }
 .quantumviewfiles-module .filter-search {
-    display: inline-block;
+    display: flex;
+    align-items: center;
     position: relative;
     max-width: 100%;
     vertical-align: middle;
@@ -68,7 +73,10 @@
     width: 16px;
     height: 16px;
 }
-.quantumviewfiles-module .filter-search input {
+.quantumviewfiles-module .filter-search .input-wrapper {
+    position: relative;
+}
+.quantumviewfiles-module .filter-search .input-wrapper input {
     padding: 0 10px;
     padding-left: 25px;
     height: 25px;
@@ -81,16 +89,71 @@
     color: #666;
     border: 1px solid #e5e5e5;
     transition: .2s ease-in-out;
-    transition-property: color,background-color,border;
+    transition-property: color,background-color,border,width;
 }
+.quantumviewfiles-module .filter-search  .input-wrapper input:focus {
+    outline: none;
+}
+.quantumviewfiles-module .filter-search  .input-wrapper span {
+    position: absolute;
+    background-color: #78abde;
+    transition: transform 0.5s ease;
+}
+.quantumviewfiles-module .filter-search .input-wrapper .bottom,
+.quantumviewfiles-module .filter-search .input-wrapper .top {
+    height: 1px;
+    left: 0;
+    right: 0;
+    transform: scaleX(0);
+}
+.quantumviewfiles-module .filter-search .input-wrapper .left,
+.quantumviewfiles-module .filter-search .input-wrapper .right {
+    width: 1px;
+    top: 0;
+    bottom: 0;
+    transform: scaleY(0);
+}
+.quantumviewfiles-module .filter-search .input-wrapper .bottom {
+    bottom: 0;
+    transform-origin: bottom right;
+}
+.quantumviewfiles-module .filter-search .input-wrapper input:focus ~ .bottom {
+    transform-origin: bottom left;
+    transform: scaleX(1);
+}
+.quantumviewfiles-module .filter-search .input-wrapper .right {
+    right: 0;
+    transform-origin: top right;
+}
+.quantumviewfiles-module .filter-search .input-wrapper input:focus ~ .right {
+    transform-origin: bottom right;
+    transform: scaleY(1);
+}
+.quantumviewfiles-module .filter-search .input-wrapper .top {
+    top: 0;
+    transform-origin: top left;
+}
+.quantumviewfiles-module .filter-search .input-wrapper input:focus ~ .top {
+    transform-origin: top right;
+    transform: scaleX(1);
+}
+.quantumviewfiles-module .filter-search .input-wrapper .left {
+    left: 0;
+    transform-origin: bottom left;
+}
+.quantumviewfiles-module .filter-search .input-wrapper input:focus ~ .left {
+    transform-origin: top left;
+    transform: scaleY(1);
+}
+/*
+.quantumviewfiles-module .filter-search input:focus,
+.quantumviewfiles-module .filter-search input:active {
+    width: 350px;
+}*/
 .quantumviewfiles-module .breadcumbs {
-    margin-top: 0;
-    width: 100%;
-    height: auto;
-}
-.quantumviewfiles-module .breadcumbs ul {
     display: flex;
     flex-wrap: wrap;
+    flex: 1;
     padding: 0;
     margin: 0;
     height: 30px;
@@ -98,24 +161,21 @@
     align-items: center;
     list-style: none;
 }
-.quantumviewfiles-module .breadcumbs > ul {
-}
-.quantumviewfiles-module .breadcumbs > ul > li {
+.quantumviewfiles-module .breadcumbs > li {
     display: flex;
     align-content: center;
     align-items: center;
     position: relative;
+    max-width: 150px;
     line-height: 16px;
     transition: all 0.2s;
 }
-.quantumviewfiles-module .breadcumbs > ul > li:last-child {
-    margin-right: 0;
-}
-.quantumviewfiles-module .breadcumbs > ul > li.carret {
+.quantumviewfiles-module .breadcumbs > li.carret {
     height: 100%;
-    padding: 0 5px;
+    padding: 0 2px;
+    flex: none;
 }
-.quantumviewfiles-module .breadcumbs > ul > li.carret > span {
+.quantumviewfiles-module .breadcumbs > li.carret > span {
     display: inline-block;
     width: 20px;
     height: 20px;
@@ -123,10 +183,10 @@
     background-size: cover;
     background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg' data-svg='chevron-right'%3E%3Cpolyline fill='none' stroke='%23000' stroke-width='1.03' points='7 4 13 10 7 16'%3E%3C/polyline%3E%3C/svg%3E");
 }
-.quantumviewfiles-module .breadcumbs > ul > li:last-child:after {
+.quantumviewfiles-module .breadcumbs > li:last-child:after {
     display: none;
 }
-.quantumviewfiles-module .breadcumbs ul li:hover {
+.quantumviewfiles-module .breadcumbs li:hover {
     background-color: #f4f4f4;
     cursor: pointer;
     text-decoration: none;
@@ -134,21 +194,23 @@
     outline: 0;
     transition: all 0.2s;
 }
-.quantumviewfiles-module .breadcumbs > ul > li > span {
+.quantumviewfiles-module .breadcumbs > li > span {
     display: inline-block;
     font-weight: 100;
-    font-size: 21px;
+    font-size: 16px;
     color: #333;
-    padding: 7px 10px;
-    max-width: 150px;
+    padding: 7px 5px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
 }
-.quantumviewfiles-module .breadcumbs ul li.dropdown {
+.quantumviewfiles-module .breadcumbs > li:first-child > span {
+    padding-left: 10px;
+}
+.quantumviewfiles-module .breadcumbs li.dropdown {
     position: relative;
 }
-.quantumviewfiles-module .breadcumbs ul li .dropdown-content {
+.quantumviewfiles-module .breadcumbs li .dropdown-content {
     display: none;
     position: absolute;
     background-color: #f9f9f9;
@@ -162,30 +224,31 @@
     max-height: 320px;
     overflow-x: hidden;
     overflow-y: auto;
+    border-radius: 3px;
     webkit-overflow-scrolling: touch;
     z-index: 1;
     transition: display 0.2s ease;
 }
-.quantumviewfiles-module .breadcumbs ul li .dropdown-content ul {
+.quantumviewfiles-module .breadcumbs li .dropdown-content ul {
     display: inline-block;
     white-space: normal;
     width: 100%;
     padding: 0;
     margin: 0;
 }
-.quantumviewfiles-module .breadcumbs ul li .dropdown-content ul li {
+.quantumviewfiles-module .breadcumbs li .dropdown-content ul li {
     display: inline-block;
     width: 100%;
     padding: 0;
     color: black;
     text-decoration: none;
 }
-.quantumviewfiles-module .breadcumbs ul li .dropdown-content ul li span {
+.quantumviewfiles-module .breadcumbs li .dropdown-content ul li span {
     display: inline-block;
     width: 100%;
     padding: 5px 15px;
 }
-.quantumviewfiles-module .breadcumbs ul li.dropdown:hover .dropdown-content {
+.quantumviewfiles-module .breadcumbs li.dropdown:hover .dropdown-content {
     display: block;
     transition: display 0.2s ease;
 }
@@ -199,6 +262,7 @@
     position: relative;
     height: auto;
     width: 100%;
+    border-right: 1px solid #ddddddb5;
 }
 .quantumviewfiles-module .meta-file ~ .view {
     width: 80%;
@@ -207,9 +271,8 @@
     position: relative;
     width: 25%;
     min-width: 265px;
-    margin-top: -45px;
-    margin-right: -15px;
-    background: #f6f6f6;
+    /*margin-top: -45px;*/
+    background: #F0F0F0;
 }
 .quantumviewfiles-module .meta-file.hidden {
     display: none;
@@ -258,10 +321,24 @@
     max-width: 100%;
     border-radius: 5px;
 }
+.quantumviewfiles-module .meta-file .meta-preview.meta-preview-open img {
+    cursor: pointer;
+}
 .quantumviewfiles-module .meta-file .meta-preview.meta-preview-folder img {
     background-color: transparent;
     border: none;
-    height: 100%;
+    height: 85%;
+}
+.quantumviewfiles-module .meta-preview-name {
+    margin-bottom: 7px;
+    padding-bottom: 7px;
+    text-align: center;
+    color: #777;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 17px;
+    word-break: break-word;
+    border-bottom: 1px solid #ddddddb5;
 }
 .quantumviewfiles-module .meta-file table {
     border-collapse: collapse;
@@ -271,17 +348,23 @@
 .quantumviewfiles-module .meta-file .meta-table > div {
     display: flex;
     align-items: center;
+    color: #777;
     transition: background-color .1s linear;
 }
 .quantumviewfiles-module .meta-file .meta-table > div > div {
     width: 50%;
     padding: 6px;
     vertical-align: middle;
+    word-break: break-word;
 }
-.quantumviewfiles-module .meta-file .meta-table > div > div:last-child {
+.quantumviewfiles-module .meta-file .meta-table > div > div:last-child,
+.quantumviewfiles-module .meta-file .meta-table > div.only-value > div {
     font-weight: bold;
     overflow: hidden;
-    text-overflow: ellipsis;
+    /*text-overflow: ellipsis;*/
+}
+.quantumviewfiles-module .meta-file .meta-table > div.only-value > div {
+    width: 100%;
 }
 .quantumviewfiles-module .meta-file .meta-preview-album {
     position: relative;
@@ -296,8 +379,10 @@
     -webkit-transition: all 0.5s;
     transition: all 0.5s;
 }
-.quantumviewfiles-module .meta-file .meta-preview-album img {
+.quantumviewfiles-module .meta-file .meta-preview-album > *
+{
     width: 100%;
+    max-height: 100%;
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -321,17 +406,17 @@
     -webkit-transform-origin: 50% 50% 50%;
     transform-origin: 50% 50% 50%;
 }
-.quantumviewfiles-module .meta-file .meta-preview-album img:first-child {
+.quantumviewfiles-module .meta-file .meta-preview-album > *:first-child {
     position: relative;
     z-index: 1000;
 }
-.quantumviewfiles-module .meta-file .meta-preview-album img:first-child + img {
+.quantumviewfiles-module .meta-file .meta-preview-album > *:first-child + > * {
     -moz-transform: rotate(-4deg);
     -ms-transform: rotate(-4deg);
     -webkit-transform: rotate(-4deg);
     transform: rotate(-4deg);
 }
-.quantumviewfiles-module .meta-file .meta-preview-album img:last-child {
+.quantumviewfiles-module .meta-file .meta-preview-album > *:last-child {
     -moz-transform: rotate(4deg);
     -ms-transform: rotate(4deg);
     -webkit-transform: rotate(4deg);
@@ -340,17 +425,17 @@
 .quantumviewfiles-module .meta-file .meta-preview-album:hover {
     width: 85%;
 }
-.quantumviewfiles-module .meta-file .meta-preview-album:hover img:first-child {
+.quantumviewfiles-module .meta-file .meta-preview-album:hover > *:first-child {
     z-index: 3000;
 }
-.quantumviewfiles-module .meta-file .meta-preview-album:hover img:first-child + img {
+.quantumviewfiles-module .meta-file .meta-preview-album:hover > *:first-child + > * {
     left: -60px;
     -moz-transform: rotate(-20deg);
     -ms-transform: rotate(-20deg);
     -webkit-transform: rotate(-20deg);
     transform: rotate(-20deg);
 }
-.quantumviewfiles-module .meta-file .meta-preview-album:hover img:last-child {
+.quantumviewfiles-module .meta-file .meta-preview-album:hover > *:last-child {
     left: 60px;
     -moz-transform: rotate(20deg);
     -ms-transform: rotate(20deg);
@@ -371,7 +456,7 @@
     -o-transform: translateZ(0);
     transform: translateZ(0);
 }
-.quantumviewfiles-module .empty {
+.quantumviewfiles-module .view > .empty {
     text-align: center;
     padding: 40px 50px;
 }
@@ -419,11 +504,11 @@
     width: 50%;
 }
 .quantumviewfiles-module .field-list-files .empty {
-    width: 100%;
+    /*width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center;*/
 }
 .quantumviewfiles-module .field-list-files input[type=checkbox]:checked {
     background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2214%22%20height%3D%2211%22%20viewBox%3D%220%200%2014%2011%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23fff%22%20points%3D%2212%201%205%207.5%202%205%201%205.5%205%2010%2013%201.5%22%20%2F%3E%0A%3C%2Fsvg%3E%0A");
@@ -467,7 +552,7 @@
     align-items: self-start;
     justify-content: flex-start;
     align-content: flex-start;
-    margin-left: -1%;
+    /*margin-left: -1%;*/
     min-height: 100%;
 }
 .quantumviewfiles-module .field-list-files .list-grid .file-item {
@@ -475,6 +560,9 @@
     height: 130px;
     padding-bottom: 30px;
     transition: all 0.2s;
+}
+.quantumviewfiles-module .field-list-files .list-grid-1-6 .file-item {
+    width: 14%;
 }
 .quantumviewfiles-module .field-list-files .list-grid-1-5 .file-item {
     width: 18%;
@@ -485,6 +573,9 @@
 .quantumviewfiles-module .field-list-files .list-grid-1-3 .file-item {
     width: 31.3%;
 }
+.quantumviewfiles-module .field-list-files .list-grid-1-2 .file-item {
+    width: 47%;
+}
 .quantumviewfiles-module .field-list-files .list-grid-1-4 .file-item {
     margin: 1%;
     height: 150px;
@@ -492,6 +583,10 @@
 .quantumviewfiles-module .field-list-files .list-grid-1-3 .file-item {
     margin: 1%;
     height: 200px;
+}
+.quantumviewfiles-module .field-list-files .list-grid-1-2 .file-item {
+    margin: 1%;
+    height: 270px;
 }
 .quantumviewfiles-module .field-list-files .list-grid .file-item:hover {
     cursor: pointer;
@@ -503,7 +598,7 @@
 .quantumviewfiles-module .field-list-files .list-grid .file-item .import-files-check-file {
     display: none;
 }
-.quantumviewfiles-module .field-list-files .list-grid .file-item .import-files-check-file:checked ~ .file:before {
+.quantumviewfiles-module .field-list-files .list-grid .file-item .file:before {
     content: "";
     display: block;
     position: absolute;
@@ -513,12 +608,17 @@
     left: 8px;
     top: 8px;
     border-radius: 50%;
+    background-image: url("data:image/svg+xml,%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 426.667 426.667' style='enable-background:new 0 0 426.667 426.667;' xml:space='preserve'%3E%3Cpath style='fill:%236AC259;' d='M213.333,0C95.518,0,0,95.514,0,213.333s95.518,213.333,213.333,213.333 c117.828,0,213.333-95.514,213.333-213.333S331.157,0,213.333,0z M174.199,322.918l-93.935-93.931l31.309-31.309l62.626,62.622 l140.894-140.898l31.309,31.309L174.199,322.918z'/%3E%3C/svg%3E%0A");
     background-size: contain;
     background-color: #fff;
     background-repeat: no-repeat;
     background-position: 50% 50%;
-    background-image: url("data:image/svg+xml,%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 426.667 426.667' style='enable-background:new 0 0 426.667 426.667;' xml:space='preserve'%3E%3Cpath style='fill:%236AC259;' d='M213.333,0C95.518,0,0,95.514,0,213.333s95.518,213.333,213.333,213.333 c117.828,0,213.333-95.514,213.333-213.333S331.157,0,213.333,0z M174.199,322.918l-93.935-93.931l31.309-31.309l62.626,62.622 l140.894-140.898l31.309,31.309L174.199,322.918z'/%3E%3C/svg%3E%0A");
+    opacity: 0;
+    transition: opacity 0.2s;
     z-index: 2;
+}
+.quantumviewfiles-module .field-list-files .list-grid .file-item .import-files-check-file:checked ~ .file:before {
+    opacity: 1;
 }
 .quantumviewfiles-module .field-list-files .list-grid .file-item .file {
     position: relative;
@@ -545,6 +645,15 @@
 .quantumviewfiles-module .field-list-files .list-grid .file-item:hover .file .file-exs.file-icons {
     opacity: .6;
 }
+.quantumviewfiles-module .field-list-files .list-grid .file-item .file .file-exs.file-icons svg {
+    width: 85%;
+    height: 85%;
+}
+svg.svg-icon text {
+    fill: #FFFFFF;
+    font-size: 80px;
+    text-anchor: middle;
+}
 .quantumviewfiles-module .field-list-files .list-grid .file-item .file .file-exs img {
     max-height: 100%;
     height: auto;
@@ -552,9 +661,9 @@
     background-color: #efefef;
     border: solid 5px #EFEFEF;
     border-radius: 5px;
+    transition: border 0.2s;
 }
 .quantumviewfiles-module .field-list-files .list-grid .file-item:hover .file .file-exs img {
-    transition: all 0.2s;
     border: solid 5px #b3b3b3;
 }
 .quantumviewfiles-module .field-list-files .list-grid .file-item .file .file-exs .av-folderlist-label {
@@ -614,6 +723,12 @@
 .quantumviewfiles-module .field-list-files .list-grid-1-3 .directory-item {
     height: 200px;
 }
+.quantumviewfiles-module .field-list-files .list-grid-1-2 .directory-item {
+    height: 270px;
+}
+.quantumviewfiles-module .field-list-files .list-grid-1-6 .directory-item {
+    width: 14%;
+}
 .quantumviewfiles-module .field-list-files .list-grid-1-5 .directory-item {
     width: 18%;
 }
@@ -623,11 +738,19 @@
 .quantumviewfiles-module .field-list-files .list-grid-1-3 .directory-item {
     width: 31.3%;
 }
+.quantumviewfiles-module .field-list-files .list-grid-1-2 .directory-item {
+    width: 47%;
+}
 .quantumviewfiles-module .field-list-files .list-grid .directory-item .directory {
+    display: flex;
+    align-items: center;
     width: 100%;
     height: 130px;
     position: relative;
     transition: all 0.2s;
+}
+.quantumviewfiles-module .field-list-files .list-grid-1-2 .directory-item .directory {
+    height: 270px;
 }
 .quantumviewfiles-module .field-list-files .list-grid-1-3 .directory-item .directory {
     height: 200px;
@@ -642,13 +765,17 @@
     transition: all 0.2s;
 }
 .quantumviewfiles-module .field-list-files .list-grid .directory-item .directory .directory-icon {
-    height: 110%;
+    width: 100%;
+    height: 85%;
     margin: auto;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: 50% 50%;
-    background-image: url("../images/icons/files/folder.svg");
+    background-image: url("data:image/svg+xml,%3Csvg width='80' height='64' viewBox='0 0 80 64' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4C0 1.79086 1.79083 0 4 0H40L48 8H76C78.2092 8 80 9.79086 80 12V60C80 62.2091 78.2092 64 76 64H4C1.79083 64 0 62.2091 0 60V4Z' fill='%23A5C7E9'/%3E%3Cg style='mix-blend-mode:overlay' opacity='0.5'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M48 8L40 0H32L40 8H48Z' fill='black'/%3E%3C/g%3E%3C/svg%3E%0A");
     transition: opacity .25s ease-in;
+}
+.quantumviewfiles-module .field-list-files .list-grid .directory-item.empty .directory .directory-icon {
+    background-image: url("data:image/svg+xml,%3Csvg width='80' height='64' viewBox='0 0 80 64' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M47.2929 8.70711L47.5858 9H48H76C77.6569 9 79 10.3431 79 12V60C79 61.6569 77.6569 63 76 63H4C2.34312 63 1 61.6569 1 60V4C1 2.34314 2.34312 1 4 1H39.5858L47.2929 8.70711Z' stroke='%23A5C7E9' stroke-width='2'/%3E%3C/svg%3E%0A");
 }
 .quantumviewfiles-module .field-list-files .list-grid .directory-item:hover .directory .directory-icon {
     opacity: .6;
@@ -764,7 +891,10 @@
     background-size: contain;
     background-repeat: no-repeat;
     background-position: 50% 50%;
-    background-image: url(../images/icons/files/folder.svg);
+    background-image: url("data:image/svg+xml,%3Csvg width='80' height='64' viewBox='0 0 80 64' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4C0 1.79086 1.79083 0 4 0H40L48 8H76C78.2092 8 80 9.79086 80 12V60C80 62.2091 78.2092 64 76 64H4C1.79083 64 0 62.2091 0 60V4Z' fill='%23A5C7E9'/%3E%3Cg style='mix-blend-mode:overlay' opacity='0.5'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M48 8L40 0H32L40 8H48Z' fill='black'/%3E%3C/g%3E%3C/svg%3E%0A");    transition: opacity .25s ease-in;
+}
+.quantumviewfiles-module .field-list-files .list-table .directory-item.empty .directory .directory-icon {
+    background-image: url("data:image/svg+xml,%3Csvg width='20' height='16' viewBox='0 0 20 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M10 2H18C19.1 2 20 2.9 20 4V14C20 15.1 19.1 16 18 16H2C0.9 16 0 15.1 0 14L0.01 2C0.01 0.9 0.9 0 2 0H8L10 2ZM2 4V14H18V4H2Z' fill='%23A5C7E9'/%3E%3C/svg%3E%0A");
 }
 .quantumviewfiles-module .field-list-files .list-table .directory-item .directory .directory-name {
     height: 100%;

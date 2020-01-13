@@ -16,20 +16,20 @@ extract($displayData);
 
 <div class="quantummanager-module quantumunsplash-module" data-type="Quantumunsplash" data-options="">
     <div class="quantumunsplash-save">
-        <div class="loader"><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_SAVE'); ?><span></span><span></span><span></span><span></span></div>
+        <div class="loader"><?php echo Text::_('COM_QUANTUMMANAGER_ACTION_SAVEAREA'); ?><span></span><span></span><span></span><span></span></div>
     </div>
     <div class="quantumunsplash-module-container">
 
         <div class="quantumunsplash-module-header">
             <div>
                 <label>
-                    <input name="q" type="text" placeholder="<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_SEARCH'); ?>">
+                    <input name="q" type="text" placeholder="<?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_SEARCH'); ?>">
                 </label>
             </div>
             <div class="header-filters">
                 <div class="fields"></div>
                 <div class="source">
-                    <span><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_LICENSE') ?></span> <a href="https://unsplash.com" target="_blank"><span class="quantummanager-icon quantummanager-icon-unsplash"></span></a>
+                    <span><?php echo Text::_('COM_QUANTUMMANAGER_QUANTUMUNSPLASH_LICENSE') ?></span> <a href="https://unsplash.com" target="_blank"><span class="quantummanager-icon quantummanager-icon-unsplash"></span></a>
                 </div>
             </div>
         </div>
@@ -38,24 +38,24 @@ extract($displayData);
             <div class="quantumunsplash-module-container-search">
                 <div class="quantumunsplash-module-search grid"></div>
                 <div class="quantumunsplash-module-load-page">
-                    <button class="btn"><?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_BUTTON_LOAD'); ?></button>
+                    <button class="btn"><?php echo Text::_('COM_QUANTUMMANAGER_ACTION_LOAD'); ?></button>
                 </div>
             </div>
         </div>
 
-        <button class="quantumunsplash-module-close btn"><span class="quantummanager-icon quantummanager-icon-close"></span> <?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_CLOSE'); ?></button>
+        <button class="quantumunsplash-module-close btn"><span class="quantummanager-icon quantummanager-icon-close"></span> <?php echo Text::_('COM_QUANTUMMANAGER_WINDOW_CLOSE'); ?></button>
     </div>
 
 </div>
 
 <script type="text/javascript">
     window.QuantumunsplashLang = {
-        'notFound': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_NOTFOUND'); ?>",
-        'button': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_BUTTON'); ?>",
-        'buttonLoad': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_BUTTON_LOAD'); ?>",
-        'save': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_SAVE'); ?>",
-        'close': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_CLOSE'); ?>",
-        'search': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_SEARCH'); ?>",
-        'searchHelper': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELDS_QUANTUMUNSPLASH_SEARCH_HELPER'); ?>",
+        'notFound': "<?php echo Text::_('COM_QUANTUMMANAGER_ALERT_NOTFOUND'); ?>",
+        'button': "<?php echo Text::_('COM_QUANTUMMANAGER_QUANTUMUNSPLASH_BUTTON'); ?>",
+        'buttonLoad': "<?php echo Text::_('COM_QUANTUMMANAGER_ACTION_LOAD'); ?>",
+        'save': "<?php echo Text::_('COM_QUANTUMMANAGER_ACTION_SAVE'); ?>",
+        'close': "<?php echo Text::_('COM_QUANTUMMANAGER_ACTION_CLOSE'); ?>",
+        'search': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_SEARCH'); ?>",
+        'searchHelper': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_SEARCH_HELPER'); ?>",
     };
 </script>

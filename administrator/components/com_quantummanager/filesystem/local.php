@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Filesystem\File;
@@ -44,8 +45,17 @@ class QuantummanagerFileSystemLocal
 
 		if(file_exists($path))
 		{
-			$nameForSafe = preg_replace('#[\-]{2,}#isu','-', str_replace(' ', '-', $name));
-			Folder::create($path . DIRECTORY_SEPARATOR . File::makeSafe($lang->transliterate($nameForSafe), ['#^\.#', '#\040#']));
+			if(!(int)QuantummanagerHelper::getParamsComponentValue('translit', 0))
+			{
+				$nameForSafe = preg_replace('#[\-]{2,}#isu','-', str_replace(' ', '-', $name));
+				$nameForSafe = File::makeSafe($lang->transliterate($nameForSafe), ['#^\.#', '#\040#']);
+			}
+			else
+			{
+				$nameForSafe = $name;
+			}
+
+			Folder::create($path . DIRECTORY_SEPARATOR . $nameForSafe);
 			return json_encode(['ok']);
 		}
 
@@ -78,13 +88,16 @@ class QuantummanagerFileSystemLocal
 				$pathArr = explode(DIRECTORY_SEPARATOR, $path);
 				$pathCurr = '';
 
-				//создаем области, если их нету
-				foreach($pathArr as $iValue)
+				if(!file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $path))
 				{
-					$pathCurr .= DIRECTORY_SEPARATOR . $iValue;
-					if(!file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $pathCurr))
+					//создаем папку для области, если ее нет
+					foreach($pathArr as $iValue)
 					{
-						Folder::create(JPATH_ROOT . DIRECTORY_SEPARATOR . $pathCurr);
+						$pathCurr .= DIRECTORY_SEPARATOR . $iValue;
+						if(!file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $pathCurr))
+						{
+							Folder::create(JPATH_ROOT . DIRECTORY_SEPARATOR . $pathCurr);
+						}
 					}
 				}
 
@@ -123,7 +136,6 @@ class QuantummanagerFileSystemLocal
 	{
 		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 		$path = JPATH_ROOT . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($path);
-
 		$directories = self::showdir($path, $root,'',true, true);
 
 		return json_encode([
@@ -176,7 +188,8 @@ class QuantummanagerFileSystemLocal
 				'path' => $root,
 				'title' => $scopeTitle,
 				'scopeid' => $scopeId,
-				'subpath' => $subdir
+				'subpath' => $subdir,
+				'is_empty' => (int)self::dirIisEmpty($dir)
 			];
 		}
 
@@ -195,7 +208,8 @@ class QuantummanagerFileSystemLocal
 
 						$folders[] = [
 							'path' => $name,
-							'subpath' => self::showdir($dir . DIRECTORY_SEPARATOR . $name, $root, $scopeTitle, $scopeId, $folderOnly, $showRoot, $level + 1, $ef)
+							'subpath' => self::showdir($dir . DIRECTORY_SEPARATOR . $name, $root, $scopeTitle, $scopeId, $folderOnly, $showRoot, $level + 1, $ef),
+							'is_empty' => (int)self::dirIisEmpty($dir . DIRECTORY_SEPARATOR . $name)
 						];
 					}
 					else
@@ -294,87 +308,112 @@ class QuantummanagerFileSystemLocal
 			$output = [];
 			$app = Factory::getApplication();
 			$data = $app->input->getArray();
-			$files = $app->input->files->getArray();
+			$file = $app->input->files->get('file', '', 'raw');
+			$arhiveupload = (int)QuantummanagerHelper::getParamsComponentValue('arhiveupload', 1);
+			$optionsForSafe = [];
 
-			foreach ($files as $file) {
+			if($arhiveupload)
+			{
+				$optionsForSafe = [
+					'forbidden_extensions' => QuantummanagerHelper::$forbiddenExtensions,
+					'php_ext_content_extensions' => ['null'],
+				];
+			}
 
-				if ($file['error'] == 4)
+
+			if(!QuantummanagerHelper::isSafeFile($file, $optionsForSafe))
+			{
+				$output['error'] = Text::_('COM_QUANTUMMANAGER_ERROR_PARTIAL_UPLOAD');
+				return json_encode($output);
+			}
+
+			if ($file['error'] == 4)
+			{
+				$output['error'] = Text::_('COM_QUANTUMMANAGER_ERROR_PARTIAL_UPLOAD');
+				return json_encode($output);
+			}
+
+			if ($file['error'])
+			{
+
+				switch ($file['error'])
 				{
-					continue;
+					case 1:
+						$output['error'] = Text::_('COM_QUANTUMMANAGER_ERROR_FILE_TO_LARGE_THAN_PHP_INI_ALLOWS');
+						break;
+
+					case 2:
+						$output['error'] = Text::_('COM_QUANTUMMANAGER_ERROR_FILE_TO_LARGE_THAN_HTML_FORM_ALLOWS');
+						break;
+
+					case 3:
+						$output['error'] = Text::_('COM_QUANTUMMANAGER_ERROR_PARTIAL_UPLOAD');
 				}
 
-				if ($file['error'])
+			}
+			else
+			{
+				$componentParams = ComponentHelper::getParams('com_quantummanager');
+				$lang = Factory::getLanguage();
+				$nameSplit = explode('.', $file['name']);
+				$nameExs = mb_strtolower(array_pop($nameSplit));
+
+				if(!(int)QuantummanagerHelper::getParamsComponentValue('translit', 0))
 				{
-
-					switch ($file['error'])
-					{
-						case 1:
-							$output[ 'error' ] = Text::_('COM_QUANTUMMANAGER_FILE_TO_LARGE_THAN_PHP_INI_ALLOWS');
-							break;
-
-						case 2:
-							$output[ 'error' ] = Text::_('COM_QUANTUMMANAGER_FILE_TO_LARGE_THAN_HTML_FORM_ALLOWS');
-							break;
-
-						case 3:
-							$output[ 'error' ] = Text::_('COM_QUANTUMMANAGER_ERROR_PARTIAL_UPLOAD');
-					}
-
+					$nameForSafe = preg_replace('#[\-]{2,}#isu','-', str_replace(' ', '-', implode('_', $nameSplit)));
+					$nameForSafe = File::makeSafe($lang->transliterate($nameForSafe), ['#^\.#', '#\040#']);
 				}
 				else
 				{
-					$componentParams = ComponentHelper::getParams('com_quantummanager');
-					$lang = Factory::getLanguage();
-					$nameSplit = explode('.', $file['name']);
-					$nameExs = mb_strtolower(array_pop($nameSplit));
-					$nameForSafe = preg_replace('#[\-]{2,}#isu','-', str_replace(' ', '-', implode('_', $nameSplit)));
-					$nameForSafe = File::makeSafe($lang->transliterate($nameForSafe), ['#^\.#', '#\040#']);
-					$maxSizeFileName = (int) QuantummanagerHelper::getParamsComponentValue('maxsizefilename', 63);
+					$nameForSafe = implode('.', $nameSplit);
+				}
 
-					if(mb_strlen($nameForSafe) > $maxSizeFileName)
+				$maxSizeFileName = (int) QuantummanagerHelper::getParamsComponentValue('maxsizefilename', 63);
+
+				if(mb_strlen($nameForSafe) > $maxSizeFileName)
+				{
+					$nameSafe = mb_substr($nameForSafe, 0, 63) . '_p' . mt_rand(11111, 99999);
+				}
+				else
+				{
+					$nameSafe =  $nameForSafe . ((int)$componentParams->get('postfix', 0) ? ('_p' . mt_rand(11111, 99999)) : '');
+				}
+
+				$uploadedFileName = $nameSafe . '.' . $nameExs;
+				$exs = explode(',', 'jpg,jpeg,png,gif');
+				$type = preg_replace("/\/.*?$/isu", '', $file['type']);
+				$data['name'] = isset($data['name']) ? $data['name'] : '';
+				$path = JPATH_ROOT . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($data['path'], false, $data['scope']);
+
+				if (!QuantummanagerHelper::checkFile($file['name'], $file['type']))
+				{
+					$output['error'] = Text::_('COM_QUANTUMMANAGER_ERROR_UPLOAD_ACCESS') . ': ' . (empty($file[ 'type']) ? Text::_('COM_QUANTUMMANAGER_EMPTY_MIMETYPE') : $file[ 'type']);
+					return json_encode($output);
+				}
+
+				if (!file_exists($path))
+				{
+					Folder::create($path);
+				}
+
+				if (File::upload($file['tmp_name'], $path . DIRECTORY_SEPARATOR . $uploadedFileName))
+				{
+
+					QuantummanagerHelper::filterFile($path . DIRECTORY_SEPARATOR . $uploadedFileName);
+
+					$output[ 'name' ] = $uploadedFileName;
+
+					if ($type === 'image')
 					{
-						$nameSafe = mb_substr($nameForSafe, 0, 63) . '_p' . mt_rand(11111, 99999);
-					}
-					else
-					{
-						$nameSafe =  $nameForSafe . ((int)$componentParams->get('postfix', 0) ? ('_p' . mt_rand(11111, 99999)) : '');
-					}
-
-					$uploadedFileName = $nameSafe . '.' . $nameExs;
-					$exs = explode(',', 'jpg,jpeg,png,gif');
-					$type = preg_replace("/\/.*?$/isu", '', $file['type']);
-					$data['name'] = isset($data['name']) ? $data['name'] : '';
-					$path = JPATH_ROOT . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($data['path'], false, $data['scope']);
-
-					if (!QuantummanagerHelper::checkFile($file['name'], $file['type']))
-					{
-						$output[ 'error' ] = Text::_('COM_QUANTUMMANAGER_ERROR_UPLOAD_ACCESS') . ': ' . (empty($file[ 'type']) ? Text::_('COM_QUANTUMMANAGER_EMPTY_MIMETYPE') : $file[ 'type']);
-						return json_encode($output);
-					}
-
-					if (!file_exists($path))
-					{
-						Folder::create($path);
-					}
-
-					if (File::upload($file['tmp_name'], $path . DIRECTORY_SEPARATOR . $uploadedFileName))
-					{
-
-						QuantummanagerHelper::filterFile($path . DIRECTORY_SEPARATOR . $uploadedFileName);
-
-						$output[ 'name' ] = $uploadedFileName;
-
-						if ($type === 'image')
-						{
-							JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');
-							$image = new QuantummanagerHelperImage;
-							$image->afterUpload($path . DIRECTORY_SEPARATOR . $uploadedFileName);
-						}
-
+						JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');
+						$image = new QuantummanagerHelperImage;
+						$image->afterUpload($path . DIRECTORY_SEPARATOR . $uploadedFileName);
 					}
 
 				}
+
 			}
+
 
 			return json_encode($output);
 		}
@@ -407,6 +446,10 @@ class QuantummanagerFileSystemLocal
 
 			if(is_file($filePath))
 			{
+
+				$splitFile = explode('.', $file);
+				$exs = mb_strtolower(array_pop($splitFile));
+
 				$meta = [
 					'preview' => [
 						'link' => 'index.php?' . http_build_query([
@@ -416,25 +459,23 @@ class QuantummanagerFileSystemLocal
 								'scope' => $scope,
 								'path' => $sourcePath,
 								'v' => mt_rand(111111, 999999),
-							])
+							]),
+						'name' => implode('.', $splitFile) . '.' . $exs
 					],
 					'global' => [],
 					'find' => [],
 				];
 
 
-				$splitFile = explode('.', $file);
-				$exs = mb_strtolower(array_pop($splitFile));
+				/*$globalInfo[] = [
+					'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_FILENAME'),
+					'value' => implode('.', $splitFile) . '.' . $exs,
+				];*/
 
-				$globalInfo[] = [
-					'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_FILENAME'),
-					'value' => implode('.', $splitFile),
-				];
-
-				$globalInfo[] = [
-					'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_EXS'),
+				/*$globalInfo[] = [
+					'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_EXS'),
 					'value' => $exs,
-				];
+				];*/
 
 				$stat = stat($filePath);
 
@@ -442,7 +483,7 @@ class QuantummanagerFileSystemLocal
 					if (isset($stat['mtime']))
 					{
 						$globalInfo[] = [
-							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_FILEDATETIME'),
+							'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_FILEDATETIME'),
 							'value' => date(Text::_('DATE_FORMAT_LC5'), $stat['mtime'])
 						];
 					}
@@ -450,7 +491,7 @@ class QuantummanagerFileSystemLocal
 					if (isset($stat['size']))
 					{
 						$globalInfo[] = [
-							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_FILESIZE'),
+							'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_FILESIZE'),
 							'value' => QuantummanagerHelper::formatFileSize((int)$stat['size'])
 						];
 					}
@@ -462,7 +503,7 @@ class QuantummanagerFileSystemLocal
 					list($width, $height, $type, $attr) = getimagesize($filePath);
 
 					$globalInfo[] = [
-						'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_RESOLUTION'),
+						'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_RESOLUTION'),
 						'value' => $width . ' x ' . $height
 					];
 				}
@@ -514,6 +555,11 @@ class QuantummanagerFileSystemLocal
 			else
 			{
 
+				$splitDirectory = explode(DIRECTORY_SEPARATOR, $directory);
+				$directoryName = array_pop($splitDirectory);
+				$extended = (int)QuantummanagerHelper::getParamsComponentValue('metafileextended', 0);
+				$showPath = (int)QuantummanagerHelper::getParamsComponentValue('metafileshowpath', 0);
+
 				$meta = [
 					'preview' => [
 						'link' => 'index.php?' . http_build_query([
@@ -523,46 +569,40 @@ class QuantummanagerFileSystemLocal
 								'scope' => $scope,
 								'path' => $sourcePath,
 								'v' => mt_rand(111111, 999999),
-							])
+							]),
+						'name' => $showPath ? (DIRECTORY_SEPARATOR . $path) : $directoryName
 					],
 					'global' => [],
 					'find' => [],
 				];
 
-				$splitDirectory = explode(DIRECTORY_SEPARATOR, $directory);
-				$directoryName = array_pop($splitDirectory);
-				$extended = (int)QuantummanagerHelper::getParamsComponentValue('metafileextended', 0);
 
 				if($extended)
 				{
 					$size = self::getSizeDirectory($directory);
 					$meta['global'] = [
 						[
-							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_DIRECTORYNAME'),
-							'value' => $directoryName
-						],
-						[
-							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_COUNTDORECTORIES'),
+							'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_COUNTDORECTORIES'),
 							'value' => $size['directoriesCount']
 						],
 						[
-							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_COUNTDORECTORIES_CURRENT'),
+							'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_COUNTDORECTORIES_CURRENT'),
 							'value' => $size['directoriesCountCurrent']
 						],
 						[
-							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_COUNTFILES'),
+							'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_COUNTFILES'),
 							'value' => $size['filesCount']
 						],
 						[
-							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_COUNTFILES_CURRENT'),
+							'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_COUNTFILES_CURRENT'),
 							'value' => $size['filesCountCurrent']
 						],
 						[
-							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_FILESSIZE'),
+							'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_FILESSIZE'),
 							'value' => QuantummanagerHelper::formatFileSize($size['size'])
 						],
 						[
-							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_FILESSIZE_CURRENT'),
+							'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_FILESSIZE_CURRENT'),
 							'value' => QuantummanagerHelper::formatFileSize($size['sizeCurrent'])
 						]
 					];
@@ -572,24 +612,33 @@ class QuantummanagerFileSystemLocal
 					$size = self::getSizeDirectory($directory, -1);
 					$meta['global'] = [
 						[
-							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_DIRECTORYNAME'),
+							'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_DIRECTORYNAME'),
 							'value' => $directoryName
 						],
 						[
-							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_COUNTDORECTORIES_CURRENT'),
+							'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_COUNTDORECTORIES_CURRENT'),
 							'value' => $size['directoriesCount']
 						],
 						[
-							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_COUNTFILES_CURRENT'),
+							'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_COUNTFILES_CURRENT'),
 							'value' => $size['filesCount']
 						],
 						[
-							'key' => Text::_('COM_QUANTUMMANAGER_FILE_METAINFO_FILESSIZE_CURRENT'),
+							'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_FILESSIZE_CURRENT'),
 							'value' => QuantummanagerHelper::formatFileSize($size['size'])
 						]
 					];
 				}
 
+				if($showPath)
+				{
+					$meta['global'] = array_merge($meta['global'], [
+						[
+							'key' => '',
+							'value' => JPATH_SITE . DIRECTORY_SEPARATOR . $path
+						]
+					]);
+				}
 
 
 			}
@@ -687,6 +736,7 @@ class QuantummanagerFileSystemLocal
 				$directoriesOutput[] = [
 					'name' => $value,
 					'is_writable' => (int)is_writable($directory . DIRECTORY_SEPARATOR . $value),
+					'is_empty' => (int)self::dirIisEmpty($directory . DIRECTORY_SEPARATOR . $value)
 				];
 			}
 
@@ -699,6 +749,69 @@ class QuantummanagerFileSystemLocal
 		catch (Exception $exception) {
 			echo $exception->getMessage();
 		}
+	}
+
+
+	/**
+	 * @param $dir
+	 *
+	 * @return bool
+	 *
+	 * @since version
+	 */
+	public static function dirIisEmpty($dir)
+	{
+		$handle = opendir($dir);
+		while (false !== ($entry = readdir($handle)))
+		{
+			if ($entry !== "." && $entry !== "..")
+			{
+				closedir($handle);
+				return true;
+			}
+		}
+		closedir($handle);
+		return false;
+	}
+
+
+	public static function paste($pathFrom, $scopeFrom, $pathTo, $scopeTo, $cut = 0, $list = [])
+	{
+		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+		$actions = QuantummanagerHelper::getActions();
+		if (!$actions->get('core.edit')) {
+			return json_encode(['fail']);
+		}
+
+		if ($list === null)
+		{
+			$list = [];
+		}
+
+		$pathFromCompile = JPATH_SITE . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($pathFrom, false, $scopeFrom);
+		$pathToCompile = JPATH_SITE . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($pathTo, false, $scopeTo);
+		if (file_exists($pathFromCompile) && file_exists($pathToCompile))
+		{
+			foreach ($list as $file)
+			{
+				if (file_exists($pathFromCompile . DIRECTORY_SEPARATOR . $file))
+				{
+					if($cut)
+					{
+						File::move($pathFromCompile . DIRECTORY_SEPARATOR . $file, $pathToCompile . DIRECTORY_SEPARATOR . $file);
+					}
+					else
+					{
+						File::copy($pathFromCompile . DIRECTORY_SEPARATOR . $file, $pathToCompile . DIRECTORY_SEPARATOR . $file);
+					}
+				}
+			}
+
+			return json_encode(['ok']);
+		}
+
+		return json_encode(['fail']);
+
 	}
 
 
@@ -789,15 +902,15 @@ class QuantummanagerFileSystemLocal
 				switch ($file['error'])
 				{
 					case 1:
-						$output[ 'error' ] = Text::_('COM_QUANTUMMANAGER_FILE_TO_LARGE_THAN_PHP_INI_ALLOWS');
+						$output['error'] = Text::_('COM_QUANTUMMANAGER_ERROR_FILE_TO_LARGE_THAN_PHP_INI_ALLOWS');
 						break;
 
 					case 2:
-						$output[ 'error' ] = Text::_('COM_QUANTUMMANAGER_FILE_TO_LARGE_THAN_HTML_FORM_ALLOWS');
+						$output['error'] = Text::_('COM_QUANTUMMANAGER_ERROR_FILE_TO_LARGE_THAN_HTML_FORM_ALLOWS');
 						break;
 
 					case 3:
-						$output[ 'error' ] = Text::_('COM_QUANTUMMANAGER_ERROR_PARTIAL_UPLOAD');
+						$output['error'] = Text::_('COM_QUANTUMMANAGER_ERROR_PARTIAL_UPLOAD');
 				}
 
 			}
@@ -809,13 +922,20 @@ class QuantummanagerFileSystemLocal
 				$nameSafe = File::makeSafe($lang->transliterate($nameSplit), ['#^\.#', '#\040#']);
 				$uploadedFileName = $nameSafe . '.' . $nameExs;
 				$exs = explode(',', 'jpg,jpeg,png,gif');
+
+				if(in_array($exs, QuantummanagerHelper::$forbiddenExtensions))
+				{
+					$output['error'] = Text::_('COM_QUANTUMMANAGER_ERROR_PARTIAL_UPLOAD');
+					return $output['error'];
+				}
+
 				$type = preg_replace("/\/.*?$/isu", '', $file['type']);
 				$data['name'] = isset($data['name']) ? $data['name'] : '';
 				$path = JPATH_ROOT . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($data['path'], false, $data['scope']);
 
 				if(!QuantummanagerHelper::checkFile($nameSplit . '.' . $nameExs, $file['type']))
 				{
-					$output[ 'error' ] = Text::_('COM_QUANTUMMANAGER_ERROR_UPLOAD_ACCESS') . ': ' . (empty($file[ 'type']) ? Text::_('COM_QUANTUMMANAGER_EMPTY_MIMETYPE') : $file[ 'type']);
+					$output['error'] = Text::_('COM_QUANTUMMANAGER_ERROR_UPLOAD_ACCESS') . ': ' . (empty($file[ 'type']) ? Text::_('COM_QUANTUMMANAGER_EMPTY_MIMETYPE') : $file[ 'type']);
 					return json_encode($output);
 				}
 
@@ -956,19 +1076,26 @@ class QuantummanagerFileSystemLocal
 		$app = Factory::getApplication();
 		$splitFile = explode('.', $file);
 		$exs = mb_strtolower(array_pop($splitFile));
-		$mediaIconsPath = 'media/com_quantummanager/images/icons/files/';
+		$mediaIconsPath = 'media/com_quantummanager/images/icons/';
 		$siteUrl = Uri::root();
+		$path = QuantummanagerHelper::preparePath($path, false, $scope);
 
 		if(empty($file))
 		{
-			$app->redirect($siteUrl . $mediaIconsPath . 'folder.svg');
+			if(self::dirIisEmpty(JPATH_ROOT . DIRECTORY_SEPARATOR . $path))
+			{
+				$app->redirect($siteUrl . $mediaIconsPath . 'folder.svg');
+			}
+			else
+			{
+				$app->redirect($siteUrl . $mediaIconsPath . 'folder-empty.svg');
+			}
 		}
 
 		if(in_array($exs, ['jpg', 'jpeg', 'png', 'gif']))
 		{
 
 			JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
-			$path = QuantummanagerHelper::preparePath($path, false, $scope);
 			$directory = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
 			$manager = JInterventionimage::getInstance();
 			$cacheSource =  JPATH_ROOT . DIRECTORY_SEPARATOR . 'cache/com_quantummanager';
@@ -1000,8 +1127,20 @@ class QuantummanagerFileSystemLocal
 			$app->redirect($siteUrl . $path . DIRECTORY_SEPARATOR . $file . '?=' . mt_rand(111111, 999999));
 		}
 
-		$app->redirect( $siteUrl . $mediaIconsPath . $exs . '.svg');
+		$mapFileColors = include implode(DIRECTORY_SEPARATOR, [JPATH_ROOT, 'administrator', 'components', 'com_quantummanager', 'layouts', 'mapfilescolors.php']);
+		$colors = $mapFileColors['default'];
+		if(isset($mapFileColors[$exs]))
+		{
+			$colors = $mapFileColors[$exs];
+		}
 
+		$svg = '<?xml version="1.0" encoding="iso-8859-1"?>' . file_get_contents(JPATH_ROOT . DIRECTORY_SEPARATOR . '/media/com_quantummanager/images/icons/file.svg');
+		$svg = str_replace(array('data-fill-m=""', 'data-fill-t=""'), array('fill="' . $colors[0] . '"', 'fill="' . $colors[1] . '"'), $svg);
+		$svg = str_replace('</g>', "<text x=\"150\" y=\"200\" fill=\"#FFFFFF\" style=\"font-size: 80px;text-anchor: middle;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;\">" . $exs . "</text></g>", $svg);
+
+		header('Content-type: image/svg+xml');
+		echo $svg;
+		$app->close();
 	}
 
 
@@ -1027,20 +1166,17 @@ class QuantummanagerFileSystemLocal
 		];
 
 		$lang = Factory::getLanguage();
-		$nameSafe = File::makeSafe($lang->transliterate($name), ['#^\.#', '#\040#']);
 
-		if(!in_array($exs, [
-				'php',
-				'php7',
-				'php5',
-				'php4',
-				'php3',
-				'php4',
-				'phtml',
-				'phps',
-				'sh',
-				'exe'
-			]) && file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file))
+		if(!(int)QuantummanagerHelper::getParamsComponentValue('translit', 0))
+		{
+			$nameSafe = File::makeSafe($lang->transliterate($name), ['#^\.#', '#\040#']);
+		}
+		else
+		{
+			$nameSafe = $name;
+		}
+
+		if(!in_array($exs, QuantummanagerHelper::$forbiddenExtensions) && file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file))
 		{
 			if(rename(JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file, JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $nameSafe . '.' . $exs))
 			{
@@ -1048,6 +1184,12 @@ class QuantummanagerFileSystemLocal
 					'status' => 'ok'
 				];
 			}
+		}
+		else
+		{
+			$output = [
+				'status' => 'fail'
+			];
 		}
 
 		return json_encode($output);
@@ -1073,7 +1215,15 @@ class QuantummanagerFileSystemLocal
 		];
 
 		$lang = Factory::getLanguage();
-		$nameSafe = File::makeSafe($lang->transliterate($name), ['#^\.#', '#\040#']);
+
+		if(!(int)QuantummanagerHelper::getParamsComponentValue('translit', 0))
+		{
+			$nameSafe = File::makeSafe($lang->transliterate($name), ['#^\.#', '#\040#']);
+		}
+		else
+		{
+			$nameSafe = $name;
+		}
 
 		if(rename(JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $oldName, JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $nameSafe))
 		{

@@ -14,7 +14,10 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
     this.currentPage = 0;
     this.totalPage = 0;
     this.searchStr = '';
-    self.masnry = '';
+    this.masonry = '';
+    this.loadPage = false;
+    this.searchWrap = QuantumPixbayElement.querySelector('.quantumpixabay-module-container-search-wrap .quantumpixabay-module-container-search');
+    this.searchGrid = QuantumPixbayElement.querySelector('.quantumpixabay-module-container-search-wrap .quantumpixabay-module-container-search .quantumpixabay-module-search');
     this.areaSave = QuantumPixbayElement.querySelector('.quantumpixabay-save');
     this.inputSearch = QuantumPixbayElement.querySelector('.quantumpixabay-module-header input');
     this.pageWrap = QuantumPixbayElement.querySelector('.quantumpixabay-module-load-page');
@@ -54,6 +57,12 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
             }, 0);
         });
 
+        self.searchWrap.addEventListener('scroll', function () {
+            if((self.searchGrid.offsetHeight - (self.searchWrap.scrollTop + self.searchWrap.offsetHeight)) < 400) {
+                self.search(self.searchStr, self.currentPage + 1);
+            }
+        });
+
         let filterFieldsLi = self.element.querySelectorAll('.filter-field li');
         for(let i=0;i<filterFieldsLi.length;i++) {
             filterFieldsLi[i].addEventListener('click', function () {
@@ -63,10 +72,13 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
                 self.search(self.searchStr);
             });
         }
+
+
     };
 
     this.search = function (str, page) {
         let self = this;
+
         self.searchStr = str;
         self.pageWrap.classList.remove('active');
 
@@ -76,6 +88,12 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
 
         if(page === null || page === undefined) {
             page = 1;
+        }
+
+        if(page !== 1) {
+            if(this.loadPage) {
+                return;
+            }
         }
 
         if(localStorage !== undefined) {
@@ -88,17 +106,20 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
             fieldsForRequest += '&' + filterFields[i].getAttribute('data-name') + '=' + encodeURIComponent(filterFields[i].getAttribute('data-value'));
         }
 
+        this.loadPage = true;
+
         jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumpixabay.search&q=" + encodeURIComponent(str) + '&page=' + encodeURIComponent(page) + fieldsForRequest)).done(function (response) {
             response = JSON.parse(response);
             self.currentPage = parseInt(page);
             self.totalPage = parseInt(response.totalPage);
+            self.loadPage = false;
 
             let html = '';
             let container = QuantumPixbayElement.querySelector('.quantumpixabay-module-search');
 
             if(page === 1) {
                 container.innerHTML = '';
-                self.masnry = new Masonry('.quantumpixabay-module-search', {
+                self.masonry = new Masonry('.quantumpixabay-module-search', {
                     itemSelector: '.grid-item',
                     percentPosition: true
                 });
@@ -108,12 +129,16 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
             let currentLoaded = 0;
 
             if(response.results.length === 0) {
-                container.innerHTML = '';
-                let elem = document.createElement('div');
-                elem.setAttribute('class', 'grid-item');
-                elem.innerHTML = QuantumpixabayLang.notFound;
-                container.appendChild(elem);
-                self.masnry.appended(elem);
+                if(page === 1) {
+                    container.innerHTML = '';
+                    let elem = document.createElement('div');
+                    elem.setAttribute('class', 'grid-item');
+                    elem.innerHTML = QuantumpixabayLang.notFound;
+                    container.appendChild(elem);
+                    self.masonry.appended(elem);
+                } else {
+                    self.loadPage = true;
+                }
 
                 return;
             }
@@ -167,7 +192,7 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
                 elem.append(metaWrap);
 
                 container.appendChild(elem);
-                self.masnry.appended(elem);
+                self.masonry.appended(elem);
 
                 QuantumUtils.replaceImgToSvg('.quantumpixabay-module-search');
 
@@ -203,12 +228,12 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
 
             }
 
-            self.masnry.layout();
+            self.masonry.layout();
 
             let intervalLayout = setInterval(function () {
 
                 if(currentLoaded === maxLoaded) {
-                    self.masnry.layout();
+                    self.masonry.layout();
                     clearInterval(intervalLayout)
                 }
             }, 100);
@@ -234,17 +259,9 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
 
             for(let i=0;i<filesAll.length;i++) {
                 if (Filemanager.Quantumpixabay.filename === filesAll[i].getAttribute('data-file')) {
-                    fm.Quantumviewfiles.selectFile(filesAll[i]);
+                    fm.Quantumviewfiles.selectFile(filesAll[i], true);
                     find = true;
                 }
-            }
-
-            if(find) {
-                fm.Quantumtoolbar.buttonsList['viewfilesWatermark'].classList.remove('btn-hide');
-                fm.Quantumtoolbar.buttonsList['viewfilesDelete'].classList.remove('btn-hide');
-            } else {
-                fm.Quantumtoolbar.buttonsList['viewfilesWatermark'].classList.add('btn-hide');
-                fm.Quantumtoolbar.buttonsList['viewfilesDelete'].classList.add('btn-hide');
             }
 
             fm.Quantumviewfiles.initBreadcrumbs(fm.Quantumviewfiles.buildBreadcrumbs);

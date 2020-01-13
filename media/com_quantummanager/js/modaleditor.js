@@ -20,6 +20,8 @@ document.addEventListener('DOMContentLoaded', function () {
     buttonCancel.setAttribute('data-dismiss', 'modal');
     buttonCancel.setAttribute('type', 'button');
 
+    console.log(window.parent.jInsertEditorText);
+
     setTimeout(function () {
         for(let i=0;i<QuantummanagerLists.length;i++) {
             QuantummanagerLists[i].Quantumtoolbar.buttonAdd('insertFileEditor', 'center', 'file-actions', 'btn-insert btn-primary btn-hide', QuantumwindowLang.buttonInsert, 'quantummanager-icon-insert-inverse', {}, function (ev) {
