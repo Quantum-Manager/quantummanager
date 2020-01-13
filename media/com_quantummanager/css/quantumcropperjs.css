@@ -99,6 +99,7 @@
 }
 .quantumcropperjs-module .toolbar .btn {
     display: flex;
+    justify-content: center;
     align-items: center;
     padding: 10px 20px;
     line-height: 0;
@@ -255,7 +256,7 @@
 }
 .quantumcropperjs-module .input-width-height-wrap input[type='text'],
 .quantumcropperjs-module .input-width-height-wrap input[type='number'] {
-    width: 80%;
+    width: auto;
     margin: 0;
     background-color: #333;
     border: 1px solid #333;
@@ -288,7 +289,12 @@
 }
 .quantumcropperjs-module .button-wrap {
     margin-top: 35px;
-    justify-content: center;
+    justify-content: space-between;
+}
+.quantumcropperjs-module .button-wrap > button {
+    width: 48%;
+    text-align: center;
+    white-space: nowrap;
 }
 .quantumcropperjs-module .button-wrap .btn-save {
     background: #78abde;

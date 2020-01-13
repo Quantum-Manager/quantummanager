@@ -58,35 +58,36 @@ $presets = $paramsComponents->get('custompresetscrop');
             <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_IMAGE'); ?></label>
 
             <div>
-                <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_WIDTH'); ?></label>
+                <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_WIDTH'); ?> (px)</label>
                 <div>
 	                <label>
 		                <input type="text" class="image-width-value">
 	                </label>
-	                <span>PX</span>
                 </div>
             </div>
 
             <div>
-                <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_HEIGHT'); ?></label>
+                <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_HEIGHT'); ?> (px)</label>
                 <div>
 	                <label>
 		                <input type="text" class="image-height-value">
 	                </label>
-	                <span>PX</span>
                 </div>
             </div>
 
             <label class="image-width-height-ratio-checkbox"><input type="checkbox" class="image-width-height-ratio" checked="checked"> <?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_SAVE_RATIO'); ?></label>
         </div>
 
-        <div class="button-wrap btn-group">
-            <button class="btn btn-save">
-                <span><?php echo Text::_('COM_QUANTUMMANAGER_ACTION_SAVE'); ?></span>
-            </button>
+        <div class="button-wrap">
+
             <button class="btn btn-close">
                 <span><?php echo Text::_('COM_QUANTUMMANAGER_ACTION_CANCEL'); ?></span>
             </button>
+
+            <button class="btn btn-save">
+                <span><?php echo Text::_('COM_QUANTUMMANAGER_ACTION_SAVE'); ?></span>
+            </button>
+
         </div>
 
         <div class="input-width-height-wrap input-width-height-wrap-rows input-width-height-wrap-bottom">
