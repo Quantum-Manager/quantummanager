@@ -87,7 +87,7 @@
 /*.quantumtreecatalogs-module ul li span.tree-caret:after {*/
     content: '';
     position: absolute;
-    top: 6px;
+    top: 5px;
     left: 2px;
     width: 8px;
     height: 8px;
