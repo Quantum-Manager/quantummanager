@@ -30,11 +30,6 @@ window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, o
             reload = false;
         }
 
-
-        if (Filemanager.data.path === undefined || Filemanager.data.path !== path) {
-            //Filemanager.data.path = path;
-        }
-
         jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumtreecatalogs.getDirectories&path=" + encodeURIComponent(path) + '&root=' + encodeURIComponent(self.options.directory))).done(function (response) {
 
             response = JSON.parse(response);
@@ -106,7 +101,10 @@ window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, o
     };
 
     this.treePathsDblclick = function (element, qte) {
-        element.closest('li').querySelector('.tree-caret').click();
+        let carret = element.closest('li').querySelector('.tree-caret');
+        if(carret !== null) {
+            carret.click();
+        }
     };
 
     this.treePathsClick = function (element, qte) {
