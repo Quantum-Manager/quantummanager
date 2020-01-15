@@ -86,13 +86,15 @@ class QuantummanagerHelperImage
 			{
 				JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
 				$manager = JInterventionimage::getInstance(['driver' => $this->getNameDriver()]);
-				$fileString = imagecreatefromstring(file_get_contents($file));
-				$image = $manager->make($fileString);
-				$logo = imagecreatefromstring(file_get_contents($fileWatermark));
-				$logoWidth = imagesx($logo);
-				$logoHeight = imagesy($logo);
-				$imageWidth = imagesx($fileString);
-				$imageHeight = imagesy($fileString);
+				$image = $manager->make($file);
+
+				$managerForWatermark = JInterventionimage::getInstance(['driver' => $this->getNameDriver()]);
+				$watermark = $managerForWatermark->make($fileWatermark);
+
+				$logoWidth = $watermark->width();
+				$logoHeight = $watermark->height();
+				$imageWidth = $image->width();
+				$imageHeight = $image->height();
 
 				if((int)$this->paramsComponent->get('overlaypercent', 0))
 				{
@@ -100,25 +102,10 @@ class QuantummanagerHelperImage
 					$precent = (double)$this->paramsComponent->get('overlaypercentvalue', 10);
 					$logoWidthMax = $imageWidth / 100 * $precent;
 					$logoHeightMax = $imageHeight / 100 * $precent;
-
-					$ratio  = $logoHeight / $logoWidth;
-					$tmpWidth = $logoWidthMax;
-					$tmpHeight = $tmpWidth * $ratio;
-
-					if ($tmpHeight > $logoHeightMax)
-					{
-						$tmpHeight = $logoHeightMax;
-						$tmpWidth = $tmpHeight / $ratio;
-					}
-
-					$logoNew = imagecreatetruecolor($tmpWidth, $tmpHeight);
-					imagesavealpha($logoNew, true);
-					imagefill($logoNew,0,0,0x7fff0000);
-					imagecopyresampled($logoNew, $logo, 0, 0, 0, 0, $tmpWidth, $tmpHeight, $logoWidth, $logoHeight);
-					$logo = $logoNew;
-					$logoWidth = $tmpWidth;
-					$logoHeight = $tmpHeight;
-					unset($logoNew);
+					$watermark->resize((int)$logoWidthMax, (int)$logoHeightMax, function ($constraint) {
+						$constraint->aspectRatio();
+						$constraint->upsize();
+					});
 				}
 
 				if($logoWidth > $imageWidth && $logoHeight > $imageHeight)
@@ -126,9 +113,7 @@ class QuantummanagerHelperImage
 					return false;
 				}
 
-				$watermark = $manager->make($logo);
 				$image->insert($watermark, $position, $padding, $padding);
-
 				$image->save($file);
 
 			}
@@ -168,7 +153,10 @@ class QuantummanagerHelperImage
 
 		$manager = JInterventionimage::getInstance(['driver' => $this->getNameDriver()]);
 		$manager->make($file)
-			->fit($newWidth, $newHeight)
+			->resize($newWidth, $newHeight, function ($constraint) {
+			$constraint->aspectRatio();
+			$constraint->upsize();
+		})
 			->save($file);
 	}
 

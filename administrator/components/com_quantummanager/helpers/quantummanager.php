@@ -363,31 +363,35 @@ class QuantummanagerHelper
 	/**
 	 * @param $name
 	 * @param string $default
+	 * @param bool $withProfiles
 	 *
-	 * @return mixed
+	 * @return mixed|string
 	 *
 	 * @since version
 	 */
-	public static function getParamsComponentValue($name, $default = '')
+	public static function getParamsComponentValue($name, $default = '', $withProfiles = true)
 	{
 		$componentParams = ComponentHelper::getParams('com_quantummanager');
 		$profiles = $componentParams->get('profiles', '');
 		$value = $componentParams->get($name, $default);
 		$groups = Factory::getUser()->groups;
 
-		if(!empty($profiles))
+		if($withProfiles)
 		{
-			foreach ($profiles as $key => $profile)
+			if(!empty($profiles))
 			{
-				if(in_array((int)$profile->group, $groups) && ($name === $profile->config))
+				foreach ($profiles as $key => $profile)
 				{
-					$value = trim($profile->value);
+					if(in_array((int)$profile->group, $groups) && ($name === $profile->config))
+					{
+						$value = trim($profile->value);
 
-					if(is_array($default)) {
-						$value = json_decode($value, true);
+						if(is_array($default)) {
+							$value = json_decode($value, true);
+						}
+
+						break;
 					}
-
-					break;
 				}
 			}
 		}
@@ -545,7 +549,7 @@ class QuantummanagerHelper
 
 	public static function checkScopes()
 	{
-		$scopesCustom = self::getParamsComponentValue('scopescustom', []);
+		$scopesCustom = self::getParamsComponentValue('scopescustom', [], false);
 		$scopeFail = false;
 		$lang = Factory::getLanguage();
 
@@ -564,6 +568,8 @@ class QuantummanagerHelper
 		}
 
 	}
+
+
 
 	/**
 	 *
