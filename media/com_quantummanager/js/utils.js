@@ -258,6 +258,24 @@ window.QuantumUtils = {
         return size;
     },
 
+    modal: function(fm, header, body, footer) {
+        let modal = this.createElement('div', {'class': 'quatummanagermodal-wrap'})
+            .addChild('div', {'class': 'quatummanagermodal-container'})
+                .add('button', {
+                    'class': 'btn quatummanagermodal-close',
+                    'events': [
+                        ['click', function (ev) {
+                            this.closest('.quatummanagermodal-wrap').remove();
+                        }]
+                    ]}, 'Закрыть')
+                .add('div', {'class': 'quatummanagermodal-header'}, header)
+                .addChild('div', {'class': 'quatummanagermodal-body-wrap'})
+                    .add('div', {'class': 'quatummanagermodal-body'}, body)
+                    .getParent()
+                .getParent();
+        fm.element.append(modal.build());
+    },
+
     getPopUpSize: function(el) {
         let size = this.windowSize();
         size.width = (size.width/100*90);
@@ -299,6 +317,83 @@ window.QuantumUtils = {
             }, 'xml');
 
         });
+    },
+
+    /**
+     * Создание вложенных DOM элементов
+     *
+     * @param tag
+     * @param attr
+     * @param innerHtml
+     * @returns {{add: add, build: build, el: *, child: []}}
+     */
+    createElement: function(tag, attr, innerHtml) {
+        let self = this;
+        let element = document.createElement(tag);
+
+        for(keyAttr in attr) {
+            if(keyAttr === 'events') {
+                let eventsLength = attr[keyAttr].length;
+                for(let i=0;i<eventsLength;i++) {
+                    element.addEventListener(attr[keyAttr][i][0], attr[keyAttr][i][1]);
+                }
+                continue;
+            }
+
+            element.setAttribute(keyAttr, attr[keyAttr]);
+        }
+
+        if(innerHtml !== undefined && innerHtml !== null) {
+
+            if(typeof innerHtml === 'function') {
+                element.innerHTML = innerHtml();
+            }
+
+            if(typeof innerHtml === 'string') {
+                element.innerHTML = innerHtml;
+            }
+
+            if(typeof innerHtml === 'object') {
+                element.append(innerHtml);
+            }
+
+        }
+
+        return {
+            el: element,
+            parent: undefined,
+            child: [],
+            getParent: function() {
+                return this.parent;
+            },
+            setParent: function(parent) {
+                this.parent = parent;
+                return this;
+            },
+            add: function (tag, attr, innerHtml) {
+                this.child.push(self.createElement(tag, attr, innerHtml).setParent(this));
+                return this;
+            },
+            addChild: function (tag, attr, innerHtml) {
+                this.child.push(self.createElement(tag, attr, innerHtml).setParent(this));
+                return this.child[ this.child.length - 1];
+            },
+            build: function () {
+                var buildElement = this.el;
+
+                if(this.child.length > 0) {
+
+                    for(var i=0;i<this.child.length;i++) {
+                        buildElement.appendChild(this.child[i].build());
+                    }
+
+                    return buildElement;
+                } else {
+                    return buildElement;
+                }
+
+            },
+        }
     }
 
 };

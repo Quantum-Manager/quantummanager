@@ -30,6 +30,11 @@ HTMLHelper::_('stylesheet', 'com_quantummanager/modal.css', [
 	'relative' => true
 ]);
 
+HTMLHelper::_('stylesheet', 'com_quantummanager/modalcontent.css', [
+	'version' => filemtime(__FILE__),
+	'relative' => true
+]);
+
 HTMLHelper::_('jquery.framework');
 
 HTMLHelper::_('script', 'com_quantummanager/modalcontent.js', [
@@ -47,6 +52,7 @@ HTMLHelper::_('script', 'com_quantummanager/modalcontent.js', [
 
     QuantummanagercontentHelper::loadLang();
     $fieldsForContentPlugin = QuantummanagercontentHelper::getFieldsForScopes();
+    $templatelistForContentPlugin = QuantummanagercontentHelper::getTemplateListForScopes();
     $groups = Factory::getUser()->groups;
 
 	try {
@@ -142,6 +148,7 @@ HTMLHelper::_('script', 'com_quantummanager/modalcontent.js', [
 <script type="text/javascript">
 
     window.QuantumContentPlugin = {
+        templatelist: '<?php echo json_encode($templatelistForContentPlugin) ?>',
         fields: '<?php echo json_encode($fieldsForContentPlugin) ?>'
     };
 

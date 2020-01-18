@@ -1,0 +1,56 @@
+.button-file-for-insert {
+    margin: auto;
+}
+
+.table-file-for-insert {
+
+}
+
+.table-file-for-insert .table-file-for-insert-tr {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.table-file-for-insert .table-file-for-insert-tr .table-file-for-insert-preview {
+    width: 20%;
+}
+
+.table-file-for-insert .table-file-for-insert-tr .table-file-for-insert-preview .table-file-for-insert-preview-file {
+    max-height: 100%;
+    height: auto;
+    max-width: 100%;
+    border-radius: 5px;
+    border: 4px solid #9e9e9e;
+    object-fit: contain;
+    object-position: center;
+    background-color: #eee;
+}
+
+.table-file-for-insert .table-file-for-insert-tr .table-file-for-insert-preview .table-file-for-insert-preview-name {
+    margin-top: 13px;
+    text-align: center;
+    color: #777;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 17px;
+    word-break: break-word;
+}
+
+.table-file-for-insert .table-file-for-insert-tr .table-file-for-insert-fields {
+    width: 78%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    padding: 10px 0;
+}
+
+.table-file-for-insert .table-file-for-insert-tr .table-file-for-insert-fields > input {
+    display: inline-block;
+    width: 29%;
+    margin: 1% !important;
+}
