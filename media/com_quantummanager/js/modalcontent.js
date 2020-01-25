@@ -118,12 +118,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 for(let i=0;i<files.length;i++) {
                     let file = files[i].getAttribute('data-file');
+                    let exs = files[i].getAttribute('data-exs');
                     let name = files[i].getAttribute('data-name');
-                    let preview = files[i].getAttribute('data-filep') + '&path=' + encodeURIComponent(fm.data.path);
+                    let preview = '';
+
+                    console.log(files[i].getAttribute('data-filep'));
+
+                    if(files[i].getAttribute('data-filep') === null || files[i].getAttribute('data-filep') === '') {
+                        preview = fm.Quantumviewfiles.generateIconFile(exs);
+                    } else {
+                        preview = QuantumUtils.createElement('img', {'class': 'table-file-for-insert-preview-file', 'src': files[i].getAttribute('data-filep') + '&path=' + encodeURIComponent(fm.data.path)}).build();
+                    }
 
                     body = body.addChild('div', {'class': 'table-file-for-insert-tr', 'data-file': file})
-                        .addChild('div', {'class': 'table-file-for-insert-preview'})
-                            .add('img', {'class': 'table-file-for-insert-preview-file', 'src': preview})
+                        .addChild('div', {'class': 'table-file-for-insert-preview'}, preview)
                             .add('div', {'class': 'table-file-for-insert-preview-name'}, name)
                             .getParent()
                         .addChild('div', {'class': 'table-file-for-insert-fields'});

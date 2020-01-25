@@ -714,7 +714,7 @@ class QuantummanagerFileSystemLocal
 					'name' => implode('.', $fileParse),
 					'exs' => $exs,
 					'file' => $file,
-					'fileP' => $file,
+					'fileP' => '',
 					'dateC' => $fileDate,
 					'dateM' => $fileDate,
 				];
