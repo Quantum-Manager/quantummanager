@@ -42,6 +42,12 @@ HTMLHelper::_('script', 'com_quantummanager/modalcontent.js', [
 	'relative' => true
 ]);
 
+
+HTMLHelper::_('script', 'com_quantummanager/sortable.min.js', [
+	'version' => filemtime(__FILE__),
+	'relative' => true
+]);
+
 ?>
 
 <?php
@@ -148,8 +154,8 @@ HTMLHelper::_('script', 'com_quantummanager/modalcontent.js', [
 <script type="text/javascript">
 
     window.QuantumContentPlugin = {
-        templatelist: '<?php echo json_encode($templatelistForContentPlugin) ?>',
-        fields: '<?php echo json_encode($fieldsForContentPlugin) ?>'
+        templatelist: '<?php echo QuantummanagerHelper::escapeJsonString(json_encode($templatelistForContentPlugin)) ?>',
+        fields: '<?php echo QuantummanagerHelper::escapeJsonString(json_encode($fieldsForContentPlugin, JSON_FORCE_OBJECT)) ?>'
     };
 
     window.QuantumwindowLang = {

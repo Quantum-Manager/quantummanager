@@ -258,8 +258,12 @@ window.QuantumUtils = {
         return size;
     },
 
-    modal: function(fm, header, body, footer) {
-        let modal = this.createElement('div', {'class': 'quatummanagermodal-wrap'})
+    modal: function(fm, header, body, footer, classForModal) {
+        if(classForModal === null) {
+            classForModal = '';
+        }
+
+        let modal = this.createElement('div', {'class': 'quatummanagermodal-wrap ' + classForModal})
             .addChild('div', {'class': 'quatummanagermodal-container'})
                 .add('button', {
                     'class': 'btn quatummanagermodal-close',

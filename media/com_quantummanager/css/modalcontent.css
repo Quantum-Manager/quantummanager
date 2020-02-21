@@ -1,9 +1,39 @@
+.modalcontentinsert {
+
+}
+
+.modalcontentinsert .quatummanagermodal-header {
+    background: #eee;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.modalcontentinsert .quatummanagermodal-header .modalcontentinsert-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+}
+
+.modalcontentinsert .quatummanagermodal-header .select-file-for-insert {
+    height: 42px;
+    margin-right: 5px;
+    margin-bottom: 0;
+    font-size: 16px;
+}
+
 .button-file-for-insert {
     margin: auto;
 }
 
 .table-file-for-insert {
-
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;/
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .table-file-for-insert .table-file-for-insert-tr {
@@ -14,8 +44,30 @@
     border-bottom: 1px solid #ddd;
 }
 
+.table-file-for-insert .table-file-for-insert-tr:last-child {
+    border-bottom: none;
+}
+
+.table-file-for-insert .table-file-for-insert-tr .handle-wrap {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    align-content: center;
+    margin-right: 20px;
+    height: 100%;
+}
+
+.table-file-for-insert .table-file-for-insert-tr .handle {
+    display: block;
+    width: 40px;
+    height: 40px;
+    cursor: move;
+}
+
 .table-file-for-insert .table-file-for-insert-tr .table-file-for-insert-preview {
     width: 20%;
+    margin-right: 20px;
 }
 
 .table-file-for-insert .table-file-for-insert-tr .table-file-for-insert-preview .table-file-for-insert-preview-file {
@@ -49,7 +101,8 @@
     padding: 10px 0;
 }
 
-.table-file-for-insert .table-file-for-insert-tr .table-file-for-insert-fields > input {
+.table-file-for-insert .table-file-for-insert-tr .table-file-for-insert-fields > input,
+.table-file-for-insert .table-file-for-insert-tr .table-file-for-insert-fields > select {
     display: inline-block;
     width: 29%;
     margin: 1% !important;

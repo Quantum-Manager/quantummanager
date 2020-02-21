@@ -297,7 +297,7 @@
 
 .quatummanagermodal-wrap .quatummanagermodal-body-wrap {
     position: relative;
-    height: calc(100% - 90px);
+    height: calc(100% - 85px);
 }
 
 .quatummanagermodal-wrap .quatummanagermodal-body-wrap .quatummanagermodal-body {
@@ -548,6 +548,11 @@
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/automatic-brightness.svg");
+}
+.quantummanager-icon-switch-vertical {
+    width: 14px;
+    height: 14px;
+    background-image: url("../images/icons/action/switch-vertical-orientation-arrows.svg");
 }
 
 
