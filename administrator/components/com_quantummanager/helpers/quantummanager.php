@@ -411,23 +411,18 @@ class QuantummanagerHelper
 
 
 	/**
-	 * @param $size
+	 * @param $bytes
+	 * @param int $decimals
 	 *
 	 * @return string
 	 *
 	 * @since version
 	 */
-	public static function formatFileSize($size) {
-		$a = [ 'B', 'KB', 'MB', 'GB', 'TB', 'PB' ];
-		$pos = 0;
-
-		while ($size >= 1024)
-		{
-			$size /= 1024;
-			$pos++;
-		}
-
-		return round($size,2). ' ' . $a[ $pos];
+	public static function formatFileSize($bytes, $decimals = 2)
+	{
+		$size = array('b','kb','Mb','Gb','Tb','Pb','Eb','Zb','Yb');
+		$factor = floor((strlen($bytes) - 1) / 3);
+		return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . " " . @$size[$factor];
 	}
 
 
