@@ -42,6 +42,11 @@ window.QuantumManagerInit = function() {
             filemanager.data.scope = scopesEnabled[0];
         }
 
+        if(scopesEnabled.indexOf('sessionroot') !== -1)
+        {
+            filemanager.data.scope = 'sessionroot';
+        }
+
         for(let j=0;j<modules.length;j++) {
             let type = modules[j].getAttribute('data-type');
             let dataOptions = modules[j].getAttribute('data-options');

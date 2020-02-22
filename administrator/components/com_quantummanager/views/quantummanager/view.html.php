@@ -55,8 +55,6 @@ class QuantummanagerViewQuantummanager extends HtmlView
 
 		// Show the sidebar
 		$this->helper = new QuantummanagerHelper;
-		/*$this->helper->addSubmenu('quantummanager');
-		$this->sidebar = JHtmlSidebar::render();*/
 
 		// Display it all
 		return parent::display($tpl);

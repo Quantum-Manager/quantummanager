@@ -482,61 +482,60 @@ class QuantummanagerHelper
 		$pathSession = $session->get('quantummanagerroot', '');
 		$scopesOutput = [];
 
-		if(empty($pathSession))
+		if(!empty($pathSession))
 		{
-			$scopes = self::getParamsComponentValue('scopes', []);
-			$scopesCustom = self::getParamsComponentValue('scopescustom', []);
-
-			if(count((array)$scopes) === 0)
-			{
-				$scopes = self::getDefaultScopes();
-			}
-
-			foreach ($scopes as $scope)
-			{
-				$scope->title = Text::_('COM_QUANTUMMANAGER_SCOPE_' . mb_strtoupper($scope->id));
-			}
-
-			if (!empty($scopesCustom) && count((array)$scopesCustom) > 0)
-			{
-				$scopes = (object)array_merge((array)$scopes, (array)$scopesCustom);
-			}
-
-			foreach ($scopes as $scope)
-			{
-
-				$scope = (object)$scope;
-
-				if (isset($scope->enable))
-				{
-					if((string)$enabled === '1')
-					{
-						if (!(int)$scope->enable)
-						{
-							continue;
-						}
-					}
-
-				}
-
-				if (empty($scope->path))
-				{
-					continue;
-				}
-
-				$scopesOutput[] = $scope;
-			}
-		}
-		else
-		{
-			$scopesOutput = (object) [
+			$scopesOutput = [
 				(object)[
 					'title' => Text::_('COM_QUANTUMMANAGER_SCOPE_FOLDER'),
-					'id' => 'quantummanagerroot',
+					'id' => 'sessionroot',
 					'path' => $pathSession
 				]
 			];
 		}
+
+		$scopes = self::getParamsComponentValue('scopes', []);
+		$scopesCustom = self::getParamsComponentValue('scopescustom', []);
+
+		if(count((array)$scopes) === 0)
+		{
+			$scopes = self::getDefaultScopes();
+		}
+
+		foreach ($scopes as $scope)
+		{
+			$scope->title = Text::_('COM_QUANTUMMANAGER_SCOPE_' . mb_strtoupper($scope->id));
+		}
+
+		if (!empty($scopesCustom) && count((array)$scopesCustom) > 0)
+		{
+			$scopes = (object)array_merge((array)$scopes, (array)$scopesCustom);
+		}
+
+		foreach ($scopes as $scope)
+		{
+
+			$scope = (object)$scope;
+
+			if (isset($scope->enable))
+			{
+				if((string)$enabled === '1')
+				{
+					if (!(int)$scope->enable)
+					{
+						continue;
+					}
+				}
+
+			}
+
+			if (empty($scope->path))
+			{
+				continue;
+			}
+
+			$scopesOutput[] = $scope;
+		}
+
 
 		return $scopesOutput;
 	}
