@@ -54,11 +54,11 @@ HTMLHelper::_('script', 'com_quantummanager/sortable.min.js', [
 
     JLoader::register('JFormFieldQuantumCombine', JPATH_ROOT . '/administrator/components/com_quantummanager/fields/quantumcombine.php');
     JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
-    JLoader::register('QuantummanagercontentHelper', JPATH_ROOT . '/plugins/editors-xtd/quantummanagercontent/helper.php');
+    JLoader::register('QuantummanagerbuttonHelper', JPATH_ROOT . '/plugins/editors-xtd/quantummanagerbutton/helper.php');
 
-    QuantummanagercontentHelper::loadLang();
-    $fieldsForContentPlugin = QuantummanagercontentHelper::getFieldsForScopes();
-    $templatelistForContentPlugin = QuantummanagercontentHelper::getTemplateListForScopes();
+    QuantummanagerbuttonHelper::loadLang();
+    $fieldsForContentPlugin = QuantummanagerbuttonHelper::getFieldsForScopes();
+    $templatelistForContentPlugin = QuantummanagerbuttonHelper::getTemplateListForScopes();
     $groups = Factory::getUser()->groups;
 
 	try {
