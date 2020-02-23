@@ -14,7 +14,8 @@ document.addEventListener('DOMContentLoaded' ,function () {
         setTimeout(function () {
             fmIndex = parseInt(quantumAll[i].getAttribute('data-index'));
 
-            QuantummanagerLists[fmIndex].Quantumtoolbar.buttonAdd('windowClose', 'right', 'window-actions', 'btn-close hidden-label', QuantumwindowLang.buttonClose, 'quantummanager-icon-close', {}, function (ev) {
+            QuantummanagerLists[fmIndex].Quantumtoolbar.buttonAdd('windowClose', 'right', 'file-other', 'btn-close hidden-label', QuantumwindowLang.buttonClose, 'quantummanager-icon-close', {}, function (ev) {
+                //window.close();
                 location.href = '/administrator/index.php?option=com_quantummanager';
             });
 
