@@ -25,6 +25,7 @@ HTMLHelper::_('script', 'com_quantummanager/window.js', [
 
 $app = Factory::getApplication();
 $app->getSession()->clear('quantummanagerroot');
+$app->getSession()->clear('quantummanageraddscripts');
 
 try {
 	JLoader::register('JFormFieldQuantumCombine', JPATH_ROOT . '/administrator/components/com_quantummanager/fields/quantumcombine.php');

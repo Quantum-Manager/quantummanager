@@ -30,12 +30,22 @@ HTMLHelper::_('stylesheet', 'plg_system_quantummanagermedia/modal.css', [
 	'relative' => true
 ]);
 
-/*
-HTMLHelper::_('script', 'plg_system_quantummanagermedia/modalfield.js', [
-	'version' => filemtime(__FILE__),
-	'relative' => true
-]);*/
+$scripts = $app->getSession()->get('quantummanageraddscripts', '');
+if(!empty($scripts))
+{
+	$scripts = json_decode($scripts, JSON_OBJECT_AS_ARRAY);
+	if(is_array($scripts))
+    {
+        foreach ($scripts as $script)
+        {
+			HTMLHelper::_('script', $script, [
+				'version' => filemtime(__FILE__),
+				'relative' => true
+			]);
+        }
 
+    }
+}
 
 ?>
 
