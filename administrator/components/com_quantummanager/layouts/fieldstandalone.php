@@ -9,8 +9,20 @@
 
 defined('_JEXEC') or die;
 extract($displayData);
+
+$scopeEnabled = [];
+$scopeEnabled[] = $scope;
+
 ?>
 
-<div class="quantummanager">
+<div class="quantummanager quantummanager-fieldstandalone">
 	<?php echo $displayData['field'] ?>
+	<?php echo $displayData['other'] ?>
 </div>
+
+<script type="text/javascript">
+    window.QuantumSettings = {
+        urlBase: '<?php echo $urlBase ?>',
+        scopeEnabled: '<?php echo implode(',', $scopeEnabled) ?>',
+    }
+</script>
