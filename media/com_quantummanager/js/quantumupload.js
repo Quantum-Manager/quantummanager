@@ -38,6 +38,10 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
         this.path = options.directory;
         Filemanager.element.setAttribute('data-drag-drop-title', QuantumuploadLang.dragDrop);
 
+        if (Filemanager.data.path === undefined) {
+            Filemanager.data.path = this.path;
+        }
+
         ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
             this.dropArea.addEventListener(eventName, function (e) {
                 e.preventDefault();
