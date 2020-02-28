@@ -39,12 +39,11 @@ class JFormFieldQuantumCombine extends JFormField
 	 */
 	protected $layout = 'quantumcombine';
 
+
 	/**
-	 * @var string
+	 * JFormFieldQuantumCombine constructor.
+	 * @param null $form
 	 */
-	protected $renderLabelLayout = 'renderlabel';
-
-
 	public function __construct($form = null)
 	{
 		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
@@ -52,29 +51,6 @@ class JFormFieldQuantumCombine extends JFormField
 	}
 
 
-	/**
-	 * @param SimpleXMLElement $element
-	 * @param mixed $value
-	 * @param null $group
-	 *
-	 * @return bool
-	 *
-	 * @since version
-	 */
-	public function setup(\SimpleXMLElement $element, $value, $group = null)
-	{
-		$return = parent::setup($element, $value, $group);
-
-		if(empty($this->element))
-		{
-			$this->element = [
-				'name' => '',
-				'label' => ''
-			];
-		}
-
-		return $return;
-	}
 
 
 	/**
@@ -84,7 +60,13 @@ class JFormFieldQuantumCombine extends JFormField
 	{
 		$scopes = QuantummanagerHelper::getAllScope();
 
-
+		if(empty($this->element))
+		{
+			$this->element = [
+				'name' => '',
+				'label' => ''
+			];
+		}
 
 		return array_merge(parent::getLayoutData(),
 			[

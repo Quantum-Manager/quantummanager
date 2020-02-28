@@ -33,32 +33,6 @@ class JFormFieldQuantumupload extends JFormField
 	 */
 	protected $layout = 'quantumupload';
 
-
-	/**
-	 * @param SimpleXMLElement $element
-	 * @param mixed $value
-	 * @param null $group
-	 *
-	 * @return bool
-	 *
-	 * @since version
-	 */
-	public function setup(\SimpleXMLElement $element, $value, $group = null)
-	{
-		$return = parent::setup($element, $value, $group);
-
-		if(empty($this->element))
-		{
-			$this->element = [
-				'name' => '',
-				'label' => ''
-			];
-		}
-
-		return $return;
-	}
-
-
 	/**
 	 * Allow to override renderer include paths in child fields
 	 *
@@ -79,13 +53,6 @@ class JFormFieldQuantumupload extends JFormField
 	 */
 	protected function getLayoutData()
 	{
-		if(empty($this->element))
-		{
-			$this->element = [
-				'name' => '',
-				'label' => ''
-			];
-		}
 
 		return array_merge(parent::getLayoutData(),
 			[
