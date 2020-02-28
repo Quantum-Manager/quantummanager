@@ -42,10 +42,11 @@ class JFormFieldQuantumcropperjs extends JFormField
 	 */
 	protected function getLayoutPaths()
 	{
-		return [
+		return array_merge(parent::getLayoutPaths(), [
 			JPATH_ROOT . '/administrator/components/com_quantummanager/layouts/fields',
-		];
+		]);
 	}
+
 
 	/**
 	 * @return array

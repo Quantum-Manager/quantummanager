@@ -27,7 +27,36 @@ class JFormFieldQuantumupload extends JFormField
 	 */
 	public $type = 'QuantumUpload';
 
+	/**
+	 * @var string
+	 * @since version
+	 */
 	protected $layout = 'quantumupload';
+
+
+	/**
+	 * @param SimpleXMLElement $element
+	 * @param mixed $value
+	 * @param null $group
+	 *
+	 * @return bool
+	 *
+	 * @since version
+	 */
+	public function setup(\SimpleXMLElement $element, $value, $group = null)
+	{
+		$return = parent::setup($element, $value, $group);
+
+		if(empty($this->element))
+		{
+			$this->element = [
+				'name' => '',
+				'label' => ''
+			];
+		}
+
+		return $return;
+	}
 
 
 	/**
@@ -39,9 +68,9 @@ class JFormFieldQuantumupload extends JFormField
 	 */
 	protected function getLayoutPaths()
 	{
-		return [
+		return array_merge(parent::getLayoutPaths(), [
 			JPATH_ROOT . '/administrator/components/com_quantummanager/layouts/fields',
-		];
+		]);
 	}
 
 
@@ -50,6 +79,14 @@ class JFormFieldQuantumupload extends JFormField
 	 */
 	protected function getLayoutData()
 	{
+		if(empty($this->element))
+		{
+			$this->element = [
+				'name' => '',
+				'label' => ''
+			];
+		}
+
 		return array_merge(parent::getLayoutData(),
 			[
 				'urlBase' => Uri::root(true),

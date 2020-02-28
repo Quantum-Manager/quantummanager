@@ -53,11 +53,38 @@ class JFormFieldQuantumCombine extends JFormField
 
 
 	/**
+	 * @param SimpleXMLElement $element
+	 * @param mixed $value
+	 * @param null $group
+	 *
+	 * @return bool
+	 *
+	 * @since version
+	 */
+	public function setup(\SimpleXMLElement $element, $value, $group = null)
+	{
+		$return = parent::setup($element, $value, $group);
+
+		if(empty($this->element))
+		{
+			$this->element = [
+				'name' => '',
+				'label' => ''
+			];
+		}
+
+		return $return;
+	}
+
+
+	/**
 	 * @return array
 	 */
 	protected function getLayoutData()
 	{
 		$scopes = QuantummanagerHelper::getAllScope();
+
+
 
 		return array_merge(parent::getLayoutData(),
 			[
@@ -68,6 +95,7 @@ class JFormFieldQuantumCombine extends JFormField
 		);
 	}
 
+
 	/**
 	 * Allow to override renderer include paths in child fields
 	 *
@@ -77,7 +105,7 @@ class JFormFieldQuantumCombine extends JFormField
 	 */
 	protected function getLayoutPaths()
 	{
-		return array_merge($this->addLayouts, [
+		return array_merge(parent::getLayoutPaths(), $this->addLayouts, [
 			JPATH_ROOT . '/administrator/components/com_quantummanager/layouts/fields',
 			JPATH_ROOT . '/layouts/joomla/form',
 		]);
@@ -89,6 +117,12 @@ class JFormFieldQuantumCombine extends JFormField
 		$this->addLayouts = array_merge($this->addLayouts, $layouts);
 	}
 
+	/**
+	 *
+	 * @return string
+	 *
+	 * @since version
+	 */
 	public function getInput()
 	{
 		try {
