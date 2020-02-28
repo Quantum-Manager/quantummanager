@@ -188,7 +188,7 @@ class JFormFieldQuantumCombine extends JFormField
 					}
 
 					$fieldObject = new $classField;
-					$fieldObject->setup(new SimpleXMLElement('<field name="upload-files" type="' . $field . '" ' . implode(' ', $dataAttributes) . ' />'), '');
+					$fieldObject->setup(new SimpleXMLElement('<field name="" type="' . $field . '" ' . implode(' ', $dataAttributes) . ' />'), '');
 					$htmlFields[$position] .= $fieldObject->getInput();
 
 
