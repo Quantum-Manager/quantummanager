@@ -56,6 +56,7 @@ class JFormFieldQuantumupload extends JFormField
 
 		return array_merge(parent::getLayoutData(),
 			[
+				'urlFull' => Uri::root(false),
 				'urlBase' => Uri::root(true),
 				'scope' => $this->scope,
 				'directory' => $this->directory,

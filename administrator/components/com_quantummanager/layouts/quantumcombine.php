@@ -78,6 +78,7 @@ foreach($scopes as $scope)
 
 <script type="text/javascript">
     window.QuantumSettings = {
+        urlFull: '<?php echo $urlFull ?>',
         urlBase: '<?php echo $urlBase ?>',
         scopeEnabled: '<?php echo implode(',', $scopeEnabled) ?>',
     }
