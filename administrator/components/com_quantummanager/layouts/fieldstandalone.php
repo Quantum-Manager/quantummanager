@@ -7,6 +7,8 @@
  * @link       https://www.norrnext.com
  */
 
+use Joomla\CMS\Language\Text;
+
 defined('_JEXEC') or die;
 extract($displayData);
 
@@ -25,5 +27,11 @@ $scopeEnabled[] = $scope;
         urlFull: '<?php echo $urlFull ?>',
         urlBase: '<?php echo $urlBase ?>',
         scopeEnabled: '<?php echo implode(',', $scopeEnabled) ?>',
-    }
+    };
+
+    window.QuantumLang = {
+        'ok': "<?php echo Text::_('COM_QUANTUMMANAGER_WINDOW_OK'); ?>",
+        'close': "<?php echo Text::_('COM_QUANTUMMANAGER_WINDOW_CLOSE'); ?>",
+        'cancel': "<?php echo Text::_('COM_QUANTUMMANAGER_WINDOW_CANCEL'); ?>"
+    };
 </script>
