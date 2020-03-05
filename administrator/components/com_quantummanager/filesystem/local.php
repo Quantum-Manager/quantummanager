@@ -722,7 +722,7 @@ class QuantummanagerFileSystemLocal
 				if(in_array(strtolower($exs), ['jpg', 'png', 'jpeg', 'gif', 'svg']))
 				{
 					$cacheSource =  JPATH_ROOT . DIRECTORY_SEPARATOR . 'cache/com_quantummanager';
-					$path = QuantummanagerHelper::preparePath($path);
+					$path = QuantummanagerHelper::preparePath($path, false, $scopeName);
 					$cache = $cacheSource . DIRECTORY_SEPARATOR . $path;
 					$fileMeta['fileP'] = 'index.php?option=com_quantummanager&task=quantumviewfiles.generatePreviewImage&scope=' . $scopeName . '&file=' . $file;
 				}

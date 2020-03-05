@@ -212,15 +212,7 @@ class QuantummanagerHelper
 		{
 			$scope = self::getScope($scopeName);
 			$pathConfig = $scope->path;
-			$pathSession = $session->get('quantummanagerroot', '');
 			static::$cachePathRoot = $pathConfig;
-
-			if(!empty($pathSession))
-			{
-				$pathConfig = $pathSession;
-				static::$cachePathRoot = $pathSession;
-			}
-
 		}
 		else
 		{
@@ -443,18 +435,7 @@ class QuantummanagerHelper
 			$scopeName = 'images';
 		}
 
-		$scopes = self::getParamsComponentValue('scopes', []);
-		$scopesCustom = self::getParamsComponentValue('scopescustom', []);
-
-		if(count((array)$scopes) === 0)
-		{
-			$scopes = self::getDefaultScopes();
-		}
-
-		if(count((array)$scopesCustom) > 0)
-		{
-			$scopes = (object) array_merge((array) $scopes, (array) $scopesCustom);
-		}
+		$scopes = self::getAllScope();
 
 		foreach ($scopes as $scope)
 		{
