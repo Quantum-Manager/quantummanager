@@ -17,7 +17,7 @@ $scopeEnabled[] = $scope;
 
 ?>
 
-<div class="quantummanager quantummanager-fieldstandalone">
+<div class="quantummanager quantummanager-fieldstandalone <?php echo $cssClass ?>">
 	<?php echo $displayData['field'] ?>
 	<?php echo $displayData['other'] ?>
 </div>
