@@ -465,13 +465,16 @@ class QuantummanagerHelper
 
 		if(!empty($pathSession))
 		{
-			$scopesOutput = [
-				(object)[
-					'title' => Text::_('COM_QUANTUMMANAGER_SCOPE_FOLDER'),
-					'id' => 'sessionroot',
-					'path' => $pathSession
-				]
-			];
+			if(file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $pathSession))
+			{
+				$scopesOutput = [
+					(object)[
+						'title' => Text::_('COM_QUANTUMMANAGER_SCOPE_FOLDER'),
+						'id' => 'sessionroot',
+						'path' => $pathSession
+					]
+				];
+			}
 		}
 
 		$scopes = self::getParamsComponentValue('scopes', []);
