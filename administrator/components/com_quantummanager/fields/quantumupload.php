@@ -72,14 +72,15 @@ class JFormFieldQuantumupload extends JFormField
 	{
 		try {
 
+			JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+
 			$this->__set('standalone', $this->getAttribute('standalone', true));
 			$this->__set('cssClass', $this->getAttribute('cssClass', ''));
-			$this->__set('maxsize', $this->getAttribute('maxsize', '2'));
+			$this->__set('maxsize', $this->getAttribute('maxsize', QuantummanagerHelper::getParamsComponentValue('maxsize', 2)));
 			$this->directory = $this->getAttribute('directory', 'images');
 			$this->scope = $this->getAttribute('scope', 'images');
-			$this->dropAreaHidden = $this->getAttribute('dropAreaHidden', '0');
+			$this->dropAreaHidden = $this->getAttribute('dropAreaHidden', QuantummanagerHelper::getParamsComponentValue('dropareahidden', 0));
 
-			JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 			QuantummanagerHelper::includeScriptHead();
 			QuantummanagerHelper::loadLang();
 
