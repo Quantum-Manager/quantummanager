@@ -80,7 +80,7 @@ class JFormFieldQuantumcropperjs extends JFormField
 				'relative' => true
 			]);
 
-			HTMLHelper::_('stylesheet', 'com_quantummanager/cropperjs.css', [
+			HTMLHelper::_('stylesheet', 'com_quantummanager/cropperjs.min.css', [
 				'version' => filemtime(__FILE__),
 				'relative' => true
 			]);
@@ -105,7 +105,7 @@ class JFormFieldQuantumcropperjs extends JFormField
 				'relative' => true
 			]);
 
-			HTMLHelper::_('script', 'com_quantummanager/cropperjs.js', [
+			HTMLHelper::_('script', 'com_quantummanager/cropperjs.min.js', [
 				'version' => filemtime(__FILE__),
 				'relative' => true
 			]);
