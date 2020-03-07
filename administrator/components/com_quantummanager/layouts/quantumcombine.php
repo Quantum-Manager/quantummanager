@@ -86,9 +86,9 @@ foreach($scopes as $scope)
     };
 
     window.QuantumLang = {
-        'ok': "<?php echo Text::_('COM_QUANTUMMANAGER_WINDOW_OK'); ?>",
-        'close': "<?php echo Text::_('COM_QUANTUMMANAGER_WINDOW_CLOSE'); ?>",
-        'cancel': "<?php echo Text::_('COM_QUANTUMMANAGER_WINDOW_CANCEL'); ?>"
+        'ok': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_OK'), ENT_QUOTES); ?>",
+        'close': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_CLOSE'), ENT_QUOTES); ?>",
+        'cancel': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_CANCEL'), ENT_QUOTES); ?>"
     };
 
 </script>

@@ -50,12 +50,12 @@ extract($displayData);
 
 <script type="text/javascript">
     window.QuantumunsplashLang = {
-        'notFound': "<?php echo Text::_('COM_QUANTUMMANAGER_ALERT_NOTFOUND'); ?>",
-        'button': "<?php echo Text::_('COM_QUANTUMMANAGER_QUANTUMUNSPLASH_BUTTON'); ?>",
-        'buttonLoad': "<?php echo Text::_('COM_QUANTUMMANAGER_ACTION_LOAD'); ?>",
-        'save': "<?php echo Text::_('COM_QUANTUMMANAGER_ACTION_SAVE'); ?>",
-        'close': "<?php echo Text::_('COM_QUANTUMMANAGER_ACTION_CLOSE'); ?>",
-        'search': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_SEARCH'); ?>",
-        'searchHelper': "<?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_SEARCH_HELPER'); ?>",
+        'notFound': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ALERT_NOTFOUND'), ENT_QUOTES); ?>",
+        'button': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_QUANTUMUNSPLASH_BUTTON'), ENT_QUOTES); ?>",
+        'buttonLoad': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_LOAD'), ENT_QUOTES); ?>",
+        'save': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_SAVE'), ENT_QUOTES); ?>",
+        'close': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_CLOSE'), ENT_QUOTES); ?>",
+        'search': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_SEARCH'), ENT_QUOTES); ?>",
+        'searchHelper': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_SEARCH_HELPER'), ENT_QUOTES); ?>",
     };
 </script>
