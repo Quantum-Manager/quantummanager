@@ -178,7 +178,7 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
                     }
 
                     if(response.error !== undefined) {
-                        self.errorsHtml += '<div>' + file.name + ': ' + response.error + '</div>';
+                        self.errorsHtml += '<div>' + file.name + ': ' + QuantumUtils.htmlspecialcharsDecode(response.error, 'ENT_QUOTES') + '</div>';
                     }
 
                     self.updateProgress(i, 100);
@@ -199,7 +199,7 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
                     }
 
                 }
-                else if (xhr.readyState == 4 && xhr.status != 200) {
+                else if (xhr.readyState === 4 && xhr.status !== 200) {
 
                     self.uploadI.push((i + 1));
 

@@ -410,7 +410,76 @@ window.QuantumUtils = {
         let regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
         let results = regex.exec(location.search);
         return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-    }
+    },
 
+    /**
+     *
+     * @param text
+     * @returns {string}
+     */
+    escapeHtml: function (text) {
+        return text
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    },
+
+
+    /**
+     *
+     * @param string
+     * @param quoteStyle
+     * @returns {void | string | *}
+     */
+    htmlspecialcharsDecode: function (string, quoteStyle) {
+        let optTemp = 0,
+        i = 0,
+        noquotes = false;
+
+        if (typeof quoteStyle === 'undefined') {
+            quoteStyle = 2
+        }
+
+        string = string.toString()
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+        let OPTS = {
+            'ENT_NOQUOTES': 0,
+            'ENT_HTML_QUOTE_SINGLE': 1,
+            'ENT_HTML_QUOTE_DOUBLE': 2,
+            'ENT_COMPAT': 2,
+            'ENT_QUOTES': 3,
+            'ENT_IGNORE': 4
+        };
+
+        if (quoteStyle === 0) {
+            noquotes = true;
+        }
+
+        if (typeof quoteStyle !== 'number') {
+            // Allow for a single string or an array of string flags
+            quoteStyle = [].concat(quoteStyle)
+            for (i = 0; i < quoteStyle.length; i++) {
+                // Resolve string input to bitwise e.g. 'PATHINFO_EXTENSION' becomes 4
+                if (OPTS[quoteStyle[i]] === 0) {
+                    noquotes = true
+                } else if (OPTS[quoteStyle[i]]) {
+                    optTemp = optTemp | OPTS[quoteStyle[i]]
+                }
+            }
+            quoteStyle = optTemp
+        }
+        if (quoteStyle & OPTS.ENT_HTML_QUOTE_SINGLE) {
+            string = string.replace(/&#0*39;/g, "'")
+        }
+        if (!noquotes) {
+            string = string.replace(/&quot;/g, '"')
+        }
+        string = string.replace(/&amp;/g, '&')
+
+        return string
+    }
 
 };
