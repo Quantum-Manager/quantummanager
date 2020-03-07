@@ -36,7 +36,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
     this.menuItemsArea = [
         {
             type: 'normal',
-            label: QuantumviewfilesLang.contextReload,
+            label: QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.contextReload, 'ENT_QUOTES'),
             tip: '',
             icon: QuantumUtils.getFullUrl('/media/com_quantummanager/images/icons/action/refresh-button.svg'),
             onClick: function(){
@@ -45,7 +45,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
         },
         {
             type: 'normal',
-            label: QuantumviewfilesLang.contextFolderCreate,
+            label: QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.contextFolderCreate, 'ENT_QUOTES'),
             tip: '',
             icon: QuantumUtils.getFullUrl('/media/com_quantummanager/images/icons/action/folder-symbol.svg'),
             onClick: function(){
@@ -60,7 +60,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
         },
         {
             type: 'normal',
-            label: QuantumviewfilesLang.contextPaste,
+            label: QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.contextPaste, 'ENT_QUOTES'),
             tip: '',
             check: function() {
                if(self.buffer.length === 0) {
@@ -96,7 +96,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
         {
             writeable: 1,
             type: 'normal',
-            label: QuantumviewfilesLang.contextRename,
+            label: QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.contextRename, 'ENT_QUOTES'),
             tip: '',
             icon: QuantumUtils.getFullUrl('/media/com_quantummanager/images/icons/action/create-new-pencil-button.svg'),
             onClick: function() {
@@ -120,7 +120,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
         {
             writeable: 1,
             type: 'normal',
-            label: QuantumviewfilesLang.contextDelete,
+            label: QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.contextDelete, 'ENT_QUOTES'),
             tip: '',
             icon: QuantumUtils.getFullUrl('/media/com_quantummanager/images/icons/action/rubbish-bin-delete-button.svg'),
             onClick: function() {
@@ -142,7 +142,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
         {
             writeable: 0,
             type: 'normal',
-            label: QuantumviewfilesLang.contextPreviewFile,
+            label: QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.contextPreviewFile, 'ENT_QUOTES'),
             tip: '',
             icon: QuantumUtils.getFullUrl('/media/com_quantummanager/images/icons/action/visibility-button.svg'),
             onClick: function(){
@@ -159,7 +159,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
         {
             writeable: 1,
             type: 'normal',
-            label: QuantumviewfilesLang.contextRename,
+            label: QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.contextRename, 'ENT_QUOTES'),
             tip: '',
             icon: QuantumUtils.getFullUrl('/media/com_quantummanager/images/icons/action/create-new-pencil-button.svg'),
             onClick: function() {
@@ -182,7 +182,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
         {
             writeable: 0,
             type: 'normal',
-            label: QuantumviewfilesLang.contextCopyLink,
+            label: QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.contextCopyLink, 'ENT_QUOTES'),
             tip: '',
             icon: QuantumUtils.getFullUrl('/media/com_quantummanager/images/icons/action/link-button.svg'),
             onClick: function() {
@@ -211,7 +211,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
         {
             writeable: 1,
             type: 'normal',
-            label: QuantumviewfilesLang.contextDelete,
+            label: QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.contextDelete, 'ENT_QUOTES'),
             tip: '',
             icon: QuantumUtils.getFullUrl('/media/com_quantummanager/images/icons/action/rubbish-bin-delete-button.svg'),
             onClick: function() {
@@ -280,7 +280,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 'left',
                 'navigations',
                 'btn-back hidden-label',
-                QuantumviewfilesLang.buttonBack,
+                QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.buttonBack, 'ENT_QUOTES'),
                 'quantummanager-icon-back',
                 {},
                 function (ev) {
@@ -303,7 +303,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 'left',
                 'navigations',
                 'btn-up hidden-label',
-                QuantumviewfilesLang.buttonUp,
+                QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.buttonUp, 'ENT_QUOTES'),
                 'quantummanager-icon-up',
                 {},
                 function (ev) {
@@ -383,7 +383,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 'center',
                 'file-actions',
                 'btn-create-directory hidden-label',
-                QuantumviewfilesLang.buttonCreateDirectory,
+                QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.buttonCreateDirectory, 'ENT_QUOTES'),
                 'quantummanager-icon-directory',
                 {},
                 function (ev) {
@@ -401,7 +401,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 'center',
                 'file-actions',
                 'btn-delete btn-hide hidden-label',
-                QuantumviewfilesLang.buttonDelete,
+                QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.buttonDelete, 'ENT_QUOTES'),
                 'quantummanager-icon-delete',
                 {},
                 function (ev) {
@@ -419,10 +419,10 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                         return;
                     }
 
-                    let alert = QuantumviewfilesLang.contextDelete + ' ' + self.file.getAttribute('data-file') + '?';
+                    let alert = QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.contextDelete, 'ENT_QUOTES') + ' ' + self.file.getAttribute('data-file') + '?';
 
                     if(files.length > 1) {
-                        alert = QuantumviewfilesLang.contextSomeDelete + '?';
+                        alert = QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.contextSomeDelete, 'ENT_QUOTES') + '?';
                     }
 
                     QuantumUtils.confirm(alert, function (result) {
@@ -456,7 +456,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 'center',
                 'file-actions',
                 'btn-paste btn-width-small',
-                QuantumviewfilesLang.buttonPaste,
+                QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.buttonPaste, 'ENT_QUOTES'),
                 'quantummanager-icon-paste',
                 {},
                 function (ev) {
@@ -488,7 +488,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 'center',
                 'file-actions',
                 'btn-copy btn-width-small btn-hide',
-                QuantumviewfilesLang.buttonCopy,
+                QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.buttonCopy, 'ENT_QUOTES'),
                 'quantummanager-icon-copy',
                 {},
                 function (ev) {
@@ -514,7 +514,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 'center',
                 'file-actions',
                 'btn-cut btn-width-small btn-hide',
-                QuantumviewfilesLang.buttonCut,
+                QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.buttonCut, 'ENT_QUOTES'),
                 'quantummanager-icon-cut',
                 {},
                 function (ev) {
@@ -540,12 +540,12 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 'center',
                 'file-actions',
                 'btn-file-rename btn-width-small btn-hide',
-                QuantumviewfilesLang.contextRename,
+                QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.contextRename, 'ENT_QUOTES'),
                 'quantummanager-icon-edit',
                 {},
                 function (ev) {
 
-                    QuantumUtils.prompt(QuantumviewfilesLang.fileName, self.file.getAttribute('data-name'), function (result) {
+                    QuantumUtils.prompt(QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.fileName, 'ENT_QUOTES'), self.file.getAttribute('data-name'), function (result) {
                         jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.renameFile&path=" + encodeURIComponent(Filemanager.data.path) + '&file=' + encodeURIComponent(self.file.getAttribute('data-file')) + '&name='+ encodeURIComponent(result) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
                             response = JSON.parse(response);
                             if(response.status === undefined) {
@@ -567,7 +567,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 'center',
                 'file-actions',
                 'btn-file-preview btn-width-small btn-hide',
-                QuantumviewfilesLang.contextPreviewFile,
+                QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.contextPreviewFile, 'ENT_QUOTES'),
                 'quantummanager-icon-eye',
                 {},
                 function (ev) {
@@ -593,7 +593,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 'center',
                 'file-actions',
                 'btn-copylink btn-width-small btn-hide',
-                QuantumviewfilesLang.contextCopyLink,
+                QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.contextCopyLink, 'ENT_QUOTES'),
                 'quantummanager-icon-link',
                 {},
                 function (ev) {
@@ -633,7 +633,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                     'center',
                     'file-actions',
                     'btn-delete btn-hide hidden-label',
-                    QuantumviewfilesLang.buttonWatermark,
+                    QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.buttonWatermark, 'ENT_QUOTES'),
                     'quantummanager-icon-watermark',
                     {},
                     function (ev) {

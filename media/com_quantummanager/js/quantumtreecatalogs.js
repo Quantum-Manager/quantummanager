@@ -216,7 +216,7 @@ window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, o
                             let deleteNamePath = this.closest('li').querySelector('.tree-path').innerHTML;
                             let selfThis = this;
 
-                            QuantumUtils.confirm(QuantumtreecatalogsLang.confirmDelete + ' ' + deleteNamePath + '?', function (result) {
+                            QuantumUtils.confirm(QuantumUtils.htmlspecialcharsDecode(QuantumtreecatalogsLang.confirmDelete, 'ENT_QUOTES') + ' ' + deleteNamePath + '?', function (result) {
                                 let files = [];
                                 let pathDelete = Filemanager.data.path.split('/');
                                 pathDelete.pop();

@@ -227,8 +227,6 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
     };
 
 
-
-
     this.trigger = function(event) {
         Filemanager.events.trigger(event, Filemanager);
     };
