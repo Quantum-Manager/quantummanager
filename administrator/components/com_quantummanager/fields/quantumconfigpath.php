@@ -19,7 +19,7 @@ use Joomla\CMS\Uri\Uri;
 JFormHelper::loadFieldClass('text');
 
 /**
- * Class JFormFieldQuantumtoolbar
+ * Class JFormFieldQuantumconfigpath
  */
 class JFormFieldQuantumconfigpath extends JFormFieldText
 {
@@ -44,9 +44,10 @@ class JFormFieldQuantumconfigpath extends JFormFieldText
 			'relative' => true
 		]);
 
-		$url = Uri::root();
+		$this->__set('prefix', $this->getAttribute('prefix', Uri::root()));
+
 		$html = parent::getInput();
-		$html = "<div class='quantumconfig-quantumconfigpath-inputs'><span>" . $url . "</span>" . $html . "</div>";
+		$html = "<div class='quantumconfig-quantumconfigpath-inputs'><span>" . $this->prefix . "</span>" . $html . "</div>";
 
 		return $html;
 	}
