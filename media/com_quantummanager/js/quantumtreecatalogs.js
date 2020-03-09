@@ -196,20 +196,33 @@ window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, o
                         let top = 0;
                         let deleteDirertory = document.createElement('div');
                         let deleteDirectoryIcon = document.createElement('span');
+                        let editDirertory = document.createElement('div');
+                        let editDirectoryIcon = document.createElement('span');
                         deleteDirertory.setAttribute('class', 'tree-delete');
                         deleteDirectoryIcon.setAttribute('class', 'quantummanager-icon quantummanager-icon-delete');
                         deleteDirertory.append(deleteDirectoryIcon);
+
+                        editDirertory.setAttribute('class', 'tree-edit');
+                        editDirectoryIcon.setAttribute('class', 'quantummanager-icon quantummanager-icon-edit');
+                        editDirertory.append(editDirectoryIcon);
 
                         if(self.active !== '') {
                             let deleteActive = self.active.querySelector('.tree-delete');
                             if(deleteActive !== null) {
                                 self.active.querySelector('.tree-delete').remove();
                             }
+
+                            let editActive = self.active.querySelector('.tree-edit');
+                            if(editActive !== null) {
+                                self.active.querySelector('.tree-edit').remove();
+                            }
+
                             self.active.classList.remove('active');
                         }
 
                         self.active = nestedLi[i];
                         self.active.classList.add('active');
+                        QuantumUtils.insertAfter(editDirertory,  self.active.querySelector('.tree-path'));
                         QuantumUtils.insertAfter(deleteDirertory,  self.active.querySelector('.tree-path'));
 
                         deleteDirertory.addEventListener('click', function (ev) {
@@ -233,6 +246,26 @@ window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, o
                             });
 
                             ev.preventDefault();
+                        });
+
+                        editDirertory.addEventListener('click', function (ev) {
+                            let name = this.closest('li').querySelector('.tree-path').innerHTML;
+                            let pathEdit = Filemanager.data.path.split('/');
+                            pathEdit.pop();
+                            pathEdit = pathEdit.join('/');
+
+                            QuantumUtils.prompt(QuantumtreecatalogsLang.fileName, name , function (result) {
+                                jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.renameDirectory&path=" + encodeURIComponent(pathEdit) + '&oldName=' + encodeURIComponent(name) + '&name='+ encodeURIComponent(result) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
+                                    response = JSON.parse(response);
+                                    if(response.status === undefined) {
+                                        return;
+                                    }
+
+                                    if(response.status === 'ok') {
+                                        Filemanager.events.trigger('reloadPaths', Filemanager);
+                                    }
+                                });
+                            });
                         });
 
                         //top = lastLi.closest('.root-scope').offsetTop;
