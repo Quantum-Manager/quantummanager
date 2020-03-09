@@ -262,6 +262,13 @@ window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, o
                                     }
 
                                     if(response.status === 'ok') {
+
+                                        pathEdit += '/' + result;
+                                        if(localStorage !== undefined) {
+                                            localStorage.setItem('quantummanagerLastDir', pathEdit);
+                                        }
+
+                                        Filemanager.data.path = pathEdit;
                                         Filemanager.events.trigger('reloadPaths', Filemanager);
                                     }
                                 });
