@@ -303,6 +303,7 @@ window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, o
                 }
             }
         };
+
         //если рут, если нет, запускаем поиск
         if(pathFind === pathSource) {
 
@@ -310,6 +311,12 @@ window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, o
                 let deleteActive = self.active.querySelector('.tree-delete');
                 if(deleteActive !== null) {
                     self.active.querySelector('.tree-delete').remove();
+                }
+
+
+                let editActive = self.active.querySelector('.tree-edit');
+                if(editActive !== null) {
+                    self.active.querySelector('.tree-edit').remove();
                 }
 
                 self.active.classList.remove('active');
