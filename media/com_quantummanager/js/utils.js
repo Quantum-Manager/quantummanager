@@ -271,7 +271,7 @@ window.QuantumUtils = {
                         ['click', function (ev) {
                             this.closest('.quatummanagermodal-wrap').remove();
                         }]
-                    ]}, 'Закрыть')
+                    ]}, QuantumLang.close)
                 .add('div', {'class': 'quatummanagermodal-header'}, header)
                 .addChild('div', {'class': 'quatummanagermodal-body-wrap'})
                     .add('div', {'class': 'quatummanagermodal-body'}, body)

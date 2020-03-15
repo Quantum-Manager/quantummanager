@@ -378,7 +378,8 @@ class QuantummanagerHelper
 					{
 						$value = trim($profile->value);
 
-						if(is_array($default)) {
+						if(is_array($default))
+						{
 							$value = json_decode($value, true);
 						}
 
