@@ -201,7 +201,7 @@ class QuantummanagerHelper
 	 * @throws Exception
 	 * @since version
 	 */
-	public static function preparePath($path, $host = false, $scopeName = 'main', $pathUnix = false)
+	public static function preparePath($path, $host = false, $scopeName = '', $pathUnix = false)
 	{
 		$session = Factory::getSession();
 		$path = trim($path);
