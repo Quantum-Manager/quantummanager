@@ -33,7 +33,7 @@ class QuantummanagerHelper
 	 * @var string
 	 * @since version
 	 */
-	public static $cachePathRoot = '';
+	public static $cachePathRoot = [];
 
 	/**
 	 * @var string
@@ -201,22 +201,22 @@ class QuantummanagerHelper
 	 * @throws Exception
 	 * @since version
 	 */
-	public static function preparePath($path, $host = false, $scopeName = '', $pathUnix = false)
+	public static function preparePath($path, $host = false, $scopeName = 'main', $pathUnix = false)
 	{
 		$session = Factory::getSession();
 		$path = trim($path);
 		$componentParams = ComponentHelper::getParams('com_quantummanager');
 		$pathConfig = '';
 
-		if(empty(static::$cachePathRoot))
+		if(empty(static::$cachePathRoot[$scopeName]))
 		{
 			$scope = self::getScope($scopeName);
 			$pathConfig = $scope->path;
-			static::$cachePathRoot = $pathConfig;
+			static::$cachePathRoot[$scopeName] = $pathConfig;
 		}
 		else
 		{
-			$pathConfig = static::$cachePathRoot;
+			$pathConfig = static::$cachePathRoot[$scopeName];
 		}
 
 		$path = str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);

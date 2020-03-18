@@ -172,12 +172,14 @@ window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, o
 
     this.directoryScroll = function (pathSource) {
         let self = this;
-        let li = QuantumTreeCatalogsElement.querySelector('[data-scope="' + Filemanager.data.scope + '"] .root').closest('li');
-        let pathFind = li.querySelector('.tree-path').getAttribute('data-path');
-        let findDirectory = false;
+        let li = QuantumTreeCatalogsElement.querySelector('[data-scope="' + Filemanager.data.scope + '"] .root');
         if(li === null) {
             return;
         }
+
+        li = li.closest('li');
+        let pathFind = li.querySelector('.tree-path').getAttribute('data-path');
+        let findDirectory = false;
 
         let findPathInLists = function (li, pathParent) {
 

@@ -790,6 +790,10 @@ class QuantummanagerFileSystemLocal
 
 		$pathFromCompile = JPATH_SITE . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($pathFrom, false, $scopeFrom);
 		$pathToCompile = JPATH_SITE . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($pathTo, false, $scopeTo);
+
+		var_dump($pathFromCompile);
+		var_dump($pathToCompile);
+
 		if (file_exists($pathFromCompile) && file_exists($pathToCompile))
 		{
 			foreach ($list as $file)
