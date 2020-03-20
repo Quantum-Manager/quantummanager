@@ -39,17 +39,18 @@ class JFormFieldQuantumCombine extends JFormField
 	 */
 	protected $layout = 'quantumcombine';
 
+
 	/**
-	 * @var string
+	 * JFormFieldQuantumCombine constructor.
+	 * @param null $form
 	 */
-	protected $renderLabelLayout = 'renderlabel';
-
-
 	public function __construct($form = null)
 	{
 		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 		parent::__construct($form);
 	}
+
+
 
 
 	/**
@@ -59,14 +60,24 @@ class JFormFieldQuantumCombine extends JFormField
 	{
 		$scopes = QuantummanagerHelper::getAllScope();
 
+		if(empty($this->element))
+		{
+			$this->element = [
+				'name' => '',
+				'label' => ''
+			];
+		}
+
 		return array_merge(parent::getLayoutData(),
 			[
 				'cssClass' => $this->cssClass,
+				'urlFull' => Uri::root(false),
 				'urlBase' => Uri::root(true),
 				'scopes' => $scopes,
 			]
 		);
 	}
+
 
 	/**
 	 * Allow to override renderer include paths in child fields
@@ -77,7 +88,7 @@ class JFormFieldQuantumCombine extends JFormField
 	 */
 	protected function getLayoutPaths()
 	{
-		return array_merge($this->addLayouts, [
+		return array_merge(parent::getLayoutPaths(), $this->addLayouts, [
 			JPATH_ROOT . '/administrator/components/com_quantummanager/layouts/fields',
 			JPATH_ROOT . '/layouts/joomla/form',
 		]);
@@ -89,6 +100,12 @@ class JFormFieldQuantumCombine extends JFormField
 		$this->addLayouts = array_merge($this->addLayouts, $layouts);
 	}
 
+	/**
+	 *
+	 * @return string
+	 *
+	 * @since version
+	 */
 	public function getInput()
 	{
 		try {
@@ -172,7 +189,7 @@ class JFormFieldQuantumCombine extends JFormField
 					}
 
 					$fieldObject = new $classField;
-					$fieldObject->setup(new SimpleXMLElement('<field name="upload-files" type="' . $field . '" ' . implode(' ', $dataAttributes) . ' />'), '');
+					$fieldObject->setup(new SimpleXMLElement('<field name="" type="' . $field . '" ' . implode(' ', $dataAttributes) . ' />'), '');
 					$htmlFields[$position] .= $fieldObject->getInput();
 
 

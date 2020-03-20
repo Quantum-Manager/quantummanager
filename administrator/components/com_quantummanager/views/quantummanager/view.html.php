@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Toolbar\Toolbar;
 
 /**
  * Quantummanager view.
@@ -55,8 +56,6 @@ class QuantummanagerViewQuantummanager extends HtmlView
 
 		// Show the sidebar
 		$this->helper = new QuantummanagerHelper;
-		/*$this->helper->addSubmenu('quantummanager');
-		$this->sidebar = JHtmlSidebar::render();*/
 
 		// Display it all
 		return parent::display($tpl);
@@ -79,6 +78,11 @@ class QuantummanagerViewQuantummanager extends HtmlView
 			JToolBarHelper::preferences('com_quantummanager');
 		}
 
-		JToolBarHelper::link('/administrator/index.php?option=com_quantummanager&layout=window&tmpl=component', Text::_('COM_QUANTUMMANAGER_CLEAN_WINDOW'));
+		$toolbar = Toolbar::getInstance('toolbar');
+		$url = '/administrator/index.php?option=com_quantummanager&layout=window&tmpl=component';
+		$button = '<a href="' . $url . '" class="btn btn-small" target="_blank">'
+			. '<span class="icon-new-tab" aria-hidden="true"></span>'
+			. Text::_('COM_QUANTUMMANAGER_CLEAN_WINDOW') . '</a>';
+		$toolbar->appendButton('Custom', $button, 'generate');
 	}
 }

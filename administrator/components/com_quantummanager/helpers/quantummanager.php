@@ -33,7 +33,7 @@ class QuantummanagerHelper
 	 * @var string
 	 * @since version
 	 */
-	public static $cachePathRoot = '';
+	public static $cachePathRoot = [];
 
 	/**
 	 * @var string
@@ -208,23 +208,15 @@ class QuantummanagerHelper
 		$componentParams = ComponentHelper::getParams('com_quantummanager');
 		$pathConfig = '';
 
-		if(empty(static::$cachePathRoot))
+		if(empty(static::$cachePathRoot[$scopeName]))
 		{
 			$scope = self::getScope($scopeName);
 			$pathConfig = $scope->path;
-			$pathSession = $session->get('quantummanagerroot', '');
-			static::$cachePathRoot = $pathConfig;
-
-			if(!empty($pathSession))
-			{
-				$pathConfig = $pathSession;
-				static::$cachePathRoot = $pathSession;
-			}
-
+			static::$cachePathRoot[$scopeName] = $pathConfig;
 		}
 		else
 		{
-			$pathConfig = static::$cachePathRoot;
+			$pathConfig = static::$cachePathRoot[$scopeName];
 		}
 
 		$path = str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
@@ -386,7 +378,8 @@ class QuantummanagerHelper
 					{
 						$value = trim($profile->value);
 
-						if(is_array($default)) {
+						if(is_array($default))
+						{
 							$value = json_decode($value, true);
 						}
 
@@ -411,23 +404,18 @@ class QuantummanagerHelper
 
 
 	/**
-	 * @param $size
+	 * @param $bytes
+	 * @param int $decimals
 	 *
 	 * @return string
 	 *
 	 * @since version
 	 */
-	public static function formatFileSize($size) {
-		$a = [ 'B', 'KB', 'MB', 'GB', 'TB', 'PB' ];
-		$pos = 0;
-
-		while ($size >= 1024)
-		{
-			$size /= 1024;
-			$pos++;
-		}
-
-		return round($size,2). ' ' . $a[ $pos];
+	public static function formatFileSize($bytes, $decimals = 2)
+	{
+		$size = array('b','kb','Mb','Gb','Tb','Pb','Eb','Zb','Yb');
+		$factor = floor((strlen($bytes) - 1) / 3);
+		return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . " " . @$size[$factor];
 	}
 
 
@@ -448,18 +436,7 @@ class QuantummanagerHelper
 			$scopeName = 'images';
 		}
 
-		$scopes = self::getParamsComponentValue('scopes', []);
-		$scopesCustom = self::getParamsComponentValue('scopescustom', []);
-
-		if(count((array)$scopes) === 0)
-		{
-			$scopes = self::getDefaultScopes();
-		}
-
-		if(count((array)$scopesCustom) > 0)
-		{
-			$scopes = (object) array_merge((array) $scopes, (array) $scopesCustom);
-		}
+		$scopes = self::getAllScope();
 
 		foreach ($scopes as $scope)
 		{
@@ -487,61 +464,63 @@ class QuantummanagerHelper
 		$pathSession = $session->get('quantummanagerroot', '');
 		$scopesOutput = [];
 
-		if(empty($pathSession))
+		if(!empty($pathSession))
 		{
-			$scopes = self::getParamsComponentValue('scopes', []);
-			$scopesCustom = self::getParamsComponentValue('scopescustom', []);
-
-			if(count((array)$scopes) === 0)
+			if(file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $pathSession))
 			{
-				$scopes = self::getDefaultScopes();
+				$scopesOutput = [
+					(object)[
+						'title' => Text::_('COM_QUANTUMMANAGER_SCOPE_FOLDER'),
+						'id' => 'sessionroot',
+						'path' => $pathSession
+					]
+				];
 			}
+		}
 
-			foreach ($scopes as $scope)
+		$scopes = self::getParamsComponentValue('scopes', []);
+		$scopesCustom = self::getParamsComponentValue('scopescustom', []);
+
+		if(count((array)$scopes) === 0)
+		{
+			$scopes = self::getDefaultScopes();
+		}
+
+		foreach ($scopes as $scope)
+		{
+			$scope->title = Text::_('COM_QUANTUMMANAGER_SCOPE_' . mb_strtoupper($scope->id));
+		}
+
+		if (!empty($scopesCustom) && count((array)$scopesCustom) > 0)
+		{
+			$scopes = (object)array_merge((array)$scopes, (array)$scopesCustom);
+		}
+
+		foreach ($scopes as $scope)
+		{
+
+			$scope = (object)$scope;
+
+			if (isset($scope->enable))
 			{
-				$scope->title = Text::_('COM_QUANTUMMANAGER_SCOPE_' . mb_strtoupper($scope->id));
-			}
-
-			if (!empty($scopesCustom) && count((array)$scopesCustom) > 0)
-			{
-				$scopes = (object)array_merge((array)$scopes, (array)$scopesCustom);
-			}
-
-			foreach ($scopes as $scope)
-			{
-
-				$scope = (object)$scope;
-
-				if (isset($scope->enable))
+				if((string)$enabled === '1')
 				{
-					if((string)$enabled === '1')
+					if (!(int)$scope->enable)
 					{
-						if (!(int)$scope->enable)
-						{
-							continue;
-						}
+						continue;
 					}
-
 				}
 
-				if (empty($scope->path))
-				{
-					continue;
-				}
-
-				$scopesOutput[] = $scope;
 			}
+
+			if (empty($scope->path))
+			{
+				continue;
+			}
+
+			$scopesOutput[] = $scope;
 		}
-		else
-		{
-			$scopesOutput = (object) [
-				(object)[
-					'title' => Text::_('COM_QUANTUMMANAGER_SCOPE_FOLDER'),
-					'id' => 'quantummanagerroot',
-					'path' => $pathSession
-				]
-			];
-		}
+
 
 		return $scopesOutput;
 	}
@@ -948,6 +927,21 @@ class QuantummanagerHelper
 		}
 
 		return array('name' => $data[0], 'type' => $data[1], 'tmp_name' => $data[2], 'error' => $data[3], 'size' => $data[4]);
+	}
+
+
+	/**
+	 * @param $value
+	 *
+	 * @return mixed
+	 *
+	 * @since version
+	 */
+	public static function escapeJsonString($value)
+	{
+		$escapers =     array("\\",     "/",   "\"",  "\n",  "\r",  "\t", "\x08", "\x0c");
+		$replacements = array("\\\\", "\\/", "\\\"", "\\n", "\\r", "\\t",  "\\f",  "\\b");
+		return str_replace($escapers, $replacements, $value);
 	}
 
 

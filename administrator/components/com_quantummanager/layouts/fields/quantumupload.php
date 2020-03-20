@@ -13,7 +13,7 @@ use Joomla\CMS\Language\Text;
 
 <div class="quantummanager-module quantumupload-module" data-type="Qantumupload" data-options="maxsize:<?php echo $displayData['maxsize'] ?>;scope:<?php echo $displayData['scope'] ?>;directory:<?php echo $displayData['directory'] ?>;dropAreaHidden:<?php echo $displayData['dropAreaHidden'] ?>">
 
-	<?php $id = mt_rand(11111, 99999)?>
+	<?php $id = mt_rand(11111, 99999); ?>
     <div class="drop-area <?php if($displayData['dropAreaHidden'] === '1') : ?> drop-area-hidden <?php endif; ?>">
         <div class="form-upload">
             <input type="hidden" class="pathElem" name="path">
@@ -36,10 +36,10 @@ use Joomla\CMS\Language\Text;
 
 <script type="text/javascript">
     window.QuantumuploadLang = {
-        'dragDrop': "<?php echo Text::_('COM_QUANTUMMANAGER_QUANTUMUPLOAD_DRAG_DROP'); ?>",
-        'file': "<?php echo Text::_('COM_QUANTUMMANAGER_QUANTUMUPLOAD_UPLOAD_ERROR_FILE'); ?>",
-        'megabyte': "<?php echo Text::_('COM_QUANTUMMANAGER_QUANTUMUPLOAD_UPLOAD_ERROR_MEGABITE'); ?>",
-        'maxsize': "<?php echo Text::_('COM_QUANTUMMANAGER_QUANTUMUPLOAD_UPLOAD_ERROR_MAXSIZE'); ?>",
-        'exs': "<?php echo Text::_('COM_QUANTUMMANAGER_QUANTUMUPLOAD_UPLOAD_ERROR_EXS'); ?>",
+        'dragDrop': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_QUANTUMUPLOAD_DRAG_DROP'), ENT_QUOTES); ?>",
+        'file': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_QUANTUMUPLOAD_UPLOAD_ERROR_FILE'), ENT_QUOTES); ?>",
+        'megabyte': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_QUANTUMUPLOAD_UPLOAD_ERROR_MEGABITE'), ENT_QUOTES); ?>",
+        'maxsize': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_QUANTUMUPLOAD_UPLOAD_ERROR_MAXSIZE'), ENT_QUOTES); ?>",
+        'exs': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_QUANTUMUPLOAD_UPLOAD_ERROR_EXS'), ENT_QUOTES); ?>",
     };
 </script>

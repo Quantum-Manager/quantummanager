@@ -258,6 +258,28 @@ window.QuantumUtils = {
         return size;
     },
 
+    modal: function(fm, header, body, footer, classForModal) {
+        if(classForModal === null) {
+            classForModal = '';
+        }
+
+        let modal = this.createElement('div', {'class': 'quatummanagermodal-wrap ' + classForModal})
+            .addChild('div', {'class': 'quatummanagermodal-container'})
+                .add('button', {
+                    'class': 'btn quatummanagermodal-close',
+                    'events': [
+                        ['click', function (ev) {
+                            this.closest('.quatummanagermodal-wrap').remove();
+                        }]
+                    ]}, QuantumLang.close)
+                .add('div', {'class': 'quatummanagermodal-header'}, header)
+                .addChild('div', {'class': 'quatummanagermodal-body-wrap'})
+                    .add('div', {'class': 'quatummanagermodal-body'}, body)
+                    .getParent()
+                .getParent();
+        fm.element.append(modal.build());
+    },
+
     getPopUpSize: function(el) {
         let size = this.windowSize();
         size.width = (size.width/100*90);
@@ -299,6 +321,165 @@ window.QuantumUtils = {
             }, 'xml');
 
         });
+    },
+
+    /**
+     * Создание вложенных DOM элементов
+     *
+     * @param tag
+     * @param attr
+     * @param innerHtml
+     * @returns {{add: add, build: build, el: *, child: []}}
+     */
+    createElement: function(tag, attr, innerHtml) {
+        let self = this;
+        let element = document.createElement(tag);
+
+        for(keyAttr in attr) {
+            if(keyAttr === 'events') {
+                let eventsLength = attr[keyAttr].length;
+                for(let i=0;i<eventsLength;i++) {
+                    element.addEventListener(attr[keyAttr][i][0], attr[keyAttr][i][1]);
+                }
+                continue;
+            }
+
+            element.setAttribute(keyAttr, attr[keyAttr]);
+        }
+
+        if(innerHtml !== undefined && innerHtml !== null) {
+
+            if(typeof innerHtml === 'function') {
+                element.innerHTML = innerHtml();
+            }
+
+            if(typeof innerHtml === 'string') {
+                element.innerHTML = innerHtml;
+            }
+
+            if(typeof innerHtml === 'object') {
+                element.append(innerHtml);
+            }
+
+        }
+
+        return {
+            el: element,
+            parent: undefined,
+            child: [],
+            getParent: function() {
+                return this.parent;
+            },
+            setParent: function(parent) {
+                this.parent = parent;
+                return this;
+            },
+            add: function (tag, attr, innerHtml) {
+                this.child.push(self.createElement(tag, attr, innerHtml).setParent(this));
+                return this;
+            },
+            addChild: function (tag, attr, innerHtml) {
+                this.child.push(self.createElement(tag, attr, innerHtml).setParent(this));
+                return this.child[ this.child.length - 1];
+            },
+            build: function () {
+                var buildElement = this.el;
+
+                if(this.child.length > 0) {
+
+                    for(var i=0;i<this.child.length;i++) {
+                        buildElement.appendChild(this.child[i].build());
+                    }
+
+                    return buildElement;
+                } else {
+                    return buildElement;
+                }
+
+            },
+        }
+    },
+
+    /**
+     *
+     * @param name
+     * @returns {string}
+     */
+    getUrlParameter: function (name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        let regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        let results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    },
+
+    /**
+     *
+     * @param text
+     * @returns {string}
+     */
+    escapeHtml: function (text) {
+        return text
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    },
+
+
+    /**
+     *
+     * @param string
+     * @param quoteStyle
+     * @returns {void | string | *}
+     */
+    htmlspecialcharsDecode: function (string, quoteStyle) {
+        let optTemp = 0,
+        i = 0,
+        noquotes = false;
+
+        if (typeof quoteStyle === 'undefined') {
+            quoteStyle = 2
+        }
+
+        string = string.toString()
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+        let OPTS = {
+            'ENT_NOQUOTES': 0,
+            'ENT_HTML_QUOTE_SINGLE': 1,
+            'ENT_HTML_QUOTE_DOUBLE': 2,
+            'ENT_COMPAT': 2,
+            'ENT_QUOTES': 3,
+            'ENT_IGNORE': 4
+        };
+
+        if (quoteStyle === 0) {
+            noquotes = true;
+        }
+
+        if (typeof quoteStyle !== 'number') {
+            // Allow for a single string or an array of string flags
+            quoteStyle = [].concat(quoteStyle)
+            for (i = 0; i < quoteStyle.length; i++) {
+                // Resolve string input to bitwise e.g. 'PATHINFO_EXTENSION' becomes 4
+                if (OPTS[quoteStyle[i]] === 0) {
+                    noquotes = true
+                } else if (OPTS[quoteStyle[i]]) {
+                    optTemp = optTemp | OPTS[quoteStyle[i]]
+                }
+            }
+            quoteStyle = optTemp
+        }
+        if (quoteStyle & OPTS.ENT_HTML_QUOTE_SINGLE) {
+            string = string.replace(/&#0*39;/g, "'")
+        }
+        if (!noquotes) {
+            string = string.replace(/&quot;/g, '"')
+        }
+        string = string.replace(/&amp;/g, '&')
+
+        return string
     }
 
 };

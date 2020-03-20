@@ -38,6 +38,10 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
         this.path = options.directory;
         Filemanager.element.setAttribute('data-drag-drop-title', QuantumuploadLang.dragDrop);
 
+        if (Filemanager.data.path === undefined) {
+            Filemanager.data.path = this.path;
+        }
+
         ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
             this.dropArea.addEventListener(eventName, function (e) {
                 e.preventDefault();
@@ -174,7 +178,7 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
                     }
 
                     if(response.error !== undefined) {
-                        self.errorsHtml += '<div>' + file.name + ': ' + response.error + '</div>';
+                        self.errorsHtml += '<div>' + file.name + ': ' + QuantumUtils.htmlspecialcharsDecode(response.error, 'ENT_QUOTES') + '</div>';
                     }
 
                     self.updateProgress(i, 100);
@@ -195,7 +199,7 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
                     }
 
                 }
-                else if (xhr.readyState == 4 && xhr.status != 200) {
+                else if (xhr.readyState === 4 && xhr.status !== 200) {
 
                     self.uploadI.push((i + 1));
 
@@ -221,8 +225,6 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
         }
 
     };
-
-
 
 
     this.trigger = function(event) {

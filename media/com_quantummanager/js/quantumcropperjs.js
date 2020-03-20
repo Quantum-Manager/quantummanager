@@ -111,6 +111,11 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             let width = parseInt(this.value);
             let height = self.ImageHeightValue.value;
             let scaleFactor = 1;
+
+            if(width === 0) {
+                return;
+            }
+
             this.value = width;
             if(self.checkImageResize.checked) {
                 scaleFactor = width / self.image.width;
@@ -134,7 +139,12 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             let width = self.ImageWidthValue.value;
             let height = parseInt(this.value);
             let scaleFactor = 1;
-            this.value = width;
+
+            if(height === 0) {
+                return;
+            }
+
+            this.value = height;
 
             if(self.checkImageResize.checked) {
                 scaleFactor = height / self.image.height;

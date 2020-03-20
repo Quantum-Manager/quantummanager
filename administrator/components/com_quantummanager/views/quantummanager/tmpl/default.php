@@ -14,6 +14,7 @@ use Joomla\CMS\Factory;
 
 $app = Factory::getApplication();
 $app->getSession()->clear('quantummanagerroot');
+$app->getSession()->clear('quantummanageraddscripts');
 
 try {
     JLoader::register('JFormFieldQuantumCombine', JPATH_ROOT . '/administrator/components/com_quantummanager/fields/quantumcombine.php');
@@ -23,23 +24,27 @@ try {
     $buttonsBun = [];
     $fields = [
         'quantumtreecatalogs' => [
+            'label' => '',
             'directory' => $folderRoot,
             'position' => 'left',
             'cssClass' => 'quantumtreecatalogs-module-muted'
         ],
         'quantumupload' => [
-            'maxsize' => QuantummanagerHelper::getParamsComponentValue('maxsize', '10'),
+			'label' => '',
+			'maxsize' => QuantummanagerHelper::getParamsComponentValue('maxsize', '10'),
             'dropAreaHidden' => QuantummanagerHelper::getParamsComponentValue('dropareahidden', '0'),
             'directory' => $folderRoot
         ],
         'quantumtoolbar' => [
-            'position' => 'top',
+			'label' => '',
+			'position' => 'top',
             'buttons' => 'all',
             'buttonsBun' => '',
             'cssClass' => 'quantummanager-module-height-1-1 quantumtoolbar-module-muted quantumtoolbar-padding-horizontal',
         ],
         'quantumviewfiles' => [
-            'directory' => $folderRoot,
+			'label' => '',
+			'directory' => $folderRoot,
             'view' => 'list-grid',
             'onlyfiles' => '0',
             'watermark' => QuantummanagerHelper::getParamsComponentValue('overlay' , 0) > 0 ? '1' : '0',
@@ -47,17 +52,15 @@ try {
 			'metafile' => QuantummanagerHelper::getParamsComponentValue('metafile' , '1'),
         ],
         'quantumcropperjs' => [
-            'position' => 'bottom'
+			'label' => '',
+			'position' => 'bottom'
         ],
-        /*
-        'quantumcodemirror' => [
-            'position' => 'center'
-        ],*/
     ];
 
     if((int)QuantummanagerHelper::getParamsComponentValue('unsplash', '1'))
     {
 		$fields['quantumunsplash'] = [
+			'label' => '',
 			'position' => 'bottom'
         ];
     }
@@ -65,7 +68,8 @@ try {
     if((int)QuantummanagerHelper::getParamsComponentValue('pixabay', '1'))
     {
         $fields['quantumpixabay'] = [
-            'position' => 'bottom'
+			'label' => '',
+			'position' => 'bottom'
         ];
     }
 

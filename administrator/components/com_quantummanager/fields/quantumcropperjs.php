@@ -42,10 +42,11 @@ class JFormFieldQuantumcropperjs extends JFormField
 	 */
 	protected function getLayoutPaths()
 	{
-		return [
+		return array_merge(parent::getLayoutPaths(), [
 			JPATH_ROOT . '/administrator/components/com_quantummanager/layouts/fields',
-		];
+		]);
 	}
+
 
 	/**
 	 * @return array
@@ -79,7 +80,7 @@ class JFormFieldQuantumcropperjs extends JFormField
 				'relative' => true
 			]);
 
-			HTMLHelper::_('stylesheet', 'com_quantummanager/cropperjs.css', [
+			HTMLHelper::_('stylesheet', 'com_quantummanager/cropperjs.min.css', [
 				'version' => filemtime(__FILE__),
 				'relative' => true
 			]);
@@ -104,7 +105,7 @@ class JFormFieldQuantumcropperjs extends JFormField
 				'relative' => true
 			]);
 
-			HTMLHelper::_('script', 'com_quantummanager/cropperjs.js', [
+			HTMLHelper::_('script', 'com_quantummanager/cropperjs.min.js', [
 				'version' => filemtime(__FILE__),
 				'relative' => true
 			]);

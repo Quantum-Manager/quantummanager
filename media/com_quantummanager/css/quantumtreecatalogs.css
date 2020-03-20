@@ -147,6 +147,7 @@
 .quantumtreecatalogs-module ul li.active > .tree-path   {
     font-weight: bold;
 }
+.quantumtreecatalogs-module ul li .tree-edit,
 .quantumtreecatalogs-module ul li .tree-delete {
     display: inline-block;
     width: 13px;
@@ -154,6 +155,7 @@
     padding: 0;
     margin-left: 5px;
 }
+.quantumtreecatalogs-module ul li .tree-edit span,
 .quantumtreecatalogs-module ul li .tree-delete span {
     padding: 0;
     width: 12px;
@@ -161,9 +163,11 @@
     margin-bottom: 3px;
     transition: all 0.2s;
 }
+.quantumtreecatalogs-module ul li .tree-edit:hover,
 .quantumtreecatalogs-module ul li .tree-delete:hover {
     cursor: pointer;
 }
+.quantumtreecatalogs-module ul li .tree-edit:hover span,
 .quantumtreecatalogs-module ul li .tree-delete:hover span {
     transition: all 0.2s;
 }

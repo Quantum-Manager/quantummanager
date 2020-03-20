@@ -714,7 +714,7 @@ class QuantummanagerFileSystemLocal
 					'name' => implode('.', $fileParse),
 					'exs' => $exs,
 					'file' => $file,
-					'fileP' => $file,
+					'fileP' => '',
 					'dateC' => $fileDate,
 					'dateM' => $fileDate,
 				];
@@ -722,7 +722,7 @@ class QuantummanagerFileSystemLocal
 				if(in_array(strtolower($exs), ['jpg', 'png', 'jpeg', 'gif', 'svg']))
 				{
 					$cacheSource =  JPATH_ROOT . DIRECTORY_SEPARATOR . 'cache/com_quantummanager';
-					$path = QuantummanagerHelper::preparePath($path);
+					$path = QuantummanagerHelper::preparePath($path, false, $scopeName);
 					$cache = $cacheSource . DIRECTORY_SEPARATOR . $path;
 					$fileMeta['fileP'] = 'index.php?option=com_quantummanager&task=quantumviewfiles.generatePreviewImage&scope=' . $scopeName . '&file=' . $file;
 				}
@@ -790,6 +790,10 @@ class QuantummanagerFileSystemLocal
 
 		$pathFromCompile = JPATH_SITE . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($pathFrom, false, $scopeFrom);
 		$pathToCompile = JPATH_SITE . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($pathTo, false, $scopeTo);
+
+		var_dump($pathFromCompile);
+		var_dump($pathToCompile);
+
 		if (file_exists($pathFromCompile) && file_exists($pathToCompile))
 		{
 			foreach ($list as $file)
