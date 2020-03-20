@@ -7,7 +7,7 @@
 	<authorUrl>https://www.norrnext.com</authorUrl>
 	<copyright>Copyright © 2019 Delo Design &amp; NorrNext. All rights reserved.</copyright>
 	<license>GNU General Public License version 3 or later; see license.txt</license>
-	<version>1.4.2</version>
+	<version>1.5.0</version>
 	<description>COM_QUANTUMMANAGER_XML_DESCRIPTION</description>
 
 	<scriptfile>script.php</scriptfile>
