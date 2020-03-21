@@ -219,8 +219,9 @@ class QuantummanagerHelper
 			$pathConfig = static::$cachePathRoot[$scopeName];
 		}
 
+
 		$path = str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
-		$path = preg_replace('#' . Path::clean(JPATH_ROOT) . "\/root?#", $pathConfig, $path);
+		$path = preg_replace('#' . str_replace('\\', '\\\\', JPATH_ROOT) . "\/root?#", $pathConfig, $path);
 		$path = preg_replace('#^root?#', $pathConfig, $path);
 		$path = str_replace('..' . DIRECTORY_SEPARATOR, '', $path);
 
