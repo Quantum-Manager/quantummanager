@@ -102,7 +102,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             onClick: function() {
                 let name = self.directoryContext.querySelector('.directory-name').innerHTML;
 
-                QuantumUtils.prompt(QuantumviewfilesLang.fileName, name , function (result) {
+                QuantumUtils.prompt(QuantumviewfilesLang.directoryName, name , function (result) {
                     jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.renameDirectory&path=" + encodeURIComponent(Filemanager.data.path) + '&oldName=' + encodeURIComponent(name) + '&name='+ encodeURIComponent(result) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
                         response = JSON.parse(response);
                         if(response.status === undefined) {
