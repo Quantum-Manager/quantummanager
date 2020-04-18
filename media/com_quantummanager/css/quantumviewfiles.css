@@ -595,10 +595,11 @@
     transition: all 0.2s;
     transform: scale(1.2);
 }*/
-.quantumviewfiles-module .field-list-files .list-grid .file-item .import-files-check-file {
+.quantumviewfiles-module .field-list-files .list-grid .object-select .import-files-check-file {
     display: none;
 }
-.quantumviewfiles-module .field-list-files .list-grid .file-item .file:before {
+.quantumviewfiles-module .field-list-files .list-grid .object-select .file:before,
+.quantumviewfiles-module .field-list-files .list-grid .object-select .directory:before {
     content: "";
     display: block;
     position: absolute;
@@ -617,7 +618,8 @@
     transition: opacity 0.2s;
     z-index: 2;
 }
-.quantumviewfiles-module .field-list-files .list-grid .file-item .import-files-check-file:checked ~ .file:before {
+.quantumviewfiles-module .field-list-files .list-grid .object-select .import-files-check-file:checked ~ .file:before,
+.quantumviewfiles-module .field-list-files .list-grid .object-select .import-files-check-file:checked ~ .directory:before {
     opacity: 1;
 }
 .quantumviewfiles-module .field-list-files .list-grid .file-item .file {
