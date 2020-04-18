@@ -492,19 +492,19 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 'quantummanager-icon-copy',
                 {},
                 function (ev) {
-                    let filesAll = ViewfilesElement.querySelectorAll('.field-list-files .file-item');
-                    let files = [];
+                    let objectAll = ViewfilesElement.querySelectorAll('.field-list-files .object-select');
+                    let objectsPush = [];
 
-                    for(let i=0;i<filesAll.length;i++) {
-                        if (filesAll[i].querySelector('input').checked) {
-                            files.push(filesAll[i].getAttribute('data-file'));
+                    for(let i=0;i<objectAll.length;i++) {
+                        if (objectAll[i].querySelector('input').checked) {
+                            objectsPush.push(objectAll[i].getAttribute('data-fullname'));
                         }
                     }
 
                     self.bufferCut = 0;
                     self.bufferFromScope = Filemanager.data.scope;
                     self.bufferFromPath = Filemanager.data.path;
-                    self.buffer = files;
+                    self.buffer = objectsPush;
                 },
                 buttonOther
             );
@@ -518,19 +518,19 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 'quantummanager-icon-cut',
                 {},
                 function (ev) {
-                    let filesAll = ViewfilesElement.querySelectorAll('.field-list-files .file-item');
-                    let files = [];
+                    let objectAll = ViewfilesElement.querySelectorAll('.field-list-files .object-select');
+                    let objectsPush = [];
 
-                    for(let i=0;i<filesAll.length;i++) {
-                        if (filesAll[i].querySelector('input').checked) {
-                            files.push(filesAll[i].getAttribute('data-file'));
+                    for(let i=0;i<objectAll.length;i++) {
+                        if (objectAll[i].querySelector('input').checked) {
+                            objectsPush.push(objectAll[i].getAttribute('data-fullname'));
                         }
                     }
 
                     self.bufferCut = 1;
                     self.bufferFromScope = Filemanager.data.scope;
                     self.bufferFromPath = Filemanager.data.path;
-                    self.buffer = files;
+                    self.buffer = objectsPush;
                 },
                 buttonOther
             );
@@ -791,7 +791,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                         addClass += 'empty';
                     }
 
-                    htmlfilesAndDirectories += "<div class='object-select directory-item " + addClass + "' data-iswritable='" + directories[i]['is_writable'] + "'><input type=\"checkbox\" class=\"import-files-check-file\"><div class='directory'><div class='directory-icon'><span></span></div><div class='directory-name'>" + directories[i]['name'] + "</div></div></div>";
+                    htmlfilesAndDirectories += "<div class='object-select directory-item " + addClass + "' data-iswritable='" + directories[i]['is_writable'] + "' data-fullname='" + directories[i]['name'] + "'><input type=\"checkbox\" class=\"import-files-check-file\"><div class='directory'><div class='directory-icon'><span></span></div><div class='directory-name'>" + directories[i]['name'] + "</div></div></div>";
                 }
             }
 
@@ -802,7 +802,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                     addClass = 'lock';
                 }
 
-                htmlfilesAndDirectories += "<div class='object-select file-item " + addClass + "' data-iswritable='" + files[i]['is_writable'] + "' data-size='" + files[i]['size'] + "' data-name='" + files[i]['name'] + "' data-exs='" + files[i]['exs'] + "' data-fileP='" + files[i]['fileP'] + "' data-dateC='" + files[i]['dateC'] + "' data-dateM='" + files[i]['dateM'] + "' data-file='" + files[i]['file'] + "'><input type=\"checkbox\" class=\"import-files-check-file\"><div class='file'><div class='context-menu-open'><span></span></div><div class='file-exs icon-file-" + type + "'><div class='av-folderlist-label'></div></div><div class='file-name'>" + files[i]['file'] + "</div></div></div>" ;
+                htmlfilesAndDirectories += "<div class='object-select file-item " + addClass + "' data-iswritable='" + files[i]['is_writable'] + "' data-size='" + files[i]['size'] + "' data-name='" + files[i]['name'] + "' data-exs='" + files[i]['exs'] + "' data-fileP='" + files[i]['fileP'] + "' data-dateC='" + files[i]['dateC'] + "' data-dateM='" + files[i]['dateM'] + "' data-file='" + files[i]['file'] + "' data-fullname='" + files[i]['file'] + "'><input type=\"checkbox\" class=\"import-files-check-file\"><div class='file'><div class='context-menu-open'><span></span></div><div class='file-exs icon-file-" + type + "'><div class='av-folderlist-label'></div></div><div class='file-name'>" + files[i]['file'] + "</div></div></div>" ;
             }
 
             htmlfilesAndDirectories += "</div></div>";
@@ -1042,6 +1042,13 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                                 self.directory = objectSelect;
                                 self.trigger('clickDirectory', objectSelect);
                             }
+                        } else
+                        {
+                            self.file = objectSelect;
+                            self.directory = objectSelect;
+
+                            self.trigger('clickFile', objectSelect);
+                            self.trigger('clickDirectory', objectSelect);
                         }
 
                     }
@@ -1085,8 +1092,6 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
         }
 
         if(triggerFlag !== null && triggerFlag === true) {
-
-            console.log(element.classList.contains('file-item'));
             if(element.classList.contains('file-item'))
             {
                 self.file = element;
