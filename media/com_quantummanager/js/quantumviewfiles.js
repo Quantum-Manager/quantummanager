@@ -1461,8 +1461,21 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             let html = '<div>';
             html += '<div class="meta-preview meta-preview-album">' + imgs + '</div>';
             html += '<div class="meta-table">';
-            html += '<div><div>' + QuantumviewfilesLang.metaSelectCount + '</div><div>' + countElement + '</div></div>';
-            html += '<div><div>' + QuantumviewfilesLang.metaSelectSize + '</div><div>' + QuantumUtils.bytesToSize(size) + '</div></div>';
+
+            if(objectOnlyFiles)
+            {
+                html += '<div><div>' + QuantumviewfilesLang.metaSelectCount + '</div><div>' + countElement + '</div></div>';
+            }
+            else
+            {
+                html += '<div><div>' + QuantumviewfilesLang.metaSelectObjectCount + '</div><div>' + countElement + '</div></div>';
+            }
+
+            if(objectOnlyFiles)
+            {
+                html += '<div><div>' + QuantumviewfilesLang.metaSelectSize + '</div><div>' + QuantumUtils.bytesToSize(size) + '</div></div>';
+            }
+
             html += '</tbody></table>';
             html += '</div>';
 
