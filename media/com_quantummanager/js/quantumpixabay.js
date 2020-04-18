@@ -103,6 +103,10 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
         let fieldsForRequest = '';
         let filterFields = self.element.querySelectorAll('.filter-field');
         for (let i=0;i<filterFields.length;i++) {
+            if(filterFields[i].hasAttribute('data-disabled')) {
+                continue;
+            }
+
             fieldsForRequest += '&' + filterFields[i].getAttribute('data-name') + '=' + encodeURIComponent(filterFields[i].getAttribute('data-value'));
         }
 
@@ -155,7 +159,10 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
                 }
 
                 elem.setAttribute('class', 'grid-item');
-                elem.setAttribute('data-url', dataUrl);
+                elem.setAttribute('data-small', response.results[i]['webformatURL']);
+                elem.setAttribute('data-medium', response.results[i]['largeImageURL']);
+                elem.setAttribute('data-large', response.results[i]['fullHDURL']);
+                elem.setAttribute('data-original', dataUrl);
                 elem.setAttribute('data-id', response.results[i]['id']);
 
                 let metaWrap = document.createElement('div');
@@ -203,10 +210,19 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
                     }
 
                     let element = this;
+                    let fileDownload = element.getAttribute('data-original');
+                    let filtersSize = self.element.querySelector('.filter-field[data-name=size]');
                     self.areaSave.style.display = 'block';
 
+                    if(filtersSize !== null && filtersSize !== undefined) {
+                        let selectSize = filtersSize.getAttribute('data-value');
+                        if(element.getAttribute('data-' + selectSize) !== '') {
+                            fileDownload = element.getAttribute('data-' + selectSize);
+                        }
+                    }
+
                     jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumpixabay.download&path=" + encodeURIComponent(Filemanager.data.path) + "&scope=" + encodeURIComponent(Filemanager.data.scope)
-                        + '&file=' + encodeURIComponent(element.getAttribute('data-url'))
+                        + '&file=' + encodeURIComponent(fileDownload)
                         + '&id=' + encodeURIComponent(element.getAttribute('data-id'))
                     )).done(function (response) {
                         response = JSON.parse(response);
