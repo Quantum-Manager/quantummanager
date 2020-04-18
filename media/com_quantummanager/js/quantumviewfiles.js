@@ -1193,7 +1193,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                         }
 
                         if(response.preview.name !== undefined) {
-                            html += '<div class="meta-preview-name">' + response.preview.name + '</div>';
+                            html += '<div class="meta-preview-name"><span class="quantummanager-icon quantummanager-icon-copy meta-preview-name-copy"></span><span>' + response.preview.name + '</span></div>';
                         }
                     }
 
@@ -1231,6 +1231,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
 
                     let previewOpen =  self.viewMeta.querySelector('.meta-preview-open');
                     let buttonToggleTags = self.viewMeta.querySelector('.show-all-tags');
+                    let metaPreviewNameCopy = self.viewMeta.querySelector('.meta-preview-name-copy');
 
                     if(previewOpen !== null) {
                         let previewOpenImg = previewOpen.querySelector('img');
@@ -1260,6 +1261,27 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                                 this.innerHTML = QuantumviewfilesLang.metaFileHide;
                                 metaFind.classList.remove('meta-hidden');
                             }
+                        });
+                    }
+
+                    if(metaPreviewNameCopy !== null) {
+                        metaPreviewNameCopy.addEventListener('click', function () {
+                            let self = this;
+                            jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getParsePath&path=" + encodeURIComponent(Filemanager.data.path)
+                                + '&scope=' + encodeURIComponent(Filemanager.data.scope)
+                                + '&host=on&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (responsePath) {
+
+                                responsePath = JSON.parse(responsePath);
+                                if(responsePath.path === undefined) {
+                                    return;
+                                }
+
+                                let file = responsePath.path + '/' + response.preview.name;
+                                let button = document.createElement('button');
+                                button.setAttribute('data-clipboard-text', file);
+                                new ClipboardJS(button);
+                                button.click();
+                            });
                         });
                     }
 
