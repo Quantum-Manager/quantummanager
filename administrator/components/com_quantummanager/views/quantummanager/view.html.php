@@ -13,6 +13,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
+use Joomla\CMS\Uri\Uri;
 
 /**
  * Quantummanager view.
@@ -79,7 +80,7 @@ class QuantummanagerViewQuantummanager extends HtmlView
 		}
 
 		$toolbar = Toolbar::getInstance('toolbar');
-		$url = '/administrator/index.php?option=com_quantummanager&layout=window&tmpl=component';
+		$url = Uri::root(true) . '/administrator/index.php?option=com_quantummanager&layout=window&tmpl=component';
 		$button = '<a href="' . $url . '" class="btn btn-small" target="_blank">'
 			. '<span class="icon-new-tab" aria-hidden="true"></span>'
 			. Text::_('COM_QUANTUMMANAGER_CLEAN_WINDOW') . '</a>';
