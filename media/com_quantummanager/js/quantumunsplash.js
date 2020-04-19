@@ -210,7 +210,7 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
                     self.masonry.layout();
                     clearInterval(intervalLayout)
                 }
-            }, 100);
+            }, 250);
 
 
             if(parseInt(response.totalPage) > 1 && (self.currentPage !== self.totalPage)) {
