@@ -286,23 +286,23 @@
 .input-width-height-wrap-rows > div label {
     margin-bottom: 0 !important;
 }
-.quantumcropperjs-module .input-compression-wrap {
+.quantumcropperjs-module .input-range-wrap {
     margin-top: 25px;
 }
-.quantumcropperjs-module .input-compression-wrap > label {
+.quantumcropperjs-module .input-range-wrap > label {
     width: 100%;
     color: #cbcbcb;
 }
-.quantumcropperjs-module .input-compression-wrap > div {
+.quantumcropperjs-module .input-range-wrap > div {
     display: flex;
     width: 100%;
 }
-.quantumcropperjs-module .input-compression-wrap > div input[type=number] {
+.quantumcropperjs-module .input-range-wrap > div input[type=number] {
     margin: 0;
     width: 42px;
     font-size: 15px;
 }
-.quantumcropperjs-module .input-compression-wrap > div input[type=range] {
+.quantumcropperjs-module .input-range-wrap > div input[type=range] {
     flex: 1;
     margin: auto 10px auto auto;
     outline: none;
@@ -321,21 +321,21 @@
     cursor: pointer;
     -webkit-appearance: none;
 }
-.quantumcropperjs-module .input-compression-wrap > div input[type=range]::-webkit-slider-runnable-track {
+.quantumcropperjs-module .input-range-wrap > div input[type=range]::-webkit-slider-runnable-track {
     box-shadow: none;
     border: none;
     background: transparent;
     -webkit-appearance: none;
 }
-.quantumcropperjs-module .input-compression-wrap > div input[type=range]::-moz-range-track {
+.quantumcropperjs-module .input-range-wrap > div input[type=range]::-moz-range-track {
     box-shadow: none;
     border: none;
     background: transparent;
 }
-.quantumcropperjs-module .input-compression-wrap > div input[type=range]::-moz-focus-outer {
+.quantumcropperjs-module .input-range-wrap > div input[type=range]::-moz-focus-outer {
     border: 0;
 }
-.quantumcropperjs-module .input-compression-wrap > div input[type=range]::-webkit-slider-thumb {
+.quantumcropperjs-module .input-range-wrap > div input[type=range]::-webkit-slider-thumb {
     width: 17px;
     height: 17px;
     border: 0;
@@ -344,7 +344,7 @@
     box-shadow: 0 0 1px 0px rgba(0,0,0,0.1);
     -webkit-appearance: none;
 }
-.quantumcropperjs-module .input-compression-wrap > div input[type=range]::-moz-range-thumb {
+.quantumcropperjs-module .input-range-wrap > div input[type=range]::-moz-range-thumb {
     width: 17px;
     height: 17px;
     border: 0;
@@ -352,7 +352,7 @@
     border-radius: 100%;
     box-shadow: 0 0 1px 0px rgba(0,0,0,0.1);
 }
-.quantumcropperjs-module .input-compression-wrap > div input[type=range]::-ms-thumb {
+.quantumcropperjs-module .input-range-wrap > div input[type=range]::-ms-thumb {
     width: 17px;
     height: 17px;
     background: #fff;
