@@ -61,7 +61,13 @@ $presets = $paramsComponents->get('custompresetscrop');
                 <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_WIDTH'); ?> (px)</label>
                 <div>
 	                <label>
-		                <input type="text" class="image-width-value">
+                        <div class="input-wrapper">
+                            <input type="text" class="image-width-value">
+                            <span class="bottom"></span>
+                            <span class="right"></span>
+                            <span class="top"></span>
+                            <span class="left"></span>
+                        </div>
 	                </label>
                 </div>
             </div>
@@ -70,14 +76,32 @@ $presets = $paramsComponents->get('custompresetscrop');
                 <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_HEIGHT'); ?> (px)</label>
                 <div>
 	                <label>
-		                <input type="text" class="image-height-value">
+                        <div class="input-wrapper">
+                            <input type="text" class="image-height-value">
+                            <span class="bottom"></span>
+                            <span class="right"></span>
+                            <span class="top"></span>
+                            <span class="left"></span>
+                        </div>
 	                </label>
                 </div>
             </div>
 
             <label class="image-width-height-ratio-checkbox"><input type="checkbox" class="image-width-height-ratio" checked="checked"> <?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_SAVE_RATIO'); ?></label>
         </div>
-
+        <div class="input-compression-wrap">
+            <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_COMPRESSION'); ?></label>
+            <div>
+                <input type="range" name="image-compression" min="1" max="100" value="80">
+                <div class="input-wrapper">
+                    <input type="number" name="image-compression-value" value="80">
+                    <span class="bottom"></span>
+                    <span class="right"></span>
+                    <span class="top"></span>
+                    <span class="left"></span>
+                </div>
+            </div>
+        </div>
         <div class="button-wrap">
 
             <button class="btn btn-close">

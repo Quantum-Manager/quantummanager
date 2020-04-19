@@ -125,83 +125,91 @@
 }
 .quantumcropperjs-module .name-file-wrap label {
     width: 100%;
-    color: #fff;
+    color: #cbcbcb;
 }
-.quantumcropperjs-module .name-file-wrap .input-wrapper {
+.quantumcropperjs-module .input-wrapper {
     position: relative;
     display: flex;
-    width: calc(100% - 70px);
 }
-.quantumcropperjs-module .name-file-wrap .input-wrapper input {
-    width: 100%;
-    flex: 1;
+.quantumcropperjs-module .input-wrapper input {
     margin: 0;
-    height: 19px;
-    font-size: inherit;
-    font-family: inherit;
-    background-color: #333;
+    flex: 1;
+    height: 20px;
+    width: 100%;
+    vertical-align: middle;
+    display: inline-block;
+    max-width: 100%;
+    background: #333;
     color: #fff;
-    padding: 0.35em 0.45em;
-    border-radius: 3px 0 0 3px;
     border: 1px solid #333;
-    transition: background-color 0.3s ease-in-out;
+    transition: .2s ease-in-out;
+    transition-property: color,background-color,border,width;
+
 }
-.quantumcropperjs-module .name-file-wrap .input-wrapper input:focus {
+.quantumcropperjs-module .input-wrapper input:focus {
     outline: none;
 }
-.quantumcropperjs-module .name-file-wrap .input-wrapper input::placeholder {
+.quantumcropperjs-module input::placeholder {
     color: hsla(0, 0%, 100%, 0.6);
 }
-.quantumcropperjs-module .name-file-wrap .input-wrapper span {
+.quantumcropperjs-module .input-wrapper span {
     position: absolute;
     background-color: #78abde;
     transition: transform 0.5s ease;
 }
-.quantumcropperjs-module .name-file-wrap .input-wrapper .bottom,
-.quantumcropperjs-module .name-file-wrap .input-wrapper .top {
+.quantumcropperjs-module .input-wrapper .bottom,
+.quantumcropperjs-module .input-wrapper .top {
     height: 1px;
     left: 0;
     right: 0;
     transform: scaleX(0);
 }
-.quantumcropperjs-module .name-file-wrap .input-wrapper .left,
-.quantumcropperjs-module .name-file-wrap .input-wrapper .right {
+.quantumcropperjs-module .input-wrapper .left,
+.quantumcropperjs-module .input-wrapper .right {
     width: 1px;
     top: 0;
     bottom: 0;
     transform: scaleY(0);
 }
-.quantumcropperjs-module .name-file-wrap .input-wrapper .bottom {
+.quantumcropperjs-module .input-wrapper .bottom {
     bottom: 0;
     transform-origin: bottom right;
 }
-.quantumcropperjs-module .name-file-wrap .input-wrapper input:focus ~ .bottom {
+.quantumcropperjs-module .input-wrapper input:focus ~ .bottom {
     transform-origin: bottom left;
     transform: scaleX(1);
 }
-.quantumcropperjs-module .name-file-wrap .input-wrapper .right {
+.quantumcropperjs-module .input-wrapper .right {
     right: 0;
     transform-origin: top right;
 }
-.quantumcropperjs-module .name-file-wrap .input-wrapper input:focus ~ .right {
+.quantumcropperjs-module .input-wrapper input:focus ~ .right {
     transform-origin: bottom right;
     transform: scaleY(1);
 }
-.quantumcropperjs-module .name-file-wrap .input-wrapper .top {
+.quantumcropperjs-module .input-wrapper .top {
     top: 0;
     transform-origin: top left;
 }
-.quantumcropperjs-module .name-file-wrap .input-wrapper input:focus ~ .top {
+.quantumcropperjs-module .input-wrapper input:focus ~ .top {
     transform-origin: top right;
     transform: scaleX(1);
 }
-.quantumcropperjs-module .name-file-wrap .input-wrapper .left {
+.quantumcropperjs-module .input-wrapper .left {
     left: 0;
     transform-origin: bottom left;
 }
-.quantumcropperjs-module .name-file-wrap .input-wrapper input:focus ~ .left {
+.quantumcropperjs-module .input-wrapper input:focus ~ .left {
     transform-origin: top left;
     transform: scaleY(1);
+}
+.quantumcropperjs-module .name-file-wrap .input-wrapper {
+    display: flex;
+    width: calc(100% - 70px);
+}
+.quantumcropperjs-module .name-file-wrap .input-wrapper input {
+    border-bottom-right-radius: 0 !important;
+    border-top-right-radius: 0 !important;
 }
 .quantumcropperjs-module .name-file-wrap select {
     width: 70px;
@@ -219,7 +227,7 @@
 }
 .quantumcropperjs-module .change-ratio-wrap label {
     width: 100%;
-    color: #fff;
+    color: #cbcbcb;
 }
 .quantumcropperjs-module .change-ratio-wrap .change-ratio {
     width: 100%;
@@ -246,7 +254,7 @@
     width: 48%;
 }
 .quantumcropperjs-module .input-width-height-wrap > div label {
-    color: #fff;
+    color: #cbcbcb;
     margin: 0;
 }
 .quantumcropperjs-module .input-width-height-wrap > div > div {
@@ -257,19 +265,10 @@
 .quantumcropperjs-module .input-width-height-wrap input[type='text'],
 .quantumcropperjs-module .input-width-height-wrap input[type='number'] {
     width: calc(100% - 12px);
-    margin: 0;
-    background-color: #333;
-    border: 1px solid #333;
-    color: #fff;
-}
-.quantumcropperjs-module .input-width-height-wrap span {
-    color: #ffffff;
-    text-transform: lowercase;
-    width: 13%;
 }
 .quantumcropperjs-module .input-width-height-wrap .image-width-height-ratio-checkbox {
     margin-top: 13px;
-    color: #fff;
+    color: #cbcbcb;
     display: flex;
     align-items: center;
 }
@@ -286,6 +285,80 @@
 }
 .input-width-height-wrap-rows > div label {
     margin-bottom: 0 !important;
+}
+.quantumcropperjs-module .input-compression-wrap {
+    margin-top: 25px;
+}
+.quantumcropperjs-module .input-compression-wrap > label {
+    width: 100%;
+    color: #cbcbcb;
+}
+.quantumcropperjs-module .input-compression-wrap > div {
+    display: flex;
+    width: 100%;
+}
+.quantumcropperjs-module .input-compression-wrap > div input[type=number] {
+    margin: 0;
+    width: 42px;
+    font-size: 15px;
+}
+.quantumcropperjs-module .input-compression-wrap > div input[type=range] {
+    flex: 1;
+    margin: auto 10px auto auto;
+    outline: none;
+    padding: 0;
+    width: 50%;
+    height: 6px;
+    background-color: #eee;
+    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #78abde), color-stop(100%, #78abde));
+    background-image: -webkit-linear-gradient(#78abde, #78abde);
+    background-image: -moz-linear-gradient(#78abde, #78abde);
+    background-image: -o-linear-gradient(#78abde, #78abde);
+    background-image: linear-gradient(#78abde, #78abde);
+    background-size: 50% 100%;
+    background-repeat: no-repeat;
+    border-radius: 10px;
+    cursor: pointer;
+    -webkit-appearance: none;
+}
+.quantumcropperjs-module .input-compression-wrap > div input[type=range]::-webkit-slider-runnable-track {
+    box-shadow: none;
+    border: none;
+    background: transparent;
+    -webkit-appearance: none;
+}
+.quantumcropperjs-module .input-compression-wrap > div input[type=range]::-moz-range-track {
+    box-shadow: none;
+    border: none;
+    background: transparent;
+}
+.quantumcropperjs-module .input-compression-wrap > div input[type=range]::-moz-focus-outer {
+    border: 0;
+}
+.quantumcropperjs-module .input-compression-wrap > div input[type=range]::-webkit-slider-thumb {
+    width: 17px;
+    height: 17px;
+    border: 0;
+    background: #fff;
+    border-radius: 100%;
+    box-shadow: 0 0 1px 0px rgba(0,0,0,0.1);
+    -webkit-appearance: none;
+}
+.quantumcropperjs-module .input-compression-wrap > div input[type=range]::-moz-range-thumb {
+    width: 17px;
+    height: 17px;
+    border: 0;
+    background: #fff;
+    border-radius: 100%;
+    box-shadow: 0 0 1px 0px rgba(0,0,0,0.1);
+}
+.quantumcropperjs-module .input-compression-wrap > div input[type=range]::-ms-thumb {
+    width: 17px;
+    height: 17px;
+    background: #fff;
+    border-color: transparent;
+    border-width: 6px 0;
+    color: transparent;
 }
 .quantumcropperjs-module .button-wrap {
     margin-top: 35px;
