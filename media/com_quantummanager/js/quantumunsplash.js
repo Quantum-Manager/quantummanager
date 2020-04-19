@@ -204,6 +204,8 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
 
             let intervalLayout = setInterval(function () {
 
+                self.masonry.layout();
+
                 if(currentLoaded === maxLoaded) {
                     self.masonry.layout();
                     clearInterval(intervalLayout)

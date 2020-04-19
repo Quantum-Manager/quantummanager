@@ -256,11 +256,13 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
 
             let intervalLayout = setInterval(function () {
 
+                self.masonry.layout();
+
                 if(currentLoaded === maxLoaded) {
                     self.masonry.layout();
                     clearInterval(intervalLayout)
                 }
-            }, 100);
+            }, 250);
 
 
             if(parseInt(response.totalPage) > 1 && (self.currentPage !== self.totalPage)) {
