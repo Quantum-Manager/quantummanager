@@ -30,19 +30,13 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
 
         Filemanager.Quantumtoolbar.buttonAdd('unsplashSearch', 'right', 'file-other', 'btn-unsplash-search hidden-label', QuantumunsplashLang.button, 'quantummanager-icon-unsplash-short', {}, function (ev) {
             QuantumUnsplashElement.classList.add('active');
-            let tmpSearchStr = '';
 
-            /*if(localStorage !== undefined) {
-                tmpSearchStr = localStorage.getItem('quantumunsplashLastStr');
+            if(self.inputSearch.value === '')
+            {
+                self.search('');
+            }
 
-                if(tmpSearchStr === null) {
-                    tmpSearchStr = '';
-                }
-            }*/
-
-            self.inputSearch.value = tmpSearchStr;
             self.inputSearch.focus();
-            self.search(tmpSearchStr);
             ev.preventDefault();
         });
 

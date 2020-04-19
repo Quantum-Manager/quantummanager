@@ -31,10 +31,13 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
 
         Filemanager.Quantumtoolbar.buttonAdd('pixabaySearch', 'right', 'file-other', 'btn-pixabay-search hidden-label', QuantumpixabayLang.button, 'quantummanager-icon-pixabay', {}, function (ev) {
             QuantumPixbayElement.classList.add('active');
-            let tmpSearchStr = '';
-            self.inputSearch.value = tmpSearchStr;
+
+            if(self.inputSearch.value === '')
+            {
+                self.search('');
+            }
+
             self.inputSearch.focus();
-            self.search(tmpSearchStr);
             ev.preventDefault();
         });
 
