@@ -107,6 +107,11 @@ class JFormFieldQuantumviewfiles extends JFormField
 				'relative' => true
 			]);
 
+			HTMLHelper::_('stylesheet', 'com_quantummanager/notify.css', [
+				'version' => filemtime(__FILE__),
+				'relative' => true
+			]);
+
 			HTMLHelper::_('script', 'com_quantummanager/main.js', [
 				'version' => filemtime(__FILE__),
 				'relative' => true
@@ -143,6 +148,11 @@ class JFormFieldQuantumviewfiles extends JFormField
 			]);
 
 			HTMLHelper::_('script', 'com_quantummanager/contentual.js', [
+				'version' => filemtime(__FILE__),
+				'relative' => true
+			]);
+
+			HTMLHelper::_('script', 'com_quantummanager/notify.js', [
 				'version' => filemtime(__FILE__),
 				'relative' => true
 			]);

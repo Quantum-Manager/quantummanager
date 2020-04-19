@@ -329,10 +329,11 @@ window.QuantumUtils = {
             return;
         }
 
-        let optionsMerge = {},
-        defaultOptions = {
-            text: 'text',
-            duration: '5000',
+        let optionsMerge = {
+            // Text for notify
+            text: '',
+            // Duration notification
+            duration: 5000,
             // On-click destination
             destination: null,
             // Open destination in new window
@@ -342,9 +343,9 @@ window.QuantumUtils = {
             // Toast position - top or bottom
             gravity: 'bottom',
             // Toast position - left, right, or center
-            position: 'left',
+            position: 'right',
             // Background color
-            backgroundColor: "linear-gradient(135deg, #73a5ff, #5477f5)",
+            backgroundColor: "linear-gradient(135deg, #78abde, #5477f5)",
             // Avatar
             avatar: "",
             // Additional classes for the toast
@@ -354,7 +355,17 @@ window.QuantumUtils = {
             callback: function () {},
         };
 
-        Toastify(optionsMerge)
+        if(options.fm !== undefined) {
+            optionsMerge.selector = '.quantummanager[data-index="' + options.fm.id + '"]';
+        }
+
+        for(let k in options) {
+            optionsMerge[k] = options[k];
+        }
+
+
+
+        Toastify(optionsMerge).showToast();
     },
 
     /**

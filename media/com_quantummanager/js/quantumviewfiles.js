@@ -706,6 +706,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
 
                 if(text.replace(' ', '') !== '') {
                     QuantumUtils.copyInBuffer(text);
+                    QuantumUtils.notify({fm: Filemanager, text: QuantumviewfilesLang.copied});
                 }
 
             });
@@ -1292,10 +1293,10 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                                 }
 
                                 let file = responsePath.path + '/' + response.preview.name;
-                                let button = document.createElement('button');
-                                button.setAttribute('data-clipboard-text', file);
-                                new ClipboardJS(button);
-                                button.click();
+
+                                QuantumUtils.copyInBuffer(file);
+                                QuantumUtils.notify({fm: Filemanager, text: QuantumviewfilesLang.copied});
+
                             });
                         });
                     }

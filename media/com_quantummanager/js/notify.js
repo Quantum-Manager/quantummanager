@@ -205,7 +205,7 @@
       if (typeof this.options.selector === "undefined") {
         rootElement = document.body;
       } else {
-        rootElement = document.getElementById(this.options.selector);
+        rootElement = document.querySelector(this.options.selector);
       }
 
       // Validating if root element is present in DOM
