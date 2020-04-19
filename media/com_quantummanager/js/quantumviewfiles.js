@@ -695,6 +695,21 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             self.contextMenu.show(ev);
         });
 
+        if(self.viewMeta !== null) {
+            self.viewMeta.addEventListener('mouseup', function () {
+                let text = '';
+                if (window.getSelection) {
+                    text = window.getSelection().toString();
+                } else if (document.selection) {
+                    text = document.selection.createRange().text;
+                }
+
+                if(text.replace(' ', '') !== '') {
+                    QuantumUtils.copyInBuffer(text);
+                }
+
+            });
+        }
     };
 
     this.initAfter = function () {

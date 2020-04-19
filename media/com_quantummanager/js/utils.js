@@ -323,6 +323,40 @@ window.QuantumUtils = {
         });
     },
 
+    notify: function(options) {
+
+        if(window.Toastify === null || window.Toastify === undefined) {
+            return;
+        }
+
+        let optionsMerge = {},
+        defaultOptions = {
+            text: 'text',
+            duration: '5000',
+            // On-click destination
+            destination: null,
+            // Open destination in new window
+            newWindow: false,
+            // Show toast close icon
+            close: false,
+            // Toast position - top or bottom
+            gravity: 'bottom',
+            // Toast position - left, right, or center
+            position: 'left',
+            // Background color
+            backgroundColor: "linear-gradient(135deg, #73a5ff, #5477f5)",
+            // Avatar
+            avatar: "",
+            // Additional classes for the toast
+            classes: "",
+            // Prevents dismissing of toast on hover
+            stopOnFocus: true,
+            callback: function () {},
+        };
+
+        Toastify(optionsMerge)
+    },
+
     /**
      * Создание вложенных DOM элементов
      *
@@ -426,6 +460,21 @@ window.QuantumUtils = {
             .replace(/'/g, "&#039;");
     },
 
+    /**
+     *
+     * @param text
+     */
+    copyInBuffer: function(text) {
+
+        if(window.ClipboardJS === null || window.ClipboardJS === undefined) {
+            return;
+        }
+
+        let button = document.createElement('button');
+        button.setAttribute('data-clipboard-text', text);
+        new ClipboardJS(button);
+        button.click();
+    },
 
     /**
      *

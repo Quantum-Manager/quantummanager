@@ -105,9 +105,9 @@ $presets = $paramsComponents->get('custompresetscrop');
         <div class="input-range-wrap">
             <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_SHARPEN'); ?></label>
             <div>
-                <input type="range" name="image-compression" min="1" max="100" value="80">
+                <input type="range" name="image-compression" min="1" max="100" value="0">
                 <div class="input-wrapper">
-                    <input type="number" name="image-compression-value" value="80">
+                    <input type="number" name="image-compression-value" value="0">
                     <span class="bottom"></span>
                     <span class="right"></span>
                     <span class="top"></span>
