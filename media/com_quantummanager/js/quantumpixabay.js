@@ -69,6 +69,11 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
                 let field = this.closest('.filter-field');
                 field.setAttribute('data-value', this.getAttribute('data-value'));
                 field.querySelector('.quantummanager-dropdown-title').innerHTML = this.innerHTML;
+
+                if(field.hasAttribute('data-disabled')) {
+                    return;
+                }
+
                 self.search(self.searchStr);
             });
         }
