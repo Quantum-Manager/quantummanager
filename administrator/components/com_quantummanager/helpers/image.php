@@ -245,6 +245,14 @@ class QuantummanagerHelperImage
 						}
 					}
 
+					if(isset($filters['brightness']))
+					{
+						if((int)$filters['brightness'] !== 0)
+						{
+							$manager = $manager->brightness((int)$filters['brightness']);
+						}
+					}
+
 					if(isset($filters['blur']))
 					{
 						if((int)$filters['blur'] > 0)

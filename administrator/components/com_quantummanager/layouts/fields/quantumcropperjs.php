@@ -116,6 +116,19 @@ $presets = $paramsComponents->get('custompresetscrop');
                 </div>
             </div>
         </div>
+        <div class="input-group input-range-wrap" data-type="range" data-depend="exs:jpg,jpeg,png">
+            <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_BRIGHTNESS'); ?></label>
+            <div>
+                <input type="range" name="range-brightness" min="-100" max="100" step="1" value="0">
+                <div class="input-wrapper">
+                    <input type="number" name="brightness" value="0" data-input-send>
+                    <span class="bottom"></span>
+                    <span class="right"></span>
+                    <span class="top"></span>
+                    <span class="left"></span>
+                </div>
+            </div>
+        </div>
         <div class="input-group input-range-wrap" data-type="range" data-depend="exs:jpg,jpeg,png;driver:imagick">
             <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_BLUR'); ?></label>
             <div>

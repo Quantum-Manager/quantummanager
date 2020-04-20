@@ -382,11 +382,12 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
                 let range = inputs[i].querySelector('input[type=range]'),
                 input = inputs[i].querySelector('input[type=number]');
 
-                let currentX = 100 / parseFloat(range.getAttribute('max')) * parseFloat(range.getAttribute('value'));
+                let currentX = 100 / (parseFloat(range.getAttribute('max')) + Math.abs(parseFloat(range.getAttribute('min')))) * Math.abs(Math.abs(parseFloat(range.getAttribute('min'))) + parseFloat(range.value));
                 range.style.backgroundSize = currentX + '% 100%';
 
                 range.addEventListener('input', function () {
-                    currentX = 100 / parseFloat(this.getAttribute('max')) * parseFloat(this.value);
+                    currentX = 100 / (parseFloat(this.getAttribute('max')) + Math.abs(parseFloat(this.getAttribute('min')))) * Math.abs(Math.abs(parseFloat(this.getAttribute('min'))) + parseFloat(this.value));
+
                     this.style.backgroundSize = currentX + '% 100%';
                     input.value = this.value;
                 });
