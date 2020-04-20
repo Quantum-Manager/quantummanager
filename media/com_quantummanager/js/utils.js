@@ -334,6 +334,8 @@ window.QuantumUtils = {
             text: '',
             // Duration notification
             duration: 3000,
+            // On-click destination
+            //destination: '',
             // Open destination in new window
             newWindow: false,
             // Show toast close icon
