@@ -53,12 +53,14 @@ class JFormFieldQuantumcropperjs extends JFormField
 	 */
 	protected function getLayoutData()
 	{
-
+		JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');
+		$driver = (new QuantummanagerHelperImage)->getNameDriver();
 
 		return array_merge(parent::getLayoutData(),
 			[
 				'paramsComponents' => ComponentHelper::getParams('com_quantummanager'),
 				'cssClass' => $this->cssClass,
+				'driver' => $driver,
 			]
 		);
 	}

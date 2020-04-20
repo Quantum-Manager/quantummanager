@@ -15,7 +15,8 @@ extract($displayData);
 $presets = $paramsComponents->get('custompresetscrop');
 ?>
 
-<div class="quantummanager-module quantumcropperjs-module" data-type="Quantumcropperjs" data-options="">
+<div class="quantummanager-module quantumcropperjs-module" data-type="Quantumcropperjs" data-options="driver:<?php echo $driver ?>">
+    <input type="hidden" name="driver" value="<?php echo $driver ?>">
     <div class="cropper-save">
         <div class="loader"><?php echo Text::_('COM_QUANTUMMANAGER_ACTION_SAVEAREA'); ?><span></span><span></span><span></span><span></span></div>
     </div>
@@ -115,7 +116,7 @@ $presets = $paramsComponents->get('custompresetscrop');
                 </div>
             </div>
         </div>
-        <div class="input-group input-range-wrap" data-type="range" data-depend="exs:jpg,jpeg,png">
+        <div class="input-group input-range-wrap" data-type="range" data-depend="exs:jpg,jpeg,png;driver:imagick">
             <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_BLUR'); ?></label>
             <div>
                 <input type="range" name="range-blur" min="0" max="100" step="1" value="0">
