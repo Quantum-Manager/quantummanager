@@ -118,6 +118,9 @@
 .quantumcropperjs-module .toolbar .quantummanager-icon {
 
 }
+.quantumcropperjs-module .input-group.hide {
+    display: none;
+}
 .quantumcropperjs-module .name-file-wrap {
     display: flex;
     align-items: center;

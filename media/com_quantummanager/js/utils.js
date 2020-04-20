@@ -489,6 +489,26 @@ window.QuantumUtils = {
 
     /**
      *
+     * @param event_name
+     * @param el
+     */
+    triggerElementEvent: function(event_name, el) {
+        let event;
+        if(document.createEvent) {
+            event = document.createEvent("HTMLEvents");
+            event.initEvent(event_name, true, true);
+            event.eventName = event_name;
+            el.dispatchEvent(event);
+        } else {
+            event = document.createEventObject();
+            event.eventName = event_name;
+            event.eventType = event_name;
+            el.fireEvent("on" + event.eventType, event);
+        }
+    },
+
+    /**
+     *
      * @param string
      * @param quoteStyle
      * @returns {void | string | *}

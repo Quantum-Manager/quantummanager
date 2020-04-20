@@ -20,10 +20,10 @@ $presets = $paramsComponents->get('custompresetscrop');
         <div class="loader"><?php echo Text::_('COM_QUANTUMMANAGER_ACTION_SAVEAREA'); ?><span></span><span></span><span></span><span></span></div>
     </div>
     <div class="toolbar">
-        <div class="name-file-wrap">
+        <div class="input-group name-file-wrap" data-type="input-select">
             <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_FILE'); ?></label>
             <div class="input-wrapper">
-                <input type="text" placeholder="" class="quantumcropperjs-name-file" name="name" >
+                <input type="text" placeholder="" class="quantumcropperjs-name-file" name="name">
                 <span class="bottom"></span>
                 <span class="right"></span>
                 <span class="top"></span>
@@ -36,7 +36,7 @@ $presets = $paramsComponents->get('custompresetscrop');
                 <option value="webp">webp</option>
             </select>
         </div>
-        <div class="change-ratio-wrap">
+        <div class="input-group change-ratio-wrap" data-type="select">
             <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_RATIO'); ?></label>
 	        <label>
 		        <select class="change-ratio" name="change-ratio">
@@ -54,7 +54,7 @@ $presets = $paramsComponents->get('custompresetscrop');
 		        </select>
 	        </label>
         </div>
-        <div class="input-width-height-wrap">
+        <div class="input-group input-width-height-wrap" data-type="between">
             <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_IMAGE'); ?></label>
 
             <div>
@@ -89,12 +89,12 @@ $presets = $paramsComponents->get('custompresetscrop');
 
             <label class="image-width-height-ratio-checkbox"><input type="checkbox" class="image-width-height-ratio" checked="checked"> <?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_SAVE_RATIO'); ?></label>
         </div>
-        <div class="input-range-wrap">
+        <div class="input-group input-range-wrap" data-type="range" data-depend="exs:jpg,jpeg">
             <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_COMPRESSION'); ?></label>
             <div>
-                <input type="range" name="image-compression" min="1" max="100" value="80">
+                <input type="range" name="range-compression" min="1" max="100" step="1" value="80">
                 <div class="input-wrapper">
-                    <input type="number" name="image-compression-value" value="80">
+                    <input type="number" name="compression" value="80" data-input-send>
                     <span class="bottom"></span>
                     <span class="right"></span>
                     <span class="top"></span>
@@ -102,12 +102,12 @@ $presets = $paramsComponents->get('custompresetscrop');
                 </div>
             </div>
         </div>
-        <div class="input-range-wrap">
+        <div class="input-group input-range-wrap" data-type="range" data-depend="exs:jpg,jpeg">
             <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_SHARPEN'); ?></label>
             <div>
-                <input type="range" name="image-compression" min="1" max="100" value="0">
+                <input type="range" name="range-sharpen" min="0" max="100" step="1" value="0">
                 <div class="input-wrapper">
-                    <input type="number" name="image-compression-value" value="0">
+                    <input type="number" name="sharpen" value="0" data-input-send>
                     <span class="bottom"></span>
                     <span class="right"></span>
                     <span class="top"></span>
@@ -115,16 +115,27 @@ $presets = $paramsComponents->get('custompresetscrop');
                 </div>
             </div>
         </div>
-        <div class="button-wrap">
+        <div class="input-group input-range-wrap" data-type="range" data-depend="exs:jpg,jpeg,png">
+            <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_BLUR'); ?></label>
+            <div>
+                <input type="range" name="range-blur" min="0" max="100" step="1" value="0">
+                <div class="input-wrapper">
+                    <input type="number" name="blur" value="0" data-input-send>
+                    <span class="bottom"></span>
+                    <span class="right"></span>
+                    <span class="top"></span>
+                    <span class="left"></span>
+                </div>
+            </div>
+        </div>
 
+        <div class="button-wrap">
             <button class="btn btn-close">
                 <span><?php echo Text::_('COM_QUANTUMMANAGER_ACTION_CANCEL'); ?></span>
             </button>
-
             <button class="btn btn-save">
                 <span><?php echo Text::_('COM_QUANTUMMANAGER_ACTION_SAVE'); ?></span>
             </button>
-
         </div>
 
         <div class="input-width-height-wrap input-width-height-wrap-rows input-width-height-wrap-bottom">
