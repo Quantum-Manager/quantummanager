@@ -333,13 +333,11 @@ window.QuantumUtils = {
             // Text for notify
             text: '',
             // Duration notification
-            duration: 5000,
-            // On-click destination
-            destination: null,
+            duration: 3000,
             // Open destination in new window
             newWindow: false,
             // Show toast close icon
-            close: false,
+            close: true,
             // Toast position - top or bottom
             gravity: 'bottom',
             // Toast position - left, right, or center
