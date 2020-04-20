@@ -91,7 +91,7 @@ $presets = $paramsComponents->get('custompresetscrop');
 
                 <label class="image-width-height-ratio-checkbox"><input type="checkbox" class="image-width-height-ratio" checked="checked"> <?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_SAVE_RATIO'); ?></label>
             </div>
-            <div class="input-group input-range-wrap" data-type="range" data-depend="exs:jpg,jpeg">
+            <div class="input-group input-range-wrap" data-type="range" data-depend="exs:jpg,jpeg,png">
                 <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_COMPRESSION'); ?></label>
                 <div>
                     <input type="range" name="range-compression" min="1" max="100" step="1" value="80">
