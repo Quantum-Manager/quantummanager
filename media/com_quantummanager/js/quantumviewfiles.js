@@ -1037,7 +1037,13 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                             if(countSelected > 1) {
                                 self.showMetaCountFile(countSelected);
                             } else {
-                                self.showMetaFile(self.objectSelect);
+                                if(self.objectSelect !== undefined) {
+                                    if(self.objectSelect.classList.contains('file-item')) {
+                                        self.showMetaFile(self.objectSelect);
+                                    } else {
+                                        self.showMetaCountFile(countSelected);
+                                    }
+                                }
                             }
 
                         } else {
