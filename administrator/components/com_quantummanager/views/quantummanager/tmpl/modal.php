@@ -145,7 +145,7 @@ catch (Exception $e) {
 
 <script type="text/javascript">
     window.QuantumwindowLang = {
-        'buttonInsert': '<?php echo Text::_('COM_QUANTUMMANAGER_WINDOW_INSERT'); ?>',
+        'buttonInsert': '<?php echo Text::_('COM_QUANTUMMANAGER_ACTION_PASTE'); ?>',
         'inputAlt': '<?php echo Text::_('COM_QUANTUMMANAGER_WINDOW_ALT'); ?>',
         'inputWidth': '<?php echo Text::_('COM_QUANTUMMANAGER_WINDOW_WIDTH'); ?>',
         'inputHeight': '<?php echo Text::_('COM_QUANTUMMANAGER_WINDOW_HEIGHT'); ?>',
