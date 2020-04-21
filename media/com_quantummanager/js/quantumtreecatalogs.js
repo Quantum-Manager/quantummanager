@@ -256,7 +256,7 @@ window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, o
                             pathEdit.pop();
                             pathEdit = pathEdit.join('/');
 
-                            QuantumUtils.prompt(QuantumtreecatalogsLang.fileName, name , function (result) {
+                            QuantumUtils.prompt(QuantumtreecatalogsLang.directoryName, name , function (result) {
                                 jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.renameDirectory&path=" + encodeURIComponent(pathEdit) + '&oldName=' + encodeURIComponent(name) + '&name='+ encodeURIComponent(result) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
                                     response = JSON.parse(response);
                                     if(response.status === undefined) {

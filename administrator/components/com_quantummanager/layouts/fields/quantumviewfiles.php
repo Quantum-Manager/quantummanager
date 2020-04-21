@@ -68,6 +68,7 @@ $document = \Joomla\CMS\Factory::getDocument();
     window.QuantumviewfilesLang = {
         'ok': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_OK'), ENT_QUOTES); ?>",
         'close': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_CLOSE'), ENT_QUOTES); ?>",
+        'copied': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_COPIED'), ENT_QUOTES); ?>",
         'cancel': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_CANCEL'), ENT_QUOTES); ?>",
         'loading': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_LOADING'), ENT_QUOTES); ?>",
         'empty': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_QUANTUMVIEWFILES_EMPTY'), ENT_QUOTES); ?>",
@@ -90,6 +91,7 @@ $document = \Joomla\CMS\Factory::getDocument();
         'metaFileShow': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_METAINFO_SHOW'), ENT_QUOTES); ?>",
         'metaFileHide': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_METAINFO_HIDE'), ENT_QUOTES); ?>",
         'metaSelectCount': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_METAINFO_SELECT_COUNT'), ENT_QUOTES); ?>",
+        'metaSelectObjectCount': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_METAINFO_SELECT_OBJECT_COUNT'), ENT_QUOTES); ?>",
         'metaSelectSize': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_METAINFO_SELECT_SIZE'), ENT_QUOTES); ?>",
         'contextReload': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_RELOAD'), ENT_QUOTES); ?>",
         'contextFolderCreate': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_FOLDER_CREATE'), ENT_QUOTES); ?>",

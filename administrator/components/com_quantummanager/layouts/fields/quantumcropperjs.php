@@ -15,79 +15,143 @@ extract($displayData);
 $presets = $paramsComponents->get('custompresetscrop');
 ?>
 
-<div class="quantummanager-module quantumcropperjs-module" data-type="Quantumcropperjs" data-options="">
+<div class="quantummanager-module quantumcropperjs-module" data-type="Quantumcropperjs" data-options="driver:<?php echo $driver ?>">
+    <input type="hidden" name="driver" value="<?php echo $driver ?>">
     <div class="cropper-save">
         <div class="loader"><?php echo Text::_('COM_QUANTUMMANAGER_ACTION_SAVEAREA'); ?><span></span><span></span><span></span><span></span></div>
     </div>
     <div class="toolbar">
-        <div class="name-file-wrap">
-            <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_FILE'); ?></label>
-            <div class="input-wrapper">
-                <input type="text" placeholder="" class="quantumcropperjs-name-file" name="name" >
-                <span class="bottom"></span>
-                <span class="right"></span>
-                <span class="top"></span>
-                <span class="left"></span>
+        <div class="fields-list">
+            <div class="input-group name-file-wrap" data-type="input-select">
+                <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_FILE'); ?></label>
+                <div class="input-wrapper">
+                    <input type="text" placeholder="" class="quantumcropperjs-name-file" name="name">
+                    <span class="bottom"></span>
+                    <span class="right"></span>
+                    <span class="top"></span>
+                    <span class="left"></span>
+                </div>
+                <select class="quantumcropperjs-name-exs" name="exs">
+                    <option value="jpg">jpg</option>
+                    <option value="jpeg">jpeg</option>
+                    <option value="png">png</option>
+                    <option value="webp">webp</option>
+                </select>
             </div>
-            <select class="quantumcropperjs-name-exs" name="exs">
-                <option value="jpg">jpg</option>
-                <option value="jpeg">jpeg</option>
-                <option value="png">png</option>
-                <option value="webp">webp</option>
-            </select>
-        </div>
-        <div class="change-ratio-wrap">
-            <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_RATIO'); ?></label>
-	        <label>
-		        <select class="change-ratio" name="change-ratio">
-		            <option value="NaN" selected="selected"><?php echo Text::_('COM_QUANTUMMANAGER_TOOLTIP_FREE'); ?></option>
-		            <?php if(!empty($presets)) : ?>
-		                <?php foreach ($presets as $preset) : ?>
-		                    <option value="<?php echo $preset->ratio ?>"><?php echo $preset->label ?></option>
-		                <?php endforeach; ?>
-		            <?php endif; ?>
-		            <option value="1">1:1</option>
-		            <option value="1.7777777777777777">16:9</option>
-		            <option value="2">18:9</option>
-		            <option value="1.3333333333333333">4:3</option>
-		            <option value="0.6666666666666666">2:3</option>
-		        </select>
-	        </label>
-        </div>
-        <div class="input-width-height-wrap">
-            <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_IMAGE'); ?></label>
+            <div class="input-group change-ratio-wrap" data-type="select">
+                <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_RATIO'); ?></label>
+                <label>
+                    <select class="change-ratio" name="change-ratio">
+                        <option value="NaN" selected="selected"><?php echo Text::_('COM_QUANTUMMANAGER_TOOLTIP_FREE'); ?></option>
+                        <?php if(!empty($presets)) : ?>
+                            <?php foreach ($presets as $preset) : ?>
+                                <option value="<?php echo $preset->ratio ?>"><?php echo $preset->label ?></option>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                        <option value="1">1:1</option>
+                        <option value="1.7777777777777777">16:9</option>
+                        <option value="2">18:9</option>
+                        <option value="1.3333333333333333">4:3</option>
+                        <option value="0.6666666666666666">2:3</option>
+                    </select>
+                </label>
+            </div>
+            <div class="input-group input-width-height-wrap" data-type="between">
+                <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_IMAGE'); ?></label>
 
-            <div>
-                <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_WIDTH'); ?> (px)</label>
                 <div>
-	                <label>
-		                <input type="text" class="image-width-value">
-	                </label>
+                    <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_WIDTH'); ?> (px)</label>
+                    <div>
+                        <label>
+                            <div class="input-wrapper">
+                                <input type="text" class="image-width-value">
+                                <span class="bottom"></span>
+                                <span class="right"></span>
+                                <span class="top"></span>
+                                <span class="left"></span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_HEIGHT'); ?> (px)</label>
+                    <div>
+                        <label>
+                            <div class="input-wrapper">
+                                <input type="text" class="image-height-value">
+                                <span class="bottom"></span>
+                                <span class="right"></span>
+                                <span class="top"></span>
+                                <span class="left"></span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <label class="image-width-height-ratio-checkbox"><input type="checkbox" class="image-width-height-ratio" checked="checked"> <?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_SAVE_RATIO'); ?></label>
+            </div>
+            <div class="input-group input-range-wrap" data-type="range" data-depend="exs:jpg,jpeg,png">
+                <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_COMPRESSION'); ?></label>
+                <div>
+                    <input type="range" name="range-compression" min="1" max="100" step="1" value="80">
+                    <div class="input-wrapper">
+                        <input type="number" name="compression" value="80" data-input-send>
+                        <span class="bottom"></span>
+                        <span class="right"></span>
+                        <span class="top"></span>
+                        <span class="left"></span>
+                    </div>
                 </div>
             </div>
-
-            <div>
-                <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_HEIGHT'); ?> (px)</label>
+            <div class="input-group input-range-wrap" data-type="range" data-depend="exs:jpg,jpeg">
+                <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_SHARPEN'); ?></label>
                 <div>
-	                <label>
-		                <input type="text" class="image-height-value">
-	                </label>
+                    <input type="range" name="range-sharpen" min="0" max="100" step="1" value="0">
+                    <div class="input-wrapper">
+                        <input type="number" name="sharpen" value="0" data-input-send>
+                        <span class="bottom"></span>
+                        <span class="right"></span>
+                        <span class="top"></span>
+                        <span class="left"></span>
+                    </div>
                 </div>
             </div>
-
-            <label class="image-width-height-ratio-checkbox"><input type="checkbox" class="image-width-height-ratio" checked="checked"> <?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_SAVE_RATIO'); ?></label>
+            <div class="input-group input-range-wrap" data-type="range" data-depend="exs:jpg,jpeg,png">
+                <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_BRIGHTNESS'); ?></label>
+                <div>
+                    <input type="range" name="range-brightness" min="-100" max="100" step="1" value="0">
+                    <div class="input-wrapper">
+                        <input type="number" name="brightness" value="0" data-input-send>
+                        <span class="bottom"></span>
+                        <span class="right"></span>
+                        <span class="top"></span>
+                        <span class="left"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="input-group input-range-wrap" data-type="range" data-depend="exs:jpg,jpeg,png;driver:imagick">
+                <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_BLUR'); ?></label>
+                <div>
+                    <input type="range" name="range-blur" min="0" max="100" step="1" value="0">
+                    <div class="input-wrapper">
+                        <input type="number" name="blur" value="0" data-input-send>
+                        <span class="bottom"></span>
+                        <span class="right"></span>
+                        <span class="top"></span>
+                        <span class="left"></span>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="button-wrap">
-
             <button class="btn btn-close">
                 <span><?php echo Text::_('COM_QUANTUMMANAGER_ACTION_CANCEL'); ?></span>
             </button>
-
             <button class="btn btn-save">
                 <span><?php echo Text::_('COM_QUANTUMMANAGER_ACTION_SAVE'); ?></span>
             </button>
-
         </div>
 
         <div class="input-width-height-wrap input-width-height-wrap-rows input-width-height-wrap-bottom">

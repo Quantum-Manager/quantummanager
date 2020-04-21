@@ -66,6 +66,7 @@ class QuantummanagerHelperImage
 			$this->resizeWatermark($file);
 		}
 
+		$this->otherFilters($file);
 		$this->reloadCache($file);
 
 	}
@@ -75,7 +76,8 @@ class QuantummanagerHelperImage
 	 */
 	public function resizeWatermark($file)
 	{
-		try {
+		try
+		{
 
 			$fileWatermark = JPATH_SITE . DIRECTORY_SEPARATOR . $this->paramsComponent->get('overlayfile');
 			$position = $this->paramsComponent->get('overlaypos', 'bottom-right');
@@ -120,7 +122,8 @@ class QuantummanagerHelperImage
 
 
 		}
-		catch (Exception $e) {
+		catch (Exception $e)
+		{
 			echo $e->getMessage();
 		}
 
@@ -165,7 +168,8 @@ class QuantummanagerHelperImage
 	 */
 	public function originalSave($fileSource)
 	{
-		try {
+		try
+		{
 			$path = explode(DIRECTORY_SEPARATOR, $fileSource);
 			$file = array_pop($path);
 			$pathSave = implode(DIRECTORY_SEPARATOR, $path) . DIRECTORY_SEPARATOR . '_original';
@@ -181,7 +185,88 @@ class QuantummanagerHelperImage
 			}
 
 		}
-		catch (Exception $e) {
+		catch (Exception $e)
+		{
+			echo $e->getMessage();
+		}
+	}
+
+	/**
+	 * @param $file
+	 *
+	 * @return bool
+	 *
+	 * @since version
+	 */
+	public function otherFilters($file)
+	{
+		try
+		{
+
+			$info = pathinfo($file);
+			if(isset($info['extension']) && (!in_array(mb_strtolower($info['extension']), ['jpg', 'jpeg', 'png'])))
+			{
+				return false;
+			}
+
+			JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
+
+			$input = \Joomla\CMS\Factory::getApplication()->input;
+			$filters = $input->getString('filters', '');
+			if(!empty($filters))
+			{
+				$filters = json_decode($filters, JSON_OBJECT_AS_ARRAY);
+				if(is_array($filters))
+				{
+					$manager = JInterventionimage::getInstance(['driver' => $this->getNameDriver()]);
+					$manager = $manager->make($file);
+
+					if(isset($filters['compression']))
+					{
+						if((int)$filters['compression'] > 0)
+						{
+							if(in_array($info['extension'], ['jpg', 'jpeg']))
+							{
+								$manager = $manager->encode('jpg', (int)$filters['compression']);
+							}
+
+							if($info['extension'] === 'png')
+							{
+								$manager = $manager->encode('png', (int)$filters['compression']);
+							}
+						}
+					}
+
+					if(isset($filters['sharpen']))
+					{
+						if((int)$filters['sharpen'] > 0)
+						{
+							$manager = $manager->sharpen((int)$filters['sharpen']);
+						}
+					}
+
+					if(isset($filters['brightness']))
+					{
+						if((int)$filters['brightness'] !== 0)
+						{
+							$manager = $manager->brightness((int)$filters['brightness']);
+						}
+					}
+
+					if(isset($filters['blur']))
+					{
+						if((int)$filters['blur'] > 0)
+						{
+							$manager = $manager->blur((int)$filters['blur']);
+						}
+					}
+
+					$manager->save($file);
+				}
+			}
+		}
+		catch (Exception $e)
+		{
 			echo $e->getMessage();
 		}
 	}

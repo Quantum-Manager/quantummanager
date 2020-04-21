@@ -106,6 +106,8 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
         let self = this;
         self.areaSave.style.display = 'none';
 
+        self.initInputs();
+
         self.ImageWidthValue.addEventListener('change', function () {
             let editor = QuantumCropperjsElement.querySelector('.editor .cropperjs');
             let width = parseInt(this.value);
@@ -176,6 +178,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             let exs = QuantumCropperjsElement.querySelector('.quantumcropperjs-name-exs').value;
             let result = self.cropperjs.getCroppedCanvas();
             let blob = '';
+            let filters = {};
 
             if(result === null) {
                 return;
@@ -195,13 +198,22 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
                 blob = result.toDataURL("image/webp", 1);
             }
 
+            let inputs = QuantumCropperjsElement.querySelectorAll('.input-group');
+            for (let i=0;i<inputs.length;i++) {
+                let input_for_send = inputs[i].querySelector('[data-input-send]');
+                if(input_for_send !== null) {
+                    filters[input_for_send.getAttribute('name')] = input_for_send.value;
+                }
+            }
+
             QuantumUtils.ajaxFile(QuantumUtils.getFullUrl('/administrator/index.php'), {
                     'option': 'com_quantummanager',
                     'task': 'quantumcropperjs.save',
                     'path': Filemanager.data.path,
                     'scope': Filemanager.data.scope,
                     'name': name,
-                    'exs': exs
+                    'exs': exs,
+                    'filters': JSON.stringify(filters)
                 },
                 QuantumUtils.dataURItoBlob(blob),
                 {},
@@ -351,9 +363,81 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             QuantumCropperjsElement.classList.add('active');
             QuantumCropperjsElement.querySelector('.quantumcropperjs-name-file').value = name;
             QuantumCropperjsElement.querySelector('.quantumcropperjs-name-exs').value = exs;
+            self.rebuildInputs();
 
         });
 
+    };
+
+    this.initInputs = function () {
+        let inputs = QuantumCropperjsElement.querySelectorAll('.input-group');
+        for (let i=0;i<inputs.length;i++) {
+
+            let inputs_for_depends = inputs[i].querySelectorAll('input,select');
+            for (let j=0;j<inputs_for_depends.length;j++) {
+                inputs_for_depends[j].addEventListener('input', this.rebuildInputs);
+            }
+
+            if(inputs[i].getAttribute('data-type') === 'range') {
+                let range = inputs[i].querySelector('input[type=range]'),
+                input = inputs[i].querySelector('input[type=number]');
+
+                let currentX = 100 / (parseFloat(range.getAttribute('max')) + Math.abs(parseFloat(range.getAttribute('min')))) * Math.abs(Math.abs(parseFloat(range.getAttribute('min'))) + parseFloat(range.value));
+                range.style.backgroundSize = currentX + '% 100%';
+
+                range.addEventListener('input', function () {
+                    currentX = 100 / (parseFloat(this.getAttribute('max')) + Math.abs(parseFloat(this.getAttribute('min')))) * Math.abs(Math.abs(parseFloat(this.getAttribute('min'))) + parseFloat(this.value));
+
+                    this.style.backgroundSize = currentX + '% 100%';
+                    input.value = this.value;
+                });
+
+                input.addEventListener('input', function () {
+
+                    if(parseInt(this.value) > parseInt(range.getAttribute('max'))) {
+                        this.value = range.getAttribute('max');
+                    }
+
+                    if(parseInt(this.value) < parseInt(range.getAttribute('min'))) {
+                        this.value = range.getAttribute('min');
+                    }
+
+                    range.value = this.value;
+                    QuantumUtils.triggerElementEvent('input', range);
+                });
+
+            }
+
+        }
+    };
+
+    this.rebuildInputs = function () {
+        let inputs = QuantumCropperjsElement.querySelectorAll('.input-group');
+        for (let i=0;i<inputs.length;i++) {
+            if(inputs[i].hasAttribute('data-depend')) {
+                let depends_attribute = inputs[i].getAttribute('data-depend');
+                let depends = {};
+                let split = depends_attribute.split(';');
+
+                for (let j=0;j<split.length;j++) {
+                    let tmp_split = split[j].split(':');
+                    if(tmp_split.length === 2) {
+                        depends[tmp_split[0]] = tmp_split[1].split(',');
+                    }
+                }
+
+                for (let key in depends) {
+                    let input = QuantumCropperjsElement.querySelector('input[name='  + key + '],select[name='  + key + ']');
+                    if(input !== null) {
+                        if(depends[key].indexOf(input.value) !== -1) {
+                            inputs[i].classList.remove('hide');
+                        } else {
+                            inputs[i].classList.add('hide');
+                        }
+                    }
+                }
+            }
+        }
     };
 
     this.trim = function (c) {

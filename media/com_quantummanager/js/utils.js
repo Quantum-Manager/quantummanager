@@ -323,6 +323,51 @@ window.QuantumUtils = {
         });
     },
 
+    notify: function(options) {
+
+        if(window.Toastify === null || window.Toastify === undefined) {
+            return;
+        }
+
+        let optionsMerge = {
+            // Text for notify
+            text: '',
+            // Duration notification
+            duration: 3000,
+            // On-click destination
+            //destination: '',
+            // Open destination in new window
+            newWindow: false,
+            // Show toast close icon
+            close: true,
+            // Toast position - top or bottom
+            gravity: 'bottom',
+            // Toast position - left, right, or center
+            position: 'right',
+            // Background color
+            backgroundColor: "linear-gradient(135deg, #78abde, #5477f5)",
+            // Avatar
+            avatar: "",
+            // Additional classes for the toast
+            classes: "",
+            // Prevents dismissing of toast on hover
+            stopOnFocus: true,
+            callback: function () {},
+        };
+
+        if(options.fm !== undefined) {
+            optionsMerge.selector = '.quantummanager[data-index="' + options.fm.id + '"]';
+        }
+
+        for(let k in options) {
+            optionsMerge[k] = options[k];
+        }
+
+
+
+        Toastify(optionsMerge).showToast();
+    },
+
     /**
      * Создание вложенных DOM элементов
      *
@@ -426,6 +471,41 @@ window.QuantumUtils = {
             .replace(/'/g, "&#039;");
     },
 
+    /**
+     *
+     * @param text
+     */
+    copyInBuffer: function(text) {
+
+        if(window.ClipboardJS === null || window.ClipboardJS === undefined) {
+            return;
+        }
+
+        let button = document.createElement('button');
+        button.setAttribute('data-clipboard-text', text);
+        new ClipboardJS(button);
+        button.click();
+    },
+
+    /**
+     *
+     * @param event_name
+     * @param el
+     */
+    triggerElementEvent: function(event_name, el) {
+        let event;
+        if(document.createEvent) {
+            event = document.createEvent("HTMLEvents");
+            event.initEvent(event_name, true, true);
+            event.eventName = event_name;
+            el.dispatchEvent(event);
+        } else {
+            event = document.createEventObject();
+            event.eventName = event_name;
+            event.eventType = event_name;
+            el.fireEvent("on" + event.eventType, event);
+        }
+    },
 
     /**
      *

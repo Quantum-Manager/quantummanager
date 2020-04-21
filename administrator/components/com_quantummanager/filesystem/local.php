@@ -791,23 +791,35 @@ class QuantummanagerFileSystemLocal
 		$pathFromCompile = JPATH_SITE . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($pathFrom, false, $scopeFrom);
 		$pathToCompile = JPATH_SITE . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($pathTo, false, $scopeTo);
 
-		var_dump($pathFromCompile);
-		var_dump($pathToCompile);
-
 		if (file_exists($pathFromCompile) && file_exists($pathToCompile))
 		{
 			foreach ($list as $file)
 			{
 				if (file_exists($pathFromCompile . DIRECTORY_SEPARATOR . $file))
 				{
-					if($cut)
+					if(is_file(file_exists($pathFromCompile . DIRECTORY_SEPARATOR . $file)))
 					{
-						File::move($pathFromCompile . DIRECTORY_SEPARATOR . $file, $pathToCompile . DIRECTORY_SEPARATOR . $file);
+						if($cut)
+						{
+							File::move($pathFromCompile . DIRECTORY_SEPARATOR . $file, $pathToCompile . DIRECTORY_SEPARATOR . $file);
+						}
+						else
+						{
+							File::copy($pathFromCompile . DIRECTORY_SEPARATOR . $file, $pathToCompile . DIRECTORY_SEPARATOR . $file);
+						}
 					}
 					else
 					{
-						File::copy($pathFromCompile . DIRECTORY_SEPARATOR . $file, $pathToCompile . DIRECTORY_SEPARATOR . $file);
+						if($cut)
+						{
+							Folder::move($pathFromCompile . DIRECTORY_SEPARATOR . $file, $pathToCompile . DIRECTORY_SEPARATOR . $file);
+						}
+						else
+						{
+							Folder::copy($pathFromCompile . DIRECTORY_SEPARATOR . $file, $pathToCompile . DIRECTORY_SEPARATOR . $file);
+						}
 					}
+
 				}
 			}
 

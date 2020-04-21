@@ -71,6 +71,17 @@ extract($displayData);
                             </ul>
                         </div>
                     </div>
+                    <div class="quantummanager-dropdown filter-field" data-name="size" data-value="original" data-disabled>
+                        <div class="quantummanager-dropdown-title"><?php echo Text::_('COM_QUANTUMMANAGER_QUANTUMPIXABAY_FILTERS_SIZE') ?></div>
+                        <div class="quantummanager-dropdown-content">
+                            <ul>
+                                <li data-value="small"><?php echo Text::_('COM_QUANTUMMANAGER_QUANTUMPIXABAY_FILTERS_SIZE_SMALL') ?></li>
+                                <li data-value="medium"><?php echo Text::_('COM_QUANTUMMANAGER_QUANTUMPIXABAY_FILTERS_SIZE_MEDIUM') ?></li>
+                                <li data-value="large"><?php echo Text::_('COM_QUANTUMMANAGER_QUANTUMPIXABAY_FILTERS_SIZE_LARGE') ?></li>
+                                <li data-value="original"><?php echo Text::_('COM_QUANTUMMANAGER_QUANTUMPIXABAY_FILTERS_SIZE_ORIGINAL') ?></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
                 <div class="source">
                     <span><?php echo Text::_('COM_QUANTUMMANAGER_QUANTUMPIXABAY_LICENSE') ?></span> <a href="https://pixabay.com" target="_blank"><span class="quantummanager-icon quantummanager-icon-pixabay"></span></a>
