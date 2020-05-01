@@ -975,7 +975,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             self.showMetaDirectory(true);
             self.metaFileLoad = {};
 
-            if(filesAll.length > 0) {
+            if((filesAll.length > 0) || (directoriesAll.length > 0)) {
                 self.ds = undefined;
                 self.dsP;
                 self.dsElemet;
