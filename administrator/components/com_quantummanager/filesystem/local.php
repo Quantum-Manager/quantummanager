@@ -797,7 +797,7 @@ class QuantummanagerFileSystemLocal
 			{
 				if (file_exists($pathFromCompile . DIRECTORY_SEPARATOR . $file))
 				{
-					if(is_file(file_exists($pathFromCompile . DIRECTORY_SEPARATOR . $file)))
+					if(is_file($pathFromCompile . DIRECTORY_SEPARATOR . $file))
 					{
 						if($cut)
 						{
