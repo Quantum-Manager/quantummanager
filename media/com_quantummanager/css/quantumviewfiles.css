@@ -145,11 +145,6 @@
     transform-origin: top left;
     transform: scaleY(1);
 }
-/*
-.quantumviewfiles-module .filter-search input:focus,
-.quantumviewfiles-module .filter-search input:active {
-    width: 350px;
-}*/
 .quantumviewfiles-module .breadcumbs {
     display: flex;
     flex-wrap: wrap;
@@ -721,10 +716,6 @@ svg.svg-icon text {
 .quantumviewfiles-module .field-list-files .list-grid .file-item.lock .file-exs {
     opacity: .6;
 }
-/*.quantumviewfiles-module .field-list-files .list-grid .file-item:hover .file-name {
-    transition: all 0.2s;
-    transform: scale(1.2);
-}*/
 .quantumviewfiles-module .field-list-files .list-grid .directory-item {
     height: 130px;
     margin: 1%;
@@ -881,7 +872,7 @@ svg.svg-icon text {
 .quantumviewfiles-module .field-list-files .list-table .directory-item {
     display: flex;
     align-items: center;
-    padding: 0 6px 0 27px;
+    padding: 0 6px;
     border-bottom: 1px solid #ddd;
 }
 .quantumviewfiles-module .field-list-files .list-table .directory-item:hover {
@@ -890,7 +881,7 @@ svg.svg-icon text {
     transition: all 0.2s;
 }
 .quantumviewfiles-module .field-list-files .list-table .directory-item .directory {
-    padding: 8px 4px;
+    padding: 8px 4px 8px 10px;
     width: 100%;
     display: flex;
     align-self: center;
