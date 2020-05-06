@@ -80,6 +80,7 @@ $document = \Joomla\CMS\Factory::getDocument();
         'buttonWatermark': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_WATERMARK'), ENT_QUOTES); ?>",
         'buttonPaste': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_PASTE'), ENT_QUOTES); ?>",
         'buttonCopy': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_COPY'), ENT_QUOTES); ?>",
+        'buttonSelectAll': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_SELECT_ALL'), ENT_QUOTES); ?>",
         'buttonCut': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_CUT'), ENT_QUOTES); ?>",
         'buttonDelete': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_DELETE'), ENT_QUOTES); ?>",
         'buttonTable': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_TABLE'), ENT_QUOTES); ?>",

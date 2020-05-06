@@ -469,6 +469,26 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
 
             }).parentElement;
 
+
+            Filemanager.Quantumtoolbar.buttonAdd(
+                'viewfilesSelectAll',
+                'center',
+                'file-actions',
+                'btn-select-all btn-width-small',
+                QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.buttonSelectAll, 'ENT_QUOTES'),
+                'quantummanager-icon-select-all',
+                {},
+                function (ev) {
+                    let objectAll = ViewfilesElement.querySelectorAll('.field-list-files .object-select');
+
+                    for(let i=0;i<objectAll.length;i++) {
+                        self.selectFile(objectAll[i], true);
+                    }
+
+                },
+                buttonOther
+            );
+
             Filemanager.Quantumtoolbar.buttonAdd(
                 'viewfilesPaste',
                 'center',
@@ -978,6 +998,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
 
                             self.clearAllSelectFile();
                             self.directory = this;
+                            self.trigger('clickObject');
                             self.trigger('updatePath');
                             self.trigger('clickDirectory');
                         }
