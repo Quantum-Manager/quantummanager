@@ -856,8 +856,8 @@ svg.svg-icon text {
     position: absolute;
     content: "";
     left: 5px;
-    width: 15px;
-    height: 15px;
+    width: 17px;
+    height: 17px;
     border: 1px solid #dddddd;
     transition: all 0.4s ease;
     z-index: 2;
@@ -904,8 +904,8 @@ svg.svg-icon text {
     position: absolute;
     content: "";
     left: 5px;
-    width: 15px;
-    height: 15px;
+    width: 17px;
+    height: 17px;
     border: 1px solid #dddddd;
     transition: all 0.4s ease;
     z-index: 2;
