@@ -485,6 +485,8 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                         self.selectFile(objectAll[i], true);
                     }
 
+                    self.trigger('clickObject');
+
                 },
                 buttonOther
             );
