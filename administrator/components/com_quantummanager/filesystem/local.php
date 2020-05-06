@@ -16,6 +16,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
+use Joomla\Filesystem\Path;
 
 class QuantummanagerFileSystemLocal
 {
@@ -118,10 +119,9 @@ class QuantummanagerFileSystemLocal
 			}
 		}
 
-
 		return json_encode([
-			'directories' => $directories
-		]);
+			'directories' => $directories,
+		], false, 1000);
 	}
 
 	/**
@@ -795,7 +795,7 @@ class QuantummanagerFileSystemLocal
 		{
 			foreach ($list as $file)
 			{
-				if (file_exists($pathFromCompile . DIRECTORY_SEPARATOR . $file))
+				if (file_exists($pathFromCompile . DIRECTORY_SEPARATOR . $file) && !file_exists($pathToCompile . DIRECTORY_SEPARATOR . $file))
 				{
 					if(is_file($pathFromCompile . DIRECTORY_SEPARATOR . $file))
 					{
@@ -816,7 +816,30 @@ class QuantummanagerFileSystemLocal
 						}
 						else
 						{
-							Folder::copy($pathFromCompile . DIRECTORY_SEPARATOR . $file, $pathToCompile . DIRECTORY_SEPARATOR . $file);
+						    $rand = 'copy_' . mt_rand(111111111, 999999999);
+						    $cache = JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'cache/com_quantummanager';
+						    $cache_copy = JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'cache/com_quantummanager/copy';
+						    $cache_copy_copy = JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'cache/com_quantummanager/copy/' . $rand;
+
+						    if(!file_exists($cache))
+                            {
+                                Folder::create($cache);
+                            }
+
+                            if(!file_exists($cache_copy))
+                            {
+                                Folder::create($cache_copy);
+                            }
+
+                            if(!file_exists($cache_copy_copy))
+                            {
+                                Folder::create($cache_copy_copy);
+                            }
+
+							Folder::copy($pathFromCompile . DIRECTORY_SEPARATOR . $file, $cache_copy_copy, '', true);
+                            Folder::copy($cache_copy_copy, $pathToCompile . DIRECTORY_SEPARATOR . $file);
+                            Folder::delete($cache_copy_copy);
+
 						}
 					}
 

@@ -233,6 +233,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
         {
             'id': 'viewfilesWatermark',
             'exs': ['png', 'jpg', 'jpeg'],
+            'for': 'file',
             'count': 'some'
         },
         {
@@ -248,13 +249,20 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             'count': 'some'
         },
         {
-            'id': 'viewfilesFileRename'
+            'id': 'viewfilesFileRename',
+            'for': 'file'
         },
         {
-            'id': 'viewfilesFilePreview'
+            'id': 'viewfilesDirectoryRename',
+            'for': 'directory'
         },
         {
-            'id': 'viewfilesCopyLink'
+            'id': 'viewfilesFilePreview',
+            'for': 'file'
+        },
+        {
+            'id': 'viewfilesCopyLink',
+            'for': 'file'
         }
     ];
 
@@ -406,12 +414,12 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 {},
                 function (ev) {
 
-                    let filesAll = ViewfilesElement.querySelectorAll('.field-list-files .file-item');
+                    let filesAll = ViewfilesElement.querySelectorAll('.field-list-files .object-select');
                     let files = [];
 
                     for(let i=0;i<filesAll.length;i++) {
                         if (filesAll[i].querySelector('input').checked) {
-                            files.push(filesAll[i].getAttribute('data-file'));
+                            files.push(filesAll[i].getAttribute('data-fullname'));
                         }
                     }
 
@@ -419,7 +427,17 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                         return;
                     }
 
-                    let alert = QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.contextDelete, 'ENT_QUOTES') + ' ' + self.file.getAttribute('data-file') + '?';
+                    if(self.objectSelect === undefined || self.objectSelect === null) {
+                        return;
+                    }
+
+                    let alert = '';
+                    if(self.objectSelect.classList.contains('file-item')) {
+                        alert = QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.contextDelete, 'ENT_QUOTES') + ' ' + self.file.getAttribute('data-file') + '?';
+                    } else {
+                        alert = QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.contextDelete, 'ENT_QUOTES') + ' ' + self.directory.getAttribute('data-fullname') + '?';
+                    }
+
 
                     if(files.length > 1) {
                         alert = QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.contextSomeDelete, 'ENT_QUOTES') + '?';
@@ -450,6 +468,26 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 function (ev) {
 
             }).parentElement;
+
+
+            Filemanager.Quantumtoolbar.buttonAdd(
+                'viewfilesSelectAll',
+                'center',
+                'file-actions',
+                'btn-select-all btn-width-small',
+                QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.buttonSelectAll, 'ENT_QUOTES'),
+                'quantummanager-icon-select-all',
+                {},
+                function (ev) {
+                    let objectAll = ViewfilesElement.querySelectorAll('.field-list-files .object-select');
+
+                    for(let i=0;i<objectAll.length;i++) {
+                        self.selectFile(objectAll[i], true);
+                    }
+
+                },
+                buttonOther
+            );
 
             Filemanager.Quantumtoolbar.buttonAdd(
                 'viewfilesPaste',
@@ -547,6 +585,35 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
 
                     QuantumUtils.prompt(QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.fileName, 'ENT_QUOTES'), self.file.getAttribute('data-name'), function (result) {
                         jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.renameFile&path=" + encodeURIComponent(Filemanager.data.path) + '&file=' + encodeURIComponent(self.file.getAttribute('data-file')) + '&name='+ encodeURIComponent(result) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
+                            response = JSON.parse(response);
+                            if(response.status === undefined) {
+                                return;
+                            }
+
+                            if(response.status === 'ok') {
+                                Filemanager.events.trigger('reloadPaths', Filemanager);
+                            }
+                        });
+                    });
+
+                },
+                buttonOther
+            );
+
+            Filemanager.Quantumtoolbar.buttonAdd(
+                'viewfilesDirectoryRename',
+                'center',
+                'file-actions',
+                'btn-file-rename btn-width-small btn-hide',
+                QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.contextRename, 'ENT_QUOTES'),
+                'quantummanager-icon-edit',
+                {},
+                function (ev) {
+
+                    let name = self.directory.querySelector('.directory-name').innerHTML;
+
+                    QuantumUtils.prompt(QuantumviewfilesLang.directoryName, name , function (result) {
+                        jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.renameDirectory&path=" + encodeURIComponent(Filemanager.data.path) + '&oldName=' + encodeURIComponent(name) + '&name='+ encodeURIComponent(result) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
                             response = JSON.parse(response);
                             if(response.status === undefined) {
                                 return;
@@ -807,7 +874,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                         addClass += 'empty';
                     }
 
-                    htmlfilesAndDirectories += "<div class='object-select directory-item " + addClass + "' data-iswritable='" + directories[i]['is_writable'] + "' data-fullname='" + directories[i]['name'] + "'><input type=\"checkbox\" class=\"import-files-check-file\"><div class='directory'><div class='directory-icon'><span></span></div><div class='directory-name'>" + directories[i]['name'] + "</div></div></div>";
+                    htmlfilesAndDirectories += "<div class='object-select directory-item " + addClass + "' data-iswritable='" + directories[i]['is_writable'] + "' data-fullname='" + directories[i]['name'] + "'><input type=\"checkbox\" class=\"import-files-check-file\"><span class='check'></span><div class='directory'><div class='directory-icon'><span></span></div><div class='directory-name'>" + directories[i]['name'] + "</div></div></div>";
                 }
             }
 
@@ -818,7 +885,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                     addClass = 'lock';
                 }
 
-                htmlfilesAndDirectories += "<div class='object-select file-item " + addClass + "' data-iswritable='" + files[i]['is_writable'] + "' data-size='" + files[i]['size'] + "' data-name='" + files[i]['name'] + "' data-exs='" + files[i]['exs'] + "' data-fileP='" + files[i]['fileP'] + "' data-dateC='" + files[i]['dateC'] + "' data-dateM='" + files[i]['dateM'] + "' data-file='" + files[i]['file'] + "' data-fullname='" + files[i]['file'] + "'><input type=\"checkbox\" class=\"import-files-check-file\"><div class='file'><div class='context-menu-open'><span></span></div><div class='file-exs icon-file-" + type + "'><div class='av-folderlist-label'></div></div><div class='file-name'>" + files[i]['file'] + "</div></div></div>" ;
+                htmlfilesAndDirectories += "<div class='object-select file-item " + addClass + "' data-iswritable='" + files[i]['is_writable'] + "' data-size='" + files[i]['size'] + "' data-name='" + files[i]['name'] + "' data-exs='" + files[i]['exs'] + "' data-fileP='" + files[i]['fileP'] + "' data-dateC='" + files[i]['dateC'] + "' data-dateM='" + files[i]['dateM'] + "' data-file='" + files[i]['file'] + "' data-fullname='" + files[i]['file'] + "'><input type=\"checkbox\" class=\"import-files-check-file\"><span class='check'></span><div class='file'><div class='context-menu-open'><span></span></div><div class='file-exs icon-file-" + type + "'><div class='av-folderlist-label'></div></div><div class='file-name'>" + files[i]['file'] + "</div></div></div>" ;
             }
 
             htmlfilesAndDirectories += "</div></div>";
@@ -850,6 +917,12 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
 
             for(let i=0;i<filesAll.length;i++) {
                 let inputCheck = filesAll[i].querySelector('.import-files-check-file');
+
+                filesAll[i].addEventListener('click', function (ev) {
+                    if(ev.target.classList.contains('check')) {
+                        self.ds.multiSelectMode = true;
+                    }
+                });
 
                 filesAll[i].addEventListener('dblclick', function () {
                     let element = this;
@@ -912,18 +985,28 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 self.contextMenu.hide();
 
                 for(let i=0;i<directoriesAll.length;i++) {
-                    directoriesAll[i].addEventListener('click', function () {
-                        let directory = this.querySelector('.directory-name').innerHTML;
-                        Filemanager.data.path = self.path + '/' + directory;
+                    directoriesAll[i].addEventListener('click', function (ev) {
 
-                        if(localStorage !== undefined) {
-                            localStorage.setItem('quantummanagerLastDir', Filemanager.data.path);
-                            localStorage.setItem('quantummanagerLastDirHash', self.options.hash);
+                        if(!ev.target.classList.contains('check')) {
+                            let directory = this.querySelector('.directory-name').innerHTML;
+                            Filemanager.data.path = self.path + '/' + directory;
+
+                            if(localStorage !== undefined) {
+                                localStorage.setItem('quantummanagerLastDir', Filemanager.data.path);
+                                localStorage.setItem('quantummanagerLastDirHash', self.options.hash);
+                            }
+
+                            self.clearAllSelectFile();
+                            self.directory = this;
+                            self.trigger('clickObject');
+                            self.trigger('updatePath');
+                            self.trigger('clickDirectory');
+                        }
+                        else
+                        {
+                            self.ds.multiSelectMode = true;
                         }
 
-                        self.directory = this;
-                        self.trigger('updatePath');
-                        self.trigger('clickDirectory');
                     });
 
                     directoriesAll[i].addEventListener('contextmenu',function(ev) {
@@ -972,6 +1055,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             }
 
             self.buildBreadcrumbs();
+
             self.showMetaDirectory(true);
             self.metaFileLoad = {};
 
@@ -989,7 +1073,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                     multiSelectMode: false,
                     autoScrollSpeed: 3,
                     onDragStart: function (ev) {
-                        if (!ev.target.classList.contains('ds-selectable')) {
+                        if (ev.target.classList.contains('list')) {
                             self.dsP = new Promise((resolve, reject) => {
                                 self.ds.clearSelection();
                                 resolve();
@@ -1009,7 +1093,6 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                         let setFile = true;
 
                         if (countSelected) {
-
                             if (countSelected === 1) {
                                 if (self.objectSelect === objectSelect) {
                                     self.unSelectFile(objectSelect, self);
@@ -1064,7 +1147,8 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                                 self.directory = objectSelect;
                                 self.trigger('clickDirectory', objectSelect);
                             }
-                        } else
+                        }
+                        else
                         {
                             self.file = objectSelect;
                             self.directory = objectSelect;
@@ -1104,7 +1188,8 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
         let self = this;
         let tmpInput = element.closest('.object-select').querySelector('.import-files-check-file');
         tmpInput.checked = true;
-        self.ds.addSelection(element);
+
+        let r = self.ds.addSelection(element);
         let countSelected = self.getCountSelected();
 
         if(countSelected > 1) {
@@ -1112,6 +1197,9 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
         } else {
             self.showMetaFile(element);
         }
+
+
+        self.ds.multiSelectMode = false;
 
         if(triggerFlag !== null && triggerFlag === true) {
             if(element.classList.contains('file-item'))
@@ -1173,6 +1261,10 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
         let tmpLength = 0;
 
         if(self.options.metafile === '1') {
+
+            if(element.classList.contains('directory-item')) {
+                return;
+            }
 
             let url = QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getMetaFile&path=" + encodeURIComponent(self.path) + '&name=' + encodeURIComponent(element.getAttribute('data-file')) + '&scope=' + Filemanager.data.scope);
 
@@ -1312,7 +1404,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 }
 
                 if(tmpLength === 0) {
-                    let filesAll = ViewfilesElement.querySelectorAll('.field-list-files .file-item');
+                    let filesAll = ViewfilesElement.querySelectorAll('.field-list-files .object-select');
                     for(let i=0;i<filesAll.length;i++) {
                         if (filesAll[i].querySelector('input').checked) {
                             return;
@@ -1679,21 +1771,6 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
         clPaths = htmlBreadcrumbs.querySelectorAll('.clPath');
         liDropdown = htmlBreadcrumbs.querySelectorAll('li.dropdown');
 
-        /*
-        for(let i=0;i<liDropdown.length;i++) {
-            let check = liDropdown[i].querySelector('.dropdown-content');
-            if(check !== null) {
-                //liDropdown[i].addEventListener('mousemove', function (ev) {
-                let coord = liDropdown[i].getBoundingClientRect();
-                let height = liDropdown[i].clientHeight - 2;
-                let dropdown = liDropdown[i].querySelector('.dropdown-content');
-                dropdown.style.left = coord.x + 'px';
-                dropdown.style.top = coord.y + height + 'px';
-                //});
-            }
-
-        }*/
-
         for(let i=0;i<clPaths.length;i++) {
             clPaths[i].addEventListener('click', function (ev) {
                 fm.data.path = this.getAttribute('data-path');
@@ -1759,12 +1836,13 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
     this.clearAllSelectFile = function () {
         let self = this;
         if(self.ds !== undefined) {
-            let filesAll = ViewfilesElement.querySelectorAll('.field-list-files .file-item');
+            let filesAll = ViewfilesElement.querySelectorAll('.field-list-files .object-select');
 
             self.ds.clearSelection();
             for (let i=0;i<filesAll.length;i++) {
                 self.unSelectFile(filesAll[i], self)
             }
+
             self.showMetaDirectory();
         }
     };
@@ -1942,6 +2020,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
     Filemanager.events.add(this, 'clickObject', function (fm, el) {
         let objectSelect = fm.Quantumviewfiles.objectSelect;
         let exs = '';
+        let type = '';
 
         if(objectSelect === undefined) {
 
@@ -1950,6 +2029,13 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             }
 
         } else {
+
+            if(objectSelect.classList.contains('file-item')) {
+                type = 'file';
+            } else {
+                type = 'directory';
+            }
+
             if(objectSelect.classList.contains('file-item'))
             {
                 exs = objectSelect.getAttribute('data-exs').toLocaleLowerCase();
@@ -2003,7 +2089,15 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                         }
                     }
 
-                    fm.Quantumtoolbar.buttonsList[self.IdsButtonForFile[i].id].classList.remove('btn-hide');
+
+                    if(self.IdsButtonForFile[i].for !== undefined) {
+                        if(self.IdsButtonForFile[i].for === type) {
+                            fm.Quantumtoolbar.buttonsList[self.IdsButtonForFile[i].id].classList.remove('btn-hide');
+                        }
+                    } else {
+                        fm.Quantumtoolbar.buttonsList[self.IdsButtonForFile[i].id].classList.remove('btn-hide');
+                    }
+
                 } else {
                     fm.Quantumtoolbar.buttonsList[self.IdsButtonForFile[i].id].classList.add('btn-hide');
                 }

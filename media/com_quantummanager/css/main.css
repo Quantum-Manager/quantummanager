@@ -281,6 +281,14 @@
     justify-content: flex-end;
 }
 
+@media screen and (max-width: 1200px) {
+
+    .quatummanagermodal-wrap .quatummanagermodal-container {
+        width: 100%;
+    }
+
+}
+
 .quatummanagermodal-wrap .quatummanagermodal-close {
     position: absolute;
     top: 8px;
@@ -452,6 +460,11 @@
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/clipboard-paste-button.svg");
+}
+.quantummanager-icon-select-all {
+    width: 14px;
+    height: 14px;
+    background-image: url("../images/icons/action/select-all.svg");
 }
 .quantummanager-icon-close {
     width: 14px;
