@@ -976,6 +976,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                                 localStorage.setItem('quantummanagerLastDirHash', self.options.hash);
                             }
 
+                            self.clearAllSelectFile();
                             self.directory = this;
                             self.trigger('updatePath');
                             self.trigger('clickDirectory');
@@ -1033,6 +1034,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             }
 
             self.buildBreadcrumbs();
+
             self.showMetaDirectory(true);
             self.metaFileLoad = {};
 
@@ -1819,6 +1821,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             for (let i=0;i<filesAll.length;i++) {
                 self.unSelectFile(filesAll[i], self)
             }
+
             self.showMetaDirectory();
         }
     };
@@ -2043,12 +2046,6 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                     continue;
                 }
 
-                if(self.IdsButtonForFile[i].for !== undefined) {
-                    if(self.IdsButtonForFile[i].for !== type) {
-                        continue;
-                    }
-                }
-
                 let checkSelect = false;
 
                 if(self.IdsButtonForFile[i].count === undefined) {
@@ -2071,7 +2068,15 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                         }
                     }
 
-                    fm.Quantumtoolbar.buttonsList[self.IdsButtonForFile[i].id].classList.remove('btn-hide');
+
+                    if(self.IdsButtonForFile[i].for !== undefined) {
+                        if(self.IdsButtonForFile[i].for === type) {
+                            fm.Quantumtoolbar.buttonsList[self.IdsButtonForFile[i].id].classList.remove('btn-hide');
+                        }
+                    } else {
+                        fm.Quantumtoolbar.buttonsList[self.IdsButtonForFile[i].id].classList.remove('btn-hide');
+                    }
+
                 } else {
                     fm.Quantumtoolbar.buttonsList[self.IdsButtonForFile[i].id].classList.add('btn-hide');
                 }

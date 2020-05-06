@@ -859,6 +859,7 @@ svg.svg-icon text {
     width: 15px;
     height: 15px;
     border: 1px solid #dddddd;
+    transition: all 0.4s ease;
     z-index: 2;
 }
 .quantumviewfiles-module .field-list-files .list-table .file-item input:checked ~ .check {
@@ -873,7 +874,7 @@ svg.svg-icon text {
 .quantumviewfiles-module .field-list-files .list-table .directory-item {
     display: flex;
     align-items: center;
-    padding: 0 6px;
+    padding: 0;
     border-bottom: 1px solid #ddd;
     font-size: 13px;
 }
@@ -886,17 +887,13 @@ svg.svg-icon text {
     display: none;
     margin-right: 5px;
 }
-.quantumviewfiles-module .field-list-files .list-table .directory-item input:checked ~ .file {
-    background-color: #fcf8e3;
-    color: #444444;
-}
-.quantumviewfiles-module .field-list-files .list-table .directory-item input:checked ~ .fields {
+.quantumviewfiles-module .field-list-files .list-table .directory-item input:checked ~ .directory {
     background-color: #fcf8e3;
     color: #444444;
 }
 .quantumviewfiles-module .field-list-files .list-table .directory-item .directory {
     position: relative;
-    padding: 8px 4px 8px 25px;
+    padding: 8px 4px 8px 31px;
     width: 100%;
     display: flex;
     align-self: center;
@@ -910,6 +907,7 @@ svg.svg-icon text {
     width: 15px;
     height: 15px;
     border: 1px solid #dddddd;
+    transition: all 0.4s ease;
     z-index: 2;
 }
 .quantumviewfiles-module .field-list-files .list-table .directory-item input:checked ~ .check {
