@@ -108,7 +108,9 @@ Quantum is a free file and media manager for Joomla.
 - [Quantum in JED](https://extensions.joomla.org/extension/quantum-manager/)
 - [Localizations](https://www.norrnext.com/quantum-manager-localizations)
 - [Support](https://www.norrnext.com/forum/quantum-manager)
+- [Tracker](https://github.com/Quantum-Manager/tracker)
 
 ### Поддержка
-- [quantum@hika.su](mailto:quantum@hika.su) (email)
+- [Трекер](https://github.com/Quantum-Manager/tracker) (Quantum-Manager/tracker)
+- [cymbal@delo-design.ru](mailto:cymbal@delo-design.ru) (email)
 - [@tsymbalmitia](tg://resolve?domain=tsymbalmitia) (telegram) 
