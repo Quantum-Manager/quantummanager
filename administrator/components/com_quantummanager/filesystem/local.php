@@ -437,6 +437,8 @@ class QuantummanagerFileSystemLocal
 		$sourcePath = $path;
 		$path = QuantummanagerHelper::preparePath($path, false, $scope);
 
+        $extended = (int)QuantummanagerHelper::getParamsComponentValue('metafileextended', 0);
+        $showPath = (int)QuantummanagerHelper::getParamsComponentValue('metafileshowpath', 0);
 		$directory = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
 		$filePath = $directory . DIRECTORY_SEPARATOR . $file;
 		$meta = [];
@@ -551,14 +553,23 @@ class QuantummanagerFileSystemLocal
 
 				$meta['global'] = array_merge($meta['global'], $globalInfo);
 
+                if($showPath)
+                {
+                    $meta['global'] = array_merge($meta['global'], [
+                        [
+                            'key' => '',
+                            'value' => JPATH_SITE . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file
+                        ]
+                    ]);
+                }
+
 			}
 			else
 			{
 
 				$splitDirectory = explode(DIRECTORY_SEPARATOR, $directory);
 				$directoryName = array_pop($splitDirectory);
-				$extended = (int)QuantummanagerHelper::getParamsComponentValue('metafileextended', 0);
-				$showPath = (int)QuantummanagerHelper::getParamsComponentValue('metafileshowpath', 0);
+
 
 				$meta = [
 					'preview' => [

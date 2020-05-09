@@ -1330,7 +1330,12 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                                 continue;
                             }
 
-                            html += '<div><div>' + response.global[i].key + '</div><div>' + response.global[i].value + '</div></div>';
+                            if(response.global[i].key !== '') {
+                                html += '<div><div>' + response.global[i].key + '</div><div>' + response.global[i].value + '</div></div>';
+                            } else {
+                                html += '<div class="only-value"><div>' + response.global[i].value + '</div></div>';
+                            }
+
                         }
                         html += '</div>';
                     }
