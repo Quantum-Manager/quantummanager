@@ -816,7 +816,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                     {
                         name: QuantumviewfilesLang.helpButtonSupport,
                         callback: function () {
-                            QuantumUtils.openInNewTab('https://www.norrnext.com/forum/quantum-manager');
+                            QuantumUtils.openInNewTab('https://github.com/Quantum-Manager/tracker');
                         }
                     },
                     {
