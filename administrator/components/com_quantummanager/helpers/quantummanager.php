@@ -67,7 +67,6 @@ class QuantummanagerHelper
 	];
 
 
-
 	/**
 	 * @param $name
 	 * @param $mimeType

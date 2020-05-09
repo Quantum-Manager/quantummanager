@@ -13,6 +13,7 @@ use Joomla\CMS\Language\Text;
 
 extract($displayData);
 $presets = $paramsComponents->get('custompresetscrop');
+
 ?>
 
 <div class="quantummanager-module quantumcropperjs-module" data-type="Quantumcropperjs" data-options="driver:<?php echo $driver ?>">
@@ -49,10 +50,10 @@ $presets = $paramsComponents->get('custompresetscrop');
                             <?php endforeach; ?>
                         <?php endif; ?>
                         <option value="1">1:1</option>
-                        <option value="1.7777777777777777">16:9</option>
+                        <option value="1.7">16:9</option>
                         <option value="2">18:9</option>
-                        <option value="1.3333333333333333">4:3</option>
-                        <option value="0.6666666666666666">2:3</option>
+                        <option value="1.3">4:3</option>
+                        <option value="0.6">2:3</option>
                     </select>
                 </label>
             </div>
