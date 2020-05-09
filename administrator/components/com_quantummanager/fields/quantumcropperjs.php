@@ -56,11 +56,19 @@ class JFormFieldQuantumcropperjs extends JFormField
 		JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');
 		$driver = (new QuantummanagerHelperImage)->getNameDriver();
 
+        $values_default = [
+            'compression' => QuantummanagerHelper::getParamsComponentValue('compression', 90),
+            'sharpen' => QuantummanagerHelper::getParamsComponentValue('sharpen', 0),
+            'brightness' => QuantummanagerHelper::getParamsComponentValue('brightness', 0),
+            'blur' => QuantummanagerHelper::getParamsComponentValue('blur', 0),
+        ];
+
 		return array_merge(parent::getLayoutData(),
 			[
 				'paramsComponents' => ComponentHelper::getParams('com_quantummanager'),
 				'cssClass' => $this->cssClass,
 				'driver' => $driver,
+                'values_default' => $values_default
 			]
 		);
 	}

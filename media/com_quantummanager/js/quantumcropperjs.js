@@ -106,6 +106,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
         let self = this;
         self.areaSave.style.display = 'none';
 
+        self.options.defaults = self.options.defaults.replace(/\&split/g, ':');
         self.initInputs();
 
         self.ImageWidthValue.addEventListener('change', function () {
@@ -345,6 +346,16 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
 
         if(['png', 'jpg', 'jpeg'].indexOf(exs) === -1) {
             return;
+        }
+
+        let default_values = JSON.parse(options.defaults);
+        for (let k in default_values) {
+            let input =  QuantumCropperjsElement.querySelector('input[name=' + k + ']')  ;
+            if(input !== null) {
+                input.value = default_values[k];
+                QuantumUtils.triggerElementEvent('input', input);
+                QuantumUtils.triggerElementEvent('change', input);
+            }
         }
 
         jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumcropperjs.getImageForCrop&path=" + encodeURIComponent(Filemanager.data.path) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&file=' + encodeURIComponent(fileSource) + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {

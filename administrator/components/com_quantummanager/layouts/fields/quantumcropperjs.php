@@ -16,7 +16,7 @@ $presets = $paramsComponents->get('custompresetscrop');
 
 ?>
 
-<div class="quantummanager-module quantumcropperjs-module" data-type="Quantumcropperjs" data-options="driver:<?php echo $driver ?>">
+<div class="quantummanager-module quantumcropperjs-module" data-type="Quantumcropperjs" data-options="driver:<?php echo $driver ?>;defaults:<?php echo str_replace(':', '&split', htmlspecialchars(json_encode($values_default), ENT_QUOTES)) ?>">
     <input type="hidden" name="driver" value="<?php echo $driver ?>">
     <div class="cropper-save">
         <div class="loader"><?php echo Text::_('COM_QUANTUMMANAGER_ACTION_SAVEAREA'); ?><span></span><span></span><span></span><span></span></div>
@@ -97,7 +97,7 @@ $presets = $paramsComponents->get('custompresetscrop');
                 <div>
                     <input type="range" name="range-compression" min="1" max="100" step="1" value="80">
                     <div class="input-wrapper">
-                        <input type="number" name="compression" value="80" data-input-send>
+                        <input type="number" name="compression" value="90" data-input-send>
                         <span class="bottom"></span>
                         <span class="right"></span>
                         <span class="top"></span>
