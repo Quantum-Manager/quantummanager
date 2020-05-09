@@ -544,19 +544,19 @@ class QuantummanagerHelper
 			],
 			(object)[
 				'id' => 'docs',
-				'title' => 'docs',
+				'title' => 'Docs',
 				'path' => 'docs',
 				'enable' => 0,
 			],
 			(object)[
 				'id' => 'music',
-				'title' => 'music',
+				'title' => 'Music',
 				'path' => 'music',
 				'enable' => 0,
 			],
 			(object)[
 				'id' => 'videos',
-				'title' => 'videos',
+				'title' => 'Videos',
 				'path' => 'videos',
 				'enable' => 0,
 			],
