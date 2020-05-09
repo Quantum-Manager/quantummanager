@@ -47,7 +47,9 @@ class JFormFieldQuantumCombine extends JFormField
 	public function __construct($form = null)
 	{
 		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
-		parent::__construct($form);
+        JLoader::register('QuantummanagerLibs', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantumlibs.php');
+
+        parent::__construct($form);
 	}
 
 
@@ -110,7 +112,7 @@ class JFormFieldQuantumCombine extends JFormField
 	{
 		try {
 
-			QuantummanagerHelper::includeScriptHead();
+            QuantummanagerLibs::includeScriptHead();
 
 			$componentParams = ComponentHelper::getParams('com_quantummanager');
 
@@ -139,15 +141,10 @@ class JFormFieldQuantumCombine extends JFormField
 					]);
 				}
 
-				HTMLHelper::_('script', 'com_quantummanager/utils.js', [
-					'version' => filemtime(__FILE__),
-					'relative' => true
-				]);
-
-				HTMLHelper::_('script', 'com_quantummanager/split.min.js', [
-					'version' => filemtime(__FILE__),
-					'relative' => true
-				]);
+                QuantummanagerLibs::includes([
+                    'utils',
+                    'split'
+                ]);
 
 				HTMLHelper::_('script', 'com_quantummanager/combine.js', [
 					'version' => filemtime(__FILE__),

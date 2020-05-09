@@ -68,34 +68,22 @@ class JFormFieldQuantumpixabay extends JFormField
 			$this->__set('cssClass', $this->getAttribute('cssClass', ''));
 
 			JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
-			QuantummanagerHelper::includeScriptHead();
-			
-			HTMLHelper::_('stylesheet', 'com_quantummanager/main.css', [
-				'version' => filemtime(__FILE__),
-				'relative' => true
-			]);
+            JLoader::register('QuantummanagerLibs', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantumlibs.php');
+
+            QuantummanagerLibs::includeScriptHead();
+            QuantummanagerLibs::includes([
+                'core',
+                'utils',
+                'dynamicGrid',
+            ]);
+
 
 			HTMLHelper::_('stylesheet', 'com_quantummanager/quantumpixabay.css', [
 				'version' => filemtime(__FILE__),
 				'relative' => true
 			]);
 
-			HTMLHelper::_('script', 'com_quantummanager/main.js', [
-				'version' => filemtime(__FILE__),
-				'relative' => true
-			]);
-
-			HTMLHelper::_('script', 'com_quantummanager/utils.js', [
-				'version' => filemtime(__FILE__),
-				'relative' => true
-			]);
-
 			HTMLHelper::_('script', 'com_quantummanager/quantumpixabay.js', [
-				'version' => filemtime(__FILE__),
-				'relative' => true
-			]);
-
-			HTMLHelper::_('script', 'com_quantummanager/masonry.min.js', [
 				'version' => filemtime(__FILE__),
 				'relative' => true
 			]);

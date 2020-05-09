@@ -73,6 +73,7 @@ class JFormFieldQuantumupload extends JFormField
 		try {
 
 			JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+            JLoader::register('QuantummanagerLibs', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantumlibs.php');
 
 			$this->__set('standalone', $this->getAttribute('standalone', true));
 			$this->__set('cssClass', $this->getAttribute('cssClass', ''));
@@ -81,30 +82,15 @@ class JFormFieldQuantumupload extends JFormField
 			$this->scope = $this->getAttribute('scope', 'images');
 			$this->dropAreaHidden = $this->getAttribute('dropAreaHidden', QuantummanagerHelper::getParamsComponentValue('dropareahidden', 0));
 
-			QuantummanagerHelper::includeScriptHead();
-			QuantummanagerHelper::loadLang();
+            QuantummanagerHelper::loadLang();
+            QuantummanagerLibs::includeScriptHead();
+            QuantummanagerLibs::includes([
+                'core',
+                'utils',
+            ]);
 
-			HTMLHelper::_('stylesheet', 'com_quantummanager/main.css', [
-				'version' => filemtime(__FILE__),
-				'relative' => true
-			]);
 
 			HTMLHelper::_('stylesheet', 'com_quantummanager/quantumupload.css', [
-				'version' => filemtime(__FILE__),
-				'relative' => true
-			]);
-
-			HTMLHelper::_('script', 'com_quantummanager/main.js', [
-				'version' => filemtime(__FILE__),
-				'relative' => true
-			]);
-
-			HTMLHelper::_('script', 'com_quantummanager/jsalert.min.js', [
-				'version' => filemtime(__FILE__),
-				'relative' => true
-			]);
-
-			HTMLHelper::_('script', 'com_quantummanager/utils.js', [
 				'version' => filemtime(__FILE__),
 				'relative' => true
 			]);

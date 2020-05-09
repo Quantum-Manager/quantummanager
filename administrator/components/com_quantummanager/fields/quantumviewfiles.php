@@ -35,6 +35,7 @@ class JFormFieldQuantumviewfiles extends JFormField
 	public function __construct($form = null)
 	{
 		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+		JLoader::register('QuantummanagerLibs', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantumlibs.php');
 		parent::__construct($form);
 	}
 
@@ -90,44 +91,20 @@ class JFormFieldQuantumviewfiles extends JFormField
 			$this->directory = $this->getAttribute('directory', 'images');
 			$this->onlyfiles = $this->getAttribute('onlyfiles', '0');
 
-			QuantummanagerHelper::includeScriptHead();
+            QuantummanagerLibs::includeScriptHead();
+            QuantummanagerLibs::includes([
+                'core',
+                'utils',
+                'alert',
+                'contextmenu',
+                'clipboard',
+                'notify',
+                'lazyload',
+                'dragSelect',
+            ]);
 
-			HTMLHelper::_('stylesheet', 'com_quantummanager/main.css', [
-				'version' => filemtime(__FILE__),
-				'relative' => true
-			]);
 
 			HTMLHelper::_('stylesheet', 'com_quantummanager/quantumviewfiles.css', [
-				'version' => filemtime(__FILE__),
-				'relative' => true
-			]);
-
-			HTMLHelper::_('stylesheet', 'com_quantummanager/contextual.css', [
-				'version' => filemtime(__FILE__),
-				'relative' => true
-			]);
-
-			HTMLHelper::_('stylesheet', 'com_quantummanager/notify.css', [
-				'version' => filemtime(__FILE__),
-				'relative' => true
-			]);
-
-			HTMLHelper::_('script', 'com_quantummanager/main.js', [
-				'version' => filemtime(__FILE__),
-				'relative' => true
-			]);
-
-			HTMLHelper::_('script', 'com_quantummanager/jsalert.min.js', [
-				'version' => filemtime(__FILE__),
-				'relative' => true
-			]);
-
-			HTMLHelper::_('script', 'com_quantummanager/clipboard.min.js', [
-				'version' => filemtime(__FILE__),
-				'relative' => true
-			]);
-
-			HTMLHelper::_('script', 'com_quantummanager/utils.js', [
 				'version' => filemtime(__FILE__),
 				'relative' => true
 			]);
@@ -137,25 +114,6 @@ class JFormFieldQuantumviewfiles extends JFormField
 				'relative' => true
 			]);
 
-			HTMLHelper::_('script', 'com_quantummanager/ds.min.js', [
-				'version' => filemtime(__FILE__),
-				'relative' => true
-			]);
-
-			HTMLHelper::_('script', 'com_quantummanager/lazyload.min.js', [
-				'version' => filemtime(__FILE__),
-				'relative' => true
-			]);
-
-			HTMLHelper::_('script', 'com_quantummanager/contentual.js', [
-				'version' => filemtime(__FILE__),
-				'relative' => true
-			]);
-
-			HTMLHelper::_('script', 'com_quantummanager/notify.js', [
-				'version' => filemtime(__FILE__),
-				'relative' => true
-			]);
 
 			$field = parent::getInput();
 
