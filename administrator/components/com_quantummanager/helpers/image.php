@@ -221,6 +221,7 @@ class QuantummanagerHelperImage
 					$manager = JInterventionimage::getInstance(['driver' => $this->getNameDriver()]);
 					$manager = $manager->make($file);
 
+
 					if(isset($filters['compression']))
 					{
 						if((int)$filters['compression'] > 0)
@@ -228,11 +229,10 @@ class QuantummanagerHelperImage
 							if(in_array($info['extension'], ['jpg', 'jpeg']))
 							{
 								$manager = $manager->encode('jpg', (int)$filters['compression']);
-							}
+                                $manager->save($file, (int)$filters['compression']);
 
-							if($info['extension'] === 'png')
-							{
-								$manager = $manager->encode('png', (int)$filters['compression']);
+                                $manager = JInterventionimage::getInstance(['driver' => $this->getNameDriver()]);
+                                $manager = $manager->make($file);
 							}
 						}
 					}
@@ -261,7 +261,7 @@ class QuantummanagerHelperImage
 						}
 					}
 
-					$manager->save($file);
+                    $manager->save($file);
 				}
 			}
 		}
