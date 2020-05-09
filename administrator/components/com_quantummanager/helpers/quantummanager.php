@@ -916,7 +916,7 @@ class QuantummanagerHelper
 	 */
 	public static function escapeJsonString($value)
 	{
-		$escapers =     array("\\",     "/",   "\"",  "\n",  "\r",  "\t", "\x08", "\x0c");
+		$escapers = array("\\",     "/",   "\"",  "\n",  "\r",  "\t", "\x08", "\x0c");
 		$replacements = array("\\\\", "\\/", "\\\"", "\\n", "\\r", "\\t",  "\\f",  "\\b");
 		return str_replace($escapers, $replacements, $value);
 	}
