@@ -138,6 +138,7 @@
 		<field name="metafileshowpath"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_METAFILE_SHOWPATH_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_METAFILE_SHOWPATH_DESC"
 			   required="true"
 			   class="btn-group"
 			   default="0"
