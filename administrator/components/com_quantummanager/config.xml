@@ -138,6 +138,7 @@
 		<field name="metafileshowpath"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_METAFILE_SHOWPATH_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_METAFILE_SHOWPATH_DESC"
 			   required="true"
 			   class="btn-group"
 			   default="0"
@@ -313,7 +314,6 @@
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_PERCENT_VALUE_LABEL"
 			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_PERCENT_VALUE_DESC"
 			   default="10"
-			   class="input-xlarge"
 			   showon="overlaypercent:1[AND]overlay!:0"
 		/>
 
@@ -340,7 +340,6 @@
 			   type="text"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_PADDING_LABEL"
 			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_PADDING_DESC"
-			   class="input-xlarge"
 			   required="true"
 			   default="10"
 			   showon="overlay!:0"/>
@@ -348,7 +347,7 @@
 		<field name="compression"
 			   type="number"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_COMPRESSION_LABEL"
-			   class="input-xlarge"
+			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_COMPRESSION_DESC"
 			   default="90"
 			   min="0"
 			   max="100" />
@@ -356,7 +355,7 @@
 		<field name="sharpen"
 			   type="number"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_SHARPEN_LABEL"
-			   class="input-xlarge"
+			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_SHARPEN_DESC"
 			   default="0"
 			   min="0"
 			   max="100" />
@@ -364,7 +363,7 @@
 		<field name="brightness"
 			   type="number"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_BRIGHTNESS_LABEL"
-			   class="input-xlarge"
+			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_BRIGHTNESS_DESC"
 			   default="0"
 			   min="-100"
 			   max="100" />
@@ -372,7 +371,7 @@
 		<field name="blur"
 			   type="number"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_BLUR_LABEL"
-			   class="input-xlarge"
+			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_BRIGHTNESS_DESC"
 			   default="0"
 			   min="0"
 			   max="100" />
