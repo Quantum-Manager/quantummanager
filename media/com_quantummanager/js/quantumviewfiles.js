@@ -249,12 +249,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             'count': 'some'
         },
         {
-            'id': 'viewfilesFileRename',
-            'for': 'file'
-        },
-        {
-            'id': 'viewfilesDirectoryRename',
-            'for': 'directory'
+            'id': 'viewfilesRename',
         },
         {
             'id': 'viewfilesFilePreview',
@@ -585,7 +580,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             );
 
             Filemanager.Quantumtoolbar.buttonAdd(
-                'viewfilesFileRename',
+                'viewfilesRename',
                 'center',
                 'file-actions',
                 'btn-file-rename btn-width-small btn-hide',
@@ -594,47 +589,37 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 {},
                 function (ev) {
 
-                    QuantumUtils.prompt(QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.fileName, 'ENT_QUOTES'), self.file.getAttribute('data-name'), function (result) {
-                        jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.renameFile&path=" + encodeURIComponent(Filemanager.data.path) + '&file=' + encodeURIComponent(self.file.getAttribute('data-file')) + '&name='+ encodeURIComponent(result) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
-                            response = JSON.parse(response);
-                            if(response.status === undefined) {
-                                return;
-                            }
+                    if(self.objectSelect.classList.contains('file-item'))
+                    {
+                        QuantumUtils.prompt(QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.fileName, 'ENT_QUOTES'), self.file.getAttribute('data-name'), function (result) {
+                            jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.renameFile&path=" + encodeURIComponent(Filemanager.data.path) + '&file=' + encodeURIComponent(self.file.getAttribute('data-file')) + '&name='+ encodeURIComponent(result) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
+                                response = JSON.parse(response);
+                                if(response.status === undefined) {
+                                    return;
+                                }
 
-                            if(response.status === 'ok') {
-                                Filemanager.events.trigger('reloadPaths', Filemanager);
-                            }
+                                if(response.status === 'ok') {
+                                    Filemanager.events.trigger('reloadPaths', Filemanager);
+                                }
+                            });
                         });
-                    });
+                    } else {
+                        let name = self.directory.querySelector('.directory-name').innerHTML;
 
-                },
-                buttonOther
-            );
+                        QuantumUtils.prompt(QuantumviewfilesLang.directoryName, name , function (result) {
+                            jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.renameDirectory&path=" + encodeURIComponent(Filemanager.data.path) + '&oldName=' + encodeURIComponent(name) + '&name='+ encodeURIComponent(result) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
+                                response = JSON.parse(response);
+                                if(response.status === undefined) {
+                                    return;
+                                }
 
-            Filemanager.Quantumtoolbar.buttonAdd(
-                'viewfilesDirectoryRename',
-                'center',
-                'file-actions',
-                'btn-file-rename btn-width-small btn-hide',
-                QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.contextRename, 'ENT_QUOTES'),
-                'quantummanager-icon-edit',
-                {},
-                function (ev) {
-
-                    let name = self.directory.querySelector('.directory-name').innerHTML;
-
-                    QuantumUtils.prompt(QuantumviewfilesLang.directoryName, name , function (result) {
-                        jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.renameDirectory&path=" + encodeURIComponent(Filemanager.data.path) + '&oldName=' + encodeURIComponent(name) + '&name='+ encodeURIComponent(result) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
-                            response = JSON.parse(response);
-                            if(response.status === undefined) {
-                                return;
-                            }
-
-                            if(response.status === 'ok') {
-                                Filemanager.events.trigger('reloadPaths', Filemanager);
-                            }
+                                if(response.status === 'ok') {
+                                    Filemanager.events.trigger('reloadPaths', Filemanager);
+                                }
+                            });
                         });
-                    });
+                    }
+
 
                 },
                 buttonOther
