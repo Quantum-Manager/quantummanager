@@ -168,11 +168,21 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
         });
 
 
-        Filemanager.Quantumtoolbar.buttonAdd('cropperjsEdit', 'center', 'file-actions', 'btn-edit btn-hide hidden-label', QuantumviewfilesLang.buttonEdit, 'quantummanager-icon-crop', {}, function (ev) {
-            self.startCropperjs();
-            Filemanager.Quantumtoolbar.trigger('buttonCropperjsEdit');
-            ev.preventDefault();
-        });
+        Filemanager.Quantumtoolbar.buttonAdd(
+            'cropperjsEdit',
+            'center',
+            'file-actions',
+            'btn-edit btn-width-small btn-hide',
+            QuantumviewfilesLang.buttonEdit,
+            'quantummanager-icon-crop',
+            {},
+            function (ev) {
+                self.startCropperjs();
+                Filemanager.Quantumtoolbar.trigger('buttonCropperjsEdit');
+                ev.preventDefault();
+            },
+            Filemanager.Quantumtoolbar.buttonsList['viewfilesOther'].parentElement
+        );
 
         QuantumCropperjsElement.querySelector('.btn-save').addEventListener('click', function (event) {
             let name = QuantumCropperjsElement.querySelector('.quantumcropperjs-name-file').value;
