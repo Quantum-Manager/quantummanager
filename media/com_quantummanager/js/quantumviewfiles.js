@@ -1147,6 +1147,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
 
                         self.trigger('clickObject', objectSelect);
 
+
                         if(objectSelect !== undefined) {
                             if(objectSelect.classList.contains('file-item'))
                             {
@@ -1215,13 +1216,17 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
         if(triggerFlag !== null && triggerFlag === true) {
             if(element.classList.contains('file-item'))
             {
+                self.objectSelect = element;
                 self.file = element;
                 self.trigger('clickFile', self);
+                self.trigger('clickObject', self);
             }
             else
             {
+                self.objectSelect = element;
                 self.directory = element;
                 self.trigger('clickDirectory', self);
+                self.trigger('clickObject', self);
             }
 
         }
