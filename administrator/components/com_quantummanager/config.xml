@@ -306,7 +306,7 @@
 			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_DESC"
 			   required="true"
 			   default="0"
-			   class="btn-group btn-group-yesno">
+			   class="btn-group">
 			<option value="1">COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_AUTO_LABEL</option>
 			<option value="2">COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_BUTTON_LABEL</option>
 			<option value="0">JNO</option>
