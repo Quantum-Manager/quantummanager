@@ -12,7 +12,8 @@
 		<field type="spacer"
 			   name="spacer_scopes"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_SPACER_SCOPES"
-			   filter="unset" />
+			   filter="unset"
+		/>
 
 		<field type="note"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_PATH_VARIABLES_LABEL"
@@ -42,7 +43,7 @@
 				<field name="enable"
 					   type="radio"
 					   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_SCOPES_ENABLE_LABEL"
-					   class="btn-group"
+					   class="btn-group btn-group-yesno"
 					   default="1">
 					<option value="1">JYES</option>
 					<option value="0">JNO</option>
@@ -82,7 +83,8 @@
 		<field type="spacer"
 			   name="spacer_files"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_SPACER_FILES"
-			   filter="unset" />
+			   filter="unset"
+		/>
 
 		<field name="maxsize"
 			   type="text"
@@ -105,7 +107,7 @@
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_POSTFIX_LABEL"
 			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_POSTFIX_DESC"
 			   required="true"
-			   class="btn-group"
+			   class="btn-group btn-group-yesno"
 			   default="0">
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
@@ -116,7 +118,7 @@
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_TRANSLIT_LABEL"
 			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_TRANSLIT_DESC"
 			   required="true"
-			   class="btn-group"
+			   class="btn-group btn-group-yesno"
 			   default="0">
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
@@ -127,7 +129,7 @@
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_ARHIVEUPLOAD_LABEL"
 			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_ARHIVEUPLOAD_DESC"
 			   required="true"
-			   class="btn-group"
+			   class="btn-group btn-group-yesno"
 			   default="0">
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
@@ -143,14 +145,15 @@
 		<field type="spacer"
 			   name="spacer_metadata"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_SPACER_METADATA"
-			   filter="unset" />
+			   filter="unset"
+		/>
 
 		<field name="metafile"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_METAFILE_LABEL"
 			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_METAFILE_DESC"
 			   required="true"
-			   class="btn-group"
+			   class="btn-group btn-group-yesno"
 			   default="1">
 			<option value="1">COM_QUANTUMMANAGER_ACTION_SHOW</option>
 			<option value="0">COM_QUANTUMMANAGER_ACTION_HIDE</option>
@@ -161,7 +164,7 @@
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_METAFILE_EXTENDED_LABEL"
 			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_METAFILE_EXTENDED_DESC"
 			   required="true"
-			   class="btn-group"
+			   class="btn-group btn-group-yesno"
 			   default="0"
 			   showon="metafile:1">
 			<option value="1">COM_QUANTUMMANAGER_ACTION_SHOW</option>
@@ -173,7 +176,7 @@
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_METAFILE_SHOWPATH_LABEL"
 			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_METAFILE_SHOWPATH_DESC"
 			   required="true"
-			   class="btn-group"
+			   class="btn-group btn-group-yesno"
 			   default="0"
 			   showon="metafile:1">
 			<option value="1">COM_QUANTUMMANAGER_ACTION_SHOW</option>
@@ -183,14 +186,15 @@
 		<field type="spacer"
 			   name="spacer_general"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_SPACER_GENERAL"
-			   filter="unset" />
+			   filter="unset"
+		/>
 
 		<field name="dropareahidden"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_DROPAREAHIDDEN_LABEL"
 			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_DROPAREAHIDDEN_DESC"
 			   required="true"
-			   class="btn-group"
+			   class="btn-group btn-group-yesno"
 			   default="0">
 			<option value="0">COM_QUANTUMMANAGER_ACTION_SHOW</option>
 			<option value="1">COM_QUANTUMMANAGER_ACTION_HIDE</option>
@@ -201,7 +205,7 @@
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_HELP_LABEL"
 			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_HELP_DESC"
 			   required="true"
-			   class="btn-group"
+			   class="btn-group btn-group-yesno"
 			   default="1">
 			<option value="1">COM_QUANTUMMANAGER_ACTION_SHOW</option>
 			<option value="0">COM_QUANTUMMANAGER_ACTION_HIDE</option>
@@ -212,7 +216,7 @@
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_REVIEW_LABEL"
 			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_REVIEW_DESC"
 			   required="true"
-			   class="btn-group"
+			   class="btn-group btn-group-yesno"
 			   default="1">
 			<option value="1">COM_QUANTUMMANAGER_ACTION_SHOW</option>
 			<option value="0">COM_QUANTUMMANAGER_ACTION_HIDE</option>
@@ -227,7 +231,7 @@
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_UNSPLASH_LABEL"
 			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_UNSPLASH_DESC"
 			   required="true"
-			   class="btn-group"
+			   class="btn-group btn-group-yesno"
 			   default="1">
 			<option value="1">COM_QUANTUMMANAGER_ACTION_ENABLE</option>
 			<option value="0">COM_QUANTUMMANAGER_ACTION_DISABLE</option>
@@ -238,7 +242,7 @@
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_PIXABAY_LABEL"
 			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_PIXABAY_DESC"
 			   required="true"
-			   class="btn-group"
+			   class="btn-group btn-group-yesno"
 			   default="1">
 			<option value="1">COM_QUANTUMMANAGER_ACTION_ENABLE</option>
 			<option value="0">COM_QUANTUMMANAGER_ACTION_DISABLE</option>
@@ -249,7 +253,7 @@
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_ORIGINAL_LABEL"
 			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_ORIGINAL_DESC"
 			   required="true"
-			   class="btn-group"
+			   class="btn-group btn-group-yesno"
 			   default="0">
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
@@ -260,7 +264,7 @@
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_ORIGINALRESIZE_LABEL"
 			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_ORIGINALRESIZE_DESC"
 			   required="true"
-			   class="btn-group"
+			   class="btn-group btn-group-yesno"
 			   default="0"
 			   showon="original:1">
 			<option value="1">JYES</option>
@@ -272,7 +276,7 @@
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_RESIZE_LABEL"
 			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_RESIZE_DESC"
 			   required="true"
-			   class="btn-group"
+			   class="btn-group btn-group-yesno"
 			   default="0">
 			<option value="1">COM_QUANTUMMANAGER_ACTION_ENABLE</option>
 			<option value="0">COM_QUANTUMMANAGER_ACTION_DISABLE</option>
@@ -302,7 +306,7 @@
 			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_DESC"
 			   required="true"
 			   default="0"
-			   class="btn-group">
+			   class="btn-group btn-group-yesno">
 			<option value="1">COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_AUTO_LABEL</option>
 			<option value="2">COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_BUTTON_LABEL</option>
 			<option value="0">JNO</option>
@@ -322,7 +326,7 @@
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_PERCENT_LABEL"
 			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_PERCENT_DESC"
 			   required="true"
-			   class="btn-group"
+			   class="btn-group btn-group-yesno"
 			   default="0"
 			   showon="overlay!:0">
 			<option value="1">JYES</option>
