@@ -290,6 +290,7 @@ class QuantummanagerFileSystemLocal
 		}
 	}
 
+
 	/**
 	 * @throws Exception
 	 */
@@ -368,11 +369,11 @@ class QuantummanagerFileSystemLocal
 					$nameForSafe = implode('.', $nameSplit);
 				}
 
-				$maxSizeFileName = (int) QuantummanagerHelper::getParamsComponentValue('maxsizefilename', 63);
+				$maxSizeFileName = (int)QuantummanagerHelper::getParamsComponentValue('maxsizefilename', 63);
 
-				if(mb_strlen($nameForSafe) > $maxSizeFileName)
+				if(mb_strlen($nameForSafe) > $maxSizeFileName && $maxSizeFileName > 0)
 				{
-					$nameSafe = mb_substr($nameForSafe, 0, 63) . '_p' . mt_rand(11111, 99999);
+					$nameSafe = mb_substr($nameForSafe, 0, $maxSizeFileName) . '_p' . mt_rand(11111, 99999);
 				}
 				else
 				{
@@ -667,6 +668,7 @@ class QuantummanagerFileSystemLocal
 
 	}
 
+
 	/**
 	 * @param $path
 	 * @return string
@@ -786,6 +788,16 @@ class QuantummanagerFileSystemLocal
 	}
 
 
+    /**
+     * @param $pathFrom
+     * @param $scopeFrom
+     * @param $pathTo
+     * @param $scopeTo
+     * @param int $cut
+     * @param array $list
+     * @return false|string
+     * @throws Exception
+     */
 	public static function paste($pathFrom, $scopeFrom, $pathTo, $scopeTo, $cut = 0, $list = [])
 	{
 		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
@@ -1070,6 +1082,7 @@ class QuantummanagerFileSystemLocal
 
 	}
 
+
 	/**
 	 * @param $path
 	 * @param $file
@@ -1244,6 +1257,7 @@ class QuantummanagerFileSystemLocal
 
 		return json_encode($output);
 	}
+
 
 	/**
 	 * @param $path
