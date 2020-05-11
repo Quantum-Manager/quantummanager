@@ -9,6 +9,11 @@
 			   class="alert alert-info"
 		/>
 
+		<field type="spacer"
+			   name="spacer_scopes"
+			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_SPACER_SCOPES"
+			   filter="unset" />
+
 		<field type="note"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_PATH_VARIABLES_LABEL"
 			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_PATH_DESC"
@@ -74,6 +79,11 @@
 			</form>
 		</field>
 
+		<field type="spacer"
+			   name="spacer_files"
+			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_SPACER_FILES"
+			   filter="unset" />
+
 		<field name="maxsize"
 			   type="text"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_MAXSIZE_LABEL"
@@ -112,6 +122,29 @@
 			<option value="0">JNO</option>
 		</field>
 
+		<field name="arhiveupload"
+			   type="radio"
+			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_ARHIVEUPLOAD_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_ARHIVEUPLOAD_DESC"
+			   required="true"
+			   class="btn-group"
+			   default="0">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field name="mimetype"
+			   type="textarea"
+			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_MIMETYPE_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_MIMETYPE_DESC"
+			   rows="15"
+		/>
+
+		<field type="spacer"
+			   name="spacer_metadata"
+			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_SPACER_METADATA"
+			   filter="unset" />
+
 		<field name="metafile"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_METAFILE_LABEL"
@@ -147,6 +180,11 @@
 			<option value="0">COM_QUANTUMMANAGER_ACTION_HIDE</option>
 		</field>
 
+		<field type="spacer"
+			   name="spacer_general"
+			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_SPACER_GENERAL"
+			   filter="unset" />
+
 		<field name="dropareahidden"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_DROPAREAHIDDEN_LABEL"
@@ -179,24 +217,6 @@
 			<option value="1">COM_QUANTUMMANAGER_ACTION_SHOW</option>
 			<option value="0">COM_QUANTUMMANAGER_ACTION_HIDE</option>
 		</field>
-
-		<field name="arhiveupload"
-			   type="radio"
-			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_ARHIVEUPLOAD_LABEL"
-			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_ARHIVEUPLOAD_DESC"
-			   required="true"
-			   class="btn-group"
-			   default="0">
-			<option value="1">COM_QUANTUMMANAGER_ACTION_ENABLE</option>
-			<option value="0">COM_QUANTUMMANAGER_ACTION_DISABLE</option>
-		</field>
-
-		<field name="mimetype"
-				type="textarea"
-				label="COM_QUANTUMMANAGER_CONFIG_GENERAL_MIMETYPE_LABEL"
-				description="COM_QUANTUMMANAGER_CONFIG_GENERAL_MIMETYPE_DESC"
-				rows="15"
-		/>
 
 	</fieldset>
 
