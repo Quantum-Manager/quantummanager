@@ -368,6 +368,12 @@
 			   default="10"
 			   showon="overlay!:0"/>
 
+		<field type="spacer"
+			   name="spacer_image_editor"
+			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_SPACER_IMAGE_EDITOR"
+			   filter="unset"
+		/>
+
 		<field name="compression"
 			   type="number"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_COMPRESSION_LABEL"
