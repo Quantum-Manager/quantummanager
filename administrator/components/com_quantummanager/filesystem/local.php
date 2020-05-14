@@ -290,6 +290,7 @@ class QuantummanagerFileSystemLocal
 		}
 	}
 
+
 	/**
 	 * @throws Exception
 	 */
@@ -368,11 +369,11 @@ class QuantummanagerFileSystemLocal
 					$nameForSafe = implode('.', $nameSplit);
 				}
 
-				$maxSizeFileName = (int) QuantummanagerHelper::getParamsComponentValue('maxsizefilename', 63);
+				$maxSizeFileName = (int)QuantummanagerHelper::getParamsComponentValue('maxsizefilename', 63);
 
-				if(mb_strlen($nameForSafe) > $maxSizeFileName)
+				if(mb_strlen($nameForSafe) > $maxSizeFileName && $maxSizeFileName > 0)
 				{
-					$nameSafe = mb_substr($nameForSafe, 0, 63) . '_p' . mt_rand(11111, 99999);
+					$nameSafe = mb_substr($nameForSafe, 0, $maxSizeFileName) . '_p' . mt_rand(11111, 99999);
 				}
 				else
 				{
@@ -437,6 +438,8 @@ class QuantummanagerFileSystemLocal
 		$sourcePath = $path;
 		$path = QuantummanagerHelper::preparePath($path, false, $scope);
 
+        $extended = (int)QuantummanagerHelper::getParamsComponentValue('metafileextended', 0);
+        $showPath = (int)QuantummanagerHelper::getParamsComponentValue('metafileshowpath', 0);
 		$directory = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
 		$filePath = $directory . DIRECTORY_SEPARATOR . $file;
 		$meta = [];
@@ -551,14 +554,23 @@ class QuantummanagerFileSystemLocal
 
 				$meta['global'] = array_merge($meta['global'], $globalInfo);
 
+                if($showPath)
+                {
+                    $meta['global'] = array_merge($meta['global'], [
+                        [
+                            'key' => '',
+                            'value' => JPATH_SITE . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file
+                        ]
+                    ]);
+                }
+
 			}
 			else
 			{
 
 				$splitDirectory = explode(DIRECTORY_SEPARATOR, $directory);
 				$directoryName = array_pop($splitDirectory);
-				$extended = (int)QuantummanagerHelper::getParamsComponentValue('metafileextended', 0);
-				$showPath = (int)QuantummanagerHelper::getParamsComponentValue('metafileshowpath', 0);
+
 
 				$meta = [
 					'preview' => [
@@ -655,6 +667,7 @@ class QuantummanagerFileSystemLocal
 
 
 	}
+
 
 	/**
 	 * @param $path
@@ -775,6 +788,16 @@ class QuantummanagerFileSystemLocal
 	}
 
 
+    /**
+     * @param $pathFrom
+     * @param $scopeFrom
+     * @param $pathTo
+     * @param $scopeTo
+     * @param int $cut
+     * @param array $list
+     * @return false|string
+     * @throws Exception
+     */
 	public static function paste($pathFrom, $scopeFrom, $pathTo, $scopeTo, $cut = 0, $list = [])
 	{
 		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
@@ -1059,6 +1082,7 @@ class QuantummanagerFileSystemLocal
 
 	}
 
+
 	/**
 	 * @param $path
 	 * @param $file
@@ -1233,6 +1257,7 @@ class QuantummanagerFileSystemLocal
 
 		return json_encode($output);
 	}
+
 
 	/**
 	 * @param $path

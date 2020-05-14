@@ -106,6 +106,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
         let self = this;
         self.areaSave.style.display = 'none';
 
+        self.options.defaults = self.options.defaults.replace(/\&split/g, ':');
         self.initInputs();
 
         self.ImageWidthValue.addEventListener('change', function () {
@@ -167,11 +168,21 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
         });
 
 
-        Filemanager.Quantumtoolbar.buttonAdd('cropperjsEdit', 'center', 'file-actions', 'btn-edit btn-hide hidden-label', QuantumviewfilesLang.buttonEdit, 'quantummanager-icon-crop', {}, function (ev) {
-            self.startCropperjs();
-            Filemanager.Quantumtoolbar.trigger('buttonCropperjsEdit');
-            ev.preventDefault();
-        });
+        Filemanager.Quantumtoolbar.buttonAdd(
+            'cropperjsEdit',
+            'center',
+            'file-actions',
+            'btn-edit btn-width-small btn-hide',
+            QuantumviewfilesLang.buttonEdit,
+            'quantummanager-icon-crop',
+            {},
+            function (ev) {
+                self.startCropperjs();
+                Filemanager.Quantumtoolbar.trigger('buttonCropperjsEdit');
+                ev.preventDefault();
+            },
+            Filemanager.Quantumtoolbar.buttonsList['viewfilesOther'].parentElement
+        );
 
         QuantumCropperjsElement.querySelector('.btn-save').addEventListener('click', function (event) {
             let name = QuantumCropperjsElement.querySelector('.quantumcropperjs-name-file').value;
@@ -345,6 +356,16 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
 
         if(['png', 'jpg', 'jpeg'].indexOf(exs) === -1) {
             return;
+        }
+
+        let default_values = JSON.parse(options.defaults);
+        for (let k in default_values) {
+            let input =  QuantumCropperjsElement.querySelector('input[name=' + k + ']')  ;
+            if(input !== null) {
+                input.value = default_values[k];
+                QuantumUtils.triggerElementEvent('input', input);
+                QuantumUtils.triggerElementEvent('change', input);
+            }
         }
 
         jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumcropperjs.getImageForCrop&path=" + encodeURIComponent(Filemanager.data.path) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&file=' + encodeURIComponent(fileSource) + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {

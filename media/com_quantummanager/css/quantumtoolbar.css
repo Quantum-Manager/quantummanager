@@ -52,7 +52,12 @@
     border-radius: 0;
 }
 .quantumtoolbar-module button.btn-hide {
-    display: none;
+    /*display: none;*/
+    pointer-events: none;
+    color: #ccc;
+}
+.quantumtoolbar-module button.btn-hide .quantummanager-icon {
+    opacity: .4;
 }
 .quantumtoolbar-module button:hover {
     transition: all 0.2s;

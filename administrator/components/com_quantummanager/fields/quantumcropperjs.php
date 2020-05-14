@@ -56,11 +56,19 @@ class JFormFieldQuantumcropperjs extends JFormField
 		JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');
 		$driver = (new QuantummanagerHelperImage)->getNameDriver();
 
+        $values_default = [
+            'compression' => QuantummanagerHelper::getParamsComponentValue('compression', 90),
+            'sharpen' => QuantummanagerHelper::getParamsComponentValue('sharpen', 0),
+            'brightness' => QuantummanagerHelper::getParamsComponentValue('brightness', 0),
+            'blur' => QuantummanagerHelper::getParamsComponentValue('blur', 0),
+        ];
+
 		return array_merge(parent::getLayoutData(),
 			[
 				'paramsComponents' => ComponentHelper::getParams('com_quantummanager'),
 				'cssClass' => $this->cssClass,
 				'driver' => $driver,
+                'values_default' => $values_default
 			]
 		);
 	}
@@ -75,29 +83,18 @@ class JFormFieldQuantumcropperjs extends JFormField
 			$this->__set('cssClass', $this->getAttribute('cssClass', ''));
 
 			JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
-			QuantummanagerHelper::includeScriptHead();
+            JLoader::register('QuantummanagerLibs', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantumlibs.php');
 
-			HTMLHelper::_('stylesheet', 'com_quantummanager/main.css', [
-				'version' => filemtime(__FILE__),
-				'relative' => true
-			]);
+            QuantummanagerLibs::includeScriptHead();
+            QuantummanagerLibs::includes([
+                'core',
+                'utils',
+                'imageEditor',
 
-			HTMLHelper::_('stylesheet', 'com_quantummanager/cropperjs.min.css', [
-				'version' => filemtime(__FILE__),
-				'relative' => true
-			]);
+            ]);
+
 
 			HTMLHelper::_('stylesheet', 'com_quantummanager/quantumcropperjs.css', [
-				'version' => filemtime(__FILE__),
-				'relative' => true
-			]);
-
-			HTMLHelper::_('script', 'com_quantummanager/main.js', [
-				'version' => filemtime(__FILE__),
-				'relative' => true
-			]);
-
-			HTMLHelper::_('script', 'com_quantummanager/utils.js', [
 				'version' => filemtime(__FILE__),
 				'relative' => true
 			]);
@@ -107,10 +104,6 @@ class JFormFieldQuantumcropperjs extends JFormField
 				'relative' => true
 			]);
 
-			HTMLHelper::_('script', 'com_quantummanager/cropperjs.min.js', [
-				'version' => filemtime(__FILE__),
-				'relative' => true
-			]);
 
 			$field = parent::getInput();
 

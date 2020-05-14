@@ -13,9 +13,10 @@ use Joomla\CMS\Language\Text;
 
 extract($displayData);
 $presets = $paramsComponents->get('custompresetscrop');
+
 ?>
 
-<div class="quantummanager-module quantumcropperjs-module" data-type="Quantumcropperjs" data-options="driver:<?php echo $driver ?>">
+<div class="quantummanager-module quantumcropperjs-module" data-type="Quantumcropperjs" data-options="driver:<?php echo $driver ?>;defaults:<?php echo str_replace(':', '&split', htmlspecialchars(json_encode($values_default), ENT_QUOTES)) ?>">
     <input type="hidden" name="driver" value="<?php echo $driver ?>">
     <div class="cropper-save">
         <div class="loader"><?php echo Text::_('COM_QUANTUMMANAGER_ACTION_SAVEAREA'); ?><span></span><span></span><span></span><span></span></div>
@@ -49,10 +50,10 @@ $presets = $paramsComponents->get('custompresetscrop');
                             <?php endforeach; ?>
                         <?php endif; ?>
                         <option value="1">1:1</option>
-                        <option value="1.7777777777777777">16:9</option>
+                        <option value="1.7">16:9</option>
                         <option value="2">18:9</option>
-                        <option value="1.3333333333333333">4:3</option>
-                        <option value="0.6666666666666666">2:3</option>
+                        <option value="1.3">4:3</option>
+                        <option value="0.6">2:3</option>
                     </select>
                 </label>
             </div>
@@ -91,12 +92,12 @@ $presets = $paramsComponents->get('custompresetscrop');
 
                 <label class="image-width-height-ratio-checkbox"><input type="checkbox" class="image-width-height-ratio" checked="checked"> <?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_SAVE_RATIO'); ?></label>
             </div>
-            <div class="input-group input-range-wrap" data-type="range" data-depend="exs:jpg,jpeg,png">
+            <div class="input-group input-range-wrap" data-type="range" data-depend="exs:jpg,jpeg">
                 <label><?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_COMPRESSION'); ?></label>
                 <div>
                     <input type="range" name="range-compression" min="1" max="100" step="1" value="80">
                     <div class="input-wrapper">
-                        <input type="number" name="compression" value="80" data-input-send>
+                        <input type="number" name="compression" value="90" data-input-send>
                         <span class="bottom"></span>
                         <span class="right"></span>
                         <span class="top"></span>

@@ -68,30 +68,6 @@ class QuantummanagerHelper
 
 
 	/**
-	 * @var bool
-	 * @since version
-	 */
-	private static $flagScriptHead = false;
-
-
-	/**
-	 *
-	 *
-	 * @since version
-	 */
-	public static function includeScriptHead()
-	{
-		if(!self::$flagScriptHead)
-		{
-
-			Factory::getDocument()
-				->addScriptDeclaration(file_get_contents(JPATH_ROOT . '/media/com_quantummanager/js/dispatcher.js'));
-			self::$flagScriptHead = true;
-		}
-	}
-
-
-	/**
 	 * @param $name
 	 * @param $mimeType
 	 * @return bool
@@ -568,19 +544,19 @@ class QuantummanagerHelper
 			],
 			(object)[
 				'id' => 'docs',
-				'title' => 'docs',
+				'title' => 'Docs',
 				'path' => 'docs',
 				'enable' => 0,
 			],
 			(object)[
 				'id' => 'music',
-				'title' => 'music',
+				'title' => 'Music',
 				'path' => 'music',
 				'enable' => 0,
 			],
 			(object)[
 				'id' => 'videos',
-				'title' => 'videos',
+				'title' => 'Videos',
 				'path' => 'videos',
 				'enable' => 0,
 			],
@@ -940,7 +916,7 @@ class QuantummanagerHelper
 	 */
 	public static function escapeJsonString($value)
 	{
-		$escapers =     array("\\",     "/",   "\"",  "\n",  "\r",  "\t", "\x08", "\x0c");
+		$escapers = array("\\",     "/",   "\"",  "\n",  "\r",  "\t", "\x08", "\x0c");
 		$replacements = array("\\\\", "\\/", "\\\"", "\\n", "\\r", "\\t",  "\\f",  "\\b");
 		return str_replace($escapers, $replacements, $value);
 	}

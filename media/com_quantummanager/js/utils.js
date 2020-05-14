@@ -8,11 +8,20 @@
 
 window.QuantumUtils = {
 
-    getFullUrl: function(url) {
+    getFullUrl: function(url, root) {
         let prefix = '';
-        if(QuantumSettings.urlBase !== undefined) {
-            prefix = QuantumSettings.urlBase;
+
+        if(root === null || root === undefined) {
+            if(QuantumSettings.urlBase !== undefined) {
+                prefix = QuantumSettings.urlBase;
+            }
         }
+        else {
+            if(QuantumSettings.urlFull !== undefined) {
+                prefix = QuantumSettings.urlFull;
+            }
+        }
+
         return prefix + url;
     },
 

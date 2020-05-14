@@ -30,7 +30,9 @@ HTMLHelper::_('stylesheet', 'plg_system_quantummanagermedia/modal.css', [
 	'relative' => true
 ]);
 
-$scripts = $app->getSession()->get('quantummanageraddscripts', '');
+$namespace = $app->input->get('namespace', 'default');
+$scripts = $app->getSession()->get('quantummanageraddscripts', '', $namespace);
+
 if(!empty($scripts))
 {
 	$scripts = json_decode($scripts, JSON_OBJECT_AS_ARRAY);

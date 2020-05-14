@@ -68,24 +68,17 @@ class JFormFieldQuantumunsplash extends JFormField
 			$this->__set('cssClass', $this->getAttribute('cssClass', ''));
 
 			JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
-			QuantummanagerHelper::includeScriptHead();
+            JLoader::register('QuantummanagerLibs', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantumlibs.php');
 
-			HTMLHelper::_('stylesheet', 'com_quantummanager/main.css', [
-				'version' => filemtime(__FILE__),
-				'relative' => true
-			]);
+            QuantummanagerLibs::includeScriptHead();
+            QuantummanagerLibs::includes([
+                'core',
+                'utils',
+                'dynamicGrid',
+            ]);
+
 
 			HTMLHelper::_('stylesheet', 'com_quantummanager/quantumunsplash.css', [
-				'version' => filemtime(__FILE__),
-				'relative' => true
-			]);
-
-			HTMLHelper::_('script', 'com_quantummanager/main.js', [
-				'version' => filemtime(__FILE__),
-				'relative' => true
-			]);
-
-			HTMLHelper::_('script', 'com_quantummanager/utils.js', [
 				'version' => filemtime(__FILE__),
 				'relative' => true
 			]);
@@ -95,10 +88,6 @@ class JFormFieldQuantumunsplash extends JFormField
 				'relative' => true
 			]);
 
-			HTMLHelper::_('script', 'com_quantummanager/masonry.min.js', [
-				'version' => filemtime(__FILE__),
-				'relative' => true
-			]);
 
 			$field = parent::getInput();
 
