@@ -141,6 +141,9 @@ class JFormFieldQuantumCombine extends JFormField
 					]);
 				}
 
+                JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+                QuantummanagerHelper::loadLang();
+
                 QuantummanagerLibs::includes([
                     'utils',
                     'split'
@@ -197,8 +200,6 @@ class JFormFieldQuantumCombine extends JFormField
 					$htmlFields['container-bottom-fixed'] .= (new FileLayout( 'jedreview', JPATH_ROOT . '/administrator/components/com_quantummanager/layouts'))->render();
 				}
 
-				JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
-				QuantummanagerHelper::loadLang();
 
 				$filemanager = new FileLayout($this->layout, JPATH_ROOT . '/administrator/components/com_quantummanager/layouts');
 				$filemanager->addIncludePaths($this->getLayoutPaths());

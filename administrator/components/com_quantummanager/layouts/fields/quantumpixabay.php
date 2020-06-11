@@ -109,7 +109,7 @@ extract($displayData);
         'button': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_QUANTUMPIXABAY_BUTTON'), ENT_QUOTES); ?>",
         'buttonLoad': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_LOAD'), ENT_QUOTES); ?>",
         'save': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_SAVE'), ENT_QUOTES); ?>",
-        'close': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_CLOSE'), ENT_QUOTES); ?>",
+        'close': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_CLOSE'), ENT_QUOTES); ?>",
         'search': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_SEARCH'), ENT_QUOTES); ?>",
         'searchHelper': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_SEARCH_HELPER'), ENT_QUOTES); ?>",
     };
