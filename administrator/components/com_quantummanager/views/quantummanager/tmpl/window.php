@@ -88,6 +88,14 @@ try {
 		];
 	}
 
+    if((int)QuantummanagerHelper::getParamsComponentValue('pexels', '1'))
+    {
+        $fields['quantumpexels'] = [
+            'label' => '',
+            'position' => 'bottom'
+        ];
+    }
+
 	$actions = QuantummanagerHelper::getActions();
 	if (!$actions->get('core.create'))
 	{
