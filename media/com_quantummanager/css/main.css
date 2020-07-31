@@ -543,9 +543,10 @@
 }
 .quantummanager-icon-pexels {
     display: inline-block;
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
     margin: 0;
+    margin-left: -2px;
     border-radius: 3px;
     background-repeat: no-repeat;
     background-position: center;

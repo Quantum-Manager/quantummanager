@@ -102,13 +102,6 @@ try {
 		];
 	}
 
-	if((int)QuantummanagerHelper::getParamsComponentValue('pixabay', '1'))
-	{
-		$fields['quantumpixabay'] = [
-			'label' => '',
-			'position' => 'bottom'
-		];
-	}
 
     if((int)QuantummanagerHelper::getParamsComponentValue('pexels', '1'))
     {
@@ -117,6 +110,16 @@ try {
             'position' => 'bottom'
         ];
     }
+
+
+	if((int)QuantummanagerHelper::getParamsComponentValue('pixabay', '1'))
+	{
+		$fields['quantumpixabay'] = [
+			'label' => '',
+			'position' => 'bottom'
+		];
+	}
+
 
 	$actions = QuantummanagerHelper::getActions();
 	if (!$actions->get('core.create'))
