@@ -34,9 +34,9 @@ window.Quantumpexels = function(Filemanager, QuantumPexelsElement, options) {
             'photostock',
             'center',
             'file-other',
-            'btn-more',
+            'btn-more hidden-label',
             QuantumpexelsLang.photostock,
-            '',
+            'quantummanager-icon-photostock',
             {},
             function (ev) {}).parentElement;
 

@@ -34,9 +34,9 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
             'photostock',
             'center',
             'file-other',
-            'btn-more',
+            'btn-more hidden-label',
             QuantumpixabayLang.photostock,
-            '',
+            'quantummanager-icon-photostock',
             {},
             function (ev) {}).parentElement;
 

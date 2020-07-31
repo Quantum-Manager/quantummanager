@@ -32,9 +32,9 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
             'photostock',
             'center',
             'file-other',
-            'btn-more',
+            'btn-more hidden-label',
             QuantumunsplashLang.photostock,
-            '',
+            'quantummanager-icon-photostock',
             {},
             function (ev) {}).parentElement;
 
