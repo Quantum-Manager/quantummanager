@@ -29,17 +29,38 @@ window.Quantumpexels = function(Filemanager, QuantumPexelsElement, options) {
 
         self.areaSave.style.display = 'none';
 
-        Filemanager.Quantumtoolbar.buttonAdd('pexelsSearch', 'right', 'file-other', 'btn-pexels-search hidden-label', QuantumpexelsLang.button, 'quantummanager-icon-pexels', {}, function (ev) {
-            QuantumPexelsElement.classList.add('active');
 
-            if(self.inputSearch.value === '')
-            {
-                self.search('');
-            }
+        let buttonPhotostock = Filemanager.Quantumtoolbar.buttonAdd(
+            'photostock',
+            'center',
+            'file-other',
+            'btn-more',
+            QuantumpexelsLang.photostock,
+            '',
+            {},
+            function (ev) {}).parentElement;
 
-            self.inputSearch.focus();
-            ev.preventDefault();
-        });
+        Filemanager.Quantumtoolbar.buttonAdd(
+            'pexelsSearch',
+            'right',
+            'file-other',
+            'btn-pexels-search hidden-label',
+            QuantumpexelsLang.button,
+            'quantummanager-icon-pexels',
+            {},
+            function (ev) {
+                QuantumPexelsElement.classList.add('active');
+
+                if(self.inputSearch.value === '')
+                {
+                    self.search('');
+                }
+
+                self.inputSearch.focus();
+                ev.preventDefault();
+            },
+            buttonPhotostock
+        );
 
         self.closeButton.addEventListener('click', function () {
             QuantumPexelsElement.classList.remove('active');

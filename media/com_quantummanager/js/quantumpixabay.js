@@ -29,17 +29,38 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
 
         self.areaSave.style.display = 'none';
 
-        Filemanager.Quantumtoolbar.buttonAdd('pixabaySearch', 'right', 'file-other', 'btn-pixabay-search hidden-label', QuantumpixabayLang.button, 'quantummanager-icon-pixabay', {}, function (ev) {
-            QuantumPixbayElement.classList.add('active');
 
-            if(self.inputSearch.value === '')
-            {
-                self.search('');
-            }
+        let buttonPhotostock = Filemanager.Quantumtoolbar.buttonAdd(
+            'photostock',
+            'center',
+            'file-other',
+            'btn-more',
+            QuantumpixabayLang.photostock,
+            '',
+            {},
+            function (ev) {}).parentElement;
 
-            self.inputSearch.focus();
-            ev.preventDefault();
-        });
+        Filemanager.Quantumtoolbar.buttonAdd(
+            'pixabaySearch',
+            'right',
+            'file-other',
+            'btn-pixabay-search hidden-label',
+            QuantumpixabayLang.button,
+            'quantummanager-icon-pixabay',
+            {},
+            function (ev) {
+                QuantumPixbayElement.classList.add('active');
+
+                if(self.inputSearch.value === '')
+                {
+                    self.search('');
+                }
+
+                self.inputSearch.focus();
+                ev.preventDefault();
+            },
+            buttonPhotostock
+        );
 
         self.closeButton.addEventListener('click', function () {
             QuantumPixbayElement.classList.remove('active');

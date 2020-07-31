@@ -31,7 +31,7 @@ window.Quantumtoolbar = function(Filemanager, QuantumToolbarElement, options) {
         }
 
         if(this.buttonsList[id] !== undefined) {
-            return;
+            return this.buttonsList[id];
         }
 
         let groupHtml = QuantumToolbarElement.querySelector('.' + position + ' .' + group);
@@ -90,6 +90,7 @@ window.Quantumtoolbar = function(Filemanager, QuantumToolbarElement, options) {
         this.buttonsList[id] = button;
         return this.buttonsList[id];
     };
+
 
     this.trigger = function(event) {
         Filemanager.events.trigger(event, Filemanager);
