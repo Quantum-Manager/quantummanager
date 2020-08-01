@@ -1151,6 +1151,11 @@ class QuantummanagerFileSystemLocal
             $fileClean = preg_replace("#\?.*?$#isu", '', $file);
             $fileSplit = explode('.', $fileClean);
             $exs = array_pop($fileSplit);
+
+            if($exs === 'jpeg') {
+                $exs = 'jpg';
+            }
+
             $fileContent = file_get_contents($file);
             $filePath = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
             $id = File::makeSafe($lang->transliterate($id), ['#^\.#', '#\040#']);
