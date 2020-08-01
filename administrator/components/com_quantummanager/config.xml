@@ -438,6 +438,64 @@
 			</form>
 		</field>
 
+		<field type="spacer"
+			   name="spacer_previews"
+			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_SPACER_PREVIEWS"
+			   filter="unset"
+		/>
+
+
+		<field name="previewsfolder"
+			   type="radio"
+			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_PREVIEWSFOLDER_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_PREVIEWSFOLDER_DESC"
+			   required="true"
+			   class="btn-group btn-group-yesno"
+			   default="1">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field name="previewsfolderopen"
+			   type="radio"
+			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_PREVIEWSFOLDEROPEN_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_PREVIEWSFOLDEROPEN_DESC"
+			   required="true"
+			   class="btn-group btn-group-yesno"
+			   default="1"
+			   showon="previewsfolder:1">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+
+		<field name="previewslist"
+			   type="subform"
+			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_PREVIEWSLLIST_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_PREVIEWSLLIST_DESC"
+			   layout="joomla.form.field.subform.repeatable-table"
+			   multiple="true"
+			   min="0"
+			   max="20">
+			<form>
+				<field
+					name="label"
+					type="text"
+					label="COM_QUANTUMMANAGER_CONFIG_IMAGE_PREVIEWSLLIST_NAME"
+				/>
+				<field
+					name="width"
+					type="number"
+					label="COM_QUANTUMMANAGER_CONFIG_IMAGE_PREVIEWSLLIST_WIDTH"
+				/>
+				<field
+					name="height"
+					type="number"
+					label="COM_QUANTUMMANAGER_CONFIG_IMAGE_PREVIEWSLLIST_HEIGHT"
+				/>
+			</form>
+		</field>
+
 	</fieldset>
 
 	<fieldset name="profiles" label="COM_QUANTUMMANAGER_CONFIG_PROFILES" description="COM_QUANTUMMANAGER_CONFIG_PROFILES_DESC">
