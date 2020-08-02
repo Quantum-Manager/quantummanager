@@ -732,7 +732,7 @@ class QuantummanagerFileSystemLocal
 					'dateM' => $fileDate,
 				];
 
-				if(in_array(strtolower($exs), ['jpg', 'png', 'jpeg', 'gif', 'svg']))
+				if(in_array(strtolower($exs), ['jpg', 'png', 'jpeg', 'gif', 'svg', 'webp']))
 				{
 					$cacheSource =  JPATH_ROOT . DIRECTORY_SEPARATOR . 'cache/com_quantummanager';
 					$path = QuantummanagerHelper::preparePath($path, false, $scopeName);
@@ -1229,8 +1229,38 @@ class QuantummanagerFileSystemLocal
 				})->save($cache . DIRECTORY_SEPARATOR . $file);
 			}
 
-			$app->redirect($siteUrl . 'cache/com_quantummanager' . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file . '?=' . mt_rand(111111, 999999));
+			$app->redirect($siteUrl . 'cache/com_quantummanager' . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file . '?v=' . mt_rand(111111, 999999));
 		}
+
+        if($exs === 'webp')
+        {
+
+            JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
+            $directory = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
+            $manager = JInterventionimage::getInstance();
+            $cacheSource =  JPATH_ROOT . DIRECTORY_SEPARATOR . 'cache/com_quantummanager';
+            $cache = $cacheSource;
+            $pathArr = explode('/', $path);
+            $newFile = implode('.', $splitFile) . '.jpg';
+
+            foreach($pathArr as $iValue)
+            {
+                $cache .= DIRECTORY_SEPARATOR . $iValue;
+                if(!file_exists($cache))
+                {
+                    Folder::create($cache);
+                }
+            }
+
+            if (!file_exists($cache . DIRECTORY_SEPARATOR . $newFile))
+            {
+                $manager->make($directory . DIRECTORY_SEPARATOR . $file)->resize(null, 320, static function ($constraint) {
+                    $constraint->aspectRatio();
+                })->encode('jpg')->save($cache . DIRECTORY_SEPARATOR . $newFile);
+            }
+
+            $app->redirect($siteUrl . 'cache/com_quantummanager' . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $newFile . '?v=' . mt_rand(111111, 999999));
+        }
 
 		if($exs === 'svg')
 		{

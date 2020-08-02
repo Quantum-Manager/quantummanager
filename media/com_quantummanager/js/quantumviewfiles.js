@@ -1553,7 +1553,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             let objectAll = self.ds.getSelection();
             let size = 0;
             let imgs = '';
-            let exsImage = ['jpg', 'png', 'svg', 'jpeg', 'gif'];
+            let exsImage = ['jpg', 'png', 'svg', 'jpeg', 'gif', 'webp'];
             let objectOnlyFiles = true;
 
             for (let i = objectAll.length - 1; i >= 0; i--) {
@@ -1950,7 +1950,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 let fileName = filesAll[i].getAttribute('data-name');
                 let fileExs = filesAll[i].getAttribute('data-exs');
                 let filePreview = filesAll[i].querySelector('.file-exs');
-                let exsImage = ['jpg', 'png', 'svg', 'jpeg', 'gif'];
+                let exsImage = ['jpg', 'png', 'svg', 'jpeg', 'gif', 'webp'];
                 let fields = filesAll[i].querySelector('.fields');
 
                 if(fields !== null) {
