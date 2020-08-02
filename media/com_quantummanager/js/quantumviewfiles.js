@@ -232,7 +232,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
     this.IdsButtonForFile = [
         {
             'id': 'viewfilesWatermark',
-            'exs': ['png', 'jpg', 'jpeg'],
+            'exs': ['png', 'jpg', 'jpeg', 'webp'],
             'for': 'file',
             'count': 'some'
         },
@@ -2057,7 +2057,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             }
         }
 
-        if(['png', 'jpg', 'jpeg'].indexOf(exs) !== -1) {
+        if(['png', 'jpg', 'jpeg', 'webp'].indexOf(exs) !== -1) {
             if(fm.Quantumtoolbar !== undefined && fm.Quantumtoolbar.buttonsList['viewfilesWatermark'] !== undefined) {
                 fm.Quantumtoolbar.buttonsList['viewfilesWatermark'].classList.remove('btn-hide');
             }

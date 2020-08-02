@@ -354,7 +354,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             name = self.file.getAttribute('data-name');
         }
 
-        if(['png', 'jpg', 'jpeg'].indexOf(exs) === -1) {
+        if(['png', 'jpg', 'jpeg', 'webp'].indexOf(exs) === -1) {
             return;
         }
 
@@ -541,7 +541,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             return;
         }
 
-        if(['png', 'jpg', 'jpeg'].indexOf(exs) === -1) {
+        if(['png', 'jpg', 'jpeg', 'webp'].indexOf(exs) === -1) {
             fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.add('btn-hide');
             return;
         }
@@ -573,7 +573,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
                 Filemanager.Quantumcropperjs.nameFile = nameFile;
                 Filemanager.Quantumcropperjs.file = '';
 
-                if(['png', 'jpg', 'jpeg'].indexOf(exs) === -1) {
+                if(['png', 'jpg', 'jpeg', 'webp'].indexOf(exs) === -1) {
                     return;
                 }
 
@@ -586,7 +586,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
         return [
             {
                 writeable: 1,
-                fileExs: ['png', 'jpg', 'jpeg'],
+                fileExs: ['png', 'jpg', 'jpeg', 'webp'],
                 type: 'normal',
                 label: QuantumviewfilesLang.buttonEdit,
                 tip: '',

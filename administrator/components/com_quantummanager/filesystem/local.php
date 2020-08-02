@@ -381,7 +381,7 @@ class QuantummanagerFileSystemLocal
 				}
 
 				$uploadedFileName = $nameSafe . '.' . $nameExs;
-				$exs = explode(',', 'jpg,jpeg,png,gif');
+				$exs = explode(',', 'jpg,jpeg,png,gif,webp');
 				$type = preg_replace("/\/.*?$/isu", '', $file['type']);
 				$data['name'] = isset($data['name']) ? $data['name'] : '';
 				$path = JPATH_ROOT . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($data['path'], false, $data['scope']);
@@ -501,7 +501,7 @@ class QuantummanagerFileSystemLocal
 
 				}
 
-				if (in_array($exs, ['jpg', 'jpeg', 'png', 'gif']))
+				if (in_array($exs, ['jpg', 'jpeg', 'png', 'gif', 'webp']))
 				{
 					list($width, $height, $type, $attr) = getimagesize($filePath);
 
@@ -983,7 +983,7 @@ class QuantummanagerFileSystemLocal
 				$nameExs = $data['exs'];
 				$nameSafe = File::makeSafe($lang->transliterate($nameSplit), ['#^\.#', '#\040#']);
 				$uploadedFileName = $nameSafe . '.' . $nameExs;
-				$exs = explode(',', 'jpg,jpeg,png,gif');
+				$exs = explode(',', 'jpg,jpeg,png,gif,webp');
 
 				if(in_array($exs, QuantummanagerHelper::$forbiddenExtensions))
 				{
