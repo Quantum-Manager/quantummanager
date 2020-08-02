@@ -204,7 +204,7 @@ class QuantummanagerHelperImage
 		{
 
 			$info = pathinfo($file);
-			if(isset($info['extension']) && (!in_array(mb_strtolower($info['extension']), ['jpg', 'jpeg', 'png'])))
+			if(isset($info['extension']) && (!in_array(mb_strtolower($info['extension']), ['jpg', 'jpeg', 'png','webp'])))
 			{
 				return false;
 			}
