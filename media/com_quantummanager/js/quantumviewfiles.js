@@ -744,7 +744,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                                     selectFiles.push(response[k].name);
                                 }
 
-                                self.loadDirectory(null, function () {
+                                self.loadDirectory(Filemanager.data.path, function () {
                                     Filemanager.Quantumviewfiles.scrollTopFilesCheck(selectFiles);
 
                                     let filesAll = Filemanager.Quantumviewfiles.element.querySelectorAll('.field-list-files .file-item');
