@@ -1313,7 +1313,6 @@ class QuantummanagerFileSystemLocal
             }
 
             //получаем размеры от превью
-
             $width = 100;
             $height = 100;
 
@@ -1334,8 +1333,11 @@ class QuantummanagerFileSystemLocal
             }
 
             //копируем файл
-            File::copy($pathFileFrom, $pathFileTo);
-            $image->resizeFit($pathFileTo, $width, $height);
+            if(File::copy($pathFileFrom, $pathFileTo))
+            {
+                $image->resizeFit($pathFileTo, $width, $height);
+            }
+
         }
 
     }
