@@ -727,6 +727,9 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                                 "&scope=" + encodeURIComponent(Filemanager.data.scope) +
                                 "&preview=" + encodeURIComponent(QuantumviewfilesPreviews[k].label))
                             ).done(function (response) {
+                                if(parseInt(self.options.previewsfolder) && parseInt(self.options.previewsfolderopen)) {
+                                    Filemanager.data.path += '/_thumb';
+                                }
                                 Filemanager.events.trigger('reloadPaths', Filemanager);
                             });
 
