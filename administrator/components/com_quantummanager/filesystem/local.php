@@ -1284,6 +1284,61 @@ class QuantummanagerFileSystemLocal
 		$app->close();
 	}
 
+    /**
+     * @param $path
+     * @param $scope
+     * @param $list
+     *
+     *
+     * @throws Exception
+     * @since version
+     */
+    public static function createPreview($path, $scope, $list)
+    {
+        JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+        JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');
+
+        $path = QuantummanagerHelper::preparePath( $path, false, $scope);
+        $image = new QuantummanagerHelperImage;
+
+        foreach ($list as $file)
+        {
+            $pathFileFrom = JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file;
+
+            $info = pathinfo($pathFileFrom);
+
+            if(isset($info['extension']) && (!in_array(mb_strtolower($info['extension']), ['jpg', 'jpeg', 'png', 'webp'])))
+            {
+                continue;
+            }
+
+            //получаем размеры от превью
+
+            $width = 100;
+            $height = 100;
+
+            $splitName = explode('.', $file);
+            $exs = array_pop($splitName);
+
+            //создаем папку, если нет название файла другой
+            if((int)QuantummanagerHelper::getParamsComponentValue('previewsfolder', 1))
+            {
+                $pathFileTo = JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . '_thumb' . DIRECTORY_SEPARATOR;
+                Folder::create($pathFileTo);
+                $pathFileTo .= implode('.', $splitName) . '_'. $width . '_' . $height . '.' . $exs;
+            }
+            else
+            {
+                $pathFileTo = JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR;
+                $pathFileTo .= 'thumb_' . implode('.', $splitName) . '_'. $width . '_' . $height . '.' . $exs;
+            }
+
+            //копируем файл
+            File::copy($pathFileFrom, $pathFileTo);
+            $image->resizeFit($pathFileTo, $width, $height);
+        }
+
+    }
 
 	/**
 	 * @param $path

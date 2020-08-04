@@ -689,6 +689,64 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 buttonOther
             );
 
+            if(typeof QuantumviewfilesPreviews === 'object' && Object.keys(QuantumviewfilesPreviews).length > 0) {
+                let buttonPreviews = Filemanager.Quantumtoolbar.buttonAdd(
+                    'viewfilesPreviews',
+                    'center',
+                    'file-actions',
+                    'btn-more',
+                    'Миниатюры',
+                    'quantummanager-icon-previews',
+                    {},
+                    function (ev) {
+                    }).parentElement;
+
+                let i = 0;
+                for (let k in QuantumviewfilesPreviews) {
+                    Filemanager.Quantumtoolbar.buttonAdd(
+                        'viewfilesPreview' + i,
+                        'center',
+                        'file-actions',
+                        'btn-preview btn-hide',
+                        QuantumviewfilesPreviews[k].label,
+                        '',
+                        {},
+                        function (ev) {
+                            let objectAll = ViewfilesElement.querySelectorAll('.field-list-files .object-select');
+                            let objectsPush = [];
+
+                            for(let i=0;i<objectAll.length;i++) {
+                                if (objectAll[i].querySelector('input').checked) {
+                                    objectsPush.push(objectAll[i].getAttribute('data-fullname'));
+                                }
+                            }
+
+                            jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.createPreview" +
+                                '&list=' + encodeURIComponent(JSON.stringify(objectsPush)) +
+                                '&path=' + encodeURIComponent(Filemanager.data.path) +
+                                "&scope=" + encodeURIComponent(Filemanager.data.scope) +
+                                "&preview=" + encodeURIComponent(QuantumviewfilesPreviews[k].label))
+                            ).done(function (response) {
+                                Filemanager.events.trigger('reloadPaths', Filemanager);
+                            });
+
+                            ev.preventDefault();
+                        },
+                        buttonPreviews
+                    );
+
+                    self.IdsButtonForFile.push({
+                            'id': 'viewfilesPreview' + i,
+                            'exs': ['png', 'jpg', 'jpeg', 'webp'],
+                            'for': 'file',
+                            'count': 'some'
+                        });
+
+                    i++;
+                }
+            }
+
+
 
             if(self.options.watermark === '1') {
                 Filemanager.Quantumtoolbar.buttonAdd(

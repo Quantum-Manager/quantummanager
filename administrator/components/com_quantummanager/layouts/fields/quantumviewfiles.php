@@ -12,15 +12,26 @@ use Joomla\CMS\Language\Text;
 extract($displayData);
 $id = mt_rand(111111, 999999);
 $document = \Joomla\CMS\Factory::getDocument();
+$options = [
+    'hash:' . $hash,
+    'directory:' . $directory,
+    'onlyfiles:' . $onlyfiles,
+    'metafile:' . $metafile,
+    'watermark:' . $watermark,
+    'help:' . $help,
+    'previewsfolder:' . $previewsfolder,
+    'previewsfolderopen:' . $previewsfolderopen
+];
+
 ?>
 
-<div class="quantummanager-module quantumviewfiles-module" data-type="Quantumviewfiles" data-options="hash:<?php echo $displayData['hash'] ?>;directory:<?php echo $displayData['directory'] ?>;onlyfiles:<?php echo $displayData['onlyfiles'] ?>;metafile:<?php echo $displayData['metafile'] ?>;watermark:<?php echo $displayData['watermark'] ?>;help:<?php echo $displayData['help'] ?>">
+<div class="quantummanager-module quantumviewfiles-module" data-type="Quantumviewfiles" data-options="<?php echo implode(';', $options)?>">
     <div class="quantumviewfiles-module-heading">
         <ul class="breadcumbs"></ul>
         <div class="filter-search">
             <div class="input-wrapper">
                 <label for="filter-search-<?php echo $id ?>" class="uk-form-icon uk-icon" uk-icon="icon: pencil">
-                    <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" data-svg="search"><circle fill="none" stroke="#000" stroke-width="1.1" cx="9" cy="9" r="7"></circle><path fill="none" stroke="#000" stroke-width="1.1" d="M14,14 L18,18 L14,14 Z"></path></svg>            </label>
+                    <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" data-svg="search"><circle fill="none" stroke="#000" stroke-width="1.1" cx="9" cy="9" r="7"></circle><path fill="none" stroke="#000" stroke-width="1.1" d="M14,14 L18,18 L14,14 Z"></path></svg></label>
                 <input id="filter-search-<?php echo $id ?>" type="text" name="searchqunatumamanger" placeholder="<?php echo Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_FILTER_NAME'); ?>">
                 <span class="bottom"></span>
                 <span class="right"></span>
@@ -61,10 +72,10 @@ $document = \Joomla\CMS\Factory::getDocument();
         $css .= 'svg.svg-icon.'.$exs.' use.tail { fill: ' . $color[1] . ';} ';
     }
     $document->addStyleDeclaration($css);
-
 ?>
 
 <script type="text/javascript">
+    window.QuantumviewfilesPreviews = <?php echo json_encode($previewslist)?>;
     window.QuantumviewfilesLang = {
         'ok': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_OK'), ENT_QUOTES); ?>",
         'close': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_CLOSE'), ENT_QUOTES); ?>",

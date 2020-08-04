@@ -129,18 +129,37 @@ class QuantummanagerHelperImage
 
 	}
 
-	/**
-	 * @param $file
-	 */
-	public function resizeFit($file)
+    /**
+     * @param $file
+     * @param null $widthFit
+     * @param null $heightFit
+     */
+	public function resizeFit($file, $widthFit = null, $heightFit = null)
 	{
 		JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
 		list($width, $height, $type, $attr) = getimagesize($file);
 		$newWidth = $width;
 		$newHeight = $height;
-		$maxWidth = (int)$this->paramsComponent->get('rezizemaxwidth', 1920);
-		$maxHeight = (int)$this->paramsComponent->get('rezizemaxheight', 1280);
-		$ratio = $width / $height;
+
+		if(is_null($widthFit))
+        {
+            $maxWidth = (int)$this->paramsComponent->get('rezizemaxwidth', 1920);
+        }
+		else
+        {
+            $maxWidth = (int)$widthFit;
+        }
+
+        if(is_null($heightFit))
+        {
+            $maxHeight = (int)$this->paramsComponent->get('rezizemaxwidth', 1920);
+        }
+        else
+        {
+            $maxHeight = (int)$heightFit;
+        }
+
+        $ratio = $width / $height;
 
 		if($width > $maxWidth)
 		{
@@ -155,11 +174,12 @@ class QuantummanagerHelperImage
 		}
 
 		$manager = JInterventionimage::getInstance(['driver' => $this->getNameDriver()]);
-		$manager->make($file)
+		$manager
+            ->make($file)
 			->resize($newWidth, $newHeight, function ($constraint) {
-			$constraint->aspectRatio();
-			$constraint->upsize();
-		})
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            })
 			->save($file);
 	}
 

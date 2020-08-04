@@ -66,7 +66,10 @@ class JFormFieldQuantumviewfiles extends JFormField
 				'metafile' => $this->metafile,
 				'watermark' => $this->watermark,
 				'help' => $this->help,
-				'hash' => md5(QuantummanagerHelper::preparePath($this->directory)),
+				'previewsfolder' => $this->previewsfolder,
+				'previewsfolderopen' => $this->previewsfolderopen,
+                'previewslist' => $this->previewslist,
+                'hash' => md5(QuantummanagerHelper::preparePath($this->directory)),
 				'cssClass' => $this->cssClass,
 			]
 		);
@@ -88,6 +91,9 @@ class JFormFieldQuantumviewfiles extends JFormField
 			$this->__set('metafile', $this->getAttribute('metafile', '1'));
 			$this->__set('watermark', $this->getAttribute('watermark', '0'));
 			$this->__set('help', $this->getAttribute('help', '1'));
+			$this->__set('previewsfolder', $this->getAttribute('previewsfolderopen', QuantummanagerHelper::getParamsComponentValue('previewsfolder', '1')));
+			$this->__set('previewsfolderopen', $this->getAttribute('previewsfolderopen', QuantummanagerHelper::getParamsComponentValue('previewsfolderopen', '1')));
+			$this->__set('previewslist', $this->getAttribute('previewslist', QuantummanagerHelper::getParamsComponentValue('previewslist', [])));
 			$this->directory = $this->getAttribute('directory', 'images');
 			$this->onlyfiles = $this->getAttribute('onlyfiles', '0');
 
