@@ -1323,7 +1323,7 @@ class QuantummanagerFileSystemLocal
                 }
             }
 
-            if(count($previewSelect) === 0)
+            if(count($previewSelect) === 0 || (int)$previewSelect['width'] === 0 || (int)$previewSelect['height'])
             {
                 return json_encode([]);
             }
