@@ -736,7 +736,36 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                                 if(parseInt(self.options.previewsfolder) && parseInt(self.options.previewsfolderopen)) {
                                     Filemanager.data.path += '/_thumb';
                                 }
-                                Filemanager.events.trigger('reloadPaths', Filemanager);
+
+                                response = JSON.parse(response);
+                                let selectFiles = [];
+                                for (let k in response)
+                                {
+                                    selectFiles.push(response[k].name);
+                                }
+
+                                self.loadDirectory(null, function () {
+                                    Filemanager.Quantumviewfiles.scrollTopFilesCheck(selectFiles);
+
+                                    let filesAll = Filemanager.Quantumviewfiles.element.querySelectorAll('.field-list-files .file-item');
+                                    let find = false;
+                                    let element;
+
+                                    for(let i=0;i<filesAll.length;i++) {
+                                        if (filesAll[i].querySelector('input').checked) {
+                                            self.priorityMetaFile = filesAll[i];
+                                            Filemanager.Quantumviewfiles.selectFile(filesAll[i], true);
+
+                                        }
+                                    }
+
+                                    let countSelected = self.getCountSelected();
+
+                                    if(countSelected > 1) {
+                                        self.showMetaCountFile(countSelected);
+                                    }
+                                })
+
                             });
 
                             ev.preventDefault();
