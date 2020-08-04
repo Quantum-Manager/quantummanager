@@ -258,6 +258,12 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
         {
             'id': 'viewfilesCopyLink',
             'for': 'file'
+        },
+        {
+            'id': 'viewfilesPreviews',
+            'exs': ['png', 'jpg', 'jpeg', 'webp'],
+            'for': 'file',
+            'count': 'some'
         }
     ];
 

@@ -1323,7 +1323,7 @@ class QuantummanagerFileSystemLocal
                 }
             }
 
-            if(count($previewSelect) === 0 || (int)$previewSelect['width'] === 0 || (int)$previewSelect['height'])
+            if(count($previewSelect) === 0 || (int)$previewSelect['width'] === 0 || (int)$previewSelect['height'] === 0)
             {
                 return json_encode([]);
             }
@@ -1335,10 +1335,10 @@ class QuantummanagerFileSystemLocal
             //создаем папку, если нет название файла другой
             if((int)QuantummanagerHelper::getParamsComponentValue('previewsfolder', 1))
             {
-                $pathFileTo = JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . '_thumb' . DIRECTORY_SEPARATOR;
+                $pathFileTo = JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . '_thumb';
                 Folder::create($pathFileTo);
                 $fileName = implode('.', $splitName) . '_'. (int)$previewSelect['width'] . '_' . (int)$previewSelect['height'] . '.' . $exs;
-                $pathFileTo .= $fileName;
+                $pathFileTo .= DIRECTORY_SEPARATOR . $fileName;
             }
             else
             {
