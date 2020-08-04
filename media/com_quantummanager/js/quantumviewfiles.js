@@ -695,7 +695,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                     'center',
                     'file-actions',
                     'btn-more',
-                    'Миниатюры',
+                    QuantumviewfilesLang.buttonPreviews,
                     'quantummanager-icon-previews',
                     {},
                     function (ev) {

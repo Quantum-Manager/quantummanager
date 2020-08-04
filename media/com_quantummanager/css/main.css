@@ -588,6 +588,11 @@
     height: 14px;
     background-image: url("../images/icons/action/switch-vertical-orientation-arrows.svg");
 }
+.quantummanager-icon-previews {
+    width: 14px;
+    height: 14px;
+    background-image: url("../images/icons/action/crop-button.svg");
+}
 
 
 /****************************** Loader ********************************/

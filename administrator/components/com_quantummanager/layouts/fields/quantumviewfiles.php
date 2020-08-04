@@ -96,6 +96,7 @@ $options = [
         'buttonDelete': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_DELETE'), ENT_QUOTES); ?>",
         'buttonTable': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_TABLE'), ENT_QUOTES); ?>",
         'buttonGrid': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_GRID'), ENT_QUOTES); ?>",
+        'buttonPreviews': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_PREVIEWS'), ENT_QUOTES); ?>",
         'directoryName': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ALERT_DIRECTORY_NAME'), ENT_QUOTES); ?>",
         'directoryNameRequired': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ALERT_DIRECTORY_NAME_REQUIRED'), ENT_QUOTES); ?>",
         'fileName': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ALERT_FILE_NAME'), ENT_QUOTES); ?>",
