@@ -1288,18 +1288,18 @@ class QuantummanagerFileSystemLocal
      * @param $path
      * @param $scope
      * @param $list
-     *
-     *
+     * @param $previewTitle
+     * @return false|string
      * @throws Exception
-     * @since version
      */
-    public static function createPreview($path, $scope, $list)
+    public static function createPreview($path, $scope, $list, $previewTitle)
     {
         JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
         JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');
 
         $path = QuantummanagerHelper::preparePath( $path, false, $scope);
         $image = new QuantummanagerHelperImage;
+        $output = [];
 
         foreach ($list as $file)
         {
@@ -1312,33 +1312,60 @@ class QuantummanagerFileSystemLocal
                 continue;
             }
 
-            //получаем размеры от превью
-            $width = 100;
-            $height = 100;
+            //получаем превью
+            $previewlist = QuantummanagerHelper::getParamsComponentValue('previewslist', []);
+            $previewSelect = [];
+            foreach ($previewlist as $preview)
+            {
+                if($preview->label === $previewTitle)
+                {
+                    $previewSelect = (array)$preview;
+                }
+            }
+
+            if(count($previewSelect) === 0)
+            {
+                return json_encode([]);
+            }
 
             $splitName = explode('.', $file);
             $exs = array_pop($splitName);
+            $fileName = '';
 
             //создаем папку, если нет название файла другой
             if((int)QuantummanagerHelper::getParamsComponentValue('previewsfolder', 1))
             {
                 $pathFileTo = JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . '_thumb' . DIRECTORY_SEPARATOR;
                 Folder::create($pathFileTo);
-                $pathFileTo .= implode('.', $splitName) . '_'. $width . '_' . $height . '.' . $exs;
+                $fileName = implode('.', $splitName) . '_'. (int)$previewSelect['width'] . '_' . (int)$previewSelect['height'] . '.' . $exs;
+                $pathFileTo .= $fileName;
             }
             else
             {
                 $pathFileTo = JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR;
-                $pathFileTo .= 'thumb_' . implode('.', $splitName) . '_'. $width . '_' . $height . '.' . $exs;
+                $fileName = 'thumb_' . implode('.', $splitName) . '_'. (int)$previewSelect['width'] . '_' . (int)$previewSelect['height'] . '.' . $exs;
+                $pathFileTo .= $fileName;
             }
+
+            $output[] = ['name' => $fileName];
 
             //копируем файл
             if(File::copy($pathFileFrom, $pathFileTo))
             {
-                $image->resizeFit($pathFileTo, $width, $height);
+                if($previewSelect['algorithm'] === 'fit')
+                {
+                    $image->fit($pathFileTo, (int)$previewSelect['width'], (int)$previewSelect['height']);
+                }
+
+                if($previewSelect['algorithm'] === 'resize')
+                {
+                    $image->fit($pathFileTo, (int)$previewSelect['width'], (int)$previewSelect['height']);
+                }
             }
 
         }
+
+        return json_encode($output);
 
     }
 

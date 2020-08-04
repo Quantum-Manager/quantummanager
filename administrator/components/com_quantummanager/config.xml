@@ -493,6 +493,16 @@
 					type="number"
 					label="COM_QUANTUMMANAGER_CONFIG_IMAGE_PREVIEWSLLIST_HEIGHT"
 				/>
+
+				<field name="algorithm"
+					   type="list"
+					   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_PREVIEWSLLIST_ALGORITHM"
+					   default="fit"
+				>
+					<option value="fit">COM_QUANTUMMANAGER_CONFIG_IMAGE_PREVIEWSLLIST_ALGORITHM_FIT</option>
+					<option value="resize">COM_QUANTUMMANAGER_CONFIG_IMAGE_PREVIEWSLLIST_ALGORITHM_RESIZE</option>
+				</field>
+
 			</form>
 		</field>
 
