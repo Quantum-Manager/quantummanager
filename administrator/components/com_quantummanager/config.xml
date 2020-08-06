@@ -224,34 +224,6 @@
 
 	</fieldset>
 
-	<fieldset name="colors" label="COM_QUANTUMMANAGER_CONFIG_COLORS" description="COM_QUANTUMMANAGER_CONFIG_COLORS_DESC">
-		<field name="colorsfiles"
-			   type="subform"
-			   label="COM_QUANTUMMANAGER_CONFIG_COLORS_COLORSFILES_LABEL"
-			   description="COM_QUANTUMMANAGER_CONFIG_COLORS_COLORSFILES_DESC"
-			   layout="joomla.form.field.subform.repeatable-table"
-			   multiple="true"
-			   min="0">
-			<form>
-				<field
-					name="ext"
-					type="text"
-					label="COM_QUANTUMMANAGER_CONFIG_COLORS_COLORSFILES_EXT_LABEL"
-				/>
-				<field
-					name="main"
-					type="color"
-					label="COM_QUANTUMMANAGER_CONFIG_COLORS_COLORSFILES_MAIN_LABEL"
-				/>
-				<field
-					name="fold"
-					type="color"
-					label="COM_QUANTUMMANAGER_CONFIG_COLORS_COLORSFILES_FOLD_LABEL"
-				/>
-			</form>
-		</field>
-	</fieldset>
-
 	<fieldset name="image" label="COM_QUANTUMMANAGER_CONFIG_IMAGE" description="COM_QUANTUMMANAGER_CONFIG_IMAGE_DESC">
 
 		<field name="unsplash"
@@ -534,6 +506,34 @@
 			</form>
 		</field>
 
+	</fieldset>
+
+	<fieldset name="colors" label="COM_QUANTUMMANAGER_CONFIG_COLORS" description="COM_QUANTUMMANAGER_CONFIG_COLORS_DESC">
+		<field name="colorsfiles"
+			   type="subform"
+			   label="COM_QUANTUMMANAGER_CONFIG_COLORS_COLORSFILES_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_COLORS_COLORSFILES_DESC"
+			   layout="joomla.form.field.subform.repeatable-table"
+			   multiple="true"
+			   min="0">
+			<form>
+				<field
+						name="ext"
+						type="text"
+						label="COM_QUANTUMMANAGER_CONFIG_COLORS_COLORSFILES_EXT_LABEL"
+				/>
+				<field
+						name="main"
+						type="color"
+						label="COM_QUANTUMMANAGER_CONFIG_COLORS_COLORSFILES_MAIN_LABEL"
+				/>
+				<field
+						name="fold"
+						type="color"
+						label="COM_QUANTUMMANAGER_CONFIG_COLORS_COLORSFILES_FOLD_LABEL"
+				/>
+			</form>
+		</field>
 	</fieldset>
 
 	<fieldset name="profiles" label="COM_QUANTUMMANAGER_CONFIG_PROFILES" description="COM_QUANTUMMANAGER_CONFIG_PROFILES_DESC">
