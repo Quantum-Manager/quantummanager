@@ -59,6 +59,11 @@ $options = [
 
 <?php
     $mapFileColors = include implode(DIRECTORY_SEPARATOR, [JPATH_ROOT, 'administrator', 'components', 'com_quantummanager', 'layouts', 'mapfilescolors.php']);
+    $mapFileColorsReplace = QuantummanagerHelper::getParamsComponentValue('colorsfiles', []);
+    foreach ($mapFileColorsReplace as $value)
+    {
+        $mapFileColors[$value->ext] = [$value->main, $value->fold];
+    }
 ?>
 
 <?php
