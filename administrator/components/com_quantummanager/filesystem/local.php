@@ -1238,7 +1238,7 @@ class QuantummanagerFileSystemLocal
             if (!file_exists($cache . DIRECTORY_SEPARATOR . $file))
 			{
 			    $fileSize = filesize($directory . DIRECTORY_SEPARATOR . $file);
-			    if($fileSize !== 0 && $fileSize < 5242880)
+			    if($fileSize !== 0 && ($fileSize < ((QuantummanagerHelper::getMemoryLimit() * 1024 * 1024) / 2)))
                 {
                     $manager->make($directory . DIRECTORY_SEPARATOR . $file)->resize(null, 320, static function ($constraint) {
                         $constraint->aspectRatio();
