@@ -491,7 +491,7 @@ class QuantummanagerFileSystemLocal
 						];
 					}
 
-					if (isset($stat['size']))
+					if (isset($stat['size']) && (int)$stat['size'] > 0)
 					{
 						$globalInfo[] = [
 							'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_FILESIZE'),
@@ -503,12 +503,17 @@ class QuantummanagerFileSystemLocal
 
 				if (in_array($exs, ['jpg', 'jpeg', 'png', 'gif', 'webp']))
 				{
-					list($width, $height, $type, $attr) = getimagesize($filePath);
 
-					$globalInfo[] = [
-						'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_RESOLUTION'),
-						'value' => $width . ' x ' . $height
-					];
+					list($width, $height, $type, $attr) = @getimagesize($filePath);
+
+					if($width > 0 && $height > 0)
+                    {
+                        $globalInfo[] = [
+                            'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_RESOLUTION'),
+                            'value' => $width . ' x ' . $height
+                        ];
+                    }
+
 				}
 
 
@@ -518,32 +523,38 @@ class QuantummanagerFileSystemLocal
 
 					try
 					{
-						$tmp = exif_read_data($filePath);
-						foreach ($tmp as $key => $section)
-						{
-							if (is_array($section)) {
-								foreach ($section as $name => $val)
-								{
-									$meta['find'][] = [
-										'key' => $key . '.' . $name,
-										'value' => $val
-									];
-								}
-							}
-							elseif (!in_array(mb_strtolower($key), [
-								'filename',
-								'filedatetime',
-								'filesize',
-								'filetype',
-								'mimetype',
-							]))
-							{
-								$meta['find'][] = [
-									'key' => $key,
-									'value' => $section,
-								];
-							}
-						}
+					    if(function_exists('exif_read_data'))
+                        {
+                            $tmp = @exif_read_data($filePath);
+                            if(is_array($tmp))
+                            {
+                                foreach ($tmp as $key => $section)
+                                {
+                                    if (is_array($section)) {
+                                        foreach ($section as $name => $val)
+                                        {
+                                            $meta['find'][] = [
+                                                'key' => $key . '.' . $name,
+                                                'value' => $val
+                                            ];
+                                        }
+                                    }
+                                    elseif (!in_array(mb_strtolower($key), [
+                                        'filename',
+                                        'filedatetime',
+                                        'filesize',
+                                        'filetype',
+                                        'mimetype',
+                                    ]))
+                                    {
+                                        $meta['find'][] = [
+                                            'key' => $key,
+                                            'value' => $section,
+                                        ];
+                                    }
+                                }
+                            }
+                        }
 					}
 					catch (Exception $e)
 					{
@@ -1203,6 +1214,7 @@ class QuantummanagerFileSystemLocal
 			}
 		}
 
+
 		if(in_array($exs, ['jpg', 'jpeg', 'png', 'gif']))
 		{
 
@@ -1222,14 +1234,25 @@ class QuantummanagerFileSystemLocal
 				}
 			}
 
-			if (!file_exists($cache . DIRECTORY_SEPARATOR . $file))
-			{
-				$manager->make($directory . DIRECTORY_SEPARATOR . $file)->resize(null, 320, static function ($constraint) {
-					$constraint->aspectRatio();
-				})->save($cache . DIRECTORY_SEPARATOR . $file);
-			}
 
-			$app->redirect($siteUrl . 'cache/com_quantummanager' . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file . '?v=' . mt_rand(111111, 999999));
+            if (!file_exists($cache . DIRECTORY_SEPARATOR . $file))
+			{
+			    $fileSize = filesize($directory . DIRECTORY_SEPARATOR . $file);
+			    if($fileSize !== 0 && $fileSize < 5242880)
+                {
+                    $manager->make($directory . DIRECTORY_SEPARATOR . $file)->resize(null, 320, static function ($constraint) {
+                        $constraint->aspectRatio();
+                    })->save($cache . DIRECTORY_SEPARATOR . $file);
+
+                    $app->redirect($siteUrl . 'cache/com_quantummanager' . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file . '?v=' . mt_rand(111111, 999999));
+                }
+
+			}
+            else
+            {
+                $app->redirect($siteUrl . 'cache/com_quantummanager' . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file . '?v=' . mt_rand(111111, 999999));
+            }
+
 		}
 
         if($exs === 'webp')
