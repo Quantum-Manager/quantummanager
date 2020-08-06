@@ -700,7 +700,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                     'viewfilesPreviews',
                     'center',
                     'file-actions',
-                    'btn-more',
+                    'btn-more hidden-label',
                     QuantumviewfilesLang.buttonPreviews,
                     'quantummanager-icon-previews',
                     {},
