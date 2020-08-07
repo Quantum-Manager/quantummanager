@@ -685,6 +685,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                                     let button = document.querySelector('.' + buttonsId);
                                     new ClipboardJS(button);
                                     button.click();
+                                    QuantumUtils.notify({fm: Filemanager, text: QuantumviewfilesLang.copied});
                                 }
                             },
                         ]);
