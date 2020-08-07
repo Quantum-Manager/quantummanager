@@ -765,6 +765,9 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                                     if(countSelected > 1) {
                                         self.showMetaCountFile(countSelected);
                                     }
+
+                                    Filemanager.Quantumviewfiles.initBreadcrumbs(Filemanager.Quantumviewfiles.buildBreadcrumbs);
+
                                 })
 
                             });
