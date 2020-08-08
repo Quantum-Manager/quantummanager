@@ -311,6 +311,18 @@
 			   showon="resize:1"
 		/>
 
+		<field name="exifsave"
+			   type="radio"
+			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_EXIFSAVE_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_EXIFSAVE_DESC"
+			   required="true"
+			   class="btn-group btn-group-yesno"
+			   default="0"
+			   showon="resize:1">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
 		<field name="overlay"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_LABEL"
@@ -378,17 +390,6 @@
 			   required="true"
 			   default="10"
 			   showon="overlay!:0"/>
-
-		<field name="exifsave"
-			   type="radio"
-			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_EXIFSAVE_LABEL"
-			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_EXIFSAVE_DESC"
-			   required="true"
-			   class="btn-group btn-group-yesno"
-			   default="0">
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
-		</field>
 
 		<field type="spacer"
 			   name="spacer_image_editor"
