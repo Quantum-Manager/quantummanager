@@ -132,7 +132,7 @@ video/quicktime
 video/quicktime
 video/vnd.vivo
 
-#arhive
+#archive
 application/x-rar-compressed
 application/octet-stream
 application/zip
