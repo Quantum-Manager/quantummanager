@@ -390,17 +390,6 @@
 			<option value="0">JNO</option>
 		</field>
 
-		<field name="exiflist"
-			   type="quantumexiflist"
-			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_EXIFLIST_LABEL"
-			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_EXIFLIST_DESC"
-			   multiple="true"
-			   value=""
-			   showon="exifsave:1"
-		>
-			<option value=""/>
-		</field>
-
 		<field type="spacer"
 			   name="spacer_image_editor"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_SPACER_IMAGE_EDITOR"

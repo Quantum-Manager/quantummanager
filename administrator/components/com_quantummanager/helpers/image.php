@@ -19,6 +19,8 @@ use Joomla\Filesystem\Folder;
 class QuantummanagerHelperImage
 {
 
+    private $exifs = [];
+
 	public function __construct()
 	{
         JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
@@ -171,6 +173,8 @@ class QuantummanagerHelperImage
 			$newWidth = round($newHeight * $ratio);
 		}
 
+		$this->saveExif($file);
+
 		$manager = JInterventionimage::getInstance(['driver' => $this->getNameDriver()]);
 		$manager
             ->make($file)
@@ -179,7 +183,10 @@ class QuantummanagerHelperImage
                 $constraint->upsize();
             })
 			->save($file);
-	}
+
+        $this->writeExif($file);
+
+    }
 
     /**
      * @param $file
@@ -404,5 +411,41 @@ class QuantummanagerHelperImage
 		return 'gd';
 	}
 
+    /**
+     * @param $file
+     */
+	private function saveExif($file)
+    {
+        JLoader::register('JPel', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jpel' . DIRECTORY_SEPARATOR . 'jpel.php');
+        $fi = JPel::instance($file);
+        if($fi)
+        {
+            $exifSave = (int)QuantummanagerHelper::getParamsComponentValue('exifsave', 0);
+            if($exifSave)
+            {
+                $this->exifs = $fi->getExif();
+            }
+        }
+    }
+
+    /**
+     * @param $file
+     */
+    private function writeExif($file)
+    {
+        JLoader::register('JPel', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jpel' . DIRECTORY_SEPARATOR . 'jpel.php');
+        $fi = JPel::instance($file);
+        if($fi)
+        {
+            $exifSave = (int)QuantummanagerHelper::getParamsComponentValue('exifsave', 0);
+            if($exifSave)
+            {
+                $fi->setExif($this->exifs);
+                $fi->save($file);
+                $this->exifs = [];
+
+            }
+        }
+    }
 
 }
