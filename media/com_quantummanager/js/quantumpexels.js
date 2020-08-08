@@ -44,7 +44,7 @@ window.Quantumpexels = function(Filemanager, QuantumPexelsElement, options) {
             'pexelsSearch',
             'right',
             'file-other',
-            'btn-pexels-search btn-width-small hidden-label',
+            'btn-pexels-search hidden-label',
             QuantumpexelsLang.button,
             'quantummanager-icon-pexels',
             {},

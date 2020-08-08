@@ -714,7 +714,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                         'viewfilesPreview' + i,
                         'center',
                         'file-actions',
-                        'btn-preview btn-hide',
+                        'btn-preview btn-width-small btn-hide',
                         QuantumviewfilesPreviews[k].label,
                         '',
                         {},
