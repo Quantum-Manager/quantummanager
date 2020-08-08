@@ -310,15 +310,14 @@ class QuantummanagerFileSystemLocal
 			$app = Factory::getApplication();
 			$data = $app->input->getArray();
 			$file = $app->input->files->get('file', '', 'raw');
-			$arhiveupload = (int)QuantummanagerHelper::getParamsComponentValue('arhiveupload', 1);
-			$optionsForSafe = [];
+			$contentcheck = (int)QuantummanagerHelper::getParamsComponentValue('contentcheck', 1);
+            $optionsForSafe = [
+                'forbidden_extensions' => QuantummanagerHelper::$forbiddenExtensions,
+            ];
 
-			if($arhiveupload)
+			if(!$contentcheck)
 			{
-				$optionsForSafe = [
-					'forbidden_extensions' => QuantummanagerHelper::$forbiddenExtensions,
-					'php_ext_content_extensions' => ['null'],
-				];
+				$optionsForSafe['php_ext_content_extensions'] = ['null'];
 			}
 
 
@@ -990,13 +989,14 @@ class QuantummanagerFileSystemLocal
 			else
 			{
 				$lang = Factory::getLanguage();
+				$exsSplit = explode('.', $data['exs']);
 				$nameSplit = $data['name'];
-				$nameExs = $data['exs'];
+				$nameExs = array_pop($exsSplit);
 				$nameSafe = File::makeSafe($lang->transliterate($nameSplit), ['#^\.#', '#\040#']);
 				$uploadedFileName = $nameSafe . '.' . $nameExs;
 				$exs = explode(',', 'jpg,jpeg,png,gif,webp');
 
-				if(in_array($exs, QuantummanagerHelper::$forbiddenExtensions))
+				if(in_array($nameExs, QuantummanagerHelper::$forbiddenExtensions))
 				{
 					$output['error'] = Text::_('COM_QUANTUMMANAGER_ERROR_PARTIAL_UPLOAD');
 					return $output['error'];
@@ -1020,7 +1020,7 @@ class QuantummanagerFileSystemLocal
 				if (File::upload($file['tmp_name'], $path . DIRECTORY_SEPARATOR . $uploadedFileName))
 				{
 					QuantummanagerHelper::filterFile($path . DIRECTORY_SEPARATOR . $uploadedFileName);
-					$output[ 'name' ] = $uploadedFileName;
+					$output['name'] = $uploadedFileName;
 					$originalresize = (int)QuantummanagerHelper::getParamsComponentValue('originalresize', 0);
 
 					if($originalresize)

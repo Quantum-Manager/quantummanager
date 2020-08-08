@@ -124,13 +124,13 @@
 			<option value="0">JNO</option>
 		</field>
 
-		<field name="arhiveupload"
+		<field name="contentcheck"
 			   type="radio"
-			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_ARHIVEUPLOAD_LABEL"
-			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_ARHIVEUPLOAD_DESC"
+			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_CHECK_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_CHECK_DESC"
 			   required="true"
 			   class="btn-group btn-group-yesno"
-			   default="0">
+			   default="1">
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
