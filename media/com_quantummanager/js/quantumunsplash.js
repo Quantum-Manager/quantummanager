@@ -42,7 +42,7 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
             'unsplashSearch',
             'right',
             'file-other',
-            'btn-unsplash-search hidden-label',
+            'btn-unsplash-search btn-width-small hidden-label',
             QuantumunsplashLang.button,
             'quantummanager-icon-unsplash-short',
             {},
