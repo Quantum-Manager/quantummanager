@@ -218,6 +218,8 @@ class QuantummanagerHelperImage
             $maxHeight = (int)$heightFit;
         }
 
+        $this->saveExif($file);
+
         $manager = JInterventionimage::getInstance(['driver' => $this->getNameDriver()]);
         $manager
             ->make($file)
@@ -225,6 +227,9 @@ class QuantummanagerHelperImage
                 $constraint->aspectRatio();
             })
             ->save($file);
+
+        $this->writeExif($file);
+
     }
 
     /**
@@ -257,6 +262,8 @@ class QuantummanagerHelperImage
             $maxHeight = (int)$heightFit;
         }
 
+        $this->saveExif($file);
+
         $manager = JInterventionimage::getInstance(['driver' => $this->getNameDriver()]);
         $manager
             ->make($file)
@@ -265,6 +272,9 @@ class QuantummanagerHelperImage
             })
             ->resizeCanvas($maxWidth, $maxHeight)
             ->save($file);
+
+        $this->writeExif($file);
+
     }
 
 	/**
