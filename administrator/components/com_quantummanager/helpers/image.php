@@ -155,7 +155,7 @@ class QuantummanagerHelperImage
 
         if(is_null($heightFit))
         {
-            $maxHeight = (int)QuantummanagerHelper::getParamsComponentValue('rezizemaxwidth', 1920);
+            $maxHeight = (int)QuantummanagerHelper::getParamsComponentValue('rezizemaxheight', 1280);
         }
         else
         {
