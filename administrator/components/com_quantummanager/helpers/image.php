@@ -87,7 +87,9 @@ class QuantummanagerHelperImage
 
 			if(file_exists($file) && file_exists($fileWatermark))
 			{
-				JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
+                $this->saveExif($file);
+
+                JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
 				$manager = JInterventionimage::getInstance(['driver' => $this->getNameDriver()]);
 				$image = $manager->make($file);
 
