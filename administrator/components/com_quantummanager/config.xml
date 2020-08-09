@@ -317,8 +317,7 @@
 			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_EXIFSAVE_DESC"
 			   required="true"
 			   class="btn-group btn-group-yesno"
-			   default="0"
-			   showon="resize:1">
+			   default="0">
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>

@@ -12,6 +12,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
     this.options = options;
     this.cropperjs = '';
     this.buttons = '';
+    this.source = '';
     this.pathFile = '';
     this.file = '';
     this.nameFile = '';
@@ -224,6 +225,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
                     'scope': Filemanager.data.scope,
                     'name': name,
                     'exs': exs,
+                    'source': encodeURIComponent(self.source),
                     'filters': JSON.stringify(filters)
                 },
                 QuantumUtils.dataURItoBlob(blob),
@@ -368,7 +370,13 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             }
         }
 
-        jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumcropperjs.getImageForCrop&path=" + encodeURIComponent(Filemanager.data.path) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&file=' + encodeURIComponent(fileSource) + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
+        jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager" +
+            "&task=quantumcropperjs.getImageForCrop" +
+            "&path=" + encodeURIComponent(Filemanager.data.path) +
+            '&scope=' + encodeURIComponent(Filemanager.data.scope) +
+            '&file=' + encodeURIComponent(fileSource) +
+            '&v=' + QuantumUtils.randomInteger(111111, 999999)))
+        .done(function (response) {
             response = JSON.parse(response);
 
             if(response.path === undefined) {
@@ -376,6 +384,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             }
 
             image.setAttribute('src', QuantumUtils.getFullUrl('/' + response.path + '?' + QuantumUtils.randomInteger(111111, 999999)));
+            self.source = response.path;
             self.image = image;
             editor.innerHTML = '';
             self.currentImage = image;

@@ -1017,6 +1017,19 @@ class QuantummanagerFileSystemLocal
 					Folder::create($path);
 				}
 
+                JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');
+                $image = new QuantummanagerHelperImage;
+
+
+                if(isset($data['source']) && !empty($data['source']))
+                {
+                    $data['source'] = urldecode($data['source']);
+                    if(file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $data['source']))
+                    {
+                        $image->saveExif(JPATH_ROOT . DIRECTORY_SEPARATOR . $data['source']);
+                    }
+                }
+
 				if (File::upload($file['tmp_name'], $path . DIRECTORY_SEPARATOR . $uploadedFileName))
 				{
 					QuantummanagerHelper::filterFile($path . DIRECTORY_SEPARATOR . $uploadedFileName);
@@ -1035,12 +1048,7 @@ class QuantummanagerFileSystemLocal
 						}
 					}
 
-					if($type === 'image')
-					{
-						JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');
-						$image = new QuantummanagerHelperImage;
-						$image->afterUpload($path . DIRECTORY_SEPARATOR . $uploadedFileName);
-					}
+                    $image->afterUpload($path . DIRECTORY_SEPARATOR . $uploadedFileName);
 
 				}
 

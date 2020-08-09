@@ -67,6 +67,7 @@ class QuantummanagerHelperImage
 		}
 
 		$this->otherFilters($file);
+        $this->writeExif($file);
 		$this->reloadCache($file);
 
 	}
@@ -184,8 +185,6 @@ class QuantummanagerHelperImage
             })
 			->save($file);
 
-        $this->writeExif($file);
-
     }
 
     /**
@@ -227,8 +226,6 @@ class QuantummanagerHelperImage
                 $constraint->aspectRatio();
             })
             ->save($file);
-
-        $this->writeExif($file);
 
     }
 
@@ -272,8 +269,6 @@ class QuantummanagerHelperImage
             })
             ->resizeCanvas($maxWidth, $maxHeight)
             ->save($file);
-
-        $this->writeExif($file);
 
     }
 
@@ -424,8 +419,13 @@ class QuantummanagerHelperImage
     /**
      * @param $file
      */
-	private function saveExif($file)
+	public function saveExif($file)
     {
+        if(!empty($this->exifs))
+        {
+            return;
+        }
+
         JLoader::register('JPel', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jpel' . DIRECTORY_SEPARATOR . 'jpel.php');
         $fi = JPel::instance($file);
         if($fi)
@@ -441,8 +441,13 @@ class QuantummanagerHelperImage
     /**
      * @param $file
      */
-    private function writeExif($file)
+    public function writeExif($file)
     {
+        if(empty($this->exifs))
+        {
+            return;
+        }
+
         JLoader::register('JPel', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jpel' . DIRECTORY_SEPARATOR . 'jpel.php');
         $fi = JPel::instance($file);
         if($fi)
