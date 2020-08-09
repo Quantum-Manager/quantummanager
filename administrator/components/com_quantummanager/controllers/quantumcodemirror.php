@@ -18,5 +18,4 @@ use Joomla\Filesystem\Folder;
  */
 class QuantummanagerControllerQuantumcodemirror extends AdminController
 {
-
 }

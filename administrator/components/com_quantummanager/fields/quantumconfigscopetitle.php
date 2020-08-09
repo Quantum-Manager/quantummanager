@@ -19,7 +19,7 @@ use Joomla\CMS\Uri\Uri;
 JFormHelper::loadFieldClass('text');
 
 /**
- * Class JFormFieldQuantumtoolbar
+ * Class JFormFieldQuantumconfigscopetitle
  */
 class JFormFieldQuantumconfigscopetitle extends JFormFieldText
 {

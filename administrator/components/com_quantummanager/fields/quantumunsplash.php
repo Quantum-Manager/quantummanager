@@ -16,7 +16,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Layout\FileLayout;
 
 /**
- * Class JFormFieldQuantumtreecatalogs
+ * Class JFormFieldQuantumunsplash
  */
 class JFormFieldQuantumunsplash extends JFormField
 {

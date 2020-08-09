@@ -18,7 +18,7 @@ use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Uri\Uri;
 
 /**
- * Class JFormFieldQuantumUpload
+ * Class JFormFieldQuantumCombine
  */
 class JFormFieldQuantumCombine extends JFormField
 {

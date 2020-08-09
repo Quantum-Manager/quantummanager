@@ -16,10 +16,7 @@ use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 
 /**
- * Quantummanager Controller.
- *
- * @package  quantummanager
- * @since    1.0
+ * Class QuantummanagerControllerQuantumupload
  */
 class QuantummanagerControllerQuantumupload extends AdminController
 {
