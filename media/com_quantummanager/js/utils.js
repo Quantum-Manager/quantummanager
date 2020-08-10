@@ -8,6 +8,12 @@
 
 window.QuantumUtils = {
 
+    /**
+     *
+     * @param url
+     * @param root
+     * @returns {string}
+     */
     getFullUrl: function(url, root) {
         let prefix = '';
 
@@ -25,6 +31,15 @@ window.QuantumUtils = {
         return prefix + url;
     },
 
+    /**
+     *
+     * @param typeRequest
+     * @param url
+     * @param data
+     * @param headers
+     * @param callbackSuccess
+     * @param callbackFail
+     */
     ajax: function (typeRequest, url, data, headers, callbackSuccess, callbackFail) {
         let xhr = new XMLHttpRequest();
         let formData = new FormData();
@@ -53,6 +68,15 @@ window.QuantumUtils = {
         xhr.send(formData);
     },
 
+    /**
+     *
+     * @param url
+     * @param dataGET
+     * @param blob
+     * @param headers
+     * @param callbackSuccess
+     * @param callbackFail
+     */
     ajaxFile: function (url, dataGET, blob, headers, callbackSuccess, callbackFail) {
         let xhr = new XMLHttpRequest();
         let formData = new FormData();
@@ -73,6 +97,11 @@ window.QuantumUtils = {
         xhr.send(formData);
     },
 
+    /**
+     *
+     * @param obj
+     * @returns {string}
+     */
     serialize: function(obj) {
         let str = [];
         for (let p in obj) {
@@ -83,6 +112,11 @@ window.QuantumUtils = {
         return str.join("&");
     },
 
+    /**
+     *
+     * @param dataURI
+     * @returns {Blob}
+     */
     dataURItoBlob: function(dataURI) {
         let byteString;
         if (dataURI.split(',')[0].indexOf('base64') >= 0) {
@@ -100,12 +134,24 @@ window.QuantumUtils = {
         return new Blob([ia], {type:mimeString});
     },
 
+    /**
+     *
+     * @param min
+     * @param max
+     * @returns {number}
+     */
     randomInteger: function (min, max) {
         let rand = min - 0.5 + Math.random() * (max - min + 1);
         rand = Math.round(rand);
         return rand;
     },
 
+    /**
+     *
+     * @param elem
+     * @param refElem
+     * @returns {*}
+     */
     insertAfter: function (elem, refElem) {
         let parent = refElem.parentNode;
         let next = refElem.nextSibling;
@@ -116,6 +162,11 @@ window.QuantumUtils = {
         }
     },
 
+    /**
+     *
+     * @param bytes
+     * @returns {string}
+     */
     bytesToSize: function(bytes) {
         bytes = parseInt(bytes);
         let sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
@@ -128,6 +179,11 @@ window.QuantumUtils = {
         return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
     },
 
+    /**
+     *
+     * @param unix_timestamp
+     * @returns {string}
+     */
     fromUnixTimeToDate: function(unix_timestamp) {
         unix_timestamp = parseInt(unix_timestamp);
         let date = new Date(unix_timestamp * 1000);
@@ -162,6 +218,11 @@ window.QuantumUtils = {
         return formattedTime;
     },
 
+    /**
+     *
+     * @param time
+     * @returns {string}
+     */
     toHHMMSS: function (time) {
         let sec_num = parseInt(time, 10);
         let hours   = Math.floor(sec_num / 3600);
@@ -183,6 +244,10 @@ window.QuantumUtils = {
         return hours + ':' + minutes + ':' + seconds;
     },
 
+    /**
+     *
+     * @param text
+     */
     fallbackCopyTextToClipboard: function(text) {
         let textArea = document.createElement("textarea");
         textArea.value = text;
@@ -201,6 +266,11 @@ window.QuantumUtils = {
         document.body.removeChild(textArea);
     },
 
+    /**
+     *
+     * @param m
+     * @param buttons
+     */
     alert: function(m, buttons) {
         let alert = JSAlert.alert(m);
 
@@ -215,6 +285,11 @@ window.QuantumUtils = {
         return alert;
     },
 
+    /**
+     *
+     * @param q
+     * @param callback
+     */
     confirm: function(q, callback) {
         JSAlert.confirm(q).then(function(result) {
             if (!result) {
@@ -224,6 +299,12 @@ window.QuantumUtils = {
         });
     },
 
+    /**
+     *
+     * @param q
+     * @param defaultValue
+     * @param callback
+     */
     prompt: function (q, defaultValue, callback) {
         JSAlert.prompt(q, defaultValue).then(function(result) {
             if (!result) {
@@ -233,6 +314,12 @@ window.QuantumUtils = {
         });
     },
 
+    /**
+     *
+     * @param name
+     * @param url
+     * @returns {Window}
+     */
     windowOpen: function (name, url) {
         let winSize = this.windowSize();
         let size = this.getPopUpSize();
@@ -267,6 +354,14 @@ window.QuantumUtils = {
         return size;
     },
 
+    /**
+     *
+     * @param fm
+     * @param header
+     * @param body
+     * @param footer
+     * @param classForModal
+     */
     modal: function(fm, header, body, footer, classForModal) {
         if(classForModal === null) {
             classForModal = '';
@@ -289,6 +384,11 @@ window.QuantumUtils = {
         fm.element.append(modal.build());
     },
 
+    /**
+     *
+     * @param el
+     * @returns {{width: number, height: number}}
+     */
     getPopUpSize: function(el) {
         let size = this.windowSize();
         size.width = (size.width/100*90);
@@ -296,11 +396,19 @@ window.QuantumUtils = {
         return size;
     },
 
+    /**
+     *
+     * @param url
+     */
     openInNewTab: function(url) {
         let win = window.open(url, '_blank');
         win.focus();
     },
 
+    /**
+     *
+     * @param element
+     */
     replaceImgToSvg: function(element) {
         jQuery(element + ' img.svg').each(function(){
             let $img = jQuery(this);
@@ -332,6 +440,10 @@ window.QuantumUtils = {
         });
     },
 
+    /**
+     *
+     * @param options
+     */
     notify: function(options) {
 
         if(window.Toastify === null || window.Toastify === undefined) {

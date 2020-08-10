@@ -13,10 +13,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\AdminController;
 
 /**
- * Quantummanager Controller.
- *
- * @package  quantummanager
- * @since    1.0
+ * Class QuantummanagerControllerQuantummanager
  */
 class QuantummanagerControllerQuantummanager extends AdminController
 {

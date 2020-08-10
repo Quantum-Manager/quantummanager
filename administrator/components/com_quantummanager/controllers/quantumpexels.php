@@ -19,9 +19,9 @@ use Joomla\Filesystem\Folder;
 use Joomla\Registry\Registry;
 
 /**
- * Class QuantummanagerControllerquantumunsplash
+ * Class QuantummanagerControllerquantumpexels
  */
-class QuantummanagerControllerquantumunsplash extends AdminController
+class QuantummanagerControllerquantumpexels extends AdminController
 {
 
 
@@ -32,26 +32,30 @@ class QuantummanagerControllerquantumunsplash extends AdminController
 
 		try
 		{
-			$data = Factory::getApplication()->input->getArray();
-			$dataForRequest = [
-				'q' => '',
-				'page' => '1',
-			];
+            $data = Factory::getApplication()->input->getArray();
+            $dataForRequest = [
+                'q' => '',
+                'page' => '1',
+            ];
 
-			if(isset($data['q']))
-			{
-				$dataForRequest['q'] = $data['q'];
-			}
+            $fields = [
+                'q',
+                'page',
+                'locale'
+            ];
 
-			if(isset($data['page']))
-			{
-				$dataForRequest['page'] = $data['page'];
-			}
+            foreach ($fields as $field)
+            {
+                if(isset($data[$field]))
+                {
+                    $dataForRequest[$field] = $data[$field];
+                }
+            }
 
-			$query = http_build_query([
-				'option' => 'com_yoohikashop',
-				'task' => 'unsplash.search'
-			]);
+            $query = http_build_query([
+                'option' => 'com_yoohikashop',
+                'task' => 'pexels.search'
+            ]);
 
 			$curlTransport = new CurlTransport(new Registry());
 			$uri = new Uri();
@@ -89,33 +93,10 @@ class QuantummanagerControllerquantumunsplash extends AdminController
 		$id = $data['id'];
 
 		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
-		echo QuantummanagerFileSystemLocal::downloadFileUnsplash($path, $scope, $file, $id);
+		echo QuantummanagerFileSystemLocal::downloadFilePexels($path, $scope, $file, $id);
 
 		$app->close();
 
-	}
-
-
-	public function downloadTrigger()
-	{
-		$app = Factory::getApplication();
-		$data = $app->input->getArray();
-
-		$query = http_build_query([
-			'option' => 'com_yoohikashop',
-			'task' => 'unsplash.downloadTrigger',
-			'uid' => $data['id']
-		]);
-
-		$curlTransport = new CurlTransport(new Registry());
-		$uri = new Uri();
-		$uri->setScheme('https');
-		$uri->setHost('hika.su/');
-		$uri->setPath('index.php');
-		$uri->setQuery($query);
-		$request = $curlTransport->request('GET', $uri);
-		$photo = json_decode($request->body, JSON_OBJECT_AS_ARRAY);
-		$app->close();
 	}
 
 }

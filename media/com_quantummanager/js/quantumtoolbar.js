@@ -31,7 +31,7 @@ window.Quantumtoolbar = function(Filemanager, QuantumToolbarElement, options) {
         }
 
         if(this.buttonsList[id] !== undefined) {
-            return;
+            return this.buttonsList[id];
         }
 
         let groupHtml = QuantumToolbarElement.querySelector('.' + position + ' .' + group);
@@ -40,7 +40,12 @@ window.Quantumtoolbar = function(Filemanager, QuantumToolbarElement, options) {
         let button = document.createElement('button');
         wrapButton.setAttribute('class', 'btn-wrap');
         button.setAttribute('class', 'btn ' + className);
-        button.innerHTML = "<span class='quantummanager-icon " + icon + "'></span><span>" + name + "</span>";
+
+        if(icon !== '' && icon !== null) {
+            button.innerHTML = "<span class='quantummanager-icon " + icon + "'></span>";
+        }
+
+        button.innerHTML += "<span>" + name + "</span>";
 
         if(attr === null)  {
             attr = {};
@@ -90,6 +95,7 @@ window.Quantumtoolbar = function(Filemanager, QuantumToolbarElement, options) {
         this.buttonsList[id] = button;
         return this.buttonsList[id];
     };
+
 
     this.trigger = function(event) {
         Filemanager.events.trigger(event, Filemanager);

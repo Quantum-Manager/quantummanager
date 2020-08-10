@@ -12,6 +12,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
     this.options = options;
     this.cropperjs = '';
     this.buttons = '';
+    this.source = '';
     this.pathFile = '';
     this.file = '';
     this.nameFile = '';
@@ -224,6 +225,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
                     'scope': Filemanager.data.scope,
                     'name': name,
                     'exs': exs,
+                    'source': encodeURIComponent(self.source),
                     'filters': JSON.stringify(filters)
                 },
                 QuantumUtils.dataURItoBlob(blob),
@@ -354,7 +356,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             name = self.file.getAttribute('data-name');
         }
 
-        if(['png', 'jpg', 'jpeg'].indexOf(exs) === -1) {
+        if(['png', 'jpg', 'jpeg', 'webp'].indexOf(exs) === -1) {
             return;
         }
 
@@ -368,7 +370,13 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             }
         }
 
-        jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumcropperjs.getImageForCrop&path=" + encodeURIComponent(Filemanager.data.path) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&file=' + encodeURIComponent(fileSource) + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
+        jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager" +
+            "&task=quantumcropperjs.getImageForCrop" +
+            "&path=" + encodeURIComponent(Filemanager.data.path) +
+            '&scope=' + encodeURIComponent(Filemanager.data.scope) +
+            '&file=' + encodeURIComponent(fileSource) +
+            '&v=' + QuantumUtils.randomInteger(111111, 999999)))
+        .done(function (response) {
             response = JSON.parse(response);
 
             if(response.path === undefined) {
@@ -376,6 +384,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             }
 
             image.setAttribute('src', QuantumUtils.getFullUrl('/' + response.path + '?' + QuantumUtils.randomInteger(111111, 999999)));
+            self.source = response.path;
             self.image = image;
             editor.innerHTML = '';
             self.currentImage = image;
@@ -541,7 +550,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             return;
         }
 
-        if(['png', 'jpg', 'jpeg'].indexOf(exs) === -1) {
+        if(['png', 'jpg', 'jpeg', 'webp'].indexOf(exs) === -1) {
             fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.add('btn-hide');
             return;
         }
@@ -573,7 +582,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
                 Filemanager.Quantumcropperjs.nameFile = nameFile;
                 Filemanager.Quantumcropperjs.file = '';
 
-                if(['png', 'jpg', 'jpeg'].indexOf(exs) === -1) {
+                if(['png', 'jpg', 'jpeg', 'webp'].indexOf(exs) === -1) {
                     return;
                 }
 
@@ -586,7 +595,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
         return [
             {
                 writeable: 1,
-                fileExs: ['png', 'jpg', 'jpeg'],
+                fileExs: ['png', 'jpg', 'jpeg', 'webp'],
                 type: 'normal',
                 label: QuantumviewfilesLang.buttonEdit,
                 tip: '',

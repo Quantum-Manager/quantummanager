@@ -19,10 +19,7 @@ use Joomla\Filesystem\Folder;
 use Joomla\Registry\Registry;
 
 /**
- * QuantummanagerControllerquantumpixabay Controller.
- *
- * @package  quantummanager
- * @since    1.0
+ * Class QuantummanagerControllerquantumpixabay
  */
 class QuantummanagerControllerquantumpixabay extends AdminController
 {

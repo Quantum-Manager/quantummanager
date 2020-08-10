@@ -6,23 +6,23 @@
  * @link       https://www.norrnext.com
  */
 
-window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
+window.Quantumpexels = function(Filemanager, QuantumPexelsElement, options) {
 
     this.options = options;
-    this.element = QuantumPixbayElement;
+    this.element = QuantumPexelsElement;
     this.filename = '';
     this.currentPage = 0;
     this.totalPage = 0;
     this.searchStr = '';
     this.masonry = '';
     this.loadPage = false;
-    this.searchWrap = QuantumPixbayElement.querySelector('.quantumpixabay-module-container-search-wrap .quantumpixabay-module-container-search');
-    this.searchGrid = QuantumPixbayElement.querySelector('.quantumpixabay-module-container-search-wrap .quantumpixabay-module-container-search .quantumpixabay-module-search');
-    this.areaSave = QuantumPixbayElement.querySelector('.quantumpixabay-save');
-    this.inputSearch = QuantumPixbayElement.querySelector('.quantumpixabay-module-header input');
-    this.pageWrap = QuantumPixbayElement.querySelector('.quantumpixabay-module-load-page');
-    this.pageButton = QuantumPixbayElement.querySelector('.quantumpixabay-module-load-page button');
-    this.closeButton = QuantumPixbayElement.querySelector('.quantumpixabay-module-close');
+    this.searchWrap = QuantumPexelsElement.querySelector('.quantumpexels-module-container-search-wrap .quantumpexels-module-container-search');
+    this.searchGrid = QuantumPexelsElement.querySelector('.quantumpexels-module-container-search-wrap .quantumpexels-module-container-search .quantumpexels-module-search');
+    this.areaSave = QuantumPexelsElement.querySelector('.quantumpexels-save');
+    this.inputSearch = QuantumPexelsElement.querySelector('.quantumpexels-module-header input');
+    this.pageWrap = QuantumPexelsElement.querySelector('.quantumpexels-module-load-page');
+    this.pageButton = QuantumPexelsElement.querySelector('.quantumpexels-module-load-page button');
+    this.closeButton = QuantumPexelsElement.querySelector('.quantumpexels-module-close');
 
     this.init = function () {
         let self = this;
@@ -35,21 +35,21 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
             'center',
             'file-other',
             'btn-more hidden-label',
-            QuantumpixabayLang.photostock,
+            QuantumpexelsLang.photostock,
             'quantummanager-icon-photostock',
             {},
             function (ev) {}).parentElement;
 
         Filemanager.Quantumtoolbar.buttonAdd(
-            'pixabaySearch',
+            'pexelsSearch',
             'right',
             'file-other',
-            'btn-pixabay-search hidden-label',
-            QuantumpixabayLang.button,
-            'quantummanager-icon-pixabay',
+            'btn-pexels-search hidden-label',
+            QuantumpexelsLang.button,
+            'quantummanager-icon-pexels',
             {},
             function (ev) {
-                QuantumPixbayElement.classList.add('active');
+                QuantumPexelsElement.classList.add('active');
 
                 if(self.inputSearch.value === '')
                 {
@@ -63,7 +63,7 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
         );
 
         self.closeButton.addEventListener('click', function () {
-            QuantumPixbayElement.classList.remove('active');
+            QuantumPexelsElement.classList.remove('active');
         });
 
         self.pageButton.addEventListener('click', function () {
@@ -87,6 +87,7 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
             }
         });
 
+
         let filterFieldsLi = self.element.querySelectorAll('.filter-field li');
         for(let i=0;i<filterFieldsLi.length;i++) {
             filterFieldsLi[i].addEventListener('click', function () {
@@ -102,12 +103,10 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
             });
         }
 
-
     };
 
     this.search = function (str, page) {
         let self = this;
-
         self.searchStr = str;
         self.pageWrap.classList.remove('active');
 
@@ -126,7 +125,7 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
         }
 
         if(localStorage !== undefined) {
-           localStorage.setItem('quantumpixabayLastStr', self.searchStr);
+           localStorage.setItem('quantumpexelsLastStr', self.searchStr);
         }
 
         let fieldsForRequest = '';
@@ -139,20 +138,21 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
             fieldsForRequest += '&' + filterFields[i].getAttribute('data-name') + '=' + encodeURIComponent(filterFields[i].getAttribute('data-value'));
         }
 
+
         this.loadPage = true;
 
-        jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumpixabay.search&q=" + encodeURIComponent(str) + '&page=' + encodeURIComponent(page) + fieldsForRequest)).done(function (response) {
+        jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumpexels.search&q=" + encodeURIComponent(str) + '&page=' + encodeURIComponent(page) + fieldsForRequest + '&v=' + QuantumUtils.randomInteger(1111111, 9999999))).done(function (response) {
             response = JSON.parse(response);
             self.currentPage = parseInt(page);
             self.totalPage = parseInt(response.totalPage);
             self.loadPage = false;
 
             let html = '';
-            let container = QuantumPixbayElement.querySelector('.quantumpixabay-module-search');
+            let container = QuantumPexelsElement.querySelector('.quantumpexels-module-search');
 
             if(page === 1) {
                 container.innerHTML = '';
-                self.masonry = new Masonry('.quantumpixabay-module-search', {
+                self.masonry = new Masonry('.quantumpexels-module-search', {
                     itemSelector: '.grid-item',
                     percentPosition: true
                 });
@@ -166,7 +166,7 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
                     container.innerHTML = '';
                     let elem = document.createElement('div');
                     elem.setAttribute('class', 'grid-item');
-                    elem.innerHTML = QuantumpixabayLang.notFound;
+                    elem.innerHTML = QuantumpexelsLang.notFound;
                     container.appendChild(elem);
                     self.masonry.appended(elem);
                 } else {
@@ -178,49 +178,41 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
 
             for(let i=0;i<response.results.length;i++) {
 
-                let dataUrl = '';
                 let elem = document.createElement('div');
-
-                if(response.results[i].vectorURL !== undefined) {
-                    dataUrl = response.results[i].vectorURL;
-                } else {
-                    dataUrl = response.results[i].imageURL;
-                }
-
                 elem.setAttribute('class', 'grid-item');
-                elem.setAttribute('data-small', response.results[i]['webformatURL']);
-                elem.setAttribute('data-medium', response.results[i]['largeImageURL']);
-                elem.setAttribute('data-large', response.results[i]['fullHDURL']);
-                elem.setAttribute('data-original', dataUrl);
                 elem.setAttribute('data-id', response.results[i]['id']);
+                elem.setAttribute('data-tiny', response.results[i]['src']['tiny']);
+                elem.setAttribute('data-landscape', response.results[i]['src']['landscape']);
+                elem.setAttribute('data-portrait', response.results[i]['src']['portrait']);
+                elem.setAttribute('data-small', response.results[i]['src']['small']);
+                elem.setAttribute('data-medium', response.results[i]['src']['medium']);
+                elem.setAttribute('data-large', response.results[i]['src']['large']);
+                elem.setAttribute('data-large2x', response.results[i]['src']['large2x']);
+                elem.setAttribute('data-original', response.results[i]['src']['original']);
 
                 let metaWrap = document.createElement('div');
-                metaWrap.setAttribute('class', 'pixabay-meta-wrap');
+                metaWrap.setAttribute('class', 'pexels-meta-wrap');
 
                 let meta = document.createElement('div');
-                meta.setAttribute('class', 'pixabay-meta');
+                meta.setAttribute('class', 'pexels-meta');
 
-                let like = document.createElement('div');
-                like.setAttribute('class', 'pixabay-like');
+                /*let like = document.createElement('div');
+                like.setAttribute('class', 'pexels-like');
                 like.innerHTML = "<img class='svg' src='/media/com_quantummanager/images/icons/action/favorite-heart-button.svg'></img>";
-                like.innerHTML += "<span class='pixabay-like-count'>" + response.results[i]['likes'] + "</span>";
-                meta.appendChild(like);
+                like.innerHTML += "<span class='pexels-like-count'>" + response.results[i]['likes'] + "</span>";
+                meta.appendChild(like);*/
 
                 let user = document.createElement('div');
-                user.setAttribute('class', 'pixabay-user');
-                user.innerHTML = "<div class='pixabay-user-avatar' style='background-image: url(" + response.results[i]['userImageURL'] + ")'></div>";
-                user.innerHTML += "<span class='pixabay-user-name'>" + response.results[i]['user'] + "</span>";
+                user.setAttribute('class', 'pexels-user');
+                //user.innerHTML = "<div class='pexels-user-avatar' style='background-image: url(" + response.photos[i]['profile_image']['medium'] + ")'></div>";
+                user.innerHTML += "<a target='_blank' href='" + response.results[i]['photographer_url'] + "?utm_source=" + encodeURIComponent('Quantum Manager') + "&utm_medium=referral'><span class='pexels-user-name'>" + response.results[i]['photographer'] + "</span></a>";
                 meta.appendChild(user);
 
                 metaWrap.appendChild(meta);
 
                 let image = document.createElement('img');
-                image.setAttribute('src', response.results[i]['webformatURL']);
+                image.setAttribute('src', response.results[i]['src']['medium']);
                 image.onload = function() {
-                    currentLoaded++;
-                };
-
-                image.onerror = function() {
                     currentLoaded++;
                 };
 
@@ -230,7 +222,7 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
                 container.appendChild(elem);
                 self.masonry.appended(elem);
 
-                QuantumUtils.replaceImgToSvg('.quantumpixabay-module-search');
+                QuantumUtils.replaceImgToSvg('.quantumpexels-module-search');
 
                 elem.addEventListener('click', function (ev) {
 
@@ -250,7 +242,7 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
                         }
                     }
 
-                    jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumpixabay.download&path=" + encodeURIComponent(Filemanager.data.path) + "&scope=" + encodeURIComponent(Filemanager.data.scope)
+                    jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumpexels.download&path=" + encodeURIComponent(Filemanager.data.path) + "&scope=" + encodeURIComponent(Filemanager.data.scope)
                         + '&file=' + encodeURIComponent(fileDownload)
                         + '&id=' + encodeURIComponent(element.getAttribute('data-id'))
                     )).done(function (response) {
@@ -260,11 +252,11 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
                             self.filename = response.name;
                         }
 
-                        QuantumPixbayElement.classList.remove('active');
+                        QuantumPexelsElement.classList.remove('active');
                         self.areaSave.style.display = 'none';
-                        Filemanager.events.trigger('pixabayComplete', Filemanager);
+                        Filemanager.events.trigger('pexelsComplete', Filemanager);
                     }).fail(function () {
-                        QuantumPixbayElement.classList.remove('active');
+                        QuantumPexelsElement.classList.remove('active');
                         self.areaSave.style.display = 'none';
                     });
 
@@ -272,8 +264,6 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
                 });
 
             }
-
-            self.masonry.layout();
 
             let intervalLayout = setInterval(function () {
 
@@ -283,7 +273,7 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
                     self.masonry.layout();
                     clearInterval(intervalLayout)
                 }
-            }, 250);
+            }, 150);
 
 
             if(parseInt(response.totalPage) > 1 && (self.currentPage !== self.totalPage)) {
@@ -294,18 +284,19 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
 
 
         });
-    };
+    }
 
-    Filemanager.events.add(this, 'pixabayComplete', function (fm, el) {
+
+    Filemanager.events.add(this, 'pexelsComplete', function (fm, el) {
         Filemanager.Quantumviewfiles.loadDirectory(null, function () {
-            fm.Quantumviewfiles.scrollTopFilesCheck(Filemanager.Quantumunsplash.filename);
+            fm.Quantumviewfiles.scrollTopFilesCheck(Filemanager.Quantumpexels.filename);
 
             let filesAll = fm.Quantumviewfiles.element.querySelectorAll('.field-list-files .file-item');
             let find = false;
             let element;
 
             for(let i=0;i<filesAll.length;i++) {
-                if (Filemanager.Quantumpixabay.filename === filesAll[i].getAttribute('data-file')) {
+                if (Filemanager.Quantumpexels.filename === filesAll[i].getAttribute('data-file')) {
                     fm.Quantumviewfiles.selectFile(filesAll[i], true);
                     find = true;
                 }
@@ -315,6 +306,7 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
 
         });
     });
+
 
 };
 

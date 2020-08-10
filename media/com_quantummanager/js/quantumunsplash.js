@@ -28,17 +28,37 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
 
         self.areaSave.style.display = 'none';
 
-        Filemanager.Quantumtoolbar.buttonAdd('unsplashSearch', 'right', 'file-other', 'btn-unsplash-search hidden-label', QuantumunsplashLang.button, 'quantummanager-icon-unsplash-short', {}, function (ev) {
-            QuantumUnsplashElement.classList.add('active');
+        let buttonPhotostock = Filemanager.Quantumtoolbar.buttonAdd(
+            'photostock',
+            'center',
+            'file-other',
+            'btn-more hidden-label',
+            QuantumunsplashLang.photostock,
+            'quantummanager-icon-photostock',
+            {},
+            function (ev) {}).parentElement;
 
-            if(self.inputSearch.value === '')
-            {
-                self.search('');
-            }
+        Filemanager.Quantumtoolbar.buttonAdd(
+            'unsplashSearch',
+            'right',
+            'file-other',
+            'btn-unsplash-search hidden-label',
+            QuantumunsplashLang.button,
+            'quantummanager-icon-unsplash-short',
+            {},
+            function (ev) {
+                QuantumUnsplashElement.classList.add('active');
 
-            self.inputSearch.focus();
-            ev.preventDefault();
-        });
+                if(self.inputSearch.value === '')
+                {
+                    self.search('');
+                }
+
+                self.inputSearch.focus();
+                ev.preventDefault();
+            },
+            buttonPhotostock
+        );
 
         self.closeButton.addEventListener('click', function () {
             QuantumUnsplashElement.classList.remove('active');

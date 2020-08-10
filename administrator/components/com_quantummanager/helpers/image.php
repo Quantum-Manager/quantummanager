@@ -19,11 +19,11 @@ use Joomla\Filesystem\Folder;
 class QuantummanagerHelperImage
 {
 
-	public $paramsComponent;
+    private $exifs = [];
 
 	public function __construct()
 	{
-		$this->paramsComponent = ComponentHelper::getParams('com_quantummanager');
+        JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 	}
 
 	/**
@@ -51,22 +51,23 @@ class QuantummanagerHelperImage
 			$defaultOptions[$key] = $value;
 		}
 
-		if($this->paramsComponent->get('original', 0) && (int)$defaultOptions['original'])
+		if(QuantummanagerHelper::getParamsComponentValue('original', 0) && (int)$defaultOptions['original'])
 		{
 			$this->originalSave($file);
 		}
 
-		if($this->paramsComponent->get('resize', 0) && (int)$defaultOptions['resize'])
+		if(QuantummanagerHelper::getParamsComponentValue('resize', 0) && (int)$defaultOptions['resize'])
 		{
-			$this->resizeFit($file);
+			$this->bestFit($file);
 		}
 
-		if((int)$this->paramsComponent->get('overlay', 0) === 1 && (int)$defaultOptions['overlay'])
+		if((int)QuantummanagerHelper::getParamsComponentValue('overlay', 0) === 1 && (int)$defaultOptions['overlay'])
 		{
 			$this->resizeWatermark($file);
 		}
 
 		$this->otherFilters($file);
+        $this->writeExif($file);
 		$this->reloadCache($file);
 
 	}
@@ -79,14 +80,16 @@ class QuantummanagerHelperImage
 		try
 		{
 
-			$fileWatermark = JPATH_SITE . DIRECTORY_SEPARATOR . $this->paramsComponent->get('overlayfile');
-			$position = $this->paramsComponent->get('overlaypos', 'bottom-right');
-			$padding = $this->paramsComponent->get('overlaypadding', 10);
-			$percent = $this->paramsComponent->get('overlaypadding', 10);
+			$fileWatermark = JPATH_SITE . DIRECTORY_SEPARATOR . QuantummanagerHelper::getParamsComponentValue('overlayfile');
+			$position = QuantummanagerHelper::getParamsComponentValue('overlaypos', 'bottom-right');
+			$padding = QuantummanagerHelper::getParamsComponentValue('overlaypadding', 10);
+			$percent = QuantummanagerHelper::getParamsComponentValue('overlaypadding', 10);
 
 			if(file_exists($file) && file_exists($fileWatermark))
 			{
-				JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
+                $this->saveExif($file);
+
+                JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
 				$manager = JInterventionimage::getInstance(['driver' => $this->getNameDriver()]);
 				$image = $manager->make($file);
 
@@ -98,10 +101,10 @@ class QuantummanagerHelperImage
 				$imageWidth = $image->width();
 				$imageHeight = $image->height();
 
-				if((int)$this->paramsComponent->get('overlaypercent', 0))
+				if((int)QuantummanagerHelper::getParamsComponentValue('overlaypercent', 0))
 				{
 					//сжимаем водяной знак по процентному соотношению от изображения на который накладывается
-					$precent = (double)$this->paramsComponent->get('overlaypercentvalue', 10);
+					$precent = (double)QuantummanagerHelper::getParamsComponentValue('overlaypercentvalue', 10);
 					$logoWidthMax = $imageWidth / 100 * $precent;
 					$logoHeightMax = $imageHeight / 100 * $precent;
 					$watermark->resize((int)$logoWidthMax, (int)$logoHeightMax, function ($constraint) {
@@ -129,18 +132,37 @@ class QuantummanagerHelperImage
 
 	}
 
-	/**
-	 * @param $file
-	 */
-	public function resizeFit($file)
+    /**
+     * @param $file
+     * @param null $widthFit
+     * @param null $heightFit
+     */
+	public function bestFit($file, $widthFit = null, $heightFit = null)
 	{
 		JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
 		list($width, $height, $type, $attr) = getimagesize($file);
 		$newWidth = $width;
 		$newHeight = $height;
-		$maxWidth = (int)$this->paramsComponent->get('rezizemaxwidth', 1920);
-		$maxHeight = (int)$this->paramsComponent->get('rezizemaxheight', 1280);
-		$ratio = $width / $height;
+
+		if(is_null($widthFit))
+        {
+            $maxWidth = (int)QuantummanagerHelper::getParamsComponentValue('rezizemaxwidth', 1920);
+        }
+		else
+        {
+            $maxWidth = (int)$widthFit;
+        }
+
+        if(is_null($heightFit))
+        {
+            $maxHeight = (int)QuantummanagerHelper::getParamsComponentValue('rezizemaxheight', 1280);
+        }
+        else
+        {
+            $maxHeight = (int)$heightFit;
+        }
+
+        $ratio = $width / $height;
 
 		if($width > $maxWidth)
 		{
@@ -154,14 +176,103 @@ class QuantummanagerHelperImage
 			$newWidth = round($newHeight * $ratio);
 		}
 
+		$this->saveExif($file);
+
 		$manager = JInterventionimage::getInstance(['driver' => $this->getNameDriver()]);
-		$manager->make($file)
+		$manager
+            ->make($file)
 			->resize($newWidth, $newHeight, function ($constraint) {
-			$constraint->aspectRatio();
-			$constraint->upsize();
-		})
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            })
 			->save($file);
-	}
+
+    }
+
+    /**
+     * @param $file
+     * @param null $widthFit
+     * @param null $heightFit
+     */
+    public function fit($file, $widthFit = null, $heightFit = null)
+    {
+        JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
+        list($width, $height, $type, $attr) = getimagesize($file);
+        $newWidth = $width;
+        $newHeight = $height;
+
+        if(is_null($widthFit))
+        {
+            $maxWidth = (int)QuantummanagerHelper::getParamsComponentValue('rezizemaxwidth', 1920);
+        }
+        else
+        {
+            $maxWidth = (int)$widthFit;
+        }
+
+        if(is_null($heightFit))
+        {
+            $maxHeight = (int)QuantummanagerHelper::getParamsComponentValue('rezizemaxwidth', 1920);
+        }
+        else
+        {
+            $maxHeight = (int)$heightFit;
+        }
+
+        $this->saveExif($file);
+
+        $manager = JInterventionimage::getInstance(['driver' => $this->getNameDriver()]);
+        $manager
+            ->make($file)
+            ->fit($maxWidth, $maxHeight, function ($constraint) {
+                $constraint->aspectRatio();
+            })
+            ->save($file);
+
+    }
+
+    /**
+     * @param $file
+     * @param null $widthFit
+     * @param null $heightFit
+     */
+    public function resize($file, $widthFit = null, $heightFit = null)
+    {
+        JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
+        list($width, $height, $type, $attr) = getimagesize($file);
+        $newWidth = $width;
+        $newHeight = $height;
+
+        if(is_null($widthFit))
+        {
+            $maxWidth = (int)QuantummanagerHelper::getParamsComponentValue('rezizemaxwidth', 1920);
+        }
+        else
+        {
+            $maxWidth = (int)$widthFit;
+        }
+
+        if(is_null($heightFit))
+        {
+            $maxHeight = (int)QuantummanagerHelper::getParamsComponentValue('rezizemaxwidth', 1920);
+        }
+        else
+        {
+            $maxHeight = (int)$heightFit;
+        }
+
+        $this->saveExif($file);
+
+        $manager = JInterventionimage::getInstance(['driver' => $this->getNameDriver()]);
+        $manager
+            ->make($file)
+            ->resize($maxWidth, $maxHeight, function ($constraint) {
+                $constraint->aspectRatio();
+            })
+            ->resizeCanvas($maxWidth, $maxHeight)
+            ->save($file);
+
+    }
 
 	/**
 	 * @param $fileSource
@@ -204,7 +315,7 @@ class QuantummanagerHelperImage
 		{
 
 			$info = pathinfo($file);
-			if(isset($info['extension']) && (!in_array(mb_strtolower($info['extension']), ['jpg', 'jpeg', 'png'])))
+			if(isset($info['extension']) && (!in_array(mb_strtolower($info['extension']), ['jpg', 'jpeg', 'png', 'webp'])))
 			{
 				return false;
 			}
@@ -307,5 +418,51 @@ class QuantummanagerHelperImage
 		return 'gd';
 	}
 
+    /**
+     * @param $file
+     */
+	public function saveExif($file)
+    {
+        if(!empty($this->exifs))
+        {
+            return;
+        }
+
+        JLoader::register('JPel', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jpel' . DIRECTORY_SEPARATOR . 'jpel.php');
+        $fi = JPel::instance($file);
+        if($fi)
+        {
+            $exifSave = (int)QuantummanagerHelper::getParamsComponentValue('exifsave', 0);
+            if($exifSave)
+            {
+                $this->exifs = $fi->getExif();
+            }
+        }
+    }
+
+    /**
+     * @param $file
+     */
+    public function writeExif($file)
+    {
+        if(empty($this->exifs))
+        {
+            return;
+        }
+
+        JLoader::register('JPel', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jpel' . DIRECTORY_SEPARATOR . 'jpel.php');
+        $fi = JPel::instance($file);
+        if($fi)
+        {
+            $exifSave = (int)QuantummanagerHelper::getParamsComponentValue('exifsave', 0);
+            if($exifSave)
+            {
+                $fi->setExif($this->exifs);
+                $fi->save($file);
+                $this->exifs = [];
+
+            }
+        }
+    }
 
 }

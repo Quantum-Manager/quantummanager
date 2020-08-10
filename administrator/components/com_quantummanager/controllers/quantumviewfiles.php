@@ -14,10 +14,7 @@ use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\Filesystem\Folder;
 
 /**
- * Quantummanager Controller.
- *
- * @package  quantummanager
- * @since    1.0
+ * Class QuantummanagerControllerquantumviewfiles
  */
 class QuantummanagerControllerquantumviewfiles extends AdminController
 {
@@ -285,5 +282,33 @@ class QuantummanagerControllerquantumviewfiles extends AdminController
 			echo $e->getMessage();
 		}
 	}
+
+	public function createPreview()
+    {
+        try {
+            $app = Factory::getApplication();
+            $data = $app->input->getArray();
+            $file = '';
+
+            if(!isset($data['path'], $data['scope'], $data['list'], $data['preview']))
+            {
+                $app->close();
+            }
+
+            $path = $data['path'];
+            $scope = $data['scope'];
+            $list = json_decode($data['list'], true);
+            $preview = $data['preview'];
+
+            JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
+            echo QuantummanagerFileSystemLocal::createPreview($path, $scope, $list, $preview);
+
+            $app->close();
+        }
+        catch (Exception $e)
+        {
+            echo $e->getMessage();
+        }
+    }
 
 }

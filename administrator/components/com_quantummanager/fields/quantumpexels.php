@@ -16,20 +16,20 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Layout\FileLayout;
 
 /**
- * Class JFormFieldQuantumunsplash
+ * Class JFormFieldQuantumpexels
  */
-class JFormFieldQuantumunsplash extends JFormField
+class JFormFieldQuantumpexels extends JFormField
 {
 
 	/**
 	 * @var string
 	 */
-	public $type = 'QuantumUnsplash';
+	public $type = 'QuantumPexels';
 
 	/**
 	 * @var string
 	 */
-	protected $layout = 'quantumunsplash';
+	protected $layout = 'quantumpexels';
 
 
 	/**
@@ -78,12 +78,12 @@ class JFormFieldQuantumunsplash extends JFormField
             ]);
 
 
-			HTMLHelper::_('stylesheet', 'com_quantummanager/quantumunsplash.css', [
+			HTMLHelper::_('stylesheet', 'com_quantummanager/quantumpexels.css', [
 				'version' => filemtime(__FILE__),
 				'relative' => true
 			]);
 
-			HTMLHelper::_('script', 'com_quantummanager/quantumunsplash.js', [
+			HTMLHelper::_('script', 'com_quantummanager/quantumpexels.js', [
 				'version' => filemtime(__FILE__),
 				'relative' => true
 			]);

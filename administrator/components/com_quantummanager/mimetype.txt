@@ -131,3 +131,10 @@ video/webm
 video/quicktime
 video/quicktime
 video/vnd.vivo
+
+#archive
+application/x-rar-compressed
+application/octet-stream
+application/zip
+application/x-zip-compressed
+multipart/x-zip

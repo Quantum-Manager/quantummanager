@@ -14,7 +14,7 @@ use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\Filesystem\Folder;
 
 /**
- * Class QuantummanagerControllerQuantumconverter
+ * Class QuantummanagerControllerQuantumcropperjs
  */
 class QuantummanagerControllerQuantumcropperjs extends AdminController
 {

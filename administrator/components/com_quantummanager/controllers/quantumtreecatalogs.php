@@ -13,12 +13,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\Filesystem\Folder;
 
-
 /**
- * Quantummanager Controller.
- *
- * @package  quantummanager
- * @since    1.0
+ * Class QuantummanagerControllerQuantumtreecatalogs
  */
 class QuantummanagerControllerQuantumtreecatalogs extends AdminController
 {
