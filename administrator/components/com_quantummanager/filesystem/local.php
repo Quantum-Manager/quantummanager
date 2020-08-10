@@ -1384,12 +1384,16 @@ class QuantummanagerFileSystemLocal
             {
                 if($previewSelect['algorithm'] === 'fit')
                 {
+                    $image->saveExif($pathFileTo);
                     $image->fit($pathFileTo, (int)$previewSelect['width'], (int)$previewSelect['height']);
+                    $image->writeExif($pathFileTo);
                 }
 
                 if($previewSelect['algorithm'] === 'resize')
                 {
+                    $image->saveExif($pathFileTo);
                     $image->fit($pathFileTo, (int)$previewSelect['width'], (int)$previewSelect['height']);
+                    $image->writeExif($pathFileTo);
                 }
             }
 
