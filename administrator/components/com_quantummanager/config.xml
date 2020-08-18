@@ -460,7 +460,6 @@
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_PREVIEWSFOLDER_LABEL"
 			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_PREVIEWSFOLDER_DESC"
-			   required="true"
 			   class="btn-group btn-group-yesno"
 			   default="1">
 			<option value="1">JYES</option>
@@ -471,7 +470,6 @@
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_PREVIEWSFOLDEROPEN_LABEL"
 			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_PREVIEWSFOLDEROPEN_DESC"
-			   required="true"
 			   class="btn-group btn-group-yesno"
 			   default="1"
 			   showon="previewsfolder:1">
