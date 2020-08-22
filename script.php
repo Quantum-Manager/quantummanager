@@ -44,7 +44,9 @@ class Com_QuantummanagerInstallerScript
 	 * @var array
 	 */
 	protected $extensions = [
-		'fileinfo'
+        'fileinfo',
+        'curl',
+        'mbstring'
 	];
 
 	/**
