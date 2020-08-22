@@ -62,7 +62,8 @@ class Com_QuantummanagerInstallerScript
 	 *
 	 * @return  boolean  True on success
 	 */
-	public function preflight($route, JAdapterInstance $adapter) {
+	public function preflight($route, JAdapterInstance $adapter)
+    {
 		$app = Factory::getApplication();
 
 		if (!(version_compare(PHP_VERSION, '7.1.0') >= 0))
@@ -99,5 +100,19 @@ class Com_QuantummanagerInstallerScript
 		}
 
 	}
+
+    /**
+     * Called after any type of action
+     *
+     * @param   string  $route  Which action is happening (install|uninstall|discover_install|update)
+     * @param   JAdapterInstance  $adapter  The object responsible for running this script
+     *
+     * @return  boolean  True on success
+     */
+    public function postflight($route, JAdapterInstance $adapter)
+    {
+        JLoader::register('QuantummanagerHelper', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+        QuantummanagerHelper::setComponentsParams('helpURL', "https://norrnext.com/docs/joomla-extensions/quantum-manager");
+    }
 
 }

@@ -3,6 +3,11 @@
 
 	<fieldset name="general" label="COM_QUANTUMMANAGER_CONFIG_GENERAL" description="COM_QUANTUMMANAGER_CONFIG_GENERAL_DESC">
 
+		<field type="hidden"
+			   name="helpURL"
+			   default="https://norrnext.com/docs/joomla-extensions/quantum-manager"
+		/>
+
 		<field type="note"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_DOCS_LABEL"
 			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_DOCS_DESC"
