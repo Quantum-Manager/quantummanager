@@ -140,12 +140,17 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
         }
 
         this.loadPage = true;
+        let loader = document.createElement('img');
+        loader.setAttribute('src', '/media/com_quantummanager/images/icons/loader.svg');
+        loader.setAttribute('style', 'display:block;width: 90px;margin:50px auto auto auto;');
+        self.searchGrid.appendChild(loader);
 
         jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumpixabay.search&q=" + encodeURIComponent(str) + '&page=' + encodeURIComponent(page) + fieldsForRequest)).done(function (response) {
             response = JSON.parse(response);
             self.currentPage = parseInt(page);
             self.totalPage = parseInt(response.totalPage);
             self.loadPage = false;
+            loader.remove();
 
             let html = '';
             let container = QuantumPixbayElement.querySelector('.quantumpixabay-module-search');

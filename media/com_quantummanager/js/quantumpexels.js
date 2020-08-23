@@ -140,12 +140,17 @@ window.Quantumpexels = function(Filemanager, QuantumPexelsElement, options) {
 
 
         this.loadPage = true;
+        let loader = document.createElement('img');
+        loader.setAttribute('src', '/media/com_quantummanager/images/icons/loader.svg');
+        loader.setAttribute('style', 'display:block;width: 90px;margin:50px auto auto auto;');
+        self.searchGrid.appendChild(loader);
 
         jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumpexels.search&q=" + encodeURIComponent(str) + '&page=' + encodeURIComponent(page) + fieldsForRequest + '&v=' + QuantumUtils.randomInteger(1111111, 9999999))).done(function (response) {
             response = JSON.parse(response);
             self.currentPage = parseInt(page);
             self.totalPage = parseInt(response.totalPage);
             self.loadPage = false;
+            loader.remove();
 
             let html = '';
             let container = QuantumPexelsElement.querySelector('.quantumpexels-module-search');
@@ -181,6 +186,7 @@ window.Quantumpexels = function(Filemanager, QuantumPexelsElement, options) {
                 let elem = document.createElement('div');
                 elem.setAttribute('class', 'grid-item');
                 elem.setAttribute('data-id', response.results[i]['id']);
+                elem.setAttribute('data-optimal', response.results[i]['src']['original'] + '?auto=compress&dpr=1&fit=crop&w=2500');
                 elem.setAttribute('data-tiny', response.results[i]['src']['tiny']);
                 elem.setAttribute('data-landscape', response.results[i]['src']['landscape']);
                 elem.setAttribute('data-portrait', response.results[i]['src']['portrait']);
@@ -196,15 +202,8 @@ window.Quantumpexels = function(Filemanager, QuantumPexelsElement, options) {
                 let meta = document.createElement('div');
                 meta.setAttribute('class', 'pexels-meta');
 
-                /*let like = document.createElement('div');
-                like.setAttribute('class', 'pexels-like');
-                like.innerHTML = "<img class='svg' src='/media/com_quantummanager/images/icons/action/favorite-heart-button.svg'></img>";
-                like.innerHTML += "<span class='pexels-like-count'>" + response.results[i]['likes'] + "</span>";
-                meta.appendChild(like);*/
-
                 let user = document.createElement('div');
                 user.setAttribute('class', 'pexels-user');
-                //user.innerHTML = "<div class='pexels-user-avatar' style='background-image: url(" + response.photos[i]['profile_image']['medium'] + ")'></div>";
                 user.innerHTML += "<a target='_blank' href='" + response.results[i]['photographer_url'] + "?utm_source=" + encodeURIComponent('Quantum Manager') + "&utm_medium=referral'><span class='pexels-user-name'>" + response.results[i]['photographer'] + "</span></a>";
                 meta.appendChild(user);
 

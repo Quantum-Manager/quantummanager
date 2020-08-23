@@ -79,7 +79,7 @@ extract($displayData);
                         </div>
                     </div>
 
-                    <div class="quantummanager-dropdown filter-field" data-name="size" data-value="original" data-disabled>
+                    <div class="quantummanager-dropdown filter-field" data-name="size" data-value="optimal" data-disabled>
                         <div class="quantummanager-dropdown-title"><?php echo Text::_('COM_QUANTUMMANAGER_QUANTUMPEXELS_FILTERS_SIZE') ?></div>
                         <div class="quantummanager-dropdown-content">
                             <ul>
@@ -90,6 +90,7 @@ extract($displayData);
                                 <li data-value="medium"><?php echo Text::_('COM_QUANTUMMANAGER_QUANTUMPEXELS_FILTERS_SIZE_MEDIUM') ?></li>
                                 <li data-value="large"><?php echo Text::_('COM_QUANTUMMANAGER_QUANTUMPEXELS_FILTERS_SIZE_LARGE') ?></li>
                                 <li data-value="large2x"><?php echo Text::_('COM_QUANTUMMANAGER_QUANTUMPEXELS_FILTERS_SIZE_LARGE2X') ?></li>
+                                <li data-value="optimal"><?php echo Text::_('COM_QUANTUMMANAGER_QUANTUMPEXELS_FILTERS_SIZE_OPTIMAL') ?></li>
                                 <li data-value="original"><?php echo Text::_('COM_QUANTUMMANAGER_QUANTUMPEXELS_FILTERS_SIZE_ORIGINAL') ?></li>
                             </ul>
                         </div>
