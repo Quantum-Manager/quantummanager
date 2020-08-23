@@ -38,6 +38,11 @@ class Com_QuantummanagerInstallerScript
 	 */
 	protected $minimumJoomla = '3.9.0';
 
+    /**
+     * @var string
+     */
+	protected $helpURL = 'https://norrnext.com/docs/joomla-extensions/quantum-manager';
+
 
 	/**
 	 * Extensions for php
@@ -104,6 +109,19 @@ class Com_QuantummanagerInstallerScript
 	}
 
     /**
+     * This method is called after a component is updated.
+     *
+     * @param  \stdClass $parent - Parent object calling object.
+     *
+     * @return void
+     */
+    public function update($parent)
+    {
+        JLoader::register('QuantummanagerHelper', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+        QuantummanagerHelper::setComponentsParams('helpURL', $this->helpURL);
+    }
+
+    /**
      * Called after any type of action
      *
      * @param   string  $route  Which action is happening (install|uninstall|discover_install|update)
@@ -114,7 +132,7 @@ class Com_QuantummanagerInstallerScript
     public function postflight($route, JAdapterInstance $adapter)
     {
         JLoader::register('QuantummanagerHelper', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
-        QuantummanagerHelper::setComponentsParams('helpURL', "https://norrnext.com/docs/joomla-extensions/quantum-manager");
+        QuantummanagerHelper::setComponentsParams('helpURL', $this->helpURL);
     }
 
 }
