@@ -63,7 +63,6 @@ window.Quantumpexels = function(Filemanager, QuantumPexelsElement, options) {
                     if(showAlert) {
                         self.alertBigData = QuantumUtils.notify({
                             'text': QuantumUtils.htmlspecialcharsDecode(QuantumLang.alertBigData),
-                            'backgroundColor': '#faa05a',
                             'duration': 600000,
                             'position': 'center',
                             'callback': function () {
