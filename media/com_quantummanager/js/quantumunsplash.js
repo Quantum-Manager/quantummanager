@@ -22,6 +22,7 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
     this.pageWrap = QuantumUnsplashElement.querySelector('.quantumunsplash-module-load-page');
     this.pageButton = QuantumUnsplashElement.querySelector('.quantumunsplash-module-load-page button');
     this.closeButton = QuantumUnsplashElement.querySelector('.quantumunsplash-module-close');
+    this.alertBigData = null;
 
     this.init = function () {
         let self = this;
@@ -49,6 +50,29 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
             function (ev) {
                 QuantumUnsplashElement.classList.add('active');
 
+                if(QuantumSettings.isUserAdmin) {
+                    let showAlert = true;
+                    if(window.localStorage !== undefined) {
+                        if(localStorage.getItem('QuantumPhotostockBigImage') !== null) {
+                            showAlert = false;
+                        }
+                    }
+
+                    if(showAlert) {
+                        self.alertBigData = QuantumUtils.notify({
+                            'text': QuantumUtils.htmlspecialcharsDecode(QuantumLang.alertBigData),
+                            'backgroundColor': '#faa05a',
+                            'duration': 600000,
+                            'position': 'center',
+                            'callback': function () {
+                                if(window.localStorage !== undefined) {
+                                    localStorage.setItem('QuantumPhotostockBigImage', '1');
+                                }
+                            }
+                        });
+                    }
+                }
+
                 if(self.inputSearch.value === '')
                 {
                     self.search('');
@@ -61,6 +85,12 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
         );
 
         self.closeButton.addEventListener('click', function () {
+
+            if(self.alertBigData !== null) {
+                self.alertBigData.hideToast();
+                self.alertBigData = null;
+            }
+
             QuantumUnsplashElement.classList.remove('active');
         });
 

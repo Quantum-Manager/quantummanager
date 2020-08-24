@@ -23,6 +23,7 @@ window.Quantumpexels = function(Filemanager, QuantumPexelsElement, options) {
     this.pageWrap = QuantumPexelsElement.querySelector('.quantumpexels-module-load-page');
     this.pageButton = QuantumPexelsElement.querySelector('.quantumpexels-module-load-page button');
     this.closeButton = QuantumPexelsElement.querySelector('.quantumpexels-module-close');
+    this.alertBigData = null;
 
     this.init = function () {
         let self = this;
@@ -51,6 +52,29 @@ window.Quantumpexels = function(Filemanager, QuantumPexelsElement, options) {
             function (ev) {
                 QuantumPexelsElement.classList.add('active');
 
+                if(QuantumSettings.isUserAdmin) {
+                    let showAlert = true;
+                    if(window.localStorage !== undefined) {
+                        if(localStorage.getItem('QuantumPhotostockBigImage') !== null) {
+                            showAlert = false;
+                        }
+                    }
+
+                    if(showAlert) {
+                        self.alertBigData = QuantumUtils.notify({
+                            'text': QuantumUtils.htmlspecialcharsDecode(QuantumLang.alertBigData),
+                            'backgroundColor': '#faa05a',
+                            'duration': 600000,
+                            'position': 'center',
+                            'callback': function () {
+                                if(window.localStorage !== undefined) {
+                                    localStorage.setItem('QuantumPhotostockBigImage', '1');
+                                }
+                            }
+                        });
+                    }
+                }
+
                 if(self.inputSearch.value === '')
                 {
                     self.search('');
@@ -63,6 +87,12 @@ window.Quantumpexels = function(Filemanager, QuantumPexelsElement, options) {
         );
 
         self.closeButton.addEventListener('click', function () {
+
+            if(self.alertBigData !== null) {
+                self.alertBigData.hideToast();
+                self.alertBigData = null;
+            }
+
             QuantumPexelsElement.classList.remove('active');
         });
 

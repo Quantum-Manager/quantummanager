@@ -484,9 +484,9 @@ window.QuantumUtils = {
             optionsMerge[k] = options[k];
         }
 
-
-
-        Toastify(optionsMerge).showToast();
+        let notify = Toastify(optionsMerge);
+        notify.showToast();
+        return notify;
     },
 
     /**

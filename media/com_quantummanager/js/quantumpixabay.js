@@ -23,6 +23,7 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
     this.pageWrap = QuantumPixbayElement.querySelector('.quantumpixabay-module-load-page');
     this.pageButton = QuantumPixbayElement.querySelector('.quantumpixabay-module-load-page button');
     this.closeButton = QuantumPixbayElement.querySelector('.quantumpixabay-module-close');
+    this.alertBigData = null;
 
     this.init = function () {
         let self = this;
@@ -51,6 +52,29 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
             function (ev) {
                 QuantumPixbayElement.classList.add('active');
 
+                if(QuantumSettings.isUserAdmin) {
+                    let showAlert = true;
+                    if(window.localStorage !== undefined) {
+                        if(localStorage.getItem('QuantumPhotostockBigImage') !== null) {
+                            showAlert = false;
+                        }
+                    }
+
+                    if(showAlert) {
+                        self.alertBigData = QuantumUtils.notify({
+                            'text': QuantumUtils.htmlspecialcharsDecode(QuantumLang.alertBigData),
+                            'backgroundColor': '#faa05a',
+                            'duration': 600000,
+                            'position': 'center',
+                            'callback': function () {
+                                if(window.localStorage !== undefined) {
+                                    localStorage.setItem('QuantumPhotostockBigImage', '1');
+                                }
+                            }
+                        });
+                    }
+                }
+
                 if(self.inputSearch.value === '')
                 {
                     self.search('');
@@ -63,6 +87,12 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
         );
 
         self.closeButton.addEventListener('click', function () {
+
+            if(self.alertBigData !== null) {
+                self.alertBigData.hideToast();
+                self.alertBigData = null;
+            }
+
             QuantumPixbayElement.classList.remove('active');
         });
 
