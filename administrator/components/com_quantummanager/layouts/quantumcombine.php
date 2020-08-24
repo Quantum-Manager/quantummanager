@@ -18,6 +18,7 @@ foreach($scopes as $scope)
 	$scopeEnabled[] = $scope->id;
 }
 
+
 ?>
 
 <div class="quantummanager <?php echo $cssClass ?>">
@@ -80,6 +81,7 @@ foreach($scopes as $scope)
 
 <script type="text/javascript">
     window.QuantumSettings = {
+        isUserAdmin: <?php echo QuantummanagerHelper::isUserAdmin() ? 'true' : 'false' ?>,
         urlFull: '<?php echo $urlFull ?>',
         urlBase: '<?php echo $urlBase ?>',
         scopeEnabled: '<?php echo implode(',', $scopeEnabled) ?>',

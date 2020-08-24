@@ -943,4 +943,21 @@ class QuantummanagerHelper
         return (int)$memory_limit;
     }
 
+
+    /**
+     * @return bool
+     */
+    public static function isUserAdmin()
+    {
+        $groups = Factory::getUser()->groups;
+        if(in_array('2', $groups) || in_array('8', $groups))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 }
