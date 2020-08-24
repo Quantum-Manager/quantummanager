@@ -30,6 +30,7 @@ $scopeEnabled[] = $scope;
     };
 
     window.QuantumLang = {
+        'alertBigData': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ALERT_BIG_IMAGE'), ENT_QUOTES); ?>",
         'ok': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_OK'), ENT_QUOTES); ?>",
         'close': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_CLOSE'), ENT_QUOTES); ?>",
         'copied': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_COPIED'), ENT_QUOTES); ?>",
