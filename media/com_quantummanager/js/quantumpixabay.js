@@ -63,7 +63,6 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
                     if(showAlert) {
                         self.alertBigData = QuantumUtils.notify({
                             'text': QuantumUtils.htmlspecialcharsDecode(QuantumLang.alertBigData),
-                            'backgroundColor': '#faa05a',
                             'duration': 600000,
                             'position': 'center',
                             'callback': function () {
