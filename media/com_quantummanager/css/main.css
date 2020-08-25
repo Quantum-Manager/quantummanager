@@ -263,6 +263,11 @@
 }
 
 
+/************************ Toastify **********************************/
+.toastify {
+    font-size: 14px;
+}
+
 /************************ Modals *************************************/
 .quatummanagermodal-wrap {
     position: absolute;
