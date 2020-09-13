@@ -23,6 +23,7 @@ if(!empty($folder))
 else
 {
 	$app->getSession()->clear('quantummanagerroot');
+    $app->getSession()->clear('quantummanagerrootcheck');
 }
 
 HTMLHelper::_('stylesheet', 'plg_system_quantummanagermedia/modal.css', [

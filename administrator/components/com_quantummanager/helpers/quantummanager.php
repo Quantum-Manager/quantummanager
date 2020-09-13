@@ -439,11 +439,22 @@ class QuantummanagerHelper
 
 		$session = Factory::getSession();
 		$pathSession = $session->get('quantummanagerroot', '');
+		$pathSessionCheck = $session->get('quantummanagerrootcheck', 1);
 		$scopesOutput = [];
 
 		if(!empty($pathSession))
 		{
-			if(file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $pathSession))
+
+		    $checked = true;
+		    if((int)$pathSessionCheck)
+            {
+                if(!file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $pathSession))
+                {
+                    $checked = false;
+                }
+            }
+
+			if($checked)
 			{
 				$scopesOutput = [
 					(object)[
@@ -453,6 +464,7 @@ class QuantummanagerHelper
 					]
 				];
 			}
+
 		}
 
 		$scopes = self::getParamsComponentValue('scopes', []);
