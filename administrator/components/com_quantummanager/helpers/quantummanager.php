@@ -42,6 +42,12 @@ class QuantummanagerHelper
 	public static $cacheMimeType = '';
 
 
+    /**
+     * @var array
+     */
+	public static $listScriptsInsert = [];
+
+
 	/**
 	 * @var array
 	 * @since version
@@ -969,6 +975,16 @@ class QuantummanagerHelper
         else
         {
             return false;
+        }
+    }
+
+
+    public static function scriptInsertOnPage($name, $script)
+    {
+        if(!in_array($name, self::$listScriptsInsert))
+        {
+            Factory::getDocument()->addScriptDeclaration($script);
+            self::$listScriptsInsert[] = $name;
         }
     }
 

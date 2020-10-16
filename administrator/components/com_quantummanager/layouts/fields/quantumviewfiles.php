@@ -77,56 +77,60 @@ $options = [
         $css .= 'svg.svg-icon.'.$exs.' use.tail { fill: ' . $color[1] . ';} ';
     }
     $document->addStyleDeclaration($css);
-?>
 
-<script type="text/javascript">
-    window.QuantumviewfilesPreviews = <?php echo json_encode($previewslist)?>;
-    window.QuantumviewfilesLang = {
-        'ok': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_OK'), ENT_QUOTES); ?>",
-        'close': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_CLOSE'), ENT_QUOTES); ?>",
-        'copied': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_COPIED'), ENT_QUOTES); ?>",
-        'cancel': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_CANCEL'), ENT_QUOTES); ?>",
-        'loading': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_LOADING'), ENT_QUOTES); ?>",
-        'empty': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_QUANTUMVIEWFILES_EMPTY'), ENT_QUOTES); ?>",
-        'buttonBack': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_BACK'), ENT_QUOTES); ?>",
-        'buttonUp': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_UP'), ENT_QUOTES); ?>",
-        'buttonUpload': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_UPLOADING'), ENT_QUOTES); ?>",
-        'buttonCreateDirectory': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_CREATE'), ENT_QUOTES); ?>",
-        'buttonEdit': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_EDIT'), ENT_QUOTES); ?>",
-        'buttonWatermark': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_WATERMARK'), ENT_QUOTES); ?>",
-        'buttonPaste': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_PASTE'), ENT_QUOTES); ?>",
-        'buttonCopy': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_COPY'), ENT_QUOTES); ?>",
-        'buttonSelectAll': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_SELECT_ALL'), ENT_QUOTES); ?>",
-        'buttonCut': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_CUT'), ENT_QUOTES); ?>",
-        'buttonDelete': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_DELETE'), ENT_QUOTES); ?>",
-        'buttonTable': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_TABLE'), ENT_QUOTES); ?>",
-        'buttonGrid': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_GRID'), ENT_QUOTES); ?>",
-        'buttonPreviews': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_PREVIEWS'), ENT_QUOTES); ?>",
-        'directoryName': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ALERT_DIRECTORY_NAME'), ENT_QUOTES); ?>",
-        'directoryNameRequired': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ALERT_DIRECTORY_NAME_REQUIRED'), ENT_QUOTES); ?>",
-        'fileName': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ALERT_FILE_NAME'), ENT_QUOTES); ?>",
-        'changeGridViews': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_TOOLTIP_CHANGE_GRID_VIEWS'), ENT_QUOTES); ?>",
-        'metaFileShow': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_METAINFO_SHOW'), ENT_QUOTES); ?>",
-        'metaFileHide': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_METAINFO_HIDE'), ENT_QUOTES); ?>",
-        'metaSelectCount': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_METAINFO_SELECT_COUNT'), ENT_QUOTES); ?>",
-        'metaSelectObjectCount': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_METAINFO_SELECT_OBJECT_COUNT'), ENT_QUOTES); ?>",
-        'metaSelectSize': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_METAINFO_SELECT_SIZE'), ENT_QUOTES); ?>",
-        'contextReload': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_RELOAD'), ENT_QUOTES); ?>",
-        'contextFolderCreate': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_FOLDER_CREATE'), ENT_QUOTES); ?>",
-        'contextPaste': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_PASTE'), ENT_QUOTES); ?>",
-        'contextRename': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_RENAME'), ENT_QUOTES); ?>",
-        'contextCopyLink': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_COPY_LINK'), ENT_QUOTES); ?>",
-        'contextPreviewFile': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_PREVIEW_FILE'), ENT_QUOTES); ?>",
-        'contextSomeDelete': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_SOME_DELETE'), ENT_QUOTES); ?>",
-        'contextDelete': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_DELETE'), ENT_QUOTES); ?>",
-        'help': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HELP'), ENT_QUOTES); ?>",
-        'helpText': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HELP_TEXT'), ENT_QUOTES); ?>",
-        'helpCopyright': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HELP_COPYRIGHT'), ENT_QUOTES); ?>",
-        'helpCopyrightImages': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HELP_COPYRIGHT_IMAGES'), ENT_QUOTES); ?>",
-        'helpLove': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HELP_LOVE'), ENT_QUOTES); ?>",
-        'helpButtonProductPage': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HELP_BUTTON_PRODUCT_PAGE'), ENT_QUOTES); ?>",
-        'helpButtonDocumentation': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HELP_BUTTON_DOCUMENTATION'), ENT_QUOTES); ?>",
-        'helpButtonSupport': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HELP_BUTTON_SUPPORT'), ENT_QUOTES); ?>",
-        'helpButtonReview': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HELP_BUTTON_REVIEW'), ENT_QUOTES); ?>"
-    };
-</script>
+
+    $previewslist = json_encode($previewslist);
+    $langs = json_encode([
+        'ok' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_OK'), ENT_QUOTES),
+        'close' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_CLOSE'), ENT_QUOTES),
+        'copied' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_COPIED'), ENT_QUOTES),
+        'cancel' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_CANCEL'), ENT_QUOTES),
+        'loading' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_LOADING'), ENT_QUOTES),
+        'empty' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_QUANTUMVIEWFILES_EMPTY'), ENT_QUOTES),
+        'buttonBack'=> htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_BACK'), ENT_QUOTES),
+        'buttonUp' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_UP'), ENT_QUOTES),
+        'buttonUpload' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_UPLOADING'), ENT_QUOTES),
+        'buttonCreateDirectory' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_CREATE'), ENT_QUOTES),
+        'buttonEdit' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_EDIT'), ENT_QUOTES),
+        'buttonWatermark' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_WATERMARK'), ENT_QUOTES),
+        'buttonPaste' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_PASTE'), ENT_QUOTES),
+        'buttonCopy' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_COPY'), ENT_QUOTES),
+        'buttonSelectAll' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_SELECT_ALL'), ENT_QUOTES),
+        'buttonCut' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_CUT'), ENT_QUOTES),
+        'buttonDelete' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_DELETE'), ENT_QUOTES),
+        'buttonTable' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_TABLE'), ENT_QUOTES),
+        'buttonGrid' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_GRID'), ENT_QUOTES),
+        'buttonPreviews' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_PREVIEWS'), ENT_QUOTES),
+        'directoryName' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ALERT_DIRECTORY_NAME'), ENT_QUOTES),
+        'directoryNameRequired' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ALERT_DIRECTORY_NAME_REQUIRED'), ENT_QUOTES),
+        'fileName' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ALERT_FILE_NAME'), ENT_QUOTES),
+        'changeGridViews' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_TOOLTIP_CHANGE_GRID_VIEWS'), ENT_QUOTES),
+        'metaFileShow' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_METAINFO_SHOW'), ENT_QUOTES),
+        'metaFileHide' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_METAINFO_HIDE'), ENT_QUOTES),
+        'metaSelectCount' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_METAINFO_SELECT_COUNT'), ENT_QUOTES),
+        'metaSelectObjectCount' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_METAINFO_SELECT_OBJECT_COUNT'), ENT_QUOTES),
+        'metaSelectSize' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_METAINFO_SELECT_SIZE'), ENT_QUOTES),
+        'contextReload' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_RELOAD'), ENT_QUOTES),
+        'contextFolderCreate' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_FOLDER_CREATE'), ENT_QUOTES),
+        'contextPaste' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_PASTE'), ENT_QUOTES),
+        'contextRename' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_RENAME'), ENT_QUOTES),
+        'contextCopyLink' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_COPY_LINK'), ENT_QUOTES),
+        'contextPreviewFile' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_PREVIEW_FILE'), ENT_QUOTES),
+        'contextSomeDelete' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_SOME_DELETE'), ENT_QUOTES),
+        'contextDelete' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_DELETE'), ENT_QUOTES),
+        'help' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HELP'), ENT_QUOTES),
+        'helpText' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HELP_TEXT'), ENT_QUOTES),
+        'helpCopyright' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HELP_COPYRIGHT'), ENT_QUOTES),
+        'helpCopyrightImages' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HELP_COPYRIGHT_IMAGES'), ENT_QUOTES),
+        'helpLove' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HELP_LOVE'), ENT_QUOTES),
+        'helpButtonProductPage' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HELP_BUTTON_PRODUCT_PAGE'), ENT_QUOTES),
+        'helpButtonDocumentation' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HELP_BUTTON_DOCUMENTATION'), ENT_QUOTES),
+        'helpButtonSupport' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HELP_BUTTON_SUPPORT'), ENT_QUOTES),
+        'helpButtonReview' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HELP_BUTTON_REVIEW'), ENT_QUOTES)
+    ]);
+
+    QuantummanagerHelper::scriptInsertOnPage('quantumViewfiles', <<<EOF
+    window.QuantumviewfilesPreviews = {$previewslist};
+    window.QuantumviewfilesLang = $langs;
+EOF
+);
