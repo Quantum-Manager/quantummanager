@@ -42,9 +42,11 @@ class JFormFieldQuantumupload extends JFormField
 	 */
 	protected function getLayoutPaths()
 	{
-		return array_merge(parent::getLayoutPaths(), [
-			JPATH_ROOT . '/administrator/components/com_quantummanager/layouts/fields',
-		]);
+        $renderer = new FileLayout('default');
+        $renderer->getDefaultIncludePaths();
+        return array_merge(parent::getLayoutPaths(), [
+            JPATH_ROOT . '/administrator/components/com_quantummanager/layouts/fields'
+        ], $renderer->getDefaultIncludePaths());
 	}
 
 
