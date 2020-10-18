@@ -125,6 +125,7 @@ $options = [
         'helpLove' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HELP_LOVE'), ENT_QUOTES),
         'helpButtonProductPage' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HELP_BUTTON_PRODUCT_PAGE'), ENT_QUOTES),
         'helpButtonDocumentation' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HELP_BUTTON_DOCUMENTATION'), ENT_QUOTES),
+        'helpButtonLocalizations' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HELP_BUTTON_LOCALIZATIONS'), ENT_QUOTES),
         'helpButtonSupport' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HELP_BUTTON_SUPPORT'), ENT_QUOTES),
         'helpButtonReview' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HELP_BUTTON_REVIEW'), ENT_QUOTES)
     ]);

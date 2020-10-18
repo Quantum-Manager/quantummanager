@@ -909,6 +909,12 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                         }
                     },
                     {
+                        name: QuantumviewfilesLang.helpButtonLocalizations,
+                        callback: function () {
+                            QuantumUtils.openInNewTab('https://www.norrnext.com/quantum-manager-localizations');
+                        }
+                    },
+                    {
                         name: QuantumviewfilesLang.helpButtonSupport,
                         callback: function () {
                             QuantumUtils.openInNewTab('https://github.com/Quantum-Manager/tracker');
