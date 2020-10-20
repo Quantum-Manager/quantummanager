@@ -281,7 +281,8 @@ class QuantummanagerHelperImage
      */
     public function rotateExif($fileSource)
     {
-        if (function_exists('exif_read_data')) {
+        if (function_exists('exif_read_data'))
+        {
             $exif = @exif_read_data($fileSource);
 
             if (!empty($exif['Orientation']))
