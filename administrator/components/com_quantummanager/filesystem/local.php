@@ -407,7 +407,7 @@ class QuantummanagerFileSystemLocal
                     {
                         JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');
                         $image = new QuantummanagerHelperImage;
-                        $image->afterUpload($path . DIRECTORY_SEPARATOR . $uploadedFileName);
+                        $image->afterUpload($path . DIRECTORY_SEPARATOR . $uploadedFileName, ['rotateExif' => 1]);
                     }
 
                 }
