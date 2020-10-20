@@ -33,13 +33,16 @@ use Joomla\CMS\Language\Text;
 
 </div>
 
+<?php
+    $langs = json_encode([
+        'dragDrop' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_QUANTUMUPLOAD_DRAG_DROP'), ENT_QUOTES),
+        'file' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_QUANTUMUPLOAD_UPLOAD_ERROR_FILE'), ENT_QUOTES),
+        'megabyte' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_QUANTUMUPLOAD_UPLOAD_ERROR_MEGABITE'), ENT_QUOTES),
+        'maxsize' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_QUANTUMUPLOAD_UPLOAD_ERROR_MAXSIZE'), ENT_QUOTES),
+        'exs' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_QUANTUMUPLOAD_UPLOAD_ERROR_EXS'), ENT_QUOTES),
+    ]);
 
-<script type="text/javascript">
-    window.QuantumuploadLang = {
-        'dragDrop': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_QUANTUMUPLOAD_DRAG_DROP'), ENT_QUOTES); ?>",
-        'file': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_QUANTUMUPLOAD_UPLOAD_ERROR_FILE'), ENT_QUOTES); ?>",
-        'megabyte': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_QUANTUMUPLOAD_UPLOAD_ERROR_MEGABITE'), ENT_QUOTES); ?>",
-        'maxsize': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_QUANTUMUPLOAD_UPLOAD_ERROR_MAXSIZE'), ENT_QUOTES); ?>",
-        'exs': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_QUANTUMUPLOAD_UPLOAD_ERROR_EXS'), ENT_QUOTES); ?>",
-    };
-</script>
+    QuantummanagerHelper::scriptInsertOnPage('quantumUpload', <<<EOF
+    window.QuantumuploadLang = {$langs};
+EOF
+);

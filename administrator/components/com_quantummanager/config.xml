@@ -327,6 +327,17 @@
 			<option value="0">JNO</option>
 		</field>
 
+		<field name="rotateexif"
+			   type="radio"
+			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_ROTATEEXIF_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_ROTATEEXIF_DESC"
+			   required="true"
+			   class="btn-group btn-group-yesno"
+			   default="0">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
 		<field name="overlay"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_OVERLAY_LABEL"

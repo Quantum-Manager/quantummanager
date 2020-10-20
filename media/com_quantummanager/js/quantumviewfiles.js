@@ -890,7 +890,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
 
         if(parseInt(this.options.help)) {
             Filemanager.Quantumtoolbar.buttonAdd('viewfilesHelp', 'right', 'file-other', 'btn-back hidden-label', QuantumviewfilesLang.help, 'quantummanager-icon-info', {}, function (ev) {
-                QuantumUtils.alert('<div class="quantummanager-about"><div class="text">Quantum 1.6.0 ' + QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.helpText, 'ENT_QUOTES') +
+                QuantumUtils.alert('<div class="quantummanager-about"><div class="text">Quantum 1.6.1 ' + QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.helpText, 'ENT_QUOTES') +
                     '</div><div class="copyright">' + QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.helpCopyright, 'ENT_QUOTES') +
                     '</div><div class="copyright-images">' + QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.helpCopyrightImages, 'ENT_QUOTES') +
                     '</div><div class="love">' + QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.helpLove, 'ENT_QUOTES') +
@@ -906,6 +906,12 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                         name: QuantumviewfilesLang.helpButtonDocumentation,
                         callback: function () {
                             QuantumUtils.openInNewTab('https://www.norrnext.com/docs/joomla-extensions/quantum-manager');
+                        }
+                    },
+                    {
+                        name: QuantumviewfilesLang.helpButtonLocalizations,
+                        callback: function () {
+                            QuantumUtils.openInNewTab('https://www.norrnext.com/quantum-manager-localizations');
                         }
                     },
                     {

@@ -48,15 +48,19 @@ extract($displayData);
 
 </div>
 
-<script type="text/javascript">
-    window.QuantumunsplashLang = {
-        'notFound': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ALERT_NOTFOUND'), ENT_QUOTES); ?>",
-        'button': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_QUANTUMUNSPLASH_BUTTON'), ENT_QUOTES); ?>",
-        'buttonLoad': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_LOAD'), ENT_QUOTES); ?>",
-        'save': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_SAVE'), ENT_QUOTES); ?>",
-        'close': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_CLOSE'), ENT_QUOTES); ?>",
-        'search': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_SEARCH'), ENT_QUOTES); ?>",
-        'photostock': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_PHOTOSTOCKS'), ENT_QUOTES); ?>",
-        'searchHelper': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_SEARCH_HELPER'), ENT_QUOTES); ?>",
-    };
-</script>
+<?php
+    $langs = json_encode([
+        'notFound' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ALERT_NOTFOUND'), ENT_QUOTES),
+        'button' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_QUANTUMUNSPLASH_BUTTON'), ENT_QUOTES),
+        'buttonLoad' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_LOAD'), ENT_QUOTES),
+        'save' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_SAVE'), ENT_QUOTES),
+        'close' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_CLOSE'), ENT_QUOTES),
+        'search' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_SEARCH'), ENT_QUOTES),
+        'photostock' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_PHOTOSTOCKS'), ENT_QUOTES),
+        'searchHelper' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_FIELD_LABEL_SEARCH_HELPER'), ENT_QUOTES),
+    ]);
+
+    QuantummanagerHelper::scriptInsertOnPage('quantumUnsplash', <<<EOF
+    window.QuantumunsplashLang = {$langs};
+EOF
+);

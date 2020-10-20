@@ -42,6 +42,12 @@ class QuantummanagerHelper
 	public static $cacheMimeType = '';
 
 
+    /**
+     * @var array
+     */
+	public static $listScriptsInsert = [];
+
+
 	/**
 	 * @var array
 	 * @since version
@@ -439,11 +445,22 @@ class QuantummanagerHelper
 
 		$session = Factory::getSession();
 		$pathSession = $session->get('quantummanagerroot', '');
+		$pathSessionCheck = $session->get('quantummanagerrootcheck', 1);
 		$scopesOutput = [];
 
 		if(!empty($pathSession))
 		{
-			if(file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $pathSession))
+
+		    $checked = true;
+		    if((int)$pathSessionCheck)
+            {
+                if(!file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $pathSession))
+                {
+                    $checked = false;
+                }
+            }
+
+			if($checked)
 			{
 				$scopesOutput = [
 					(object)[
@@ -453,6 +470,7 @@ class QuantummanagerHelper
 					]
 				];
 			}
+
 		}
 
 		$scopes = self::getParamsComponentValue('scopes', []);
@@ -957,6 +975,16 @@ class QuantummanagerHelper
         else
         {
             return false;
+        }
+    }
+
+
+    public static function scriptInsertOnPage($name, $script)
+    {
+        if(!in_array($name, self::$listScriptsInsert))
+        {
+            Factory::getDocument()->addScriptDeclaration($script);
+            self::$listScriptsInsert[] = $name;
         }
     }
 

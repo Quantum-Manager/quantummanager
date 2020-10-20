@@ -7,6 +7,7 @@
  * @link       https://www.norrnext.com
  */
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 
 defined('_JEXEC') or die;
@@ -22,19 +23,39 @@ $scopeEnabled[] = $scope;
 	<?php echo $displayData['other'] ?>
 </div>
 
-<script type="text/javascript">
-    window.QuantumSettings = {
-        isUserAdmin: <?php echo QuantummanagerHelper::isUserAdmin() ? 'true' : 'false' ?>,
-        urlFull: '<?php echo $urlFull ?>',
-        urlBase: '<?php echo $urlBase ?>',
-        scopeEnabled: '<?php echo implode(',', $scopeEnabled) ?>',
+<?php
+$options = [
+    'isUserAdmin' => QuantummanagerHelper::isUserAdmin() ? 'true' : 'false',
+    'urlFull' => $urlFull,
+    'urlBase' => $urlBase,
+    'scopeEnabled' => implode(',', $scopeEnabled),
+    'alertBigData' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ALERT_BIG_IMAGE'), ENT_QUOTES),
+    'ok' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_OK'), ENT_QUOTES),
+    'close' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_CLOSE'), ENT_QUOTES),
+    'copied' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_COPIED'), ENT_QUOTES),
+    'cancel' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_CANCEL'), ENT_QUOTES),
+];
+
+$optionsOutput = function ($name) use (&$options) {
+    return $options[$name];
+};
+
+QuantummanagerHelper::scriptInsertOnPage('quantumSettings', <<<EOF
+window.QuantumSettings = {
+        isUserAdmin: {$optionsOutput('isUserAdmin')},
+        urlFull: '{$optionsOutput('urlFull')}',
+        urlBase: '{$optionsOutput('urlBase')}',
+        scopeEnabled: '{$optionsOutput('scopeEnabled')}',
     };
 
     window.QuantumLang = {
-        'alertBigData': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ALERT_BIG_IMAGE'), ENT_QUOTES); ?>",
-        'ok': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_OK'), ENT_QUOTES); ?>",
-        'close': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_CLOSE'), ENT_QUOTES); ?>",
-        'copied': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_COPIED'), ENT_QUOTES); ?>",
-        'cancel': "<?php echo htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_CANCEL'), ENT_QUOTES); ?>"
+        'alertBigData': "{$optionsOutput('alertBigData')}",
+        'ok': "{$optionsOutput('ok')}",
+        'close': "{$optionsOutput('close')}",
+        'copied': "{$optionsOutput('copied')}",
+        'cancel': "{$optionsOutput('cancel')}"
     };
-</script>
+EOF
+);
+
+?>

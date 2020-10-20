@@ -8,6 +8,7 @@
 
 window.Qantumupload = function(Filemanager, UploadElement, options) {
 
+    let self = this;
     this.options = options;
     this.dropAreaAll = [];
     this.inputFileAll = [];
@@ -226,7 +227,6 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
 
     };
 
-
     this.trigger = function(event) {
         Filemanager.events.trigger(event, Filemanager);
     };
@@ -238,6 +238,22 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
     Filemanager.events.add(this, 'uploadAfter', function (fm, el) {
         for (let i = 0; i < fm.Qantumupload.inputFileAll.length; i++) {
             fm.Qantumupload.inputFileAll[i].value = '';
+        }
+    });
+
+    document.addEventListener('paste', function (ev) {
+        let items = (ev.clipboardData || ev.originalEvent.clipboardData).items;
+        for (let index in items) {
+            let item = items[index];
+            if (item.kind === 'file') {
+                let blob = item.getAsFile();
+                let reader = new FileReader();
+                reader.onload = function(event) {
+                    let ext = event.target.result.substring("data:image/".length, event.target.result.indexOf(";base64"));
+                    self.uploadFiles([new File([QuantumUtils.dataURItoBlob(event.target.result)], 'buffer_' + QuantumUtils.randomInteger(1111111, 9999999) + '.' + ext)]);
+                }
+                reader.readAsDataURL(blob);
+            }
         }
     });
 

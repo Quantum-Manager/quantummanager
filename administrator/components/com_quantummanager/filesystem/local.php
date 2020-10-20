@@ -193,7 +193,7 @@ class QuantummanagerFileSystemLocal
             ];
         }
 
-        $list = scandir($dir);
+        $list = @scandir($dir);
         if (is_array($list))
         {
             $list = array_diff($list, ['.', '..']);
@@ -407,7 +407,7 @@ class QuantummanagerFileSystemLocal
                     {
                         JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');
                         $image = new QuantummanagerHelperImage;
-                        $image->afterUpload($path . DIRECTORY_SEPARATOR . $uploadedFileName);
+                        $image->afterUpload($path . DIRECTORY_SEPARATOR . $uploadedFileName, ['rotateExif' => 1]);
                     }
 
                 }
@@ -784,16 +784,16 @@ class QuantummanagerFileSystemLocal
      */
     public static function dirIisEmpty($dir)
     {
-        $handle = opendir($dir);
-        while (false !== ($entry = readdir($handle)))
+        $handle = @opendir($dir);
+        while (false !== ($entry = @readdir($handle)))
         {
             if ($entry !== "." && $entry !== "..")
             {
-                closedir($handle);
+                @closedir($handle);
                 return true;
             }
         }
-        closedir($handle);
+        @closedir($handle);
         return false;
     }
 

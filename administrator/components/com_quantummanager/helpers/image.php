@@ -44,6 +44,7 @@ class QuantummanagerHelperImage
             'original' => 1,
             'resize' => 1,
             'overlay' => 1,
+            'rotateExif' => 0,
         ];
 
         foreach ($options as $key => $value)
@@ -66,6 +67,11 @@ class QuantummanagerHelperImage
         if((int)QuantummanagerHelper::getParamsComponentValue('overlay', 0) === 1 && (int)$defaultOptions['overlay'])
         {
             $this->resizeWatermark($file);
+        }
+
+        if((int)QuantummanagerHelper::getParamsComponentValue('rotateexif', 0) === 1 && (int)$defaultOptions['rotateExif'])
+        {
+            $this->rotateExif($file);
         }
 
         $this->otherFilters($file);
@@ -267,6 +273,51 @@ class QuantummanagerHelperImage
             })
             ->resizeCanvas($maxWidth, $maxHeight)
             ->save($file);
+
+    }
+
+    /**
+     * @param $fileSource
+     */
+    public function rotateExif($fileSource)
+    {
+        if (function_exists('exif_read_data'))
+        {
+            $exif = @exif_read_data($fileSource);
+
+            if (!empty($exif['Orientation']))
+            {
+                $rotated = false;
+                $angle = 0;
+
+                switch ($exif['Orientation'])
+                {
+                    case 3:
+                        $angle = 180;
+                        $rotated = true;
+                        break;
+
+                    case 6:
+                        $angle = -90;
+                        $rotated = true;
+                        break;
+
+                    case 8:
+                        $angle = 90;
+                        $rotated = true;
+                        break;
+                }
+
+                if ($rotated)
+                {
+                    $manager = JInterventionimage::getInstance(['driver' => $this->getNameDriver()]);
+                    $manager
+                        ->make($fileSource)
+                        ->rotate($angle)
+                        ->save($fileSource);
+                }
+            }
+        }
 
     }
 

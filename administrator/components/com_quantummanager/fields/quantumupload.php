@@ -42,9 +42,11 @@ class JFormFieldQuantumupload extends JFormField
 	 */
 	protected function getLayoutPaths()
 	{
-		return array_merge(parent::getLayoutPaths(), [
-			JPATH_ROOT . '/administrator/components/com_quantummanager/layouts/fields',
-		]);
+        $renderer = new FileLayout('default');
+        $renderer->getDefaultIncludePaths();
+        return array_merge(parent::getLayoutPaths(), [
+            JPATH_ROOT . '/administrator/components/com_quantummanager/layouts/fields'
+        ], $renderer->getDefaultIncludePaths());
 	}
 
 
@@ -78,9 +80,9 @@ class JFormFieldQuantumupload extends JFormField
 			$this->__set('standalone', $this->getAttribute('standalone', true));
 			$this->__set('cssClass', $this->getAttribute('cssClass', ''));
 			$this->__set('maxsize', $this->getAttribute('maxsize', QuantummanagerHelper::getParamsComponentValue('maxsize', 2)));
-			$this->directory = $this->getAttribute('directory', 'images');
-			$this->scope = $this->getAttribute('scope', 'images');
-			$this->dropAreaHidden = $this->getAttribute('dropAreaHidden', QuantummanagerHelper::getParamsComponentValue('dropareahidden', 0));
+			$this->directory = isset($this->directory) ? $this->directory : $this->getAttribute('directory', 'images');
+			$this->scope = isset($this->scope) ? $this->scope : $this->getAttribute('scope', 'images');
+			$this->dropAreaHidden = isset($this->dropAreaHidden) ? $this->dropAreaHidden : $this->getAttribute('dropAreaHidden', QuantummanagerHelper::getParamsComponentValue('dropareahidden', 0));
 
             QuantummanagerHelper::loadLang();
             QuantummanagerLibs::includeScriptHead();

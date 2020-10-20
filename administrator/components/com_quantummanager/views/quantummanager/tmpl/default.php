@@ -14,6 +14,7 @@ use Joomla\CMS\Factory;
 
 $app = Factory::getApplication();
 $app->getSession()->clear('quantummanagerroot');
+$app->getSession()->clear('quantummanagerrootcheck');
 $app->getSession()->clear('quantummanageraddscripts');
 
 try {
