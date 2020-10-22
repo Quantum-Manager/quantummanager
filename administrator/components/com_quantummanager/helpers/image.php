@@ -287,6 +287,7 @@ class QuantummanagerHelperImage
 
             if (!empty($exif['Orientation']))
             {
+                $exif['Orientation'] = (int)$exif['Orientation'];
                 $rotated = false;
                 $angle = 0;
 
