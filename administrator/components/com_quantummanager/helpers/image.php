@@ -42,9 +42,9 @@ class QuantummanagerHelperImage
 
         $defaultOptions = [
             'original' => 1,
+            'rotateExif' => 0,
             'resize' => 1,
             'overlay' => 1,
-            'rotateExif' => 0,
         ];
 
         foreach ($options as $key => $value)
@@ -287,6 +287,7 @@ class QuantummanagerHelperImage
 
             if (!empty($exif['Orientation']))
             {
+                $exif['Orientation'] = (int)$exif['Orientation'];
                 $rotated = false;
                 $angle = 0;
 
@@ -310,6 +311,7 @@ class QuantummanagerHelperImage
 
                 if ($rotated)
                 {
+                    JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
                     $manager = JInterventionimage::getInstance(['driver' => $this->getNameDriver()]);
                     $manager
                         ->make($fileSource)
