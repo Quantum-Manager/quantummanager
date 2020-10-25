@@ -946,6 +946,12 @@ class QuantummanagerHelper
 	public static function getMemoryLimit()
     {
         $memory_limit = ini_get('memory_limit');
+
+        if((string)$memory_limit === '-1')
+        {
+            $memory_limit = '32M';
+        }
+
         if (preg_match('/^(\d+)(.)$/', $memory_limit, $matches))
         {
             if ($matches[2] === 'M')
