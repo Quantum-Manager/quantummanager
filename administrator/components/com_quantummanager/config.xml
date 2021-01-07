@@ -408,6 +408,54 @@
 			   default="10"
 			   showon="overlay!:0"/>
 
+
+		<field type="spacer"
+			   name="spacer_image_resize_folders"
+			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_SPACER_RESIZE_FOLDERS"
+			   filter="unset"
+		/>
+
+		<field name="resizefolders"
+			   type="subform"
+			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_RESIZE_FOLDERS"
+			   layout="joomla.form.field.subform.repeatable-table"
+			   multiple="true"
+			   min="0"
+			   max="20">
+			<form>
+				<field name="folder"
+					   type="text"
+					   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_RESIZE_FOLDERS_FOLDER"
+				/>
+				<field name="subfolder"
+					   type="radio"
+					   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_RESIZE_FOLDERS_SUBFOLDER"
+					   class="btn-group btn-group-yesno"
+					   default="0">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+				<field name="maxwidth"
+					   type="text"
+					   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_RESIZE_FOLDERS_MAX_WIDTH"
+				/>
+				<field name="maxheight"
+					   type="number"
+					   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_RESIZE_FOLDERS_MAX_HEIGHT"
+				/>
+				<field name="algorithm"
+					   type="list"
+					   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_RESIZE_FOLDERS_ALGORITHM"
+					   default="fit"
+				>
+					<option value="fit">COM_QUANTUMMANAGER_CONFIG_IMAGE_RESIZE_FOLDERS_ALGORITHM_FIT</option>
+					<option value="bestfit">COM_QUANTUMMANAGER_CONFIG_IMAGE_RESIZE_FOLDERS_ALGORITHM_BEST_FIT</option>
+					<option value="resize">COM_QUANTUMMANAGER_CONFIG_IMAGE_RESIZE_FOLDERS_ALGORITHM_RESIZE</option>
+				</field>
+			</form>
+		</field>
+
+
 		<field type="spacer"
 			   name="spacer_image_editor"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_SPACER_IMAGE_EDITOR"

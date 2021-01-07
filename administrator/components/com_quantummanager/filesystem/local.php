@@ -383,6 +383,7 @@ class QuantummanagerFileSystemLocal
                 $exs = explode(',', 'jpg,jpeg,png,gif,webp');
                 $type = preg_replace("/\/.*?$/isu", '', $file['type']);
                 $data['name'] = isset($data['name']) ? $data['name'] : '';
+                $path_source = QuantummanagerHelper::preparePathRoot($data['path'], $data['scope']);
                 $path = JPATH_ROOT . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($data['path'], false, $data['scope']);
 
                 if (!QuantummanagerHelper::checkFile($file['name'], $file['type']))
@@ -407,7 +408,7 @@ class QuantummanagerFileSystemLocal
                     {
                         JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');
                         $image = new QuantummanagerHelperImage;
-                        $image->afterUpload($path . DIRECTORY_SEPARATOR . $uploadedFileName, ['rotateExif' => 1]);
+                        $image->afterUpload($path_source,$path . DIRECTORY_SEPARATOR . $uploadedFileName, ['rotateExif' => 1]);
                     }
 
                 }
@@ -1004,6 +1005,7 @@ class QuantummanagerFileSystemLocal
 
                 $type = preg_replace("/\/.*?$/isu", '', $file['type']);
                 $data['name'] = isset($data['name']) ? $data['name'] : '';
+                $path_source = QuantummanagerHelper::preparePath($data['path'], $data['scope']);
                 $path = JPATH_ROOT . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($data['path'], false, $data['scope']);
 
                 if(!QuantummanagerHelper::checkFile($nameSplit . '.' . $nameExs, $file['type']))
@@ -1048,7 +1050,7 @@ class QuantummanagerFileSystemLocal
                         }
                     }
 
-                    $image->afterUpload($path . DIRECTORY_SEPARATOR . $uploadedFileName);
+                    $image->afterUpload($path_source,$path . DIRECTORY_SEPARATOR . $uploadedFileName);
 
                 }
 
@@ -1060,16 +1062,14 @@ class QuantummanagerFileSystemLocal
 
 
     /**
-     * @param $path
+     * @param $path_source
+     * @param $scope
      * @param $file
      * @param $id
-     *
      * @return false|string
-     *
      * @throws Exception
-     * @since version
      */
-    public static function downloadFileUnsplash($path, $scope, $file, $id)
+    public static function downloadFileUnsplash($path_source, $scope, $file, $id)
     {
 
         $output = [];
@@ -1080,7 +1080,8 @@ class QuantummanagerFileSystemLocal
 
             JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
             $lang = Factory::getLanguage();
-            $path = QuantummanagerHelper::preparePath($path, false, $scope);
+            $path_source = QuantummanagerHelper::preparePathRoot($path_source, $scope);
+            $path = QuantummanagerHelper::preparePath($path_source, false, $scope);
 
             $fileContent = file_get_contents($file);
             $filePath = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
@@ -1090,7 +1091,7 @@ class QuantummanagerFileSystemLocal
 
             JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');
             $image = new QuantummanagerHelperImage;
-            $image->afterUpload($filePath . DIRECTORY_SEPARATOR . $fileName);
+            $image->afterUpload($path_source, $filePath . DIRECTORY_SEPARATOR . $fileName);
 
             $output['name'] = $fileName;
 
@@ -1111,7 +1112,7 @@ class QuantummanagerFileSystemLocal
      * @throws Exception
      * @since version
      */
-    public static function downloadFilePixabay($path, $scope, $file, $id)
+    public static function downloadFilePixabay($path_source, $scope, $file, $id)
     {
 
         $output = [];
@@ -1122,7 +1123,8 @@ class QuantummanagerFileSystemLocal
 
             JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
             $lang = Factory::getLanguage();
-            $path = QuantummanagerHelper::preparePath($path, false, $scope);
+            $path_source = QuantummanagerHelper::preparePathRoot($path_source, $scope);
+            $path = QuantummanagerHelper::preparePath($path_source, false, $scope);
             $fileSplit = explode('.', $file);
             $exs = array_pop($fileSplit);
             $fileContent = file_get_contents($file);
@@ -1133,7 +1135,7 @@ class QuantummanagerFileSystemLocal
 
             JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');
             $image = new QuantummanagerHelperImage;
-            $image->afterUpload($filePath . DIRECTORY_SEPARATOR . $fileName);
+            $image->afterUpload($path_source, $filePath . DIRECTORY_SEPARATOR . $fileName);
 
             $output['name'] = $fileName;
 
@@ -1154,7 +1156,7 @@ class QuantummanagerFileSystemLocal
      * @throws Exception
      * @since version
      */
-    public static function downloadFilePexels($path, $scope, $file, $id)
+    public static function downloadFilePexels($path_source, $scope, $file, $id)
     {
 
         $output = [];
@@ -1165,7 +1167,8 @@ class QuantummanagerFileSystemLocal
 
             JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
             $lang = Factory::getLanguage();
-            $path = QuantummanagerHelper::preparePath($path, false, $scope);
+            $path_source = QuantummanagerHelper::preparePath($path_source, $scope);
+            $path = QuantummanagerHelper::preparePath($path_source, false, $scope);
             $fileClean = preg_replace("#\?.*?$#isu", '', $file);
             $fileSplit = explode('.', $fileClean);
             $exs = array_pop($fileSplit);
@@ -1182,7 +1185,7 @@ class QuantummanagerFileSystemLocal
 
             JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');
             $image = new QuantummanagerHelperImage;
-            $image->afterUpload($filePath . DIRECTORY_SEPARATOR . $fileName);
+            $image->afterUpload($path_source,$filePath . DIRECTORY_SEPARATOR . $fileName);
 
             $output['name'] = $fileName;
 
