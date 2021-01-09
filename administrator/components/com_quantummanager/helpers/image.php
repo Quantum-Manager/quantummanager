@@ -559,16 +559,17 @@ class QuantummanagerHelperImage
             return;
         }
 
-        JLoader::register('JPel', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jpel' . DIRECTORY_SEPARATOR . 'jpel.php');
-        $fi = JPel::instance($file);
-        if($fi)
+        $exifSave = (int)QuantummanagerHelper::getParamsComponentValue('exifsave', 0);
+        if($exifSave)
         {
-            $exifSave = (int)QuantummanagerHelper::getParamsComponentValue('exifsave', 0);
-            if($exifSave)
+            JLoader::register('JPel', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jpel' . DIRECTORY_SEPARATOR . 'jpel.php');
+            $fi = JPel::instance($file);
+            if ($fi)
             {
                 $this->exifs = $fi->getExif();
             }
         }
+
     }
 
 
@@ -582,19 +583,19 @@ class QuantummanagerHelperImage
             return;
         }
 
-        JLoader::register('JPel', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jpel' . DIRECTORY_SEPARATOR . 'jpel.php');
-        $fi = JPel::instance($file);
-        if($fi)
+        $exifSave = (int)QuantummanagerHelper::getParamsComponentValue('exifsave', 0);
+        if($exifSave)
         {
-            $exifSave = (int)QuantummanagerHelper::getParamsComponentValue('exifsave', 0);
-            if($exifSave)
+            JLoader::register('JPel', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jpel' . DIRECTORY_SEPARATOR . 'jpel.php');
+            $fi = JPel::instance($file);
+            if ($fi)
             {
                 $fi->setExif($this->exifs);
                 $fi->save($file);
                 $this->exifs = [];
-
             }
         }
+
     }
 
 }
