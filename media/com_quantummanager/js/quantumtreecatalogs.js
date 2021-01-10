@@ -5,15 +5,44 @@
  * @license    GNU General Public License version 3 or later; see license.txt
  * @link       https://www.norrnext.com
  */
-
 window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, options) {
 
+    this.input = null;
     this.options = options;
     this.active = '';
 
     this.init = function() {
         this.path = this.options.directory;
+        this.findInput();
         this.loadDirectory();
+    };
+
+    this.findInput = function () {
+        this.input = QuantumTreeCatalogsElement.querySelector('.quantumtreecatalogs-path-to');
+        if(this.input !== null) {
+
+            this.input.addEventListener('focus', function () {
+                QuantumTreeCatalogsElement.querySelector('.tree-scroll').classList.add('active');
+            });
+
+            document.querySelector('body').addEventListener('click', function (ev) {
+                let quantummanagerContainer = ev.target.closest('.quantummanager');
+                let close = false;
+
+                if(quantummanagerContainer === null) {
+                    close = true;
+                } else {
+                    if(Filemanager.id !== parseInt(quantummanagerContainer.getAttribute('data-index'))) {
+                        close = true;
+                    }
+                }
+
+                if(close) {
+                    QuantumTreeCatalogsElement.querySelector('.tree-scroll').classList.remove('active');
+                }
+            });
+
+        }
     };
 
     this.loadDirectory = function (path, callback, reload) {
@@ -346,6 +375,20 @@ window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, o
     this.trigger = function(event) {
         Filemanager.events.trigger(event, Filemanager);
     };
+
+
+    this.setValueInputs = function(path) {
+        if(path === null || path === undefined) {
+            this.input.value = this.path;
+        }
+        else {
+            this.input.value = path;
+        }
+    }
+
+    QuantumEventsDispatcher.add(this, 'clickTreeDirectory', function (fm, el) {
+        fm.Quantumtreecatalogs.setValueInputs(fm.data.path);
+    });
 
     QuantumEventsDispatcher.add(this, 'updatePath', function (fm, el) {
         fm.Quantumtreecatalogs.directoryScroll(fm.data.path);

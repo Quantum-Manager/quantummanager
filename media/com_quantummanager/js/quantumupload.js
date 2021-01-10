@@ -172,15 +172,23 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
 
             xhr.addEventListener('readystatechange', function (e) {
                 if (xhr.readyState == 4 && xhr.status == 200) {
-                    let response = JSON.parse(xhr.response);
 
-                    if(response.name !== undefined) {
-                        self.filesLists.push(response.name);
+                    try
+                    {
+                        let response = JSON.parse(xhr.response);
+
+                        if(response.name !== undefined) {
+                            self.filesLists.push(response.name);
+                        }
+
+                        if(response.error !== undefined) {
+                            self.errorsHtml += '<div>' + file.name + ': ' + QuantumUtils.htmlspecialcharsDecode(response.error, 'ENT_QUOTES') + '</div>';
+                        }
+
+                    }
+                    catch (e) {
                     }
 
-                    if(response.error !== undefined) {
-                        self.errorsHtml += '<div>' + file.name + ': ' + QuantumUtils.htmlspecialcharsDecode(response.error, 'ENT_QUOTES') + '</div>';
-                    }
 
                     self.updateProgress(i, 100);
                     self.uploadI.push((i + 1));

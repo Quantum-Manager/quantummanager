@@ -41,8 +41,18 @@ class JFormFieldQuantumtreecatalogs extends JFormField
 	 */
 	protected function getLayoutPaths()
 	{
+	    $path = JPATH_ROOT . '/administrator/components/com_quantummanager/layouts/fields';
+
+        if($this->standalone)
+        {
+            if(file_exists($path . '/single/' . $this->layout . '.php'))
+            {
+                $path .= '/single';
+            }
+        }
+
 		return array_merge(parent::getLayoutPaths(), [
-			JPATH_ROOT . '/administrator/components/com_quantummanager/layouts/fields',
+            $path,
 		]);
 	}
 
