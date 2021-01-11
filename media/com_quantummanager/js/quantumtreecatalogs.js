@@ -378,6 +378,11 @@ window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, o
 
 
     this.setValueInputs = function(path) {
+
+        if(this.input === null) {
+            return;
+        }
+
         if(path === null || path === undefined) {
             this.input.value = this.path;
         }
