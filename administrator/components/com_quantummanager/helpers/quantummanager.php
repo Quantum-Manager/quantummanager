@@ -123,7 +123,7 @@ class QuantummanagerHelper
 
 			$exs = mb_strtolower(array_pop($nameSplit));
 
-			if(in_array($exs, ['php', 'php7', 'php5', 'php4', 'php3', 'php4', 'phtml', 'phps', 'sh', 'exe']))
+			if(in_array($exs, ['php', 'php7', 'php5', 'php4', 'php3', 'php4', 'phtml', 'phps', 'sh']))
 			{
 				return false;
 			}
