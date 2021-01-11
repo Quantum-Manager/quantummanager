@@ -27,8 +27,14 @@ window.QuantumManagerInit = function(container) {
     let quantummanagerAll = container.querySelectorAll('.quantummanager');
     let id = 0;
     let scopesEnabled = QuantumSettings.scopeEnabled.split(',');
+    let quantummanagerForBuild = [];
 
     for (let i=0;i<quantummanagerAll.length;i++) {
+
+        if(quantummanagerAll[i].hasAttribute('data-index')) {
+            continue;
+        }
+
         let modules = quantummanagerAll[i].querySelectorAll('.quantummanager-module');
         let filemanager = {};
         filemanager.id = QuantummanagerLists.length;
@@ -86,6 +92,7 @@ window.QuantumManagerInit = function(container) {
 
         quantummanagerAll[i].setAttribute('data-index', filemanager.id);
         QuantummanagerLists.push(filemanager);
+        quantummanagerForBuild.push(filemanager);
 
         let quantummanagerHelp = filemanager.element.querySelector('.quantummanager-jedreview');
         let helpButtonClose = filemanager.element.querySelector('.quantummanager-jedreview .btn-close');
@@ -103,7 +110,7 @@ window.QuantumManagerInit = function(container) {
 
     let loadQuantum = setInterval(function () {
         if(QuantumManagerLoadComplete) {
-            QuantumEventsDispatcher.build();
+            QuantumEventsDispatcher.build(quantummanagerForBuild);
             QuantumEventsDispatcher.trigger('afterMainInit');
             clearInterval(loadQuantum)
         }
