@@ -378,32 +378,39 @@ window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, o
 
 
     this.setValueInputs = function(path) {
-
         if(this.input === null) {
             return;
         }
 
+        let self = this;
+
         if(path === null || path === undefined) {
-            this.input.value = this.path;
+            path = this.path;
         }
-        else {
-            this.input.value = path;
-        }
+
+        this.input.setAttribute('disabled', 'disabled');
+        QuantumUtils.compilePath(Filemanager.data.scope, path, function (response, scope, path) {
+            self.input.value = response.path;
+            self.input.removeAttribute('disabled');
+        }, function () {
+            self.input.value = path;
+            self.input.removeAttribute('disabled');
+        });
     }
 
-    QuantumEventsDispatcher.add(this, 'clickTreeDirectory', function (fm, el) {
+    Filemanager.events.add(this, 'clickTreeDirectory', function (fm, el) {
         fm.Quantumtreecatalogs.setValueInputs(fm.data.path);
     });
 
-    QuantumEventsDispatcher.add(this, 'updatePath', function (fm, el) {
+    Filemanager.events.add(this, 'updatePath', function (fm, el) {
         fm.Quantumtreecatalogs.directoryScroll(fm.data.path);
     });
 
-    QuantumEventsDispatcher.add(this, 'uploadComplete', function (fm, el) {
+    Filemanager.events.add(this, 'uploadComplete', function (fm, el) {
         fm.Quantumtreecatalogs.loadDirectory(this.path, function () {}, true);
     });
 
-    QuantumEventsDispatcher.add(this, 'reloadPaths', function (fm, el) {
+    Filemanager.events.add(this, 'reloadPaths', function (fm, el) {
         fm.Quantumtreecatalogs.loadDirectory(this.path, function () {}, true);
     });
 

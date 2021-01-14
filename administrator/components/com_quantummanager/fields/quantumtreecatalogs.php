@@ -9,11 +9,10 @@
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Filter\OutputFilter;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Layout\FileLayout;
+use Joomla\CMS\Uri\Uri;
+
 
 /**
  * Class JFormFieldQuantumtreecatalogs
@@ -64,9 +63,13 @@ class JFormFieldQuantumtreecatalogs extends JFormField
 	{
 		return array_merge(parent::getLayoutData(),
 			[
+                'urlFull' => Uri::root(false),
+                'urlBase' => Uri::root(true),
 				'directory' => $this->directory,
 				'cssClass' => $this->cssClass,
-			]
+                'scope' => $this->scope,
+                'other' => '',
+            ]
 		);
 	}
 
@@ -77,7 +80,7 @@ class JFormFieldQuantumtreecatalogs extends JFormField
 
 			$this->__set('standalone', $this->getAttribute('standalone', true));
 			$this->__set('cssClass', $this->getAttribute('cssClass', ''));
-			$this->directory = $this->getAttribute('directory', 'images');
+			$this->directory = $this->getAttribute('directory', 'root');
 
 			JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
             JLoader::register('QuantummanagerLibs', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantumlibs.php');
@@ -105,7 +108,7 @@ class JFormFieldQuantumtreecatalogs extends JFormField
 			if($this->standalone)
 			{
 				$filemanager = new FileLayout( 'fieldstandalone', JPATH_ROOT . '/administrator/components/com_quantummanager/layouts');
-				return $filemanager->render(['field' => $field]);
+                return $filemanager->render(array_merge($this->getLayoutData(), ['field' => $field]));
 			}
 
 			return $field;
