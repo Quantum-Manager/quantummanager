@@ -16,12 +16,12 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Uri\Uri;
 
-JFormHelper::loadFieldClass('text');
+JLoader::register('JFormFieldQuantumtreecatalogs', JPATH_ROOT . DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, ['administrator', 'components', 'com_quantummanager', 'fields', 'quantumtreecatalogs.php']));
 
 /**
  * Class JFormFieldQuantumconfigpath
  */
-class JFormFieldQuantumconfigpath extends JFormFieldText
+class JFormFieldQuantumconfigpath extends JFormFieldQuantumtreecatalogs
 {
 
 	/**

@@ -49,10 +49,10 @@ window.QuantumEventsDispatcher = {
         eventObj.c = callback;
         this.listEvents.push(eventObj);
     },
-    build: function () {
+    build: function (fmLists) {
         for(let j=0;j<this.listEvents.length;j++) {
-            for(let i=0;i<QuantummanagerLists.length;i++) {
-                QuantummanagerLists[i].events.add(this.listEvents[j].e, this.listEvents[j].n, this.listEvents[j].c);
+            for(let i=0;i<fmLists.length;i++) {
+                fmLists[i].events.add(this.listEvents[j].e, this.listEvents[j].n, this.listEvents[j].c);
             }
         }
     },

@@ -15,8 +15,9 @@
     overflow-x: hidden;
 }
 .quantummanager.quantummanager-fieldstandalone {
-   width: auto;
+    width: auto;
     height: auto;
+    overflow: visible;
 }
 .quantummanager-full-wrap.quantummanager {
     position: absolute;

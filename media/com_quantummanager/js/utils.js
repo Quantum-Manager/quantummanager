@@ -440,6 +440,23 @@ window.QuantumUtils = {
         });
     },
 
+    compilePath: function(scope, path, callbackSuccess, callbackFail) {
+        jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getParsePath&path=" + encodeURIComponent(path) + '&scope=' + scope + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
+            response = JSON.parse(response);
+
+            if(response.path !== undefined) {
+                if(typeof callbackSuccess === 'function') {
+                    callbackSuccess(response, scope, path);
+                }
+            } else {
+                if(typeof callbackFail === 'function') {
+                    callbackFail(response, scope, path);
+                }
+            }
+
+        });
+    },
+
     /**
      *
      * @param options

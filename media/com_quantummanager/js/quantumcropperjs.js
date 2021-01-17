@@ -570,11 +570,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
         fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.add('btn-hide');
     });
 
-    this.trigger = function(event) {
-        Filemanager.events.trigger(event, Filemanager);
-    };
-
-    QuantumEventsDispatcher.add(this, 'uploadComplete', function (fm, el) {
+    Filemanager.events.add(this, 'uploadComplete', function (fm, el) {
         setTimeout(function () {
             if(Filemanager.Qantumupload.filesLists.length > 0) {
                 let nameFile = Filemanager.Qantumupload.filesLists[0];
@@ -591,7 +587,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
         }, 400);
     });
 
-    QuantumEventsDispatcher.add(this, 'addContextMenuFile', function (fm, el) {
+    Filemanager.events.add(this, 'addContextMenuFile', function (fm, el) {
         return [
             {
                 writeable: 1,
@@ -609,5 +605,9 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             }
         ];
     });
+
+    this.trigger = function(event) {
+        Filemanager.events.trigger(event, Filemanager);
+    };
 
 };

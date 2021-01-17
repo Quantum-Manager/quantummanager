@@ -11,16 +11,33 @@ document.addEventListener('DOMContentLoaded' ,function () {
     window.QuantumManagerInit();
 });
 
-window.QuantumManagerInit = function() {
+//support subform add row
+if(window.jQuery !== undefined) {
+    jQuery(document).on('subform-row-add', function(event, row) {
+        window.QuantumManagerInit(row);
+    });
+}
 
-    let quantummanagerAll = document.querySelectorAll('.quantummanager');
+window.QuantumManagerInit = function(container) {
+
+    if(container === null || container === undefined) {
+        container = document;
+    }
+
+    let quantummanagerAll = container.querySelectorAll('.quantummanager');
     let id = 0;
     let scopesEnabled = QuantumSettings.scopeEnabled.split(',');
+    let quantummanagerForBuild = [];
 
     for (let i=0;i<quantummanagerAll.length;i++) {
+
+        if(quantummanagerAll[i].hasAttribute('data-index')) {
+            continue;
+        }
+
         let modules = quantummanagerAll[i].querySelectorAll('.quantummanager-module');
         let filemanager = {};
-        filemanager.id = id;
+        filemanager.id = QuantummanagerLists.length;
         filemanager.events = new QuantumEvents;
         filemanager.element = quantummanagerAll[i];
         filemanager.data = {};
@@ -73,10 +90,9 @@ window.QuantumManagerInit = function() {
 
         }
 
-        quantummanagerAll[i].setAttribute('data-index', i);
+        quantummanagerAll[i].setAttribute('data-index', filemanager.id);
         QuantummanagerLists.push(filemanager);
-        id = id + 1;
-
+        quantummanagerForBuild.push(filemanager);
 
         let quantummanagerHelp = filemanager.element.querySelector('.quantummanager-jedreview');
         let helpButtonClose = filemanager.element.querySelector('.quantummanager-jedreview .btn-close');
@@ -94,7 +110,7 @@ window.QuantumManagerInit = function() {
 
     let loadQuantum = setInterval(function () {
         if(QuantumManagerLoadComplete) {
-            QuantumEventsDispatcher.build();
+            QuantumEventsDispatcher.build(quantummanagerForBuild);
             QuantumEventsDispatcher.trigger('afterMainInit');
             clearInterval(loadQuantum)
         }
@@ -102,4 +118,3 @@ window.QuantumManagerInit = function() {
 
 
 };
-

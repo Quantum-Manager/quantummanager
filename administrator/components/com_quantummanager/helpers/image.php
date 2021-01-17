@@ -19,19 +19,23 @@ use Joomla\Filesystem\Folder;
 class QuantummanagerHelperImage
 {
 
+
     private $exifs = [];
+
 
     public function __construct()
     {
         JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
     }
 
+
     /**
+     * @param $path_source
      * @param $file
      * @param array $options
      * @return bool
      */
-    public function afterUpload($file, $options = [])
+    public function afterUpload($path_source, $file, $options = [])
     {
         $info = pathinfo($file);
 
@@ -45,6 +49,7 @@ class QuantummanagerHelperImage
             'rotateExif' => 0,
             'resize' => 1,
             'overlay' => 1,
+            'foldersResize' => 1,
         ];
 
         foreach ($options as $key => $value)
@@ -64,6 +69,11 @@ class QuantummanagerHelperImage
             $this->bestFit($file);
         }
 
+        if((int)$defaultOptions['foldersResize'])
+        {
+            $this->foldersResize($path_source, $file);
+        }
+
         if((int)QuantummanagerHelper::getParamsComponentValue('overlay', 0) === 1 && (int)$defaultOptions['overlay'])
         {
             $this->resizeWatermark($file);
@@ -79,6 +89,7 @@ class QuantummanagerHelperImage
         $this->reloadCache($file);
 
     }
+
 
     /**
      * @param $file
@@ -139,6 +150,7 @@ class QuantummanagerHelperImage
 
     }
 
+
     /**
      * @param $file
      * @param null $widthFit
@@ -195,6 +207,7 @@ class QuantummanagerHelperImage
 
     }
 
+
     /**
      * @param $file
      * @param null $widthFit
@@ -234,6 +247,69 @@ class QuantummanagerHelperImage
             ->save($file);
 
     }
+
+
+    public function foldersResize($path_source, $file)
+    {
+        $folders_rules = QuantummanagerHelper::getParamsComponentValue('resizefolders', []);
+        foreach ($folders_rules as $folder_rule)
+        {
+            if(in_array(substr($folder_rule->folder, 0, 1), ['/', '\\']))
+            {
+                $folder_rule->folder = substr($folder_rule->folder, 1);
+            }
+
+            $pos = mb_strpos($path_source, $folder_rule->folder);
+
+
+            if($pos !== false)
+            {
+                if($pos === 0)
+                {
+                    $more = mb_strlen(str_replace($path_source, '', $folder_rule->folder));
+                    $resize = false;
+
+                    if($more > 0)
+                    {
+                        if((int)$folder_rule->subfolder)
+                        {
+                            $resize = true;
+                        }
+                    }
+                    else
+                    {
+                        $resize = true;
+                    }
+
+
+                    if($resize)
+                    {
+
+                        if($folder_rule->algorithm === 'fit')
+                        {
+                            $this->fit($file, (int)$folder_rule->maxwidth, (int)$folder_rule->maxheight);
+                        }
+
+
+                        if($folder_rule->algorithm === 'bestfit')
+                        {
+                            $this->bestFit($file, (int)$folder_rule->maxwidth, (int)$folder_rule->maxheight);
+                        }
+
+
+                        if($folder_rule->algorithm === 'resize')
+                        {
+                            $this->resize($file, (int)$folder_rule->maxwidth, (int)$folder_rule->maxheight);
+                        }
+
+                    }
+
+                }
+            }
+
+        }
+    }
+
 
     /**
      * @param $file
@@ -275,6 +351,7 @@ class QuantummanagerHelperImage
             ->save($file);
 
     }
+
 
     /**
      * @param $fileSource
@@ -323,6 +400,7 @@ class QuantummanagerHelperImage
 
     }
 
+
     /**
      * @param $fileSource
      */
@@ -350,6 +428,7 @@ class QuantummanagerHelperImage
             echo $e->getMessage();
         }
     }
+
 
     /**
      * @param $file
@@ -431,6 +510,7 @@ class QuantummanagerHelperImage
         }
     }
 
+
     /**
      * @param $file
      */
@@ -451,6 +531,7 @@ class QuantummanagerHelperImage
         }
     }
 
+
     /**
      *
      * @return string
@@ -467,6 +548,7 @@ class QuantummanagerHelperImage
         return 'gd';
     }
 
+
     /**
      * @param $file
      */
@@ -477,17 +559,19 @@ class QuantummanagerHelperImage
             return;
         }
 
-        JLoader::register('JPel', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jpel' . DIRECTORY_SEPARATOR . 'jpel.php');
-        $fi = JPel::instance($file);
-        if($fi)
+        $exifSave = (int)QuantummanagerHelper::getParamsComponentValue('exifsave', 0);
+        if($exifSave)
         {
-            $exifSave = (int)QuantummanagerHelper::getParamsComponentValue('exifsave', 0);
-            if($exifSave)
+            JLoader::register('JPel', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jpel' . DIRECTORY_SEPARATOR . 'jpel.php');
+            $fi = JPel::instance($file);
+            if ($fi)
             {
                 $this->exifs = $fi->getExif();
             }
         }
+
     }
+
 
     /**
      * @param $file
@@ -499,19 +583,19 @@ class QuantummanagerHelperImage
             return;
         }
 
-        JLoader::register('JPel', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jpel' . DIRECTORY_SEPARATOR . 'jpel.php');
-        $fi = JPel::instance($file);
-        if($fi)
+        $exifSave = (int)QuantummanagerHelper::getParamsComponentValue('exifsave', 0);
+        if($exifSave)
         {
-            $exifSave = (int)QuantummanagerHelper::getParamsComponentValue('exifsave', 0);
-            if($exifSave)
+            JLoader::register('JPel', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jpel' . DIRECTORY_SEPARATOR . 'jpel.php');
+            $fi = JPel::instance($file);
+            if ($fi)
             {
                 $fi->setExif($this->exifs);
                 $fi->save($file);
                 $this->exifs = [];
-
             }
         }
+
     }
 
 }
