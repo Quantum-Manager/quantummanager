@@ -18,10 +18,12 @@ use Joomla\CMS\Uri\Uri;
 
 JLoader::register('JFormFieldQuantumtreecatalogs', JPATH_ROOT . DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, ['administrator', 'components', 'com_quantummanager', 'fields', 'quantumtreecatalogs.php']));
 
+JFormHelper::loadFieldClass('text');
+
 /**
  * Class JFormFieldQuantumconfigpath
  */
-class JFormFieldQuantumconfigpath extends JFormFieldQuantumtreecatalogs
+class JFormFieldQuantumconfigpath extends JFormFieldText
 {
 
 	/**
