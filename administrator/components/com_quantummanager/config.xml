@@ -424,7 +424,7 @@
 			   max="20">
 			<form>
 				<field name="folder"
-					   type="quantumtreecatalogs"
+					   type="text"
 					   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_RESIZE_FOLDERS_FOLDER"
 				/>
 				<field name="subfolder"
