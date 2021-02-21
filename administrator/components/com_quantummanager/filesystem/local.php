@@ -1167,13 +1167,14 @@ class QuantummanagerFileSystemLocal
 
             JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
             $lang = Factory::getLanguage();
-            $path_source = QuantummanagerHelper::preparePath($path_source, $scope);
+            $path_source = QuantummanagerHelper::preparePathRoot($path_source, $scope);
             $path = QuantummanagerHelper::preparePath($path_source, false, $scope);
             $fileClean = preg_replace("#\?.*?$#isu", '', $file);
             $fileSplit = explode('.', $fileClean);
             $exs = array_pop($fileSplit);
 
-            if($exs === 'jpeg') {
+            if($exs === 'jpeg')
+            {
                 $exs = 'jpg';
             }
 
@@ -1181,6 +1182,7 @@ class QuantummanagerFileSystemLocal
             $filePath = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
             $id = File::makeSafe($lang->transliterate($id), ['#^\.#', '#\040#']);
             $fileName = $id . '.' . $exs;
+
             file_put_contents($filePath . DIRECTORY_SEPARATOR . $fileName, $fileContent);
 
             JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');
