@@ -71,6 +71,7 @@ class JFormFieldQuantumviewfiles extends JFormField
                 'previewslist' => $this->previewslist,
                 'hash' => md5(QuantummanagerHelper::preparePath($this->directory)),
 				'cssClass' => $this->cssClass,
+				'quantumVersion' => QuantummanagerHelper::getVersion(),
 			]
 		);
 	}

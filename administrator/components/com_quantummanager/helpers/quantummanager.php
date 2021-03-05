@@ -43,6 +43,12 @@ class QuantummanagerHelper
 
 
     /**
+     * @var null
+     */
+	public static $cacheVersion = null;
+
+
+    /**
      * @var array
      */
 	public static $listScriptsInsert = [];
@@ -1036,5 +1042,23 @@ class QuantummanagerHelper
             self::$listScriptsInsert[] = $name;
         }
     }
+
+
+    public static function getVersion()
+    {
+        if (!is_null(self::$cacheVersion))
+        {
+            return self::$cacheVersion;
+        }
+
+        $db    = Factory::getDbo();
+        $query = $db->getQuery(true)
+            ->select('manifest_cache')
+            ->from($db->quoteName('#__extensions'))
+            ->where($db->quoteName('element') . ' = ' . $db->quote('com_quantummanager'));
+        self::$cacheVersion = (new Registry($db->setQuery($query)->loadResult()))->get('version');
+        return self::$cacheVersion;
+    }
+
 
 }

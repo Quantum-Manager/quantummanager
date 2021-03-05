@@ -131,6 +131,7 @@ $options = [
     ]);
 
     QuantummanagerHelper::scriptInsertOnPage('quantumViewfiles', <<<EOF
+    window.QuantumviewfilesVerison = '{$quantumVersion}';
     window.QuantumviewfilesPreviews = {$previewslist};
     window.QuantumviewfilesLang = $langs;
 EOF

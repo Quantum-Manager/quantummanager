@@ -356,32 +356,76 @@ window.QuantumUtils = {
 
     /**
      *
-     * @param fm
-     * @param header
-     * @param body
-     * @param footer
-     * @param classForModal
+     * @param options
      */
-    modal: function(fm, header, body, footer, classForModal) {
-        if(classForModal === null) {
-            classForModal = '';
+    modal: function(options) {
+
+        if(options.fm === undefined) {
+            return false;
         }
 
-        let modal = this.createElement('div', {'class': 'quatummanagermodal-wrap ' + classForModal})
-            .addChild('div', {'class': 'quatummanagermodal-container'})
-                .add('button', {
-                    'class': 'btn quatummanagermodal-close',
-                    'events': [
-                        ['click', function (ev) {
-                            this.closest('.quatummanagermodal-wrap').remove();
-                        }]
-                    ]}, QuantumLang.close)
-                .add('div', {'class': 'quatummanagermodal-header'}, header)
+        if(options.classForModal === undefined) {
+            options.classForModal = '';
+        }
+
+        if(options.header === undefined) {
+            options.header = '';
+        }
+
+        if(options.body === undefined) {
+            options.body = '';
+        }
+
+        if(options.footer === undefined) {
+            options.footer = '';
+        }
+
+        if(options.close === undefined) {
+            options.close = true;
+        }
+
+        let modal = this.createElement('div', {'class': 'quatummanagermodal-wrap ' + options.classForModal})
+            .addChild('div', {'class': 'quatummanagermodal-container'});
+
+        if(options.close) {
+            modal = modal.add('button', {
+                'class': 'btn quatummanagermodal-close',
+                'events': [
+                    ['click', function (ev) {
+                        this.closest('.quatummanagermodal-wrap').remove();
+                    }]
+                ]}, QuantumLang.close);
+        }
+
+        modal = modal.add('div', {'class': 'quatummanagermodal-header'}, options.header)
                 .addChild('div', {'class': 'quatummanagermodal-body-wrap'})
-                    .add('div', {'class': 'quatummanagermodal-body'}, body)
+                    .add('div', {'class': 'quatummanagermodal-body'}, options.body)
                     .getParent()
                 .getParent();
-        fm.element.append(modal.build());
+
+        options.fm.element.append(modal.build());
+
+
+        let modalClass = function (modal) {
+            let self = this;
+            self.modal = modal;
+            self.modal_html = modal.build();
+
+            this.show = function () {
+                self.modal_html.classList.remove('quatummanagermodal-hide');
+            }
+
+            this.hide = function () {
+                self.modal_html.classList.add('quatummanagermodal-hide');
+            }
+
+            this.destroy = function () {
+                self.modal_html.remove();
+            }
+
+        }
+
+        return (new modalClass(modal));
     },
 
     /**

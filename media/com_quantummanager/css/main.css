@@ -280,6 +280,10 @@
     z-index: 9;
 }
 
+.quatummanagermodal-hide {
+    display: none;
+}
+
 .quatummanagermodal-wrap .quatummanagermodal-container {
     position: relative;
     width: 1200px;
