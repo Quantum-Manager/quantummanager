@@ -798,6 +798,8 @@ svg.svg-icon text {
     bottom: -40px;
     width: 100%;
     font-size: 13px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -moz-user-select: none;
