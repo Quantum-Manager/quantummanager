@@ -12,8 +12,8 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Cache\Cache;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Filesystem\Folder;
@@ -42,15 +42,15 @@ class QuantummanagerHelper
 	public static $cacheMimeType = '';
 
 
-    /**
-     * @var null
-     */
+	/**
+	 * @var null
+	 */
 	public static $cacheVersion = null;
 
 
-    /**
-     * @var array
-     */
+	/**
+	 * @var array
+	 */
 	public static $listScriptsInsert = [];
 
 
@@ -82,61 +82,65 @@ class QuantummanagerHelper
 	/**
 	 * @param $name
 	 * @param $mimeType
+	 *
 	 * @return bool
 	 */
 	public static function checkFile($name, $mimeType)
 	{
-		try {
+		try
+		{
 
-			if(empty(self::$cacheMimeType))
+			if (empty(self::$cacheMimeType))
 			{
-				$componentParams = ComponentHelper::getParams('com_quantummanager');
+				$componentParams     = ComponentHelper::getParams('com_quantummanager');
 				self::$cacheMimeType = $componentParams->get('mimetype');
 
-				if(empty(self::$cacheMimeType) || self::$cacheMimeType === null)
+				if (empty(self::$cacheMimeType) || self::$cacheMimeType === null)
 				{
 					self::$cacheMimeType = file_get_contents(JPATH_SITE . DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, ['administrator', 'components', 'com_quantummanager', 'mimetype.txt']));
 					$componentParams->set('mimetype', self::$cacheMimeType);
-					$component = new stdClass();
+					$component          = new stdClass();
 					$component->element = 'com_quantummanager';
-					$component->params = (string) $componentParams;
+					$component->params  = (string) $componentParams;
 					Factory::getDbo()->updateObject('#__extensions', $component, ['element']);
 				}
 
 			}
 
-			$listMimeType = explode("\n", self::$cacheMimeType);
+			$listMimeType  = explode("\n", self::$cacheMimeType);
 			$accepMimeType = [];
 
-			foreach ($listMimeType as $value) {
+			foreach ($listMimeType as $value)
+			{
 				$type = trim($value);
-				if(!preg_match('/^#.*?/', $type))
+				if (!preg_match('/^#.*?/', $type))
 				{
 					$accepMimeType[] = $type;
 				}
 			}
 
-			if(!in_array($mimeType, $accepMimeType))
+			if (!in_array($mimeType, $accepMimeType))
 			{
 				return false;
 			}
 
 			$nameSplit = explode('.', $name);
-			if(count($nameSplit) <= 1)
+			if (count($nameSplit) <= 1)
 			{
 				return false;
 			}
 
 			$exs = mb_strtolower(array_pop($nameSplit));
 
-			if(in_array($exs, ['php', 'php7', 'php5', 'php4', 'php3', 'php4', 'phtml', 'phps', 'sh']))
+			if (in_array($exs, ['php', 'php7', 'php5', 'php4', 'php3', 'php4', 'phtml', 'phps', 'sh']))
 			{
 				return false;
 			}
 
 			return true;
 		}
-		catch (Exception $e) {
+		catch (Exception $e)
+		{
 			echo $e->getMessage();
 		}
 	}
@@ -147,7 +151,8 @@ class QuantummanagerHelper
 	 */
 	public static function filterFile($file)
 	{
-		try {
+		try
+		{
 			//TODO доработать фильтрацию
 
 			/*if (file_exists($file)) {
@@ -157,7 +162,8 @@ class QuantummanagerHelper
 				);
 			}*/
 		}
-		catch (Exception $e) {
+		catch (Exception $e)
+		{
 			echo $e->getMessage();
 		}
 	}
@@ -167,82 +173,38 @@ class QuantummanagerHelper
 	 */
 	public static function getActions()
 	{
-		$user = JFactory::getUser();
-		$result = new JObject;
+		$user      = JFactory::getUser();
+		$result    = new JObject;
 		$assetName = 'com_quantummanager';
-		$actions = JAccess::getActions($assetName);
-		foreach ( $actions as $action )
+		$actions   = JAccess::getActions($assetName);
+		foreach ($actions as $action)
 		{
-			$result->set( $action->name, $user->authorise( $action->name, $assetName ) );
+			$result->set($action->name, $user->authorise($action->name, $assetName));
 		}
+
 		return $result;
 	}
 
 
-    /**
-     * @param $path
-     * @param $scopeName
-     * @param bool $pathUnix
-     * @return string|string[]
-     * @throws Exception
-     */
-	public static function preparePathRoot($path, $scopeName, $pathUnix = false)
-    {
-        $session = Factory::getSession();
-        $path = trim($path);
-        $componentParams = ComponentHelper::getParams('com_quantummanager');
-        $pathConfig = '';
-
-        if(empty(static::$cachePathRoot[$scopeName]))
-        {
-            $scope = self::getScope($scopeName);
-            $pathConfig = $scope->path;
-            static::$cachePathRoot[$scopeName] = $pathConfig;
-        }
-        else
-        {
-            $pathConfig = static::$cachePathRoot[$scopeName];
-        }
-
-
-        $path = str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
-        $path = preg_replace('#' . str_replace('\\', '\\\\', JPATH_ROOT) . "\/root?#", $pathConfig, $path);
-        $path = preg_replace('#^root?#', $pathConfig, $path);
-        $path = str_replace('..' . DIRECTORY_SEPARATOR, '', $path);
-
-        $path = Path::clean($path);
-
-        if($pathUnix)
-        {
-            $path = str_replace("\\",'/', $path);
-        }
-
-        return $path;
-    }
-
-
 	/**
-	 * @param $path
-	 * @param bool $host
-	 * @param string $scopeName
-	 * @param bool $pathUnix
+	 * @param         $path
+	 * @param         $scopeName
+	 * @param   bool  $pathUnix
 	 *
-	 * @return string
-	 *
+	 * @return string|string[]
 	 * @throws Exception
-	 * @since version
 	 */
-	public static function preparePath($path, $host = false, $scopeName = '', $pathUnix = false)
+	public static function preparePathRoot($path, $scopeName, $pathUnix = false)
 	{
-		$session = Factory::getSession();
-		$path = trim($path);
+		$session         = Factory::getSession();
+		$path            = trim($path);
 		$componentParams = ComponentHelper::getParams('com_quantummanager');
-		$pathConfig = '';
+		$pathConfig      = '';
 
-		if(empty(static::$cachePathRoot[$scopeName]))
+		if (empty(static::$cachePathRoot[$scopeName]))
 		{
-			$scope = self::getScope($scopeName);
-			$pathConfig = $scope->path;
+			$scope                             = self::getScope($scopeName);
+			$pathConfig                        = $scope->path;
 			static::$cachePathRoot[$scopeName] = $pathConfig;
 		}
 		else
@@ -256,17 +218,63 @@ class QuantummanagerHelper
 		$path = preg_replace('#^root?#', $pathConfig, $path);
 		$path = str_replace('..' . DIRECTORY_SEPARATOR, '', $path);
 
-		if(substr_count($path, '{user_id}'))
+		$path = Path::clean($path);
+
+		if ($pathUnix)
+		{
+			$path = str_replace("\\", '/', $path);
+		}
+
+		return $path;
+	}
+
+
+	/**
+	 * @param           $path
+	 * @param   bool    $host
+	 * @param   string  $scopeName
+	 * @param   bool    $pathUnix
+	 *
+	 * @return string
+	 *
+	 * @throws Exception
+	 * @since version
+	 */
+	public static function preparePath($path, $host = false, $scopeName = '', $pathUnix = false)
+	{
+		$session         = Factory::getSession();
+		$path            = trim($path);
+		$componentParams = ComponentHelper::getParams('com_quantummanager');
+		$pathConfig      = '';
+
+		if (empty(static::$cachePathRoot[$scopeName]))
+		{
+			$scope                             = self::getScope($scopeName);
+			$pathConfig                        = $scope->path;
+			static::$cachePathRoot[$scopeName] = $pathConfig;
+		}
+		else
+		{
+			$pathConfig = static::$cachePathRoot[$scopeName];
+		}
+
+
+		$path = str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
+		$path = preg_replace('#' . str_replace('\\', '\\\\', JPATH_ROOT) . "\/root?#", $pathConfig, $path);
+		$path = preg_replace('#^root?#', $pathConfig, $path);
+		$path = str_replace('..' . DIRECTORY_SEPARATOR, '', $path);
+
+		if (substr_count($path, '{user_id}'))
 		{
 			$user = Factory::getUser();
 		}
 		else
 		{
-			$user = new stdClass();
+			$user     = new stdClass();
 			$user->id = 0;
 		}
 
-		if(substr_count($path, '{item_id}'))
+		if (substr_count($path, '{item_id}'))
 		{
 			$item_id = Factory::getApplication()->input->get('id', '0');
 		}
@@ -275,57 +283,66 @@ class QuantummanagerHelper
 			$item_id = '0';
 		}
 
-		$path = str_replace([
+		$variables = [
 			'{user_id}',
 			'{item_id}',
 			'{year}',
 			'{month}',
+			'{week_year}',
+			'{week_week}',
+			'{day_year}',
 			'{day}',
 			'{hours}',
+			'{hours_24}',
 			'{minutes}',
 			'{second}',
 			'{unix}',
-		], [
+		];
+
+		$values = [
 			$user->id,
 			$item_id,
 			date('Y'),
 			date('m'),
+			date('W'),
+			date('w'),
+			date('z'),
 			date('d'),
 			date('h'),
+			date('H'),
 			date('i'),
 			date('s'),
 			date('U'),
-		], $path);
+		];
 
-		$pathConfigParse = str_replace([
-			'{user_id}',
-			'{item_id}',
-			'{year}',
-			'{month}',
-			'{day}',
-			'{hours}',
-			'{minutes}',
-			'{second}',
-			'{unix}',
-		], [
-			$user->id,
-			$item_id,
-			date('Y'),
-			date('m'),
-			date('d'),
-			date('h'),
-			date('i'),
-			date('s'),
-			date('U'),
-		], $pathConfig);
+		PluginHelper::importPlugin('quantummanager');
+		$results = Factory::getApplication()->triggerEvent('onQuantummanagerAddVariables');
 
-		$path = Path::clean($path);
+		if (is_array($results))
+		{
+			foreach ($results as $result)
+			{
+				if (is_array($result))
+				{
+					foreach ($result as $item)
+					{
+						$variables[] = $item[0];
+						$values[]    = $item[1];
+					}
+				}
+			}
+		}
+
+		$path            = str_replace($variables, $values, $path);
+		$pathConfigParse = str_replace($variables, $values, $pathConfig);
+
+		$path            = Path::clean($path);
 		$pathConfigParse = Path::clean($pathConfigParse);
 
 		//если пытаются выйти за пределы папки, то не даем этого сделать
-		if(!preg_match('#^' . str_replace(DIRECTORY_SEPARATOR, "\\" . DIRECTORY_SEPARATOR, "\("  . Path::clean(JPATH_ROOT  . DIRECTORY_SEPARATOR) . "\)?" . $pathConfigParse) . '.*?#', $path))
+		if (!preg_match('#^' . str_replace(DIRECTORY_SEPARATOR, "\\" . DIRECTORY_SEPARATOR, "\(" . Path::clean(JPATH_ROOT . DIRECTORY_SEPARATOR) . "\)?" . $pathConfigParse) . '.*?#', $path))
 		{
-			if(preg_match('#.*?' . str_replace(DIRECTORY_SEPARATOR, "\\" . DIRECTORY_SEPARATOR, Path::clean(JPATH_ROOT  . DIRECTORY_SEPARATOR) . $pathConfigParse) . '.*?#', $path))
+			if (preg_match('#.*?' . str_replace(DIRECTORY_SEPARATOR, "\\" . DIRECTORY_SEPARATOR, Path::clean(JPATH_ROOT . DIRECTORY_SEPARATOR) . $pathConfigParse) . '.*?#', $path))
 			{
 				$path = JPATH_ROOT . DIRECTORY_SEPARATOR . $pathConfigParse . str_replace(JPATH_ROOT, '', $path);
 			}
@@ -340,31 +357,31 @@ class QuantummanagerHelper
 		$pathCurrent = str_replace([
 			JPATH_ROOT,
 			DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR
-		], [ '', DIRECTORY_SEPARATOR ], $path);
+		], ['', DIRECTORY_SEPARATOR], $path);
 
-		$folders = explode(DIRECTORY_SEPARATOR, $pathConfigParse);
+		$folders    = explode(DIRECTORY_SEPARATOR, $pathConfigParse);
 		$currentTmp = '';
 
 		foreach ($folders as $tmpFolder)
 		{
 			$currentTmp .= DIRECTORY_SEPARATOR . $tmpFolder;
-			if(!file_exists(JPATH_ROOT . $currentTmp))
+			if (!file_exists(JPATH_ROOT . $currentTmp))
 			{
 				Folder::create(JPATH_ROOT . $currentTmp);
 			}
 		}
 
-		if($pathUnix)
+		if ($pathUnix)
 		{
-			$path = str_replace("\\",'/', $path);
+			$path = str_replace("\\", '/', $path);
 		}
 
-		if($host)
+		if ($host)
 		{
 			$path = Uri::root() . $path;
 		}
 
-		return trim($path,DIRECTORY_SEPARATOR);
+		return trim($path, DIRECTORY_SEPARATOR);
 	}
 
 
@@ -374,9 +391,10 @@ class QuantummanagerHelper
 	public static function getFolderRoot()
 	{
 		$componentParams = ComponentHelper::getParams('com_quantummanager');
-		$folderRoot = $componentParams->get('path', 'images');
+		$folderRoot      = $componentParams->get('path', 'images');
 
-		if($folderRoot === 'root') {
+		if ($folderRoot === 'root')
+		{
 			$folderRoot = 'root';
 		}
 
@@ -385,9 +403,9 @@ class QuantummanagerHelper
 
 
 	/**
-	 * @param $name
-	 * @param string $default
-	 * @param bool $withProfiles
+	 * @param           $name
+	 * @param   string  $default
+	 * @param   bool    $withProfiles
 	 *
 	 * @return mixed|string
 	 *
@@ -396,21 +414,21 @@ class QuantummanagerHelper
 	public static function getParamsComponentValue($name, $default = '', $withProfiles = true)
 	{
 		$componentParams = ComponentHelper::getParams('com_quantummanager');
-		$profiles = $componentParams->get('profiles', '');
-		$value = $componentParams->get($name, $default);
-		$groups = Factory::getUser()->groups;
+		$profiles        = $componentParams->get('profiles', '');
+		$value           = $componentParams->get($name, $default);
+		$groups          = Factory::getUser()->groups;
 
-		if($withProfiles)
+		if ($withProfiles)
 		{
-			if(!empty($profiles))
+			if (!empty($profiles))
 			{
 				foreach ($profiles as $key => $profile)
 				{
-					if(in_array((int)$profile->group, $groups) && ($name === $profile->config))
+					if (in_array((int) $profile->group, $groups) && ($name === $profile->config))
 					{
 						$value = trim($profile->value);
 
-						if(is_array($default))
+						if (is_array($default))
 						{
 							$value = json_decode($value, true);
 						}
@@ -427,17 +445,17 @@ class QuantummanagerHelper
 
 	public static function loadLang()
 	{
-		$lang = Factory::getLanguage();
-		$extension = 'com_quantummanager';
-		$base_dir = JPATH_ROOT . DIRECTORY_SEPARATOR . 'administrator';
+		$lang         = Factory::getLanguage();
+		$extension    = 'com_quantummanager';
+		$base_dir     = JPATH_ROOT . DIRECTORY_SEPARATOR . 'administrator';
 		$language_tag = $lang->getTag();
 		$lang->load($extension, $base_dir, $language_tag, true);
 	}
 
 
 	/**
-	 * @param $bytes
-	 * @param int $decimals
+	 * @param        $bytes
+	 * @param   int  $decimals
 	 *
 	 * @return string
 	 *
@@ -445,8 +463,9 @@ class QuantummanagerHelper
 	 */
 	public static function formatFileSize($bytes, $decimals = 2)
 	{
-		$size = array('b','kb','Mb','Gb','Tb','Pb','Eb','Zb','Yb');
+		$size   = array('b', 'kb', 'Mb', 'Gb', 'Tb', 'Pb', 'Eb', 'Zb', 'Yb');
 		$factor = floor((strlen($bytes) - 1) / 3);
+
 		return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . " " . @$size[$factor];
 	}
 
@@ -463,7 +482,7 @@ class QuantummanagerHelper
 
 		self::checkScopes();
 
-		if($scopeName === '' || $scopeName === 'null')
+		if ($scopeName === '' || $scopeName === 'null')
 		{
 			$scopeName = 'images';
 		}
@@ -472,8 +491,8 @@ class QuantummanagerHelper
 
 		foreach ($scopes as $scope)
 		{
-			$scope = (object)$scope;
-			if($scope->id === $scopeName)
+			$scope = (object) $scope;
+			if ($scope->id === $scopeName)
 			{
 				return $scope;
 			}
@@ -482,7 +501,7 @@ class QuantummanagerHelper
 
 
 	/**
-	 * @param int $enabled
+	 * @param   int  $enabled
 	 *
 	 * @return array|object
 	 *
@@ -492,40 +511,40 @@ class QuantummanagerHelper
 	{
 		self::checkScopes();
 
-		$session = Factory::getSession();
-		$pathSession = $session->get('quantummanagerroot', '');
+		$session          = Factory::getSession();
+		$pathSession      = $session->get('quantummanagerroot', '');
 		$pathSessionCheck = $session->get('quantummanagerrootcheck', 1);
-		$scopesOutput = [];
+		$scopesOutput     = [];
 
-		if(!empty($pathSession))
+		if (!empty($pathSession))
 		{
 
-		    $checked = true;
-		    if((int)$pathSessionCheck)
-            {
-                if(!file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $pathSession))
-                {
-                    $checked = false;
-                }
-            }
+			$checked = true;
+			if ((int) $pathSessionCheck)
+			{
+				if (!file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $pathSession))
+				{
+					$checked = false;
+				}
+			}
 
-			if($checked)
+			if ($checked)
 			{
 				$scopesOutput = [
-					(object)[
+					(object) [
 						'title' => Text::_('COM_QUANTUMMANAGER_SCOPE_FOLDER'),
-						'id' => 'sessionroot',
-						'path' => $pathSession
+						'id'    => 'sessionroot',
+						'path'  => $pathSession
 					]
 				];
 			}
 
 		}
 
-		$scopes = self::getParamsComponentValue('scopes', []);
+		$scopes       = self::getParamsComponentValue('scopes', []);
 		$scopesCustom = self::getParamsComponentValue('scopescustom', []);
 
-		if(count((array)$scopes) === 0)
+		if (count((array) $scopes) === 0)
 		{
 			$scopes = self::getDefaultScopes();
 		}
@@ -535,21 +554,21 @@ class QuantummanagerHelper
 			$scope->title = Text::_('COM_QUANTUMMANAGER_SCOPE_' . mb_strtoupper($scope->id));
 		}
 
-		if (!empty($scopesCustom) && count((array)$scopesCustom) > 0)
+		if (!empty($scopesCustom) && count((array) $scopesCustom) > 0)
 		{
-			$scopes = (object)array_merge((array)$scopes, (array)$scopesCustom);
+			$scopes = (object) array_merge((array) $scopes, (array) $scopesCustom);
 		}
 
 		foreach ($scopes as $scope)
 		{
 
-			$scope = (object)$scope;
+			$scope = (object) $scope;
 
 			if (isset($scope->enable))
 			{
-				if((string)$enabled === '1')
+				if ((string) $enabled === '1')
 				{
-					if (!(int)$scope->enable)
+					if (!(int) $scope->enable)
 					{
 						continue;
 					}
@@ -573,25 +592,24 @@ class QuantummanagerHelper
 	public static function checkScopes()
 	{
 		$scopesCustom = self::getParamsComponentValue('scopescustom', [], false);
-		$scopeFail = false;
-		$lang = Factory::getLanguage();
+		$scopeFail    = false;
+		$lang         = Factory::getLanguage();
 
 		foreach ($scopesCustom as $scope)
 		{
-			if(empty($scope->id))
+			if (empty($scope->id))
 			{
 				$scopeFail = true;
 				$scope->id = str_replace(' ', '', $lang->transliterate($scope->title));
 			}
 		}
 
-		if($scopeFail)
+		if ($scopeFail)
 		{
 			self::setComponentsParams('scopescustom', $scopesCustom);
 		}
 
 	}
-
 
 
 	/**
@@ -603,28 +621,28 @@ class QuantummanagerHelper
 	public static function getDefaultScopes()
 	{
 		return [
-			(object)[
-				'id' => 'images',
-				'title' => 'Images',
-				'path' => 'images',
+			(object) [
+				'id'     => 'images',
+				'title'  => 'Images',
+				'path'   => 'images',
 				'enable' => 1,
 			],
-			(object)[
-				'id' => 'docs',
-				'title' => 'Docs',
-				'path' => 'docs',
+			(object) [
+				'id'     => 'docs',
+				'title'  => 'Docs',
+				'path'   => 'docs',
 				'enable' => 0,
 			],
-			(object)[
-				'id' => 'music',
-				'title' => 'Music',
-				'path' => 'music',
+			(object) [
+				'id'     => 'music',
+				'title'  => 'Music',
+				'path'   => 'music',
 				'enable' => 0,
 			],
-			(object)[
-				'id' => 'videos',
-				'title' => 'Videos',
-				'path' => 'videos',
+			(object) [
+				'id'     => 'videos',
+				'title'  => 'Videos',
+				'path'   => 'videos',
 				'enable' => 0,
 			],
 		];
@@ -644,19 +662,21 @@ class QuantummanagerHelper
 		$params->set($name, $value);
 
 		$componentid = ComponentHelper::getComponent('com_quantummanager')->id;
-		$table = Table::getInstance('extension');
+		$table       = Table::getInstance('extension');
 		$table->load($componentid);
 		$table->bind(['params' => $params->toString()]);
 
 		if (!$table->check())
 		{
 			echo $table->getError();
+
 			return false;
 		}
 
 		if (!$table->store())
 		{
 			echo $table->getError();
+
 			return false;
 		}
 
@@ -682,7 +702,7 @@ class QuantummanagerHelper
 
 		$options = [
 			'defaultgroup' => !is_null($group) ? $group : Factory::getApplication()->input->get('option'),
-			'cachebase' => $client_id ? JPATH_ADMINISTRATOR . '/cache' : $conf->get('cache_path', JPATH_SITE . '/cache')
+			'cachebase'    => $client_id ? JPATH_ADMINISTRATOR . '/cache' : $conf->get('cache_path', JPATH_SITE . '/cache')
 		];
 
 		$cache = Cache::getInstance('callback', $options);
@@ -813,7 +833,7 @@ class QuantummanagerHelper
 				if (!empty($options['forbidden_extensions']))
 				{
 					$explodedName = explode('.', $intendedName);
-					$explodedName =	array_reverse($explodedName);
+					$explodedName = array_reverse($explodedName);
 					array_pop($explodedName);
 					$explodedName = array_map('strtolower', $explodedName);
 
@@ -983,82 +1003,84 @@ class QuantummanagerHelper
 	 */
 	public static function escapeJsonString($value)
 	{
-		$escapers = array("\\",     "/",   "\"",  "\n",  "\r",  "\t", "\x08", "\x0c");
-		$replacements = array("\\\\", "\\/", "\\\"", "\\n", "\\r", "\\t",  "\\f",  "\\b");
+		$escapers     = array("\\", "/", "\"", "\n", "\r", "\t", "\x08", "\x0c");
+		$replacements = array("\\\\", "\\/", "\\\"", "\\n", "\\r", "\\t", "\\f", "\\b");
+
 		return str_replace($escapers, $replacements, $value);
 	}
 
 
-    /**
-     * @return int
-     */
+	/**
+	 * @return int
+	 */
 	public static function getMemoryLimit()
-    {
-        $memory_limit = ini_get('memory_limit');
+	{
+		$memory_limit = ini_get('memory_limit');
 
-        if((string)$memory_limit === '-1')
-        {
-            $memory_limit = '32M';
-        }
+		if ((string) $memory_limit === '-1')
+		{
+			$memory_limit = '32M';
+		}
 
-        if (preg_match('/^(\d+)(.)$/', $memory_limit, $matches))
-        {
-            if ($matches[2] === 'M')
-            {
-                $memory_limit = $matches[1] * 1024 * 1024; // nnnM -> nnn MB
-            }
-            else if ($matches[2] === 'K')
-            {
-                $memory_limit = $matches[1] * 1024; // nnnK -> nnn KB
-            }
-        }
+		if (preg_match('/^(\d+)(.)$/', $memory_limit, $matches))
+		{
+			if ($matches[2] === 'M')
+			{
+				$memory_limit = $matches[1] * 1024 * 1024; // nnnM -> nnn MB
+			}
+			else if ($matches[2] === 'K')
+			{
+				$memory_limit = $matches[1] * 1024; // nnnK -> nnn KB
+			}
+		}
 
-        return (int)$memory_limit;
-    }
-
-
-    /**
-     * @return bool
-     */
-    public static function isUserAdmin()
-    {
-        $groups = Factory::getUser()->groups;
-        if(in_array('2', $groups) || in_array('8', $groups))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
+		return (int) $memory_limit;
+	}
 
 
-    public static function scriptInsertOnPage($name, $script)
-    {
-        if(!in_array($name, self::$listScriptsInsert))
-        {
-            Factory::getDocument()->addScriptDeclaration($script);
-            self::$listScriptsInsert[] = $name;
-        }
-    }
+	/**
+	 * @return bool
+	 */
+	public static function isUserAdmin()
+	{
+		$groups = Factory::getUser()->groups;
+		if (in_array('2', $groups) || in_array('8', $groups))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 
 
-    public static function getVersion()
-    {
-        if (!is_null(self::$cacheVersion))
-        {
-            return self::$cacheVersion;
-        }
+	public static function scriptInsertOnPage($name, $script)
+	{
+		if (!in_array($name, self::$listScriptsInsert))
+		{
+			Factory::getDocument()->addScriptDeclaration($script);
+			self::$listScriptsInsert[] = $name;
+		}
+	}
 
-        $db    = Factory::getDbo();
-        $query = $db->getQuery(true)
-            ->select('manifest_cache')
-            ->from($db->quoteName('#__extensions'))
-            ->where($db->quoteName('element') . ' = ' . $db->quote('com_quantummanager'));
-        self::$cacheVersion = (new Registry($db->setQuery($query)->loadResult()))->get('version');
-        return self::$cacheVersion;
-    }
+
+	public static function getVersion()
+	{
+		if (!is_null(self::$cacheVersion))
+		{
+			return self::$cacheVersion;
+		}
+
+		$db                 = Factory::getDbo();
+		$query              = $db->getQuery(true)
+			->select('manifest_cache')
+			->from($db->quoteName('#__extensions'))
+			->where($db->quoteName('element') . ' = ' . $db->quote('com_quantummanager'));
+		self::$cacheVersion = (new Registry($db->setQuery($query)->loadResult()))->get('version');
+
+		return self::$cacheVersion;
+	}
 
 
 }
