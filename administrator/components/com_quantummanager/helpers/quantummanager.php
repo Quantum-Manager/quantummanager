@@ -289,7 +289,7 @@ class QuantummanagerHelper
 			'{year}',
 			'{month}',
 			'{week_year}',
-			'{week_week}',
+			'{week_day}',
 			'{day_year}',
 			'{day}',
 			'{hours}',
