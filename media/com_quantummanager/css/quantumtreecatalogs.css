@@ -47,6 +47,7 @@
 .quantumtreecatalogs-module .tree-nested {
     display: none;
     margin-left: 19px;
+    padding-left: 0;
 }
 .quantumtreecatalogs-module .active {
     display: block;

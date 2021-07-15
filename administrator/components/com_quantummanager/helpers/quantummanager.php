@@ -9,6 +9,7 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Access\Access;
 use Joomla\CMS\Cache\Cache;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -173,10 +174,14 @@ class QuantummanagerHelper
 	 */
 	public static function getActions()
 	{
-		$user      = JFactory::getUser();
+		$user      = Factory::getUser();
 		$result    = new JObject;
 		$assetName = 'com_quantummanager';
-		$actions   = JAccess::getActions($assetName);
+		$actions   = Access::getActionsFromFile(
+			JPATH_ADMINISTRATOR . '/components/' . $assetName . '/access.xml',
+			"/access/section[@name='component']/"
+		);
+
 		foreach ($actions as $action)
 		{
 			$result->set($action->name, $user->authorise($action->name, $assetName));
