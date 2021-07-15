@@ -100,7 +100,7 @@ window.QuantumManagerInit = function(container) {
             QuantumUtils.replaceImgToSvg('.quantummanager-jedreview');
             helpButtonClose.addEventListener('click', function (ev) {
                 quantummanagerHelp.remove();
-                jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantummanager.hideJedReview"));
+                QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantummanager.hideJedReview"));
                 ev.preventDefault();
             });
         }

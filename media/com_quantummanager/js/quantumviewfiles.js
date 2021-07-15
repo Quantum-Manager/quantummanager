@@ -50,7 +50,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             icon: QuantumUtils.getFullUrl('/media/com_quantummanager/images/icons/action/folder-symbol.svg'),
             onClick: function(){
                 QuantumUtils.prompt(QuantumviewfilesLang.directoryName, '', function (nameDirectory) {
-                    jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.createDirectory&path=" + encodeURIComponent(Filemanager.data.path)
+                    QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.createDirectory&path=" + encodeURIComponent(Filemanager.data.path)
                         + '&name=' + encodeURIComponent(nameDirectory)
                         + "&scope=" + encodeURIComponent(Filemanager.data.scope))).done(function (response) {
                         Filemanager.events.trigger('reloadPaths', Filemanager);
@@ -73,7 +73,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                     return;
                 }
 
-                jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.paste" +
+                QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.paste" +
                     '&pathFrom=' + encodeURIComponent(self.bufferFromPath) +
                     '&pathTo=' + encodeURIComponent(Filemanager.data.path) +
                     '&list=' + encodeURIComponent(JSON.stringify(self.buffer)) +
@@ -103,7 +103,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 let name = self.directoryContext.querySelector('.directory-name').innerHTML;
 
                 QuantumUtils.prompt(QuantumviewfilesLang.directoryName, name , function (result) {
-                    jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.renameDirectory&path=" + encodeURIComponent(Filemanager.data.path) + '&oldName=' + encodeURIComponent(name) + '&name='+ encodeURIComponent(result) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
+                    QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.renameDirectory&path=" + encodeURIComponent(Filemanager.data.path) + '&oldName=' + encodeURIComponent(name) + '&name='+ encodeURIComponent(result) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
                         response = JSON.parse(response);
                         if(response.status === undefined) {
                             return;
@@ -129,7 +129,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 QuantumUtils.confirm(QuantumtreecatalogsLang.confirmDelete + ' ' + nameDirectory + '?', function (result) {
                     let directories = [];
                     directories.push(nameDirectory);
-                    jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.delete&path=" + encodeURIComponent(Filemanager.data.path) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&list=' + encodeURIComponent(JSON.stringify(directories)))).done(function (response) {
+                    QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.delete&path=" + encodeURIComponent(Filemanager.data.path) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&list=' + encodeURIComponent(JSON.stringify(directories)))).done(function (response) {
                         Filemanager.events.trigger('reloadPaths', Filemanager);
                     });
                 });
@@ -146,7 +146,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             tip: '',
             icon: QuantumUtils.getFullUrl('/media/com_quantummanager/images/icons/action/visibility-button.svg'),
             onClick: function(){
-                jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getParsePath&path=" + encodeURIComponent(Filemanager.data.path) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&host=on&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
+                QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getParsePath&path=" + encodeURIComponent(Filemanager.data.path) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&host=on&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
                     response = JSON.parse(response);
                     if(response.path === undefined) {
                         return;
@@ -165,7 +165,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             onClick: function() {
 
                 QuantumUtils.prompt(QuantumviewfilesLang.fileName, self.fileContext.getAttribute('data-name'), function (result) {
-                    jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.renameFile&path=" + encodeURIComponent(Filemanager.data.path) + '&file=' + encodeURIComponent(self.fileContext.getAttribute('data-file')) + '&name='+ encodeURIComponent(result) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
+                    QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.renameFile&path=" + encodeURIComponent(Filemanager.data.path) + '&file=' + encodeURIComponent(self.fileContext.getAttribute('data-file')) + '&name='+ encodeURIComponent(result) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
                         response = JSON.parse(response);
                         if(response.status === undefined) {
                             return;
@@ -186,7 +186,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             tip: '',
             icon: QuantumUtils.getFullUrl('/media/com_quantummanager/images/icons/action/link-button.svg'),
             onClick: function() {
-                jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getParsePath&path=" + encodeURIComponent(Filemanager.data.path) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&host=on&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
+                QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getParsePath&path=" + encodeURIComponent(Filemanager.data.path) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&host=on&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
                     response = JSON.parse(response);
                     if(response.path === undefined) {
                         return;
@@ -220,7 +220,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 files.push(self.fileContext.getAttribute('data-file'));
 
                 QuantumUtils.confirm(QuantumviewfilesLang.contextDelete + ' ' + nameFile + '?', function (result) {
-                    jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.delete&path=" + encodeURIComponent(Filemanager.data.path) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&list=' + encodeURIComponent(JSON.stringify(files)))).done(function (response) {
+                    QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.delete&path=" + encodeURIComponent(Filemanager.data.path) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&list=' + encodeURIComponent(JSON.stringify(files)))).done(function (response) {
                         Filemanager.events.trigger('reloadPaths', Filemanager);
                     });
                 });
@@ -397,7 +397,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 {},
                 function (ev) {
                     QuantumUtils.prompt(QuantumviewfilesLang.directoryName, '', function (nameDirectory) {
-                        jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.createDirectory&path=" + encodeURIComponent(Filemanager.data.path) + '&name=' + encodeURIComponent(nameDirectory)  + "&scope=" + encodeURIComponent(Filemanager.data.scope))).done(function (response) {
+                        QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.createDirectory&path=" + encodeURIComponent(Filemanager.data.path) + '&name=' + encodeURIComponent(nameDirectory)  + "&scope=" + encodeURIComponent(Filemanager.data.scope))).done(function (response) {
                             Filemanager.events.trigger('reloadPaths', Filemanager);
                         });
                     });
@@ -446,7 +446,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
 
                     QuantumUtils.confirm(alert, function (result) {
 
-                        jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.delete&path=" + encodeURIComponent(Filemanager.data.path) + '&list=' + encodeURIComponent(JSON.stringify(files)) + "&scope=" + encodeURIComponent(Filemanager.data.scope))).done(function (response) {
+                        QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.delete&path=" + encodeURIComponent(Filemanager.data.path) + '&list=' + encodeURIComponent(JSON.stringify(files)) + "&scope=" + encodeURIComponent(Filemanager.data.scope))).done(function (response) {
                             Filemanager.events.trigger('reloadPaths', Filemanager);
                         });
 
@@ -506,7 +506,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                         return;
                     }
 
-                    jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.paste" +
+                    QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.paste" +
                         '&pathFrom=' + encodeURIComponent(self.bufferFromPath) +
                         '&pathTo=' + encodeURIComponent(Filemanager.data.path) +
                         '&list=' + encodeURIComponent(JSON.stringify(self.buffer)) +
@@ -599,7 +599,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                     if(self.objectSelect.classList.contains('file-item'))
                     {
                         QuantumUtils.prompt(QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.fileName, 'ENT_QUOTES'), self.file.getAttribute('data-name'), function (result) {
-                            jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.renameFile&path=" + encodeURIComponent(Filemanager.data.path) + '&file=' + encodeURIComponent(self.file.getAttribute('data-file')) + '&name='+ encodeURIComponent(result) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
+                            QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.renameFile&path=" + encodeURIComponent(Filemanager.data.path) + '&file=' + encodeURIComponent(self.file.getAttribute('data-file')) + '&name='+ encodeURIComponent(result) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
                                 response = JSON.parse(response);
                                 if(response.status === undefined) {
                                     return;
@@ -614,7 +614,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                         let name = self.directory.querySelector('.directory-name').innerHTML;
 
                         QuantumUtils.prompt(QuantumviewfilesLang.directoryName, name , function (result) {
-                            jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.renameDirectory&path=" + encodeURIComponent(Filemanager.data.path) + '&oldName=' + encodeURIComponent(name) + '&name='+ encodeURIComponent(result) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
+                            QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.renameDirectory&path=" + encodeURIComponent(Filemanager.data.path) + '&oldName=' + encodeURIComponent(name) + '&name='+ encodeURIComponent(result) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
                                 response = JSON.parse(response);
                                 if(response.status === undefined) {
                                     return;
@@ -642,7 +642,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 {},
                 function (ev) {
 
-                    jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getParsePath&path=" + encodeURIComponent(Filemanager.data.path)
+                    QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getParsePath&path=" + encodeURIComponent(Filemanager.data.path)
                         + '&scope=' + encodeURIComponent(Filemanager.data.scope)
                         + '&host=on&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
 
@@ -668,7 +668,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 {},
                 function (ev) {
 
-                    jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getParsePath&path=" + encodeURIComponent(Filemanager.data.path)
+                    QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getParsePath&path=" + encodeURIComponent(Filemanager.data.path)
                         + '&scope=' + encodeURIComponent(Filemanager.data.scope)
                         + '&host=on&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
 
@@ -729,7 +729,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                                 }
                             }
 
-                            jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.createPreview" +
+                            QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.createPreview" +
                                 '&list=' + encodeURIComponent(JSON.stringify(objectsPush)) +
                                 '&path=' + encodeURIComponent(Filemanager.data.path) +
                                 "&scope=" + encodeURIComponent(Filemanager.data.scope) +
@@ -811,7 +811,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                             }
                         }
 
-                        jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.watermark&path=" + encodeURIComponent(Filemanager.data.path) + '&list=' + encodeURIComponent(JSON.stringify(files)) + "&scope=" + encodeURIComponent(Filemanager.data.scope))).done(function (response) {
+                        QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.watermark&path=" + encodeURIComponent(Filemanager.data.path) + '&list=' + encodeURIComponent(JSON.stringify(files)) + "&scope=" + encodeURIComponent(Filemanager.data.scope))).done(function (response) {
                             Filemanager.events.trigger('reloadPaths', Filemanager);
                         });
 
@@ -953,7 +953,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
         ViewfilesElement.querySelector('.view').innerHTML = '';
         this.preoloader();
 
-        jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getFiles&path=" + encodeURIComponent(path) + '&scope=' + encodeURIComponent(scope) + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
+        QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getFiles&path=" + encodeURIComponent(path) + '&scope=' + encodeURIComponent(scope) + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
             response = JSON.parse(response);
 
             if(response.error !== undefined) {
@@ -1390,7 +1390,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             }
 
 
-            jQuery.get(url).done(function (response) {
+            QuantumUtils.ajaxGet(url).done(function (response) {
 
                 self.metaFileLoad[url]--;
 
@@ -1471,7 +1471,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                         let previewOpenImg = previewOpen.querySelector('img');
                         previewOpenImg.addEventListener('click', function () {
 
-                            jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getParsePath&path=" + encodeURIComponent(Filemanager.data.path) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&host=on&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
+                            QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getParsePath&path=" + encodeURIComponent(Filemanager.data.path) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&host=on&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
                                 response = JSON.parse(response);
                                 if(response.path === undefined) {
                                     return;
@@ -1501,7 +1501,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                     if(metaPreviewNameCopy !== null) {
                         metaPreviewNameCopy.addEventListener('click', function () {
                             let self = this;
-                            jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getParsePath&path=" + encodeURIComponent(Filemanager.data.path)
+                            QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getParsePath&path=" + encodeURIComponent(Filemanager.data.path)
                                 + '&scope=' + encodeURIComponent(Filemanager.data.scope)
                                 + '&host=on&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (responsePath) {
 
@@ -1577,7 +1577,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
 
             self.metaLoadDirCurrent = Filemanager.data.scope + '/' +self.path;
 
-            jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getMetaFile&path=" + encodeURIComponent(self.path) + "&scope=" + encodeURIComponent(Filemanager.data.scope))).done(function (response) {
+            QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getMetaFile&path=" + encodeURIComponent(self.path) + "&scope=" + encodeURIComponent(Filemanager.data.scope))).done(function (response) {
 
                 response = JSON.parse(response);
                 if(response.global !== undefined || response.find !== undefined) {
@@ -1780,7 +1780,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
         let fm = Filemanager;
         let scope = fm.data.scope;
 
-        jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumtreecatalogs.getDirectories&path=root&scope=" + encodeURIComponent(scope) + '&root=root'))
+        QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumtreecatalogs.getDirectories&path=root&scope=" + encodeURIComponent(scope) + '&root=root'))
             .done(function (response) {
                 response = JSON.parse(response);
                 self.breadcrumbsLists = response.directories[0];

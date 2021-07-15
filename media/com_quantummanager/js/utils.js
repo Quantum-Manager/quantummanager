@@ -68,6 +68,80 @@ window.QuantumUtils = {
         xhr.send(formData);
     },
 
+
+    ajaxGet: function (url, data) {
+        let self = this,
+        request = new XMLHttpRequest();
+
+        if(data !== undefined && data !== null)
+        {
+            url += '&' + Object.keys(data).map(function (key) {
+                return key + '=' + data[key];
+            }).join('&');
+        }
+
+        request.open('GET', url);
+        return self.ajaxRequest(request);
+    },
+
+
+    ajaxPost: function (url, form) {
+        let self = this,
+            request = new XMLHttpRequest(),
+            formData = new FormData(form);
+
+        request.open('POST', url);
+        self.ajaxRequest(request);
+        return request.send(formData);
+    },
+
+
+    ajaxRequest: function (request, send = true) {
+        let ajax = new function () {
+            return this;
+        };
+        ajax.request = request;
+        ajax.request.onreadystatechange = function () {
+            if (this.readyState === 4) {
+                if(this.status === 200)
+                {
+                    if (ajax.done !== undefined) {
+                        ajax.done(this.responseText, this);
+                    }
+                }
+                else
+                {
+                    if (ajax.fail !== undefined) {
+                        ajax.fail(this);
+                    }
+                }
+
+            }
+        };
+
+        if (send) {
+            ajax.request.send();
+        }
+
+        let ajax_proxy = new Proxy(ajax, {
+            get: function(target_original, prop, receiver) {
+                let F = function(...args){}
+                return new Proxy(F, {
+                    apply: function(target, thisArg, argumentsList) {
+                        target_original[prop] = argumentsList[0];
+                        return ajax_proxy;
+                    }});
+                },
+            set(target, prop, val) {
+                target[prop] = val;
+                return true;
+            }
+        });
+
+        return ajax_proxy;
+    },
+
+
     /**
      *
      * @param url
@@ -454,38 +528,39 @@ window.QuantumUtils = {
      * @param element
      */
     replaceImgToSvg: function(element) {
-        jQuery(element + ' img.svg').each(function(){
-            let $img = jQuery(this);
-            let imgID = $img.attr('id');
-            let imgClass = $img.attr('class');
-            let imgURL = $img.attr('src');
+        let elements = document.querySelector(element).querySelectorAll('img.svg');
+        for (let i=0;i<elements.length;i++) {
 
-            jQuery.get(imgURL, function(data) {
-                // Get the SVG tag, ignore the rest
-                var $svg = jQuery(data).find('svg');
+            let imgID = elements[i].getAttribute('id'),
+                imgClass = elements[i].getAttribute('class'),
+                imgURL = elements[i].getAttribute('src');
 
-                // Add replaced image's ID to the new SVG
+            QuantumUtils.ajaxGet(imgURL).done(function(data) {
+                let svg = document.createElement('div');
+                svg.innerHTML = data.trim();
+                svg = svg.querySelector('svg')
+
                 if(typeof imgID !== 'undefined') {
-                    $svg = $svg.attr('id', imgID);
+                    svg.setAttribute('id', imgID);
                 }
-                // Add replaced image's classes to the new SVG
+
                 if(typeof imgClass !== 'undefined') {
-                    $svg = $svg.attr('class', imgClass+' replaced-svg');
+                    svg.setAttribute('class', imgClass+' replaced-svg');
                 }
 
                 // Remove any invalid XML tags as per http://validator.w3.org
-                $svg = $svg.removeAttr('xmlns:a');
+                svg.removeAttribute('xmlns:a');
+                elements[i].replaceWith(svg);
 
-                // Replace image with new SVG
-                $img.replaceWith($svg);
+            });
 
-            }, 'xml');
 
-        });
+        }
+
     },
 
     compilePath: function(scope, path, callbackSuccess, callbackFail) {
-        jQuery.get(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getParsePath&path=" + encodeURIComponent(path) + '&scope=' + scope + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
+        QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getParsePath&path=" + encodeURIComponent(path) + '&scope=' + scope + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
             response = JSON.parse(response);
 
             if(response.path !== undefined) {
