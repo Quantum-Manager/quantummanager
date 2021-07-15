@@ -19,6 +19,32 @@
     height: auto;
     overflow: visible;
 }
+body.com_quantummanager .subhead-collapse,
+body.com_quantummanager .subhead {
+    margin-bottom: 0 !important;
+}
+body.com_quantummanager #content,
+body.com_quantummanager #content > *,
+body.com_quantummanager #content > * > *
+body.com_quantummanager #content > * > * > *
+{
+    height: calc(100% - 68px);
+    padding: 0;
+}
+body.com_quantummanager .container-main {
+    padding-bottom: 0;
+}
+body.com_quantummanager > .container-main,
+body.com_quantummanager .content > * > * > * {
+    position: relative;
+}
+body.com_quantummanager .content > * > * > * {
+    height: calc(100% + 68px);
+}
+body.com_quantummanager > .container-main {
+    top: 1px !important;
+    height: calc(100% - 133px);
+}
 .quantummanager-full-wrap.quantummanager {
     position: absolute;
     width: 100%;
@@ -33,9 +59,9 @@
     position: absolute;
     left: 0;
     right: 0;
-    top: 135px;
+    top: 0;
     bottom: 0;
-    height: calc(100% - 163px);
+    height: 100%;
 }
 .quantummanager.highlight:before {
     content: attr(data-drag-drop-title);

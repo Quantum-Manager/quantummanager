@@ -352,6 +352,10 @@
     border-spacing: 0;
     width: 100%;
 }
+.quantumviewfiles-module .meta-file .meta-table {
+    font-size: 13px;
+    line-height: 17px;
+}
 .quantumviewfiles-module .meta-file .meta-table > div {
     display: flex;
     align-items: center;
@@ -455,6 +459,7 @@
     position: absolute;
     top: 0;
     bottom: 0;
+    background: #fff;
     overflow-x: hidden;
     overflow-y: auto;
     webkit-overflow-scrolling: touch;
@@ -798,6 +803,8 @@ svg.svg-icon text {
     bottom: -40px;
     width: 100%;
     font-size: 13px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -moz-user-select: none;

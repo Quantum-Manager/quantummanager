@@ -124,7 +124,6 @@ class JFormFieldQuantumCombine extends JFormField
 			if(!empty($this->fields))
 			{
 
-                HTMLHelper::_('jquery.framework');
 
                 if(file_exists(JPATH_ROOT . '/media/com_quantummanager/css/' . $this->layout . '.css'))
 				{
