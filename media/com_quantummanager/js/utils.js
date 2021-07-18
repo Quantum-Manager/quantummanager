@@ -14,16 +14,15 @@ window.QuantumUtils = {
      * @param root
      * @returns {string}
      */
-    getFullUrl: function(url, root) {
+    getFullUrl: function (url, root) {
         let prefix = '';
 
-        if(root === null || root === undefined) {
-            if(QuantumSettings.urlBase !== undefined) {
+        if (root === null || root === undefined) {
+            if (QuantumSettings.urlBase !== undefined) {
                 prefix = QuantumSettings.urlBase;
             }
-        }
-        else {
-            if(QuantumSettings.urlFull !== undefined) {
+        } else {
+            if (QuantumSettings.urlFull !== undefined) {
                 prefix = QuantumSettings.urlFull;
             }
         }
@@ -44,23 +43,22 @@ window.QuantumUtils = {
         let xhr = new XMLHttpRequest();
         let formData = new FormData();
 
-        for(let current in data) {
+        for (let current in data) {
             formData.append(current, data[current]);
         }
 
-        for(let current in headers) {
+        for (let current in headers) {
             xhr.setRequestHeader(current, headers[current]);
         }
 
         xhr.open(typeRequest, url, true);
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                if(callbackSuccess !== null) {
+                if (callbackSuccess !== null) {
                     callbackSuccess(xhr.response);
                 }
-            }
-            else if (xhr.readyState == 4 && xhr.status != 200) {
-                if(callbackFail !== null) {
+            } else if (xhr.readyState == 4 && xhr.status != 200) {
+                if (callbackFail !== null) {
                     callbackFail(xhr.response);
                 }
             }
@@ -71,10 +69,9 @@ window.QuantumUtils = {
 
     ajaxGet: function (url, data) {
         let self = this,
-        request = new XMLHttpRequest();
+            request = new XMLHttpRequest();
 
-        if(data !== undefined && data !== null)
-        {
+        if (data !== undefined && data !== null) {
             url += '&' + Object.keys(data).map(function (key) {
                 return key + '=' + data[key];
             }).join('&');
@@ -85,14 +82,23 @@ window.QuantumUtils = {
     },
 
 
-    ajaxPost: function (url, form) {
+    ajaxPost: function (url, data) {
         let self = this,
             request = new XMLHttpRequest(),
-            formData = new FormData(form);
+            formData = new FormData();
+
+        if (data !== undefined && data !== null) {
+            for (let key in data) {
+                formData.append(key, data[key]);
+            }
+        }
+
 
         request.open('POST', url);
-        self.ajaxRequest(request);
-        return request.send(formData);
+        let ajax = self.ajaxRequest(request, false);
+        request.send(formData);
+
+        return ajax
     },
 
 
@@ -103,14 +109,11 @@ window.QuantumUtils = {
         ajax.request = request;
         ajax.request.onreadystatechange = function () {
             if (this.readyState === 4) {
-                if(this.status === 200)
-                {
+                if (this.status === 200) {
                     if (ajax.done !== undefined) {
                         ajax.done(this.responseText, this);
                     }
-                }
-                else
-                {
+                } else {
                     if (ajax.fail !== undefined) {
                         ajax.fail(this);
                     }
@@ -124,14 +127,16 @@ window.QuantumUtils = {
         }
 
         let ajax_proxy = new Proxy(ajax, {
-            get: function(target_original, prop, receiver) {
-                let F = function(...args){}
+            get: function (target_original, prop, receiver) {
+                let F = function (...args) {
+                }
                 return new Proxy(F, {
-                    apply: function(target, thisArg, argumentsList) {
+                    apply: function (target, thisArg, argumentsList) {
                         target_original[prop] = argumentsList[0];
                         return ajax_proxy;
-                    }});
-                },
+                    }
+                });
+            },
             set(target, prop, val) {
                 target[prop] = val;
                 return true;
@@ -156,14 +161,13 @@ window.QuantumUtils = {
         let formData = new FormData();
         formData.append("file", blob);
         xhr.open('POST', url + '?' + this.serialize(dataGET), true);
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                if(callbackSuccess !== null) {
+                if (callbackSuccess !== null) {
                     callbackSuccess(xhr.response);
                 }
-            }
-            else if (xhr.readyState == 4 && xhr.status !== 200) {
-                if(callbackFail !== null) {
+            } else if (xhr.readyState == 4 && xhr.status !== 200) {
+                if (callbackFail !== null) {
                     callbackFail(xhr.response);
                 }
             }
@@ -176,7 +180,7 @@ window.QuantumUtils = {
      * @param obj
      * @returns {string}
      */
-    serialize: function(obj) {
+    serialize: function (obj) {
         let str = [];
         for (let p in obj) {
             if (obj.hasOwnProperty(p)) {
@@ -191,7 +195,7 @@ window.QuantumUtils = {
      * @param dataURI
      * @returns {Blob}
      */
-    dataURItoBlob: function(dataURI) {
+    dataURItoBlob: function (dataURI) {
         let byteString;
         if (dataURI.split(',')[0].indexOf('base64') >= 0) {
             byteString = atob(dataURI.split(',')[1]);
@@ -205,7 +209,7 @@ window.QuantumUtils = {
             ia[i] = byteString.charCodeAt(i);
         }
 
-        return new Blob([ia], {type:mimeString});
+        return new Blob([ia], {type: mimeString});
     },
 
     /**
@@ -241,7 +245,7 @@ window.QuantumUtils = {
      * @param bytes
      * @returns {string}
      */
-    bytesToSize: function(bytes) {
+    bytesToSize: function (bytes) {
         bytes = parseInt(bytes);
         let sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
 
@@ -258,7 +262,7 @@ window.QuantumUtils = {
      * @param unix_timestamp
      * @returns {string}
      */
-    fromUnixTimeToDate: function(unix_timestamp) {
+    fromUnixTimeToDate: function (unix_timestamp) {
         unix_timestamp = parseInt(unix_timestamp);
         let date = new Date(unix_timestamp * 1000);
         let hours = date.getHours();
@@ -268,27 +272,27 @@ window.QuantumUtils = {
         let month = date.getMonth() + 1;
         let year = date.getFullYear();
 
-        if(hours < 10) {
+        if (hours < 10) {
             hours = "0" + hours;
         }
 
-        if(minutes < 10) {
+        if (minutes < 10) {
             minutes = "0" + minutes;
         }
 
-        if(day < 10) {
+        if (day < 10) {
             day = "0" + day;
         }
 
-        if(month < 10) {
+        if (month < 10) {
             month = "0" + month;
         }
 
-        if(year < 10) {
+        if (year < 10) {
             year = "0" + year;
         }
 
-        let formattedTime = day + "-" +  month + "-" +  year + ' ' + hours + ':' + minutes;
+        let formattedTime = day + "-" + month + "-" + year + ' ' + hours + ':' + minutes;
         return formattedTime;
     },
 
@@ -299,7 +303,7 @@ window.QuantumUtils = {
      */
     toHHMMSS: function (time) {
         let sec_num = parseInt(time, 10);
-        let hours   = Math.floor(sec_num / 3600);
+        let hours = Math.floor(sec_num / 3600);
         let minutes = Math.floor((sec_num - (hours * 3600)) / 60);
         let seconds = sec_num - (hours * 3600) - (minutes * 60);
 
@@ -322,7 +326,7 @@ window.QuantumUtils = {
      *
      * @param text
      */
-    fallbackCopyTextToClipboard: function(text) {
+    fallbackCopyTextToClipboard: function (text) {
         let textArea = document.createElement("textarea");
         textArea.value = text;
         document.body.appendChild(textArea);
@@ -345,12 +349,12 @@ window.QuantumUtils = {
      * @param m
      * @param buttons
      */
-    alert: function(m, buttons) {
+    alert: function (m, buttons) {
         let alert = JSAlert.alert(m);
 
-        if(typeof buttons === 'object') {
-            for(let i=0;i<buttons.length;i++) {
-                alert.addButton(buttons[i].name).then(function() {
+        if (typeof buttons === 'object') {
+            for (let i = 0; i < buttons.length; i++) {
+                alert.addButton(buttons[i].name).then(function () {
                     buttons[i].callback();
                 });
             }
@@ -364,8 +368,8 @@ window.QuantumUtils = {
      * @param q
      * @param callback
      */
-    confirm: function(q, callback) {
-        JSAlert.confirm(q).then(function(result) {
+    confirm: function (q, callback) {
+        JSAlert.confirm(q).then(function (result) {
             if (!result) {
                 return;
             }
@@ -380,7 +384,7 @@ window.QuantumUtils = {
      * @param callback
      */
     prompt: function (q, defaultValue, callback) {
-        JSAlert.prompt(q, defaultValue).then(function(result) {
+        JSAlert.prompt(q, defaultValue).then(function (result) {
             if (!result) {
                 return;
             }
@@ -408,11 +412,11 @@ window.QuantumUtils = {
         );
     },
 
-    windowSize: function() {
+    windowSize: function () {
         let myWidth = 0,
             myHeight = 0,
-            size = { width: 0, height: 0 };
-        if (typeof(window.innerWidth) == 'number') {
+            size = {width: 0, height: 0};
+        if (typeof (window.innerWidth) == 'number') {
             myWidth = window.innerWidth;
             myHeight = window.innerHeight;
         } else if (document.documentElement && (document.documentElement.clientWidth || document.documentElement.clientHeight)) {
@@ -432,50 +436,51 @@ window.QuantumUtils = {
      *
      * @param options
      */
-    modal: function(options) {
+    modal: function (options) {
 
-        if(options.fm === undefined) {
+        if (options.fm === undefined) {
             return false;
         }
 
-        if(options.classForModal === undefined) {
+        if (options.classForModal === undefined) {
             options.classForModal = '';
         }
 
-        if(options.header === undefined) {
+        if (options.header === undefined) {
             options.header = '';
         }
 
-        if(options.body === undefined) {
+        if (options.body === undefined) {
             options.body = '';
         }
 
-        if(options.footer === undefined) {
+        if (options.footer === undefined) {
             options.footer = '';
         }
 
-        if(options.close === undefined) {
+        if (options.close === undefined) {
             options.close = true;
         }
 
         let modal = this.createElement('div', {'class': 'quatummanagermodal-wrap ' + options.classForModal})
             .addChild('div', {'class': 'quatummanagermodal-container'});
 
-        if(options.close) {
+        if (options.close) {
             modal = modal.add('button', {
                 'class': 'btn quatummanagermodal-close',
                 'events': [
                     ['click', function (ev) {
                         this.closest('.quatummanagermodal-wrap').remove();
                     }]
-                ]}, QuantumLang.close);
+                ]
+            }, QuantumLang.close);
         }
 
         modal = modal.add('div', {'class': 'quatummanagermodal-header'}, options.header)
-                .addChild('div', {'class': 'quatummanagermodal-body-wrap'})
-                    .add('div', {'class': 'quatummanagermodal-body'}, options.body)
-                    .getParent()
-                .getParent();
+            .addChild('div', {'class': 'quatummanagermodal-body-wrap'})
+            .add('div', {'class': 'quatummanagermodal-body'}, options.body)
+            .getParent()
+            .getParent();
 
         options.fm.element.append(modal.build());
 
@@ -507,10 +512,10 @@ window.QuantumUtils = {
      * @param el
      * @returns {{width: number, height: number}}
      */
-    getPopUpSize: function(el) {
+    getPopUpSize: function (el) {
         let size = this.windowSize();
-        size.width = (size.width/100*90);
-        size.height = (size.height/100*90);
+        size.width = (size.width / 100 * 90);
+        size.height = (size.height / 100 * 90);
         return size;
     },
 
@@ -518,7 +523,7 @@ window.QuantumUtils = {
      *
      * @param url
      */
-    openInNewTab: function(url) {
+    openInNewTab: function (url) {
         let win = window.open(url, '_blank');
         win.focus();
     },
@@ -527,25 +532,25 @@ window.QuantumUtils = {
      *
      * @param element
      */
-    replaceImgToSvg: function(element) {
+    replaceImgToSvg: function (element) {
         let elements = document.querySelector(element).querySelectorAll('img.svg');
-        for (let i=0;i<elements.length;i++) {
+        for (let i = 0; i < elements.length; i++) {
 
             let imgID = elements[i].getAttribute('id'),
                 imgClass = elements[i].getAttribute('class'),
                 imgURL = elements[i].getAttribute('src');
 
-            QuantumUtils.ajaxGet(imgURL).done(function(data) {
+            QuantumUtils.ajaxGet(imgURL).done(function (data) {
                 let svg = document.createElement('div');
                 svg.innerHTML = data.trim();
                 svg = svg.querySelector('svg')
 
-                if(typeof imgID !== 'undefined') {
+                if (typeof imgID !== 'undefined') {
                     svg.setAttribute('id', imgID);
                 }
 
-                if(typeof imgClass !== 'undefined') {
-                    svg.setAttribute('class', imgClass+' replaced-svg');
+                if (typeof imgClass !== 'undefined') {
+                    svg.setAttribute('class', imgClass + ' replaced-svg');
                 }
 
                 // Remove any invalid XML tags as per http://validator.w3.org
@@ -559,16 +564,16 @@ window.QuantumUtils = {
 
     },
 
-    compilePath: function(scope, path, callbackSuccess, callbackFail) {
+    compilePath: function (scope, path, callbackSuccess, callbackFail) {
         QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getParsePath&path=" + encodeURIComponent(path) + '&scope=' + scope + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
             response = JSON.parse(response);
 
-            if(response.path !== undefined) {
-                if(typeof callbackSuccess === 'function') {
+            if (response.path !== undefined) {
+                if (typeof callbackSuccess === 'function') {
                     callbackSuccess(response, scope, path);
                 }
             } else {
-                if(typeof callbackFail === 'function') {
+                if (typeof callbackFail === 'function') {
                     callbackFail(response, scope, path);
                 }
             }
@@ -580,9 +585,9 @@ window.QuantumUtils = {
      *
      * @param options
      */
-    notify: function(options) {
+    notify: function (options) {
 
-        if(window.Toastify === null || window.Toastify === undefined) {
+        if (window.Toastify === null || window.Toastify === undefined) {
             return;
         }
 
@@ -609,14 +614,15 @@ window.QuantumUtils = {
             classes: "",
             // Prevents dismissing of toast on hover
             stopOnFocus: true,
-            callback: function () {},
+            callback: function () {
+            },
         };
 
-        if(options.fm !== undefined) {
+        if (options.fm !== undefined) {
             optionsMerge.selector = '.quantummanager[data-index="' + options.fm.id + '"]';
         }
 
-        for(let k in options) {
+        for (let k in options) {
             optionsMerge[k] = options[k];
         }
 
@@ -633,14 +639,14 @@ window.QuantumUtils = {
      * @param innerHtml
      * @returns {{add: add, build: build, el: *, child: []}}
      */
-    createElement: function(tag, attr, innerHtml) {
+    createElement: function (tag, attr, innerHtml) {
         let self = this;
         let element = document.createElement(tag);
 
-        for(keyAttr in attr) {
-            if(keyAttr === 'events') {
+        for (keyAttr in attr) {
+            if (keyAttr === 'events') {
                 let eventsLength = attr[keyAttr].length;
-                for(let i=0;i<eventsLength;i++) {
+                for (let i = 0; i < eventsLength; i++) {
                     element.addEventListener(attr[keyAttr][i][0], attr[keyAttr][i][1]);
                 }
                 continue;
@@ -649,17 +655,17 @@ window.QuantumUtils = {
             element.setAttribute(keyAttr, attr[keyAttr]);
         }
 
-        if(innerHtml !== undefined && innerHtml !== null) {
+        if (innerHtml !== undefined && innerHtml !== null) {
 
-            if(typeof innerHtml === 'function') {
+            if (typeof innerHtml === 'function') {
                 element.innerHTML = innerHtml();
             }
 
-            if(typeof innerHtml === 'string') {
+            if (typeof innerHtml === 'string') {
                 element.innerHTML = innerHtml;
             }
 
-            if(typeof innerHtml === 'object') {
+            if (typeof innerHtml === 'object') {
                 element.append(innerHtml);
             }
 
@@ -669,10 +675,10 @@ window.QuantumUtils = {
             el: element,
             parent: undefined,
             child: [],
-            getParent: function() {
+            getParent: function () {
                 return this.parent;
             },
-            setParent: function(parent) {
+            setParent: function (parent) {
                 this.parent = parent;
                 return this;
             },
@@ -682,14 +688,14 @@ window.QuantumUtils = {
             },
             addChild: function (tag, attr, innerHtml) {
                 this.child.push(self.createElement(tag, attr, innerHtml).setParent(this));
-                return this.child[ this.child.length - 1];
+                return this.child[this.child.length - 1];
             },
             build: function () {
                 var buildElement = this.el;
 
-                if(this.child.length > 0) {
+                if (this.child.length > 0) {
 
-                    for(var i=0;i<this.child.length;i++) {
+                    for (var i = 0; i < this.child.length; i++) {
                         buildElement.appendChild(this.child[i].build());
                     }
 
@@ -732,9 +738,9 @@ window.QuantumUtils = {
      *
      * @param text
      */
-    copyInBuffer: function(text) {
+    copyInBuffer: function (text) {
 
-        if(window.ClipboardJS === null || window.ClipboardJS === undefined) {
+        if (window.ClipboardJS === null || window.ClipboardJS === undefined) {
             return;
         }
 
@@ -749,9 +755,9 @@ window.QuantumUtils = {
      * @param event_name
      * @param el
      */
-    triggerElementEvent: function(event_name, el) {
+    triggerElementEvent: function (event_name, el) {
         let event;
-        if(document.createEvent) {
+        if (document.createEvent) {
             event = document.createEvent("HTMLEvents");
             event.initEvent(event_name, true, true);
             event.eventName = event_name;
@@ -772,8 +778,8 @@ window.QuantumUtils = {
      */
     htmlspecialcharsDecode: function (string, quoteStyle) {
         let optTemp = 0,
-        i = 0,
-        noquotes = false;
+            i = 0,
+            noquotes = false;
 
         if (typeof quoteStyle === 'undefined') {
             quoteStyle = 2
