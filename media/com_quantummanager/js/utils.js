@@ -96,7 +96,7 @@ window.QuantumUtils = {
 
         request.open('POST', url);
         let ajax = self.ajaxRequest(request, false);
-        ajax.request.send(formData);
+        request.send(formData);
 
         return ajax
     },
