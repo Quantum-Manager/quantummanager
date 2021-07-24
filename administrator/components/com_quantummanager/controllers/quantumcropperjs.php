@@ -32,6 +32,7 @@ class QuantummanagerControllerQuantumcropperjs extends AdminController
 		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
 		echo QuantummanagerFileSystemLocal::getImageForCrop($data['path'],  $data['scope'], $data['file']);
 
+		QuantummanagerHelper::setHeadersNoCache();
 		$app->close();
 	}
 
@@ -44,6 +45,7 @@ class QuantummanagerControllerQuantumcropperjs extends AdminController
 		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
 		echo QuantummanagerFileSystemLocal::converterSave();
 
+		QuantummanagerHelper::setHeadersNoCache();
 		$app->close();
 	}
 

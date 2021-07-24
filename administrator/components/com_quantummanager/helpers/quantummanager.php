@@ -1088,4 +1088,11 @@ class QuantummanagerHelper
 	}
 
 
+	public static function setHeadersNoCache()
+	{
+		$app = Factory::getApplication();
+		$app->setHeader('Cache-Control', 'no-store');
+		$app->sendHeaders();
+	}
+
 }

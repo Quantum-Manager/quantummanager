@@ -75,6 +75,7 @@ class QuantummanagerControllerquantumpixabay extends AdminController
 		}
 
 
+		QuantummanagerHelper::setHeadersNoCache();
 		$app->close();
 	}
 
@@ -98,6 +99,7 @@ class QuantummanagerControllerquantumpixabay extends AdminController
 		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
 		echo QuantummanagerFileSystemLocal::downloadFilePixabay($path, $scope, $file, $id);
 
+		QuantummanagerHelper::setHeadersNoCache();
 		$app->close();
 
 	}

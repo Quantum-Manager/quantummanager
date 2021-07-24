@@ -72,6 +72,7 @@ class QuantummanagerControllerquantumpexels extends AdminController
 		}
 
 
+		QuantummanagerHelper::setHeadersNoCache();
 		$app->close();
 	}
 
@@ -95,6 +96,7 @@ class QuantummanagerControllerquantumpexels extends AdminController
 		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
 		echo QuantummanagerFileSystemLocal::downloadFilePexels($path, $scope, $file, $id);
 
+		QuantummanagerHelper::setHeadersNoCache();
 		$app->close();
 
 	}
