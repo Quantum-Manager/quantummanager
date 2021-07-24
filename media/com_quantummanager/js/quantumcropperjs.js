@@ -396,8 +396,17 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
 
     };
 
-    this.close = function () {
-        Filemanager.events.trigger('reloadPaths', Filemanager);
+    this.close = function (trigger) {
+
+        if(trigger === null || trigger === undefined) {
+            trigger = true;
+        }
+
+        if(trigger)
+        {
+            Filemanager.events.trigger('reloadPaths', Filemanager);
+        }
+
         self.cropperjs.destroy();
         QuantumCropperjsElement.classList.remove('active');
         self.areaSave.style.display = 'none';
@@ -564,10 +573,12 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
 
     Filemanager.events.add(this, 'reloadPaths', function (fm, el, target) {
         fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.add('btn-hide');
+        self.close(false);
     });
 
     Filemanager.events.add(this, 'updatePath', function (fm, el, target) {
         fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.add('btn-hide');
+        self.close(false);
     });
 
     Filemanager.events.add(this, 'buttonViewfilesDelete', function (fm, el, target) {
