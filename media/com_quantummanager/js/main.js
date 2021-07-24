@@ -25,7 +25,6 @@ window.QuantumManagerInit = function(container) {
     }
 
     let quantummanagerAll = container.querySelectorAll('.quantummanager');
-    let id = 0;
     let scopesEnabled = QuantumSettings.scopeEnabled.split(',');
     let quantummanagerForBuild = [];
 
