@@ -10,7 +10,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
 
     let self = this;
     this.options = options;
-    this.cropperjs = '';
+    this.cropperjs;
     this.buttons = '';
     this.source = '';
     this.pathFile = '';
@@ -407,7 +407,11 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             Filemanager.events.trigger('reloadPaths', Filemanager);
         }
 
-        self.cropperjs.destroy();
+        if(self.cropperjs !== undefined && self.cropperjs !== null)
+        {
+            self.cropperjs.destroy();
+        }
+
         QuantumCropperjsElement.classList.remove('active');
         self.areaSave.style.display = 'none';
     };
