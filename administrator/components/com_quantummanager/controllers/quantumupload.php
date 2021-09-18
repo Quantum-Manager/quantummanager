@@ -35,6 +35,7 @@ class QuantummanagerControllerQuantumupload extends AdminController
 		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
 		echo QuantummanagerFileSystemLocal::upload();
 
+		QuantummanagerHelper::setHeadersNoCache();
 		$app->close();
 	}
 

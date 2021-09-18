@@ -68,6 +68,7 @@ class QuantummanagerControllerquantumunsplash extends AdminController
 		}
 
 
+		QuantummanagerHelper::setHeadersNoCache();
 		$app->close();
 	}
 
@@ -91,6 +92,7 @@ class QuantummanagerControllerquantumunsplash extends AdminController
 		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
 		echo QuantummanagerFileSystemLocal::downloadFileUnsplash($path, $scope, $file, $id);
 
+		QuantummanagerHelper::setHeadersNoCache();
 		$app->close();
 
 	}
@@ -115,6 +117,8 @@ class QuantummanagerControllerquantumunsplash extends AdminController
 		$uri->setQuery($query);
 		$request = $curlTransport->request('GET', $uri);
 		$photo = json_decode($request->body, JSON_OBJECT_AS_ARRAY);
+
+		QuantummanagerHelper::setHeadersNoCache();
 		$app->close();
 	}
 
