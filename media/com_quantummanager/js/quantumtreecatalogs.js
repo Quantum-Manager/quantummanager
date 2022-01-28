@@ -59,7 +59,7 @@ window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, o
             reload = false;
         }
 
-        QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumtreecatalogs.getDirectories&path=" + encodeURIComponent(path) + '&root=' + encodeURIComponent(self.options.directory))).done(function (response) {
+        QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("index.php?option=com_quantummanager&task=quantumtreecatalogs.getDirectories&path=" + encodeURIComponent(path) + '&root=' + encodeURIComponent(self.options.directory))).done(function (response) {
 
             response = JSON.parse(response);
             if(response.directories === undefined) {
@@ -265,7 +265,7 @@ window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, o
                                 let pathDelete = Filemanager.data.path.split('/');
                                 pathDelete.pop();
                                 files.push(selfThis.closest('li').querySelector('.tree-path').innerHTML);
-                                QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.delete&path=" + encodeURIComponent(pathDelete.join('/')) + '&list=' + encodeURIComponent(JSON.stringify(files)) + '&scope=' + encodeURIComponent(Filemanager.data.scope))).done(function (response) {
+                                QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("index.php?option=com_quantummanager&task=quantumviewfiles.delete&path=" + encodeURIComponent(pathDelete.join('/')) + '&list=' + encodeURIComponent(JSON.stringify(files)) + '&scope=' + encodeURIComponent(Filemanager.data.scope))).done(function (response) {
                                     Filemanager.data.path = pathDelete.join('/');
 
                                     if(localStorage !== undefined) {
@@ -286,7 +286,7 @@ window.Quantumtreecatalogs = function(Filemanager, QuantumTreeCatalogsElement, o
                             pathEdit = pathEdit.join('/');
 
                             QuantumUtils.prompt(QuantumtreecatalogsLang.directoryName, name , function (result) {
-                                QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.renameDirectory&path=" + encodeURIComponent(pathEdit) + '&oldName=' + encodeURIComponent(name) + '&name='+ encodeURIComponent(result) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
+                                QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("index.php?option=com_quantummanager&task=quantumviewfiles.renameDirectory&path=" + encodeURIComponent(pathEdit) + '&oldName=' + encodeURIComponent(name) + '&name='+ encodeURIComponent(result) + '&scope=' + encodeURIComponent(Filemanager.data.scope) + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
                                     response = JSON.parse(response);
                                     if(response.status === undefined) {
                                         return;

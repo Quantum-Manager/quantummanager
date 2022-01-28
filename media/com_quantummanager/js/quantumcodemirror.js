@@ -15,7 +15,7 @@ window.Quantumcodemirror = function(Filemanager, QuantumcodemirrorElement, optio
     this.init = function () {
         let self = this;
 
-        Filemanager.Quantumtoolbar.buttonAdd('codemirrorEdit', 'center', 'file-actions', 'btn-edit btn-hide hidden-label', QuantumviewfilesLang.buttonEdit, 'quantummanager-icon-edit', {}, function (ev) {
+        Filemanager.Quantumtoolbar.buttonAdd('codemirrorEdit', 'center', 'file-actions', 'qm-btn-edit qm-btn-hide hidden-label', QuantumviewfilesLang.buttonEdit, 'quantummanager-icon-edit', {}, function (ev) {
 
             QuantumcodemirrorElement.classList.add('active');
             let image = document.createElement('img');
@@ -43,7 +43,7 @@ window.Quantumcodemirror = function(Filemanager, QuantumcodemirrorElement, optio
         el.nameFile = nameFile;
 
         if(!tmpCheck.checked) {
-            fm.Quantumtoolbar.buttonsList['codemirrorEdit'].classList.add('btn-hide');
+            fm.Quantumtoolbar.buttonsList['codemirrorEdit'].classList.add('qm-btn-hide');
             return;
         }
 
@@ -60,7 +60,7 @@ window.Quantumcodemirror = function(Filemanager, QuantumcodemirrorElement, optio
             return;
         }
 
-        fm.Quantumtoolbar.buttonsList['codemirrorEdit'].classList.remove('btn-hide');
+        fm.Quantumtoolbar.buttonsList['codemirrorEdit'].classList.remove('qm-btn-hide');
     });
 
 

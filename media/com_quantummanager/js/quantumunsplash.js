@@ -33,7 +33,7 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
             'photostock',
             'center',
             'file-other',
-            'btn-more hidden-label',
+            'qm-btn-more hidden-label',
             QuantumunsplashLang.photostock,
             'quantummanager-icon-photostock',
             {},
@@ -43,7 +43,7 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
             'unsplashSearch',
             'right',
             'file-other',
-            'btn-unsplash-search hidden-label',
+            'qm-btn-unsplash-search hidden-label',
             QuantumunsplashLang.button,
             'quantummanager-icon-unsplash-short',
             {},
@@ -145,7 +145,7 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
         loader.setAttribute('style', 'display:block;width: 90px;margin:50px auto auto auto;');
         self.searchGrid.appendChild(loader);
 
-        QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumunsplash.search&q=" + encodeURIComponent(str) + '&page=' + encodeURIComponent(page))).done(function (response) {
+        QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("index.php?option=com_quantummanager&task=quantumunsplash.search&q=" + encodeURIComponent(str) + '&page=' + encodeURIComponent(page))).done(function (response) {
             response = JSON.parse(response);
             self.currentPage = parseInt(page);
             self.totalPage = parseInt(response.totalPage);
@@ -231,9 +231,9 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
                     let element = this;
                     self.areaSave.style.display = 'block';
 
-                    QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumunsplash.downloadTrigger&id=" + encodeURIComponent(element.getAttribute('data-id'))));
+                    QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("index.php?option=com_quantummanager&task=quantumunsplash.downloadTrigger&id=" + encodeURIComponent(element.getAttribute('data-id'))));
 
-                    QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumunsplash.download&path=" + encodeURIComponent(Filemanager.data.path) + "&scope=" + encodeURIComponent(Filemanager.data.scope)
+                    QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("index.php?option=com_quantummanager&task=quantumunsplash.download&path=" + encodeURIComponent(Filemanager.data.path) + "&scope=" + encodeURIComponent(Filemanager.data.scope)
                         + '&file=' + encodeURIComponent(element.getAttribute('data-url'))
                         + '&id=' + encodeURIComponent(element.getAttribute('data-id'))
                     )).done(function (response) {

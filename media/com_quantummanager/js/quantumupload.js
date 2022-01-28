@@ -160,7 +160,7 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
 
             let self = this;
             let fm = Filemanager;
-            let url = QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumupload.upload&path=" + encodeURIComponent(Filemanager.data.path) + "&scope=" + encodeURIComponent(Filemanager.data.scope));
+            let url = QuantumUtils.getFullUrl("index.php?option=com_quantummanager&task=quantumupload.upload&path=" + encodeURIComponent(Filemanager.data.path) + "&scope=" + encodeURIComponent(Filemanager.data.scope));
             let xhr = new XMLHttpRequest();
             let formData = new FormData();
             xhr.open('POST', url, true);

@@ -661,6 +661,21 @@ class QuantummanagerHelper
 	 *
 	 * @since version
 	 */
+	public static function getComponentsParams($name, $default = null)
+	{
+		$params = ComponentHelper::getParams('com_quantummanager');
+
+		return $params->get($name, $default);
+	}
+
+
+	/**
+	 * @param $name
+	 * @param $value
+	 *
+	 *
+	 * @since version
+	 */
 	public static function setComponentsParams($name, $value)
 	{
 		$params = ComponentHelper::getParams('com_quantummanager');

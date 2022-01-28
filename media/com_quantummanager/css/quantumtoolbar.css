@@ -51,12 +51,12 @@
     line-height: 18px;
     border-radius: 0;
 }
-.quantumtoolbar-module button.btn-hide {
+.quantumtoolbar-module button.qm-btn-hide {
     /*display: none;*/
     pointer-events: none;
     color: #ccc;
 }
-.quantumtoolbar-module button.btn-hide .quantummanager-icon {
+.quantumtoolbar-module button.qm-btn-hide .quantummanager-icon {
     opacity: .4;
 }
 .quantumtoolbar-module button:hover {
@@ -76,14 +76,14 @@
 .quantumtoolbar-module .quantumtoolbar-module-buttons-group:last-child {
     margin-right: 0;
 }
-.quantumtoolbar-module .btn-primary {
+.quantumtoolbar-module .qm-btn-primary {
     background: #78abde;
     border: 1px solid transparent;
 }
-.quantumtoolbar-module .btn-wrap {
+.quantumtoolbar-module .qm-btn-wrap {
     position: relative;
 }
-.quantumtoolbar-module .btn-dropdown {
+.quantumtoolbar-module .qm-btn-dropdown {
     visibility: hidden;
     position: absolute;
     width: 100%;
@@ -92,23 +92,23 @@
     transition: visibility 0.1s;
     z-index: 6;
 }
-.quantumtoolbar-module .btn-wrap:hover .btn-dropdown {
+.quantumtoolbar-module .qm-btn-wrap:hover .qm-btn-dropdown {
     visibility: visible;
     /*display: block;*/
 }
-.quantumtoolbar-module .btn-dropdown .btn {
+.quantumtoolbar-module .qm-btn-dropdown .qm-btn {
     border-top: none;
 }
-.quantumtoolbar-module .btn-dropdown > * {
+.quantumtoolbar-module .qm-btn-dropdown > * {
     width: 100%;
 }
-.quantumtoolbar-module .btn-dropdown > .btn-width-small {
+.quantumtoolbar-module .qm-btn-dropdown > .qm-btn-width-small {
     width: 170px;
     max-width: 170px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.quantumtoolbar-module .btn-dropdown > .btn-width-small > .quantummanager-icon {
+.quantumtoolbar-module .qm-btn-dropdown > .qm-btn-width-small > .quantummanager-icon {
     min-width: 14px;
     min-height: 14px;
 }

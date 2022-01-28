@@ -38,8 +38,8 @@ window.Quantumtoolbar = function(Filemanager, QuantumToolbarElement, options) {
         let htmlButtons;
         let wrapButton = document.createElement('div');
         let button = document.createElement('button');
-        wrapButton.setAttribute('class', 'btn-wrap');
-        button.setAttribute('class', 'btn ' + className);
+        wrapButton.setAttribute('class', 'qm-btn-wrap');
+        button.setAttribute('class', 'qm-btn ' + className);
 
         if(icon !== '' && icon !== null) {
             button.innerHTML = "<span class='quantummanager-icon " + icon + "'></span>";
@@ -81,11 +81,11 @@ window.Quantumtoolbar = function(Filemanager, QuantumToolbarElement, options) {
             wrapButton.append(button);
             groupHtml.append(wrapButton);
         } else {
-            let dropdown = parentButtonWrap.querySelector('.btn-dropdown');
+            let dropdown = parentButtonWrap.querySelector('.qm-btn-dropdown');
 
             if(dropdown === null) {
                 dropdown = document.createElement('div');
-                dropdown.setAttribute('class', 'btn-dropdown');
+                dropdown.setAttribute('class', 'qm-btn-dropdown');
                 parentButtonWrap.append(dropdown);
             }
 

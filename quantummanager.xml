@@ -21,9 +21,7 @@
 	<files folder="components/com_quantummanager">
 		<filename>quantummanager.php</filename>
 		<filename>controller.php</filename>
-		<folder>controllers</folder>
 		<folder>language</folder>
-		<folder>layouts</folder>
 		<folder>views</folder>
 	</files>
 

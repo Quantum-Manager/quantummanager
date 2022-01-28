@@ -173,7 +173,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             'cropperjsEdit',
             'center',
             'file-actions',
-            'btn-edit btn-width-small btn-hide',
+            'qm-btn-edit qm-btn-width-small qm-btn-hide',
             QuantumviewfilesLang.buttonEdit,
             'quantummanager-icon-crop',
             {},
@@ -185,7 +185,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             Filemanager.Quantumtoolbar.buttonsList['viewfilesOther'].parentElement
         );
 
-        QuantumCropperjsElement.querySelector('.btn-save').addEventListener('click', function (event) {
+        QuantumCropperjsElement.querySelector('.qm-btn-save').addEventListener('click', function (event) {
             let name = QuantumCropperjsElement.querySelector('.quantumcropperjs-name-file').value;
             let exs = QuantumCropperjsElement.querySelector('.quantumcropperjs-name-exs').value;
             let result = self.cropperjs.getCroppedCanvas();
@@ -218,7 +218,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
                 }
             }
 
-            QuantumUtils.ajaxFile(QuantumUtils.getFullUrl('/administrator/index.php'), {
+            QuantumUtils.ajaxFile(QuantumUtils.getFullUrl('index.php'), {
                     'option': 'com_quantummanager',
                     'task': 'quantumcropperjs.save',
                     'path': Filemanager.data.path,
@@ -241,7 +241,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             event.preventDefault();
         });
 
-        QuantumCropperjsElement.querySelector('.btn-close').addEventListener('click', function (event) {
+        QuantumCropperjsElement.querySelector('.qm-btn-close').addEventListener('click', function (event) {
             self.cropperjs.destroy();
             QuantumCropperjsElement.classList.remove('active');
             event.preventDefault();
@@ -367,7 +367,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
             }
         }
 
-        QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager" +
+        QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("index.php?option=com_quantummanager" +
             "&task=quantumcropperjs.getImageForCrop" +
             "&path=" + encodeURIComponent(Filemanager.data.path) +
             '&scope=' + encodeURIComponent(Filemanager.data.scope) +
@@ -549,7 +549,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
 
         let file = Filemanager.Quantumviewfiles.file;
 
-        fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.add('btn-hide');
+        fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.add('qm-btn-hide');
         if(file === undefined) {
             return;
         }
@@ -563,30 +563,30 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
         el.file = file;
 
         if(!tmpCheck.checked) {
-            fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.add('btn-hide');
+            fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.add('qm-btn-hide');
             return;
         }
 
         if(['png', 'jpg', 'jpeg', 'webp'].indexOf(exs) === -1) {
-            fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.add('btn-hide');
+            fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.add('qm-btn-hide');
             return;
         }
 
-        fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.remove('btn-hide');
+        fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.remove('qm-btn-hide');
     });
 
     Filemanager.events.add(this, 'reloadPaths', function (fm, el, target) {
-        fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.add('btn-hide');
+        fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.add('qm-btn-hide');
         self.close(false);
     });
 
     Filemanager.events.add(this, 'updatePath', function (fm, el, target) {
-        fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.add('btn-hide');
+        fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.add('qm-btn-hide');
         self.close(false);
     });
 
     Filemanager.events.add(this, 'buttonViewfilesDelete', function (fm, el, target) {
-        fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.add('btn-hide');
+        fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.add('qm-btn-hide');
     });
 
     Filemanager.events.add(this, 'uploadComplete', function (fm, el) {
@@ -601,7 +601,7 @@ window.Quantumcropperjs = function(Filemanager, QuantumCropperjsElement, options
                     return;
                 }
 
-                fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.remove('btn-hide');
+                fm.Quantumtoolbar.buttonsList['cropperjsEdit'].classList.remove('qm-btn-hide');
             }
         }, 400);
     });

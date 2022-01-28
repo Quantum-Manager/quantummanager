@@ -106,12 +106,12 @@ extract($displayData);
             <div class="quantumpexels-module-container-search">
                 <div class="quantumpexels-module-search grid"></div>
                 <div class="quantumpexels-module-load-page">
-                    <button class="btn"><?php echo Text::_('COM_QUANTUMMANAGER_ACTION_LOAD'); ?></button>
+                    <button class="qm-btn"><?php echo Text::_('COM_QUANTUMMANAGER_ACTION_LOAD'); ?></button>
                 </div>
             </div>
         </div>
 
-        <button class="quantumpexels-module-close btn"><span class="quantummanager-icon quantummanager-icon-close"></span> <?php echo Text::_('COM_QUANTUMMANAGER_WINDOW_CLOSE'); ?></button>
+        <button class="quantumpexels-module-close qm-btn"><span class="quantummanager-icon quantummanager-icon-close"></span> <?php echo Text::_('COM_QUANTUMMANAGER_WINDOW_CLOSE'); ?></button>
     </div>
 
 </div>

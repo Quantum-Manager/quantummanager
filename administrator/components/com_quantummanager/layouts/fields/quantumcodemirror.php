@@ -14,8 +14,8 @@ extract($displayData);
 <div class="quantummanager-module quantumcodemirror-module" data-type="Quantumcodemirror" data-options="">
     <div class="toolbar">
         <div>
-            <button class="btn btn-save">Сохранить</button>
-            <button class="btn btn-close">Отменить</button>
+            <button class="qm-btn qm-btn-save">Сохранить</button>
+            <button class="qm-btn qm-btn-close">Отменить</button>
         </div>
     </div>
     <div class="editor"></div>

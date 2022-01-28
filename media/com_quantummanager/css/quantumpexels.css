@@ -64,7 +64,7 @@
 .quantumpexels-module .quantumpexels-module-container .quantumpexels-module-close {
     position: absolute;
     top: 8px;
-    right: -105px;
+    right: 4px;
 }
 
 .quantumpexels-module .quantumpexels-module-header {
@@ -83,11 +83,11 @@
 }
 
 .quantumpexels-module .quantumpexels-module-header label {
-    width: calc(100% - 35px);
+    width: 100%;
 }
 
 .quantumpexels-module .quantumpexels-module-header input {
-    width: 100%;
+    width: calc(100% - 37px);
     padding: 0 10px;
     padding-left: 25px;
     height: 35px;
@@ -100,8 +100,20 @@
     background: #fff;
     color: #666;
     border: 1px solid #e5e5e5;
+    border-radius: 3px;
+    box-shadow: none !important;
+    font-weight: normal;
     transition: .2s ease-in-out;
     transition-property: color,background-color,border;
+}
+
+.quantumpexels-module .quantumpexels-module-header input:focus {
+    border-color: rgba(82,168,236,0.8);
+    outline: 0;
+    outline: thin dotted \9;
+    -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(82 168 236 / 60%);
+    -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6);
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(82 168 236 / 60%);
 }
 
 .quantumpexels-module .quantumpexels-module-header .header-filters {
@@ -336,13 +348,13 @@
     min-height: 45px;
 }
 
-.quantumpexels-module .quantumpexels-module-load-page .btn {
+.quantumpexels-module .quantumpexels-module-load-page .qm-btn {
     display: none;
     padding: 12px 25px;
     font-size: 17px;
 }
 
-.quantumpexels-module .quantumpexels-module-load-page.active .btn {
+.quantumpexels-module .quantumpexels-module-load-page.active .qm-btn {
     display: inline-block;
 }
 
@@ -352,12 +364,4 @@
         max-width: 100%;
     }
 
-}
-
-@media screen and (max-width: 1425px) {
-    .quantumpexels-module .quantumpexels-module-container .quantumpexels-module-close {
-        position: absolute;
-        top: 8px;
-        right: 4px;
-    }
 }

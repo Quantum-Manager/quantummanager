@@ -565,7 +565,7 @@ window.QuantumUtils = {
     },
 
     compilePath: function (scope, path, callbackSuccess, callbackFail) {
-        QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumviewfiles.getParsePath&path=" + encodeURIComponent(path) + '&scope=' + scope + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
+        QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("index.php?option=com_quantummanager&task=quantumviewfiles.getParsePath&path=" + encodeURIComponent(path) + '&scope=' + scope + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
             response = JSON.parse(response);
 
             if (response.path !== undefined) {
@@ -592,6 +592,7 @@ window.QuantumUtils = {
         }
 
         let optionsMerge = {
+            selector: '.quantummanager',
             // Text for notify
             text: '',
             // Duration notification

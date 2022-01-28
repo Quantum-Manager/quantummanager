@@ -194,6 +194,17 @@
 			   filter="unset"
 		/>
 
+		<field name="front"
+			   type="radio"
+			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_FRONT_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_FRONT_DESC"
+			   required="true"
+			   class="btn-group btn-group-yesno"
+			   default="0">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
 		<field name="dropareahidden"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_DROPAREAHIDDEN_LABEL"

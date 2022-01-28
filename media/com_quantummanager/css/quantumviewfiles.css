@@ -297,6 +297,8 @@
     margin-top: 10px;
     padding: 6px;
     color: #000000;
+    font-size: 13px;
+    line-height: 18px;
     font-weight: bold;
 }
 .quantumviewfiles-module .meta-file .show-all-tags:hover {
