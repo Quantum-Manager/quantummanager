@@ -76,10 +76,6 @@
 .quantumtoolbar-module .quantumtoolbar-module-buttons-group:last-child {
     margin-right: 0;
 }
-.quantumtoolbar-module .qm-btn-primary {
-    background: #78abde;
-    border: 1px solid transparent;
-}
 .quantumtoolbar-module .qm-btn-wrap {
     position: relative;
 }

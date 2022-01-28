@@ -202,6 +202,19 @@ body.com_quantummanager > .container-main {
     outline: 0;
 }
 
+.qm-btn-primary {
+    background: #78abde;
+    border: 1px solid transparent;
+}
+
+.qm-btn-primary:hover {
+    cursor: pointer;
+}
+
+.qm-btn-hide {
+    display: none;
+}
+
 /******************************** Dropdown *******************************/
 .quantummanager-dropdown {
     position: relative;
