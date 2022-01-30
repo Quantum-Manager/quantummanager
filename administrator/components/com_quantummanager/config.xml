@@ -129,6 +129,17 @@
 			<option value="0">JNO</option>
 		</field>
 
+		<field name="hashname"
+			   type="radio"
+			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_HASHNAME_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_HASHNAME_DESC"
+			   required="true"
+			   class="btn-group btn-group-yesno"
+			   default="0">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
 		<field name="contentcheck"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_CHECK_LABEL"

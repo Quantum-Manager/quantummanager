@@ -379,6 +379,11 @@ class QuantummanagerFileSystemLocal
                     $nameSafe =  $nameForSafe . ((int)$componentParams->get('postfix', 0) ? ('_p' . mt_rand(11111, 99999)) : '');
                 }
 
+	            if((int)$componentParams->get('hashname', 0))
+	            {
+		            $nameSafe = md5($nameSafe);
+	            }
+
                 $uploadedFileName = $nameSafe . '.' . $nameExs;
                 $exs = explode(',', 'jpg,jpeg,png,gif,webp');
                 $type = preg_replace("/\/.*?$/isu", '', $file['type']);
