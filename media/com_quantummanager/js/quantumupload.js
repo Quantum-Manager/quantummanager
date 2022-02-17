@@ -6,7 +6,7 @@
  * @link       https://www.norrnext.com
  */
 
-window.Qantumupload = function(Filemanager, UploadElement, options) {
+window.Qantumupload = function (Filemanager, UploadElement, options) {
 
     let self = this;
     this.options = options;
@@ -83,7 +83,7 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
         }
 
         this.dropAreaInput.addEventListener('click', function (ev) {
-            if(ev.target.tagName.toLowerCase() !== 'label') {
+            if (ev.target.tagName.toLowerCase() !== 'label') {
                 for (let i = 0; i < self.inputFileAll.length; i++) {
                     self.inputFileAll[i].click();
                     break;
@@ -106,7 +106,7 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
         }
     };
 
-    this.initializeProgress = function(numFiles) {
+    this.initializeProgress = function (numFiles) {
         this.progressBar.style.display = "block";
         this.progressBar.value = 0;
         this.uploadProgress = [];
@@ -117,15 +117,15 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
         }
     };
 
-    this.updateProgress = function(fileNumber, percent) {
+    this.updateProgress = function (fileNumber, percent) {
         this.uploadProgress[fileNumber] = percent;
         let total = this.uploadProgress.reduce((tot, curr) => tot + curr, 0) / this.uploadProgress.length;
         this.progressBar.value = total;
     };
 
-    this.uploadFiles = function(files) {
+    this.uploadFiles = function (files) {
 
-        if(files === null || files.length === 0) {
+        if (files === null || files.length === 0) {
             return;
         }
 
@@ -134,15 +134,15 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
         this.errorsHtml = '';
         this.uploadI = [];
         this.filesLists = [];
-        for (let i=0;i<files.length;i++) {
+        for (let i = 0; i < files.length; i++) {
 
             let file = files[i];
 
-            if((file.size  / 1024 / 1024) > this.maxsize) {
+            if ((file.size / 1024 / 1024) > this.maxsize) {
                 QuantumUtils.alert(QuantumuploadLang.file + file.name + QuantumuploadLang.maxsize + this.maxsize + QuantumuploadLang.megabyte);
                 this.countFiles--;
 
-                if(this.countFiles === 0) {
+                if (this.countFiles === 0) {
                     this.progressBar.style.display = "none";
                 }
 
@@ -151,7 +151,7 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
 
             let currExs = file.name.split('.');
 
-            if(currExs.length === 1) {
+            if (currExs.length === 1) {
                 QuantumUtils.alert(QuantumuploadLang.file + file.name + QuantumuploadLang.exs);
                 this.countFiles--;
                 return false;
@@ -173,33 +173,31 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
             xhr.addEventListener('readystatechange', function (e) {
                 if (xhr.readyState == 4 && xhr.status == 200) {
 
-                    try
-                    {
+                    try {
                         let response = JSON.parse(xhr.response);
 
-                        if(response.name !== undefined) {
+                        if (response.name !== undefined) {
                             self.filesLists.push(response.name);
                         }
 
-                        if(response.error !== undefined) {
+                        if (response.error !== undefined) {
                             self.errorsHtml += '<div>' + file.name + ': ' + QuantumUtils.htmlspecialcharsDecode(response.error, 'ENT_QUOTES') + '</div>';
                         }
 
-                    }
-                    catch (e) {
+                    } catch (e) {
                     }
 
 
                     self.updateProgress(i, 100);
                     self.uploadI.push((i + 1));
 
-                    if(self.countFiles === self.uploadI.length) {
+                    if (self.countFiles === self.uploadI.length) {
                         self.progressBar.style.display = "none";
 
                         self.trigger('uploadComplete');
 
-                        if(self.errorsHtml !== '') {
-                            self.errorsWrap.querySelector('div').innerHTML =  self.errorsHtml;
+                        if (self.errorsHtml !== '') {
+                            self.errorsWrap.querySelector('div').innerHTML = self.errorsHtml;
                             self.errorsWrap.style.display = "block";
                         }
 
@@ -207,16 +205,15 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
 
                     }
 
-                }
-                else if (xhr.readyState === 4 && xhr.status !== 200) {
+                } else if (xhr.readyState === 4 && xhr.status !== 200) {
 
                     self.uploadI.push((i + 1));
 
-                    if(self.countFiles === self.uploadI.length) {
+                    if (self.countFiles === self.uploadI.length) {
                         self.progressBar.style.display = "none";
 
-                        if(self.errorsHtml !== '') {
-                            self.errorsWrap.innerHTML =  self.errorsHtml;
+                        if (self.errorsHtml !== '') {
+                            self.errorsWrap.innerHTML = self.errorsHtml;
                             self.errorsWrap.style.display = "block";
                         }
 
@@ -235,7 +232,7 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
 
     };
 
-    this.trigger = function(event) {
+    this.trigger = function (event) {
         Filemanager.events.trigger(event, Filemanager);
     };
 
@@ -250,15 +247,20 @@ window.Qantumupload = function(Filemanager, UploadElement, options) {
     });
 
     document.addEventListener('paste', function (ev) {
+        let check_element = ev.target.closest('.quantummanager');
+        if (check_element === null || check_element === undefined) {
+            return;
+        }
+
         let items = (ev.clipboardData || ev.originalEvent.clipboardData).items;
         for (let index in items) {
             let item = items[index];
             if (item.kind === 'file') {
                 let blob = item.getAsFile();
                 let reader = new FileReader();
-                reader.onload = function(event) {
+                reader.onload = function (event) {
                     let ext = event.target.result.substring("data:image/".length, event.target.result.indexOf(";base64"));
-                    self.uploadFiles([new File([QuantumUtils.dataURItoBlob(event.target.result)], 'buffer_' + QuantumUtils.randomInteger(1111111, 9999999) + '.' + ext)]);
+                    self.uploadFiles([new File([QuantumUtils.dataURItoBlob(event.target.result)], 'clipboard_' + QuantumUtils.randomInteger(1111111, 9999999) + '.' + ext)]);
                 }
                 reader.readAsDataURL(blob);
             }
