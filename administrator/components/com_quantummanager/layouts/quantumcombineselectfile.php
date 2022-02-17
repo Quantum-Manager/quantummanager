@@ -7,6 +7,7 @@
  * @link       https://www.norrnext.com
  */
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
 
 defined('_JEXEC') or die;
@@ -14,11 +15,13 @@ extract($displayData);
 ?>
 
 <div class="quantumcombineselectfile">
-    <input class="input-file <?php echo $displayData['class'] ?>" type="hidden" name="<?php echo $displayData['name'] ?>" id="<?php echo $displayData['id'] ?>" value="<?php echo $displayData['value'] ?>">
+    <input class="input-file <?php echo $displayData['class'] ?>" type="hidden"
+           name="<?php echo $displayData['name'] ?>" id="<?php echo $displayData['id'] ?>"
+           value="<?php echo $displayData['value'] ?>">
 
     <div class="preview-file" data-value="<?php echo $displayData['value'] ?>">
         <div class="image"></div>
-        <button>Изменить</button>
+        <button><?php echo Text::_('COM_QUANTUMMANAGER_ACTION_EDIT') ?></button>
     </div>
 
 	<?php
