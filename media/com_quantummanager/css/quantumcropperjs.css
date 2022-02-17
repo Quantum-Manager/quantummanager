@@ -405,7 +405,7 @@
 .quantumcropperjs-module .editor .cropperjs {
     position: relative;
     margin: auto;
-    height: 100%;
+    height: calc(100% - 44px);
     background: #eee;
 }
 .quantumcropperjs-module .toolbar-sizes {
@@ -436,13 +436,14 @@
     margin-right: 4px;
 }
 .quantumcropperjs-module .toolbar-footer {
-    position: absolute;
+    position: relative;
+    width: 100%;
     display: flex;
     justify-content: center;
-    bottom: 10px;
-    left: 0;
-    right: 0;
-    text-align: center;
+    justify-items: center;
+    padding: 7px;
+    height: 30px;
+    background: #444;
 }
 .quantumcropperjs-module .toolbar-footer > div {
     display: flex;
