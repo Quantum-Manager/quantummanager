@@ -302,7 +302,6 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                         Filemanager.data.path = directory;
                     }
 
-
                     Filemanager.Quantumtoolbar.trigger('buttonViewfilesBack');
                     ev.preventDefault();
                 });
