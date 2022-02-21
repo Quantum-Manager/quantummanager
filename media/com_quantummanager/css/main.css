@@ -13,6 +13,8 @@
     position: relative;
     height: 70vh;
     overflow-x: hidden;
+    font-size: 13px;
+    line-height: 18px;
 }
 .quantummanager.quantummanager-fieldstandalone {
     width: auto;
@@ -154,6 +156,70 @@ body.com_quantummanager > .container-main {
     height: 100%;
 }
 
+
+
+/******************************** Height *********************************/
+.quantummanager-height-medium {
+    height: 600px;
+}
+
+/******************************** Buttons ********************************/
+.qm-btn {
+    display: inline-block;
+    padding: 4px 12px;
+    margin-bottom: 0;
+    font-size: 13px;
+    line-height: 18px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background-color: #f3f3f3;
+    color: #333;
+    border: 1px solid #b3b3b3;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 5%);
+    font-weight: normal;
+}
+
+.qm-btn:hover,
+.qm-btn:focus {
+    background-color: #e6e6e6;
+    text-decoration: none;
+    text-shadow: none;
+    cursor: pointer;
+}
+
+.qm-btn:focus {
+    outline: thin dotted #333;
+    outline-offset: -2px;
+}
+
+.qm-btn.active,
+.qm-btn:active {
+    background-image: none;
+    outline: 0;
+}
+
+.qm-btn-primary {
+    background: #78abde;
+    color: #fff;
+    border: 1px solid transparent;
+}
+
+.qm-btn-primary:hover,
+.qm-btn-primary:focus {
+    background: #5882ad;
+}
+
+.qm-btn-primary:hover {
+    cursor: pointer;
+}
+
+.qm-btn-hide {
+    display: none;
+}
 
 /******************************** Dropdown *******************************/
 .quantummanager-dropdown {

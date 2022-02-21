@@ -353,7 +353,6 @@ class QuantummanagerFileSystemLocal
             }
             else
             {
-                $componentParams = ComponentHelper::getParams('com_quantummanager');
                 $lang = Factory::getLanguage();
                 $nameSplit = explode('.', $file['name']);
                 $nameExs = mb_strtolower(array_pop($nameSplit));
@@ -376,8 +375,13 @@ class QuantummanagerFileSystemLocal
                 }
                 else
                 {
-                    $nameSafe =  $nameForSafe . ((int)$componentParams->get('postfix', 0) ? ('_p' . mt_rand(11111, 99999)) : '');
+                    $nameSafe =  $nameForSafe . ((int)QuantummanagerHelper::getParamsComponentValue('postfix', 0) ? ('_p' . mt_rand(11111, 99999)) : '');
                 }
+
+	            if((int)QuantummanagerHelper::getParamsComponentValue('hashname', 0))
+	            {
+		            $nameSafe = md5($nameSafe);
+	            }
 
                 $uploadedFileName = $nameSafe . '.' . $nameExs;
                 $exs = explode(',', 'jpg,jpeg,png,gif,webp');

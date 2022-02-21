@@ -94,7 +94,7 @@ window.QuantumManagerInit = function(container) {
         quantummanagerForBuild.push(filemanager);
 
         let quantummanagerHelp = filemanager.element.querySelector('.quantummanager-jedreview');
-        let helpButtonClose = filemanager.element.querySelector('.quantummanager-jedreview .btn-close');
+        let helpButtonClose = filemanager.element.querySelector('.quantummanager-jedreview .qm-btn-close');
         if(quantummanagerHelp !== null) {
             QuantumUtils.replaceImgToSvg('.quantummanager-jedreview');
             helpButtonClose.addEventListener('click', function (ev) {

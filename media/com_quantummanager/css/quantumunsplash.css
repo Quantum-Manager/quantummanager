@@ -64,7 +64,7 @@
 .quantumunsplash-module .quantumunsplash-module-container .quantumunsplash-module-close {
     position: absolute;
     top: 8px;
-    right: -105px;
+    right: 4px;
 }
 
 .quantumunsplash-module .quantumunsplash-module-header {
@@ -83,11 +83,11 @@
 }
 
 .quantumunsplash-module .quantumunsplash-module-header label {
-    width: calc(100% - 35px);
+    width: 100%;
 }
 
 .quantumunsplash-module .quantumunsplash-module-header input {
-    width: 100%;
+    width: calc(100% - 37px);
     padding: 0 10px;
     padding-left: 25px;
     height: 35px;
@@ -100,8 +100,20 @@
     background: #fff;
     color: #666;
     border: 1px solid #e5e5e5;
+    border-radius: 3px;
+    box-shadow: none !important;
+    font-weight: normal;
     transition: .2s ease-in-out;
     transition-property: color,background-color,border;
+}
+
+.quantumunsplash-module .quantumunsplash-module-header input:focus {
+    border-color: rgba(82,168,236,0.8);
+    outline: 0;
+    outline: thin dotted \9;
+    -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(82 168 236 / 60%);
+    -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6);
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(82 168 236 / 60%);
 }
 
 .quantumunsplash-module .quantumunsplash-module-header .header-filters {
@@ -263,23 +275,23 @@
     min-height: 45px;
 }
 
-.quantumunsplash-module .quantumunsplash-module-load-page .btn {
+.quantumunsplash-module .quantumunsplash-module-load-page .qm-btn {
     display: none;
     padding: 12px 25px;
     font-size: 17px;
 }
 
-.quantumunsplash-module .quantumunsplash-module-load-page.active .btn {
+.quantumunsplash-module .quantumunsplash-module-load-page.active .qm-btn {
     display: inline-block;
 }
 
-.quantumtoolbar-module .btn-unsplash-search {
+.quantumtoolbar-module .qm-btn-unsplash-search {
     padding-top: 0;
     padding-bottom: 0;
 }
 
 @media screen and (max-width: 1360px) {
-    .quantumtoolbar-module .btn-unsplash-search .quantummanager-icon-unsplash {
+    .quantumtoolbar-module .qm-btn-unsplash-search .quantummanager-icon-unsplash {
         width: 15px;
         background-image: url("data:image/svg+xml,%0A%3Csvg width='32' height='32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 9V0h12v9H10zm12 5h10v18H0V14h10v9h12v-9z' fill='%23000000' fill-rule='nonzero' /%3E%3C/svg%3E%0A");
     }
@@ -291,12 +303,4 @@
         max-width: 100%;
     }
 
-}
-
-@media screen and (max-width: 1425px) {
-    .quantumunsplash-module .quantumunsplash-module-container .quantumunsplash-module-close {
-        position: absolute;
-        top: 8px;
-        right: 4px;
-    }
 }

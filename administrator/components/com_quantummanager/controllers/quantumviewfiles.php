@@ -15,7 +15,7 @@ use Joomla\CMS\MVC\Controller\AdminController;
 /**
  * Class QuantummanagerControllerquantumviewfiles
  */
-class QuantummanagerControllerquantumviewfiles extends AdminController
+class QuantummanagerControllerQuantumviewfiles extends AdminController
 {
 
 	public function createDirectory()

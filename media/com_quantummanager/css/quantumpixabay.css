@@ -64,7 +64,7 @@
 .quantumpixabay-module .quantumpixabay-module-container .quantumpixabay-module-close {
     position: absolute;
     top: 8px;
-    right: -105px;
+    right: 4px;
 }
 
 .quantumpixabay-module .quantumpixabay-module-header {
@@ -83,11 +83,11 @@
 }
 
 .quantumpixabay-module .quantumpixabay-module-header label {
-    width: calc(100% - 35px);
+    width: 100%;
 }
 
 .quantumpixabay-module .quantumpixabay-module-header input {
-    width: 100%;
+    width: calc(100% - 37px);
     padding: 0 10px;
     padding-left: 25px;
     height: 35px;
@@ -100,8 +100,20 @@
     background: #fff;
     color: #666;
     border: 1px solid #e5e5e5;
+    border-radius: 3px;
+    box-shadow: none !important;
+    font-weight: normal;
     transition: .2s ease-in-out;
     transition-property: color,background-color,border;
+}
+
+.quantumpixabay-module .quantumpixabay-module-header input:focus {
+    border-color: rgba(82,168,236,0.8);
+    outline: 0;
+    outline: thin dotted \9;
+    -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(82 168 236 / 60%);
+    -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6);
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(82 168 236 / 60%);
 }
 
 .quantumpixabay-module .quantumpixabay-module-header .header-filters {
@@ -335,26 +347,26 @@
     min-height: 45px;
 }
 
-.quantumpixabay-module .quantumpixabay-module-load-page .btn {
+.quantumpixabay-module .quantumpixabay-module-load-page .qm-btn {
     display: none;
     padding: 12px 25px;
     font-size: 17px;
 }
 
-.quantumpixabay-module .quantumpixabay-module-load-page.active .btn {
+.quantumpixabay-module .quantumpixabay-module-load-page.active .qm-btn {
     display: inline-block;
 }
 
-.quantumtoolbar-module .btn-pixabay-search {
+.quantumtoolbar-module .qm-btn-pixabay-search {
     padding-top: 0;
     padding-bottom: 0;
 }
 
-.quantumtoolbar-module .btn-pixabay-search span {
+.quantumtoolbar-module .qm-btn-pixabay-search span {
     display: none;
 }
 
-.quantumtoolbar-module .btn-pixabay-search .quantummanager-icon-pixabay {
+.quantumtoolbar-module .qm-btn-pixabay-search .quantummanager-icon-pixabay {
     display: inline-block;
     width: 70px;
     height: 25px;
@@ -366,7 +378,7 @@
 }
 
 @media screen and (max-width: 1360px) {
-    .quantumtoolbar-module .btn-pixabay-search .quantummanager-icon-pixabay {
+    .quantumtoolbar-module .qm-btn-pixabay-search .quantummanager-icon-pixabay {
         width: 23px;
         background-image: url("data:image/svg+xml,%3Csvg xmlns:dc='http://purl.org/dc/elements/1.1/' xmlns:cc='http://creativecommons.org/ns%23' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns%23' xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' xmlns:sodipodi='http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd' xmlns:inkscape='http://www.inkscape.org/namespaces/inkscape' height='74' width='118' version='1.1' viewBox='0 0 640 123.87' id='svg3799' sodipodi:docname='pixabay-mini.svg' inkscape:version='0.92.3 (2405546, 2018-03-11)'%3E%3Cmetadata id='metadata3805'%3E%3Crdf:RDF%3E%3Ccc:Work rdf:about=''%3E%3Cdc:format%3Eimage/svg+xml%3C/dc:format%3E%3Cdc:type rdf:resource='http://purl.org/dc/dcmitype/StillImage' /%3E%3Cdc:title%3E%3C/dc:title%3E%3C/cc:Work%3E%3C/rdf:RDF%3E%3C/metadata%3E%3Cdefs id='defs3803' /%3E%3Csodipodi:namedview pagecolor='%23ffffff' bordercolor='%23666666' borderopacity='1' objecttolerance='10' gridtolerance='10' guidetolerance='10' inkscape:pageopacity='0' inkscape:pageshadow='2' inkscape:window-width='2560' inkscape:window-height='1017' id='namedview3801' showgrid='false' inkscape:zoom='4' inkscape:cx='195.28308' inkscape:cy='26.927842' inkscape:window-x='1912' inkscape:window-y='-8' inkscape:window-maximized='1' inkscape:current-layer='svg3799' /%3E%3Cg transform='matrix(4.1605062,0,0,4.1605062,-2677.3429,-1666.2943)' id='g3797' style='fill:%23333333'%3E%3Cpath d='m 679.67,407.38 c -3.4778,-2.461 -6.0048,-4.9559 -6.0048,-8.0337 h -19.338 c 0,5.5388 -2.527,8.0337 -5.6449,8.0337 h -5.1644 v 56.236 h 100.42 V 407.38 h -64.629 z m -6.0056,16.067 h -18.096 v -8.0337 h 20.084 v 6.4644 z m 33.991,31.276 c -11.457,0 -20.779,-9.2018 -20.779,-20.513 0,-11.3112 9.3215,-20.04 20.779,-20.04 11.457,0 20.778,8.7283 20.778,20.04 0,11.311 -9.3207,20.513 -20.778,20.513 z m 11.17,-20.513 c 0,6.0803 -5.011,11.028 -11.169,11.028 -6.1591,0 -11.17,-4.9476 -11.17,-11.028 0,-6.081 5.0109,-11.027 11.17,-11.027 6.1582,0 11.169,4.9468 11.169,11.027 z m 77.334,-34.48 -25.001,63.735 -19.184,-7.6934 v -10.862 l 13.323,5.4522 17.592,-44.844 -65.92,-25.205 -6.1099,19.034 h -11 l 11.248,-32.135 85.053,32.519 z' id='path3779' inkscape:connector-curvature='0' /%3E%3C/g%3E%3C/svg%3E");
     }
@@ -378,12 +390,4 @@
         max-width: 100%;
     }
 
-}
-
-@media screen and (max-width: 1425px) {
-    .quantumpixabay-module .quantumpixabay-module-container .quantumpixabay-module-close {
-        position: absolute;
-        top: 8px;
-        right: 4px;
-    }
 }

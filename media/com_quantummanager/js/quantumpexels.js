@@ -35,7 +35,7 @@ window.Quantumpexels = function(Filemanager, QuantumPexelsElement, options) {
             'photostock',
             'center',
             'file-other',
-            'btn-more hidden-label',
+            'qm-btn-more hidden-label',
             QuantumpexelsLang.photostock,
             'quantummanager-icon-photostock',
             {},
@@ -45,7 +45,7 @@ window.Quantumpexels = function(Filemanager, QuantumPexelsElement, options) {
             'pexelsSearch',
             'right',
             'file-other',
-            'btn-pexels-search hidden-label',
+            'qm-btn-pexels-search hidden-label',
             QuantumpexelsLang.button,
             'quantummanager-icon-pexels',
             {},
@@ -174,7 +174,7 @@ window.Quantumpexels = function(Filemanager, QuantumPexelsElement, options) {
         loader.setAttribute('style', 'display:block;width: 90px;margin:50px auto auto auto;');
         self.searchGrid.appendChild(loader);
 
-        QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumpexels.search&q=" + encodeURIComponent(str) + '&page=' + encodeURIComponent(page) + fieldsForRequest + '&v=' + QuantumUtils.randomInteger(1111111, 9999999))).done(function (response) {
+        QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("index.php?option=com_quantummanager&task=quantumpexels.search&q=" + encodeURIComponent(str) + '&page=' + encodeURIComponent(page) + fieldsForRequest + '&v=' + QuantumUtils.randomInteger(1111111, 9999999))).done(function (response) {
             response = JSON.parse(response);
             self.currentPage = parseInt(page);
             self.totalPage = parseInt(response.totalPage);
@@ -270,7 +270,7 @@ window.Quantumpexels = function(Filemanager, QuantumPexelsElement, options) {
                         }
                     }
 
-                    QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantumpexels.download&path=" + encodeURIComponent(Filemanager.data.path) + "&scope=" + encodeURIComponent(Filemanager.data.scope)
+                    QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("index.php?option=com_quantummanager&task=quantumpexels.download&path=" + encodeURIComponent(Filemanager.data.path) + "&scope=" + encodeURIComponent(Filemanager.data.scope)
                         + '&file=' + encodeURIComponent(fileDownload)
                         + '&id=' + encodeURIComponent(element.getAttribute('data-id'))
                     )).done(function (response) {

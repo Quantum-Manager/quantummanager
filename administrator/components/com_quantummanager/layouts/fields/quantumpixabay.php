@@ -93,12 +93,12 @@ extract($displayData);
             <div class="quantumpixabay-module-container-search">
                 <div class="quantumpixabay-module-search grid"></div>
                 <div class="quantumpixabay-module-load-page">
-                    <button class="btn"><?php echo Text::_('COM_QUANTUMMANAGER_ACTION_LOAD'); ?></button>
+                    <button class="qm-btn"><?php echo Text::_('COM_QUANTUMMANAGER_ACTION_LOAD'); ?></button>
                 </div>
             </div>
         </div>
 
-        <button class="quantumpixabay-module-close btn"><span class="quantummanager-icon quantummanager-icon-close"></span> <?php echo Text::_('COM_QUANTUMMANAGER_WINDOW_CLOSE'); ?></button>
+        <button class="quantumpixabay-module-close qm-btn"><span class="quantummanager-icon quantummanager-icon-close"></span> <?php echo Text::_('COM_QUANTUMMANAGER_WINDOW_CLOSE'); ?></button>
     </div>
 
 </div>
