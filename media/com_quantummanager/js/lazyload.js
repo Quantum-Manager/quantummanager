@@ -90,10 +90,11 @@
 
     LazyLoad.prototype = {
 
+        turn_execute_time: 0,
         turn_execute: null,
         turns_list: [],
         turns_thread: 0,
-        turns_thread_max: 3,
+        turns_thread_max: 2,
 
         init: function() {
 
@@ -117,19 +118,18 @@
 
                         self.addTurn(function(callback_end) {
                             let src = entry.target.getAttribute(self.settings.src);
-                            let srcset = entry.target.getAttribute(self.settings.srcset);
                             if ("img" === entry.target.tagName.toLowerCase()) {
                                 if (src) {
                                     entry.target.src = src;
                                     entry.target.onload = function () {
                                         callback_end();
                                     }
-                                }
-                                if (srcset) {
-                                    entry.target.srcset = srcset;
+                                    entry.target.error = function () {
+                                        callback_end();
+                                    }
                                 }
                             } else {
-                                entry.target.style.backgroundImage = "url(" + src + ")";
+                                //entry.target.style.backgroundImage = "url(" + src + ")";
                             }
                         })
 
@@ -174,16 +174,25 @@
             this.settings = null;
         },
 
+
+        clearTurn: function () {
+            let self = this;
+            self.turns_thread = 0;
+            clearInterval(self.turn_execute);
+            self.turn_execute = null;
+            self.turn_execute_time = 0;
+        },
+
         addTurn: function(callback) {
             let self = this;
             self.turns_list.push(callback);
+
             if(self.turn_execute === null && self.turns_list.length > 0) {
+                self.turn_execute_time = 0;
                 self.turn_execute = setInterval(function() {
 
-                    if(self.turns_list.length === 0) {
-                        self.turns_thread = 0;
-                        clearInterval(self.turn_execute);
-                        self.turn_execute = null;
+                    if(self.turns_list.length === 0 && self.turn_execute_time >= 5000) {
+                        self.clearTurn();
                         return;
                     }
 
@@ -191,7 +200,13 @@
                         return;
                     }
 
-                    let task = self.turns_list.shift();
+                    let task;
+
+                    if(self.turns_list.length > 30) {
+                        task = self.turns_list.pop();
+                    } else {
+                        task = self.turns_list.shift();
+                    }
 
                     if(typeof task === 'function') {
                         task(function() {
@@ -201,9 +216,11 @@
                                 self.turns_thread = 0;
                             }
                         });
+                        self.turns_thread++;
                     }
 
-                }, 80);
+                    self.turn_execute_time += 100;
+                }, 100);
             }
         }
     };
