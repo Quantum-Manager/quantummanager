@@ -21,6 +21,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
     this.file = '';
     this.directory = '';
     this.lastTypeViewFiles = '';
+    this.lazyload = null;
     this.bufferTopDirectories = {};
     this.listFiles = '';
     this.history = [];
@@ -2341,7 +2342,6 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 if (filesAll[i].querySelector('input').checked) {
                     self.priorityMetaFile = filesAll[i];
                     fm.Quantumviewfiles.selectFile(filesAll[i], true);
-
                 }
             }
 
@@ -2369,7 +2369,15 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
     Filemanager.events.add(this, 'afterReloadTypeViewFiles', function (fm, el) {
         if(fm.Quantumviewfiles.lastTypeViewFiles === 'list-grid') {
             let images = fm.Quantumviewfiles.element.querySelectorAll('.lazyLoad');
-            new LazyLoad(images);
+
+            if(self.lazyload === undefined || self.lazyload === null) {
+                self.lazyload = new LazyLoad(images);
+            }
+            else {
+                self.lazyload.clearTurn();
+                self.lazyload.changeImages(images);
+                self.lazyload.init();
+            }
         }
     });
 

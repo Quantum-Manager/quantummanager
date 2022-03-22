@@ -128,8 +128,6 @@
                                         callback_end();
                                     }
                                 }
-                            } else {
-                                //entry.target.style.backgroundImage = "url(" + src + ")";
                             }
                         })
 
@@ -140,6 +138,10 @@
             Array.prototype.forEach.call(this.images, function (image) {
                 self.observer.observe(image);
             });
+        },
+
+        changeImages(images) {
+            this.images = images;
         },
 
         loadAndDestroy: function () {
@@ -153,18 +155,20 @@
 
             let self = this;
             Array.prototype.forEach.call(this.images, function (image) {
-                let src = image.getAttribute(self.settings.src);
-                let srcset = image.getAttribute(self.settings.srcset);
-                if ("img" === image.tagName.toLowerCase()) {
-                    if (src) {
-                        image.src = src;
+                self.addTurn(function(callback_end) {
+                    let src = image.getAttribute(self.settings.src);
+                    if ("img" === image.tagName.toLowerCase()) {
+                        if (src) {
+                            image.src = src;
+                            image.onload = function () {
+                                callback_end();
+                            }
+                            image.error = function () {
+                                callback_end();
+                            }
+                        }
                     }
-                    if (srcset) {
-                        image.srcset = srcset;
-                    }
-                } else {
-                    image.style.backgroundImage = "url('" + src + "')";
-                }
+                });
             });
         },
 
@@ -174,17 +178,20 @@
             this.settings = null;
         },
 
-
         clearTurn: function () {
             let self = this;
+            self.turns_list = [];
             self.turns_thread = 0;
             clearInterval(self.turn_execute);
             self.turn_execute = null;
             self.turn_execute_time = 0;
+            console.log(self.turns_list);
         },
+
 
         addTurn: function(callback) {
             let self = this;
+            console.log(self.turns_list);
             self.turns_list.push(callback);
 
             if(self.turn_execute === null && self.turns_list.length > 0) {
