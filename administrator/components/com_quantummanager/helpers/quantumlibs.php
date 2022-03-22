@@ -150,7 +150,7 @@ class QuantummanagerLibs
 
     public static function lazyload()
     {
-        HTMLHelper::_('script', 'com_quantummanager/lazyload.min.js', [
+        HTMLHelper::_('script', 'com_quantummanager/lazyload.js', [
             'version' => filemtime(__FILE__),
             'relative' => true
         ]);
