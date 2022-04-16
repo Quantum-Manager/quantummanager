@@ -9,6 +9,7 @@
 .quantummanager-full-wrap {
     position: relative;
 }
+
 .quantummanager {
     position: relative;
     height: 70vh;
@@ -16,15 +17,18 @@
     font-size: 13px;
     line-height: 18px;
 }
+
 .quantummanager.quantummanager-fieldstandalone {
     width: auto;
     height: auto;
     overflow: visible;
 }
+
 body.com_quantummanager .subhead-collapse,
 body.com_quantummanager .subhead {
     margin-bottom: 0 !important;
 }
+
 body.com_quantummanager #content,
 body.com_quantummanager #content > *,
 body.com_quantummanager #content > * > *
@@ -33,20 +37,25 @@ body.com_quantummanager #content > * > * > *
     height: calc(100% - 68px);
     padding: 0;
 }
+
 body.com_quantummanager .container-main {
     padding-bottom: 0;
 }
+
 body.com_quantummanager > .container-main,
 body.com_quantummanager .content > * > * > * {
     position: relative;
 }
+
 body.com_quantummanager .content > * > * > * {
     height: calc(100% + 68px);
 }
+
 body.com_quantummanager > .container-main {
     top: 1px !important;
     height: calc(100% - 133px);
 }
+
 .quantummanager-full-wrap.quantummanager {
     position: absolute;
     width: 100%;
@@ -56,6 +65,7 @@ body.com_quantummanager > .container-main {
     right: 0;
     bottom: 0;
 }
+
 .quantummanager-full-component-wrap {
     width: 100%;
     position: absolute;
@@ -65,6 +75,7 @@ body.com_quantummanager > .container-main {
     bottom: 0;
     height: 100%;
 }
+
 .quantummanager.highlight:before {
     content: attr(data-drag-drop-title);
     display: flex;
@@ -84,35 +95,45 @@ body.com_quantummanager > .container-main {
     z-index: 9;
     transition: all 0.2s;
 }
+
+
 /***************************** Positions *******************************/
 .quantummanager-splitview {
     display: flex;
     justify-content: space-between;
 }
+
 .quantummanager-splitview > div {
     width: 49%;
 }
+
 .quantummanager .quantummanager-top {
     height: 50px;
 }
+
 .quantummanager .quantummanager-container {
     display: flex;
     /*flex-wrap: wrap;*/
     height: 100%;
 }
+
 .quantummanager .quantummanager-top ~ .quantummanager-container {
     height: calc(100% - 50px);
 }
+
 .quantummanager .quantummanager-container-top {
     width: 100%;
 }
+
 .quantummanager .quantummanager-container .quantummanager-left {
     width: 25%;
     position: relative;
 }
+
 .quantummanager .gutter {
     position: relative;
 }
+
 .quantummanager .gutter:after {
     content: "";
     position: absolute;
@@ -122,9 +143,11 @@ body.com_quantummanager > .container-main {
     background: #fff;
     border-left: 3px double #e0e0e0;
 }
+
 .quantummanager .quantummanager-container .quantummanager-left .quantummanager-left-toggle {
     display: none;
 }
+
 .quantummanager .quantummanager-container .quantummanager-center {
     position: relative;
     flex: 1;
@@ -133,29 +156,34 @@ body.com_quantummanager > .container-main {
     flex-direction: column;
     margin-left: -7px;
 }
+
 .quantummanager .quantummanager-container .quantummanager-center > div {
     /*width: calc(100% - 15px);*/
 }
+
 .quantummanager .quantummanager-container .quantummanager-right {
     width: 25%;
     margin-left: 15px;
 }
+
 .quantummanager .quantummanager-container .quantummanager-right .quantummanager-right-toggle {
     display: none;
 }
+
 .quantummanager .quantummanager-container-bottom {
     width: 100%;
 }
+
 .quantummanager .quantummanager-container-bottom-fixed {
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
 }
+
 .quantummanager-module-height-1-1 {
     height: 100%;
 }
-
 
 
 /******************************** Height *********************************/
@@ -166,34 +194,19 @@ body.com_quantummanager > .container-main {
 /******************************** Buttons ********************************/
 .qm-btn {
     display: inline-block;
-    padding: 4px 12px;
-    margin-bottom: 0;
-    font-size: 13px;
-    line-height: 18px;
     text-align: center;
     vertical-align: middle;
     cursor: pointer;
-    background-color: #f3f3f3;
-    color: #333;
-    border: 1px solid #b3b3b3;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    box-shadow: 0 1px 2px rgb(0 0 0 / 5%);
-    font-weight: normal;
 }
 
 .qm-btn:hover,
 .qm-btn:focus {
-    background-color: #e6e6e6;
     text-decoration: none;
     text-shadow: none;
     cursor: pointer;
 }
 
 .qm-btn:focus {
-    outline: thin dotted #333;
-    outline-offset: -2px;
 }
 
 .qm-btn.active,
@@ -203,14 +216,10 @@ body.com_quantummanager > .container-main {
 }
 
 .qm-btn-primary {
-    background: #78abde;
-    color: #fff;
-    border: 1px solid transparent;
 }
 
 .qm-btn-primary:hover,
 .qm-btn-primary:focus {
-    background: #5882ad;
 }
 
 .qm-btn-primary:hover {
@@ -230,11 +239,9 @@ body.com_quantummanager > .container-main {
 .quantummanager-dropdown-content {
     display: none;
     position: absolute;
-    background-color: #f9f9f9;
     min-width: 160px;
     max-height: 50vh;
     overflow: auto;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
 
@@ -245,14 +252,12 @@ body.com_quantummanager > .container-main {
 }
 
 .quantummanager-dropdown-content a {
-    color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
 }
 
 .quantummanager-dropdown-content a:hover {
-    background-color: #f1f1f1;
 }
 
 .quantummanager-dropdown:hover .quantummanager-dropdown-content {
@@ -260,7 +265,6 @@ body.com_quantummanager > .container-main {
 }
 
 .quantummanager-dropdown:hover .quantummanager-dropdown-title {
-    color: #78abde;
 }
 
 /************************** Helper ***************************************/
@@ -319,7 +323,6 @@ body.com_quantummanager > .container-main {
 }
 
 .quantummanager-about .text {
-
 }
 
 .quantummanager-about .copyright {
@@ -492,37 +495,44 @@ body.com_quantummanager > .container-main {
     background-position: 50% 50%;
     background-size: cover;
 }
+
 .quantummanager-icon-upload {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/cloud-backup-up-arrow.svg");
 }
+
 .quantummanager-icon-directory {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/folder-symbol.svg");
 }
+
 .quantummanager-icon-up {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/left-arrow-key-1.svg");
     transform: rotate(90deg);
 }
+
 .quantummanager-icon-back {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/left-arrow-key-1.svg");
 }
+
 .quantummanager-icon-reload {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/refresh-button-1.svg");
 }
+
 .quantummanager-icon-delete {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/rubbish-bin-delete-button.svg");
 }
+
 .quantummanager-icon-insert,
 .quantummanager-icon-insert-inverse,
 .quantummanager-icon-link {
@@ -530,102 +540,122 @@ body.com_quantummanager > .container-main {
     height: 14px;
     background-image: url("../images/icons/action/link-button.svg");
 }
+
 .quantummanager-icon-grid {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/show-apps-button.svg");
 }
+
 .quantummanager-icon-table {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/list-button-with-3-elements.svg");
 }
+
 .quantummanager-icon-save {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/save-button.svg");
 }
+
 .quantummanager-icon-more {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/show-more-button-with-three-dots.svg");
     transform: rotate(90deg);
 }
+
 .quantummanager-icon-config {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/settings-cogwheel-button.svg");
 }
+
 .quantummanager-icon-cut {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/cut-content-button.svg");
 }
+
 .quantummanager-icon-copy {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/copy-content.svg");
 }
+
 .quantummanager-icon-paste {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/clipboard-paste-button.svg");
 }
+
 .quantummanager-icon-select-all {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/select-all.svg");
 }
+
 .quantummanager-icon-close {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/close-button.svg");
 }
+
 .quantummanager-icon-edit  {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/create-new-pencil-button.svg");
 }
+
 .quantummanager-icon-eye {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/visibility-button.svg");
 }
+
 .quantummanager-icon-crop {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/crop-tool-button.svg");
 }
+
 .quantummanager-icon-zoom-in {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/rounded-add-button.svg");
 }
+
 .quantummanager-icon-zoom-out {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/round-delete-button.svg");
 }
+
 .quantummanager-icon-rotate-left {
     width: 14px;
     height: 14px;
     background-image: url("data:image/svg+xml,%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23444444' d='M8 0c-3 0-5.6 1.6-6.9 4.1l-1.1-1.1v4h4l-1.5-1.5c1-2 3.1-3.5 5.5-3.5 3.3 0 6 2.7 6 6s-2.7 6-6 6c-1.8 0-3.4-0.8-4.5-2.1l-1.5 1.3c1.4 1.7 3.6 2.8 6 2.8 4.4 0 8-3.6 8-8s-3.6-8-8-8z'%3E%3C/path%3E%3C/svg%3E%0A");
 }
+
 .quantummanager-icon-rotate-right {
     width: 14px;
     height: 14px;
     background-image: url("data:image/svg+xml,%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23444444' d='M16 7v-4l-1.1 1.1c-1.3-2.5-3.9-4.1-6.9-4.1-4.4 0-8 3.6-8 8s3.6 8 8 8c2.4 0 4.6-1.1 6-2.8l-1.5-1.3c-1.1 1.3-2.7 2.1-4.5 2.1-3.3 0-6-2.7-6-6s2.7-6 6-6c2.4 0 4.5 1.5 5.5 3.5l-1.5 1.5h4z'%3E%3C/path%3E%3C/svg%3E%0A");
 }
+
 .quantummanager-icon-flip-horizontal {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/swap-horizontal-orientation-arrows.svg");
 }
+
 .quantummanager-icon-flip-vertical {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/switch-vertical-orientation-arrows.svg");
 }
+
 .quantummanager-icon-unsplash {
     display: inline-block;
     width: 70px;
@@ -636,11 +666,13 @@ body.com_quantummanager > .container-main {
     background-size: contain;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 457.19 104.19'%3E%3Cpath d='M59.88 38.66h27.53v48.75H0V38.66h27.53v24.37h32.35zm93 25c0 8.25-5.45 13.13-12.9 13.13-7.28 0-12.81-4.88-12.81-13.13V24.41h-12.22v39.13c0 15.45 11 25.21 25.06 25.21s25.15-9.76 25.15-25.21V24.41h-12.25zm43.7-21.13c-4.7 0-9.94 2-12.6 6.57v-5.41h-11.45v43.64h11.81v-25.1c0-5 3-9 8.16-9 5.68 0 8.08 3.82 8.08 8.7v25.4h11.8V59.82c.03-9.59-4.94-17.31-15.77-17.31zm43.31 18.37l-6.48-1.33c-2.47-.5-4-1.77-4-3.9 0-2.49 2.23-4.35 5.33-4.35 4.36 0 6.09 2.25 6.51 4.88h10.18c-.08-6-4.83-13.84-16.51-13.84-9.41 0-16.33 6.47-16.33 14.28 0 6.13 3.81 11.19 12.24 13l6.05 1.33c3.37.71 4.7 2.31 4.7 4.26 0 2.31-2.14 4.35-6 4.35-4.71 0-7.27-2.68-7.87-5.79h-10.5c.59 6.53 5.32 14.84 18.46 14.84 11.45 0 17.22-7.28 17.22-14.38-.01-6.36-4.36-11.59-12.97-13.37zm63.19 4.53c0 13.22-8.26 23-20.59 23-6 0-10.48-2.4-12.61-5.33v21.13h-11.8V43.67h11.45v5.41c2-3.37 6.83-6.39 13.4-6.39 12.81 0 20.18 9.76 20.18 22.72zm-11.63.09c0-7.72-4.79-12.25-10.83-12.25s-10.91 4.53-10.91 12.25 4.88 12.33 10.91 12.33 10.91-4.54 10.91-12.35zm68-21.83h11.45v43.64h-11.8v-5.31c-2 3.5-6.57 6.38-12.61 6.38-12.33 0-20.59-9.77-20.59-23 0-13 7.37-22.72 20.15-22.72 6.57 0 11.32 3.05 13.4 6.39zm-.18 21.83c0-7.72-4.88-12.25-10.91-12.25s-10.83 4.51-10.83 12.23 4.79 12.33 10.83 12.33 10.92-4.6 10.92-12.33zm-50.66 21.81h11.8V24.41h-11.8zm132.35-44.81c-4.17 0-9 1.41-11.81 4.78V24.41h-11.8v62.91h11.8V61.68c.27-4.8 3.2-8.52 8.17-8.52 5.68 0 8.08 3.83 8.07 8.71v25.47h11.81V59.82c-.01-9.59-5.15-17.3-16.24-17.3zm-42 18.36l-6.43-1.33c-2.47-.5-4-1.77-4-3.9 0-2.49 2.22-4.35 5.33-4.35 4.35 0 6.08 2.25 6.5 4.88h10.17c-.08-6-4.83-13.84-16.51-13.84-9.41 0-16.33 6.47-16.33 14.28 0 6.13 3.82 11.19 12.25 13l6 1.33c3.37.71 4.7 2.31 4.7 4.26 0 2.31-2.14 4.35-6 4.35-4.71 0-7.27-2.68-7.87-5.79h-10.49c.58 6.53 5.31 14.84 18.45 14.84 11.45 0 17.22-7.28 17.22-14.38 0-6.34-4.35-11.57-12.95-13.35zM59.88 0H27.53v24.37h32.35z'/%3E%3C/svg%3E%0A");
 }
+
 .quantummanager-icon-unsplash-short {
     width: 14px;
     height: 14px;
     background-image: url("data:image/svg+xml,%0A%3Csvg width='32' height='32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 9V0h12v9H10zm12 5h10v18H0V14h10v9h12v-9z' fill='%23000000' fill-rule='nonzero' /%3E%3C/svg%3E%0A");
 }
+
 .quantummanager-icon-pixabay {
     display: inline-block;
     width: 70px;
@@ -651,6 +683,7 @@ body.com_quantummanager > .container-main {
     background-size: contain;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='123.87' width='640' version='1.1' viewBox='0 0 640 123.87'%3E%3Cg transform='translate(-156.15726,-367.21451)' fill='%23333'%3E%3Cpath d='m679.67,407.38c-3.4778-2.461-6.0048-4.9559-6.0048-8.0337h-19.338c0,5.5388-2.527,8.0337-5.6449,8.0337h-5.1644v56.236h100.42v-56.236h-64.629zm-6.0056,16.067-18.096,0,0-8.0337,20.084,0,0,6.4644zm33.991,31.276c-11.457,0-20.779-9.2018-20.779-20.513s9.3215-20.04,20.779-20.04c11.457,0,20.778,8.7283,20.778,20.04,0,11.311-9.3207,20.513-20.778,20.513zm11.17-20.513c0,6.0803-5.011,11.028-11.169,11.028-6.1591,0-11.17-4.9476-11.17-11.028,0-6.081,5.0109-11.027,11.17-11.027,6.1582,0,11.169,4.9468,11.169,11.027zm77.334-34.48-25.001,63.735-19.184-7.6934,0-10.862,13.323,5.4522,17.592-44.844-65.92-25.205-6.1099,19.034-11,0,11.248-32.135,85.053,32.519z'/%3E%3Cg transform='matrix(4.129044,0,0,4.129044,-488.6229,-1536.6294)'%3E%3Cpath d='m164.38,467.99c4.011-0.0921,7.7758,3.1703,8.1995,7.17,0.50671,3.5153-1.5613,7.166-4.8022,8.5926-1.9632,0.97468-4.1802,0.67513-6.2919,0.72493h-2.063v6.6094h-3.2677c0.007-5.0998-0.0132-10.2,0.01-15.3,0.10696-3.7986,3.2179-7.2015,6.9739-7.7072,0.41065-0.061,0.82716-0.0908,1.2414-0.0901zm0,13.219c2.3572,0.0591,4.5679-1.78,4.9197-4.1152,0.46978-2.3507-1.0297-4.8765-3.3219-5.5815-2.214-0.78561-4.8777,0.24867-5.9588,2.3393-0.83901,1.4284-0.54099,3.1171-0.59666,4.691v2.6665c1.6526-0.00001,3.3051,0.00001,4.9577-0.00001z'/%3E%3Cpath d='m174.16,467.91,3.2308,0,0,16.488-3.2308,0,0-16.488z'/%3E%3Cpath d='m187.1,478.32,0.11776,0,4.5925,6.1234,4.0037,0-6.2411-8.4785,5.5346-8.0075-4.0038,0-3.886,5.6523-0.11776,0-3.886-5.6523-4.0037,0,5.5346,8.0075-6.2411,8.4785,4.0038,0z'/%3E%3Cpath d='m203.13,467.91c3.2724-0.0646,6.4111,2.0792,7.6221,5.1058,0.63231,1.4057,0.62342,2.963,0.60314,4.472v6.91c-2.9161-0.01-5.8331,0.0201-8.7487-0.0157-3.3523-0.16361-6.4178-2.608-7.3775-5.8156-0.87984-2.7888-0.14884-6.0271,1.922-8.1097,1.5471-1.6003,3.7454-2.5681,5.9789-2.5468zm4.9576,13.22c-0.014-1.8333,0.0294-3.6684-0.0241-5.5004-0.19325-2.4562-2.4685-4.514-4.9336-4.4508-2.3436-0.0566-4.553,1.7616-4.9197,4.0819-0.42956,2.2266,0.84881,4.6528,2.9737,5.4838,1.3088,0.57081,2.7544,0.33544,4.1378,0.38549,0.92196,0.00001,1.8439,0.00001,2.7659,0.00001z'/%3E%3Cpath d='m221.19,467.99c3.8699-0.0954,7.4862,2.9494,8.1024,6.7609,0.69922,3.6121-1.3415,7.5146-4.7051,9.0017-3.2872,1.5514-7.5139,0.55177-9.7744-2.2912-1.401-1.6503-2.0047-3.8445-1.8853-5.984v-14.097h3.2677v6.6094c1.6649,0.00021,3.3302-0.00043,4.9948,0.00032zm0,13.219c2.4818,0.0664,4.7507-2.0174,4.9325-4.4865,0.31135-2.4542-1.5078-4.9223-3.9368-5.3683-1.3432-0.18387-2.7076-0.0602-4.0606-0.0964h-1.9297c0.021,1.8627-0.0445,3.7289,0.0376,5.5892,0.25949,2.4609,2.485,4.4103,4.957,4.362z'/%3E%3Cpath d='m238.9,467.91c3.2725-0.0646,6.411,2.0793,7.6222,5.1058,0.63229,1.4057,0.62343,2.963,0.60314,4.472v6.91c-2.9161-0.01-5.8331,0.0201-8.7487-0.0157-3.3523-0.16361-6.4178-2.608-7.3775-5.8156-0.87985-2.7888-0.14883-6.0271,1.922-8.1097,1.547-1.6003,3.7454-2.5681,5.9788-2.5468zm4.9576,13.22c-0.014-1.8333,0.0294-3.6684-0.0241-5.5004-0.19325-2.4562-2.4685-4.514-4.9336-4.4508-2.3436-0.0566-4.553,1.7616-4.9197,4.0819-0.42957,2.2266,0.84881,4.6528,2.9737,5.4838,1.3088,0.57081,2.7544,0.33544,4.1378,0.38549,0.92196,0.00001,1.8439,0.00001,2.7659,0.00001z'/%3E%3Cpath d='m265.11,467.95c-0.007,5.0876,0.0132,10.176-0.0101,15.263-0.11859,4.004-3.5594,7.6027-7.5766,7.8119-0.7631,0.0404-1.5278,0.0158-2.2917,0.0226v-3.2677c1.3944-0.007,2.8862,0.13456,4.1212-0.65516,1.5426-0.86529,2.523-2.6105,2.4882-4.3753-2.8966,2.3356-7.3871,2.2143-10.204-0.19651-2.0523-1.6568-3.1738-4.322-3.0154-6.9447v-7.6578h3.2677c0.015,2.9107-0.0307,5.8234,0.0241,8.7328,0.17752,2.3961,2.314,4.4238,4.7151,4.4811,2.4332,0.18697,4.7752-1.7026,5.1382-4.1097,0.14646-1.44,0.0425-2.8946,0.0738-4.3411v-4.7632c1.0896-0.00007,2.1792-0.00014,3.2689-0.00021z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
+
 .quantummanager-icon-pexels {
     display: inline-block;
     width: 15px;
@@ -663,41 +696,49 @@ body.com_quantummanager > .container-main {
     background-size: contain;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32px' height='32px' viewBox='0 0 32 32'%3E%3Cpath d='M2 0h28a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z' fill='%2305A081'%3E%3C/path%3E%3Cpath d='M13 21h3.863v-3.752h1.167a3.124 3.124 0 1 0 0-6.248H13v10zm5.863 2H11V9h7.03a5.124 5.124 0 0 1 .833 10.18V23z' fill='%23fff'%3E%3C/path%3E%3C/svg%3E");
 }
+
 .quantummanager-icon-photostock {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/photo-library.svg");
 }
+
 .quantummanager-icon-like {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/favorite-heart-button.svg");
 }
+
 .quantummanager-icon-like-inverse {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/favorite-heart-button.svg");
 }
+
 .quantummanager-icon-info {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/rounded-info-button.svg");
 }
+
 .quantummanager-icon-star {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/mark-as-favorite-star.svg");
 }
+
 .quantummanager-icon-watermark {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/automatic-brightness.svg");
 }
+
 .quantummanager-icon-switch-vertical {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/switch-vertical-orientation-arrows.svg");
 }
+
 .quantummanager-icon-previews {
     width: 14px;
     height: 14px;
@@ -706,7 +747,6 @@ body.com_quantummanager > .container-main {
 
 
 /****************************** Loader ********************************/
-
 .quantummanager .loader {
     position: absolute;
     top: 50%;
@@ -723,10 +763,12 @@ body.com_quantummanager > .container-main {
     overflow: hidden
 
 }
+
 .quantummanager .loader span {
     position: absolute;
     background: #444444;
 }
+
 .quantummanager .loader span:nth-child(1) {
     width: 100%;
     height: 4px;
@@ -750,6 +792,7 @@ body.com_quantummanager > .container-main {
     top: -100%;
     animation: animate2 2s linear infinite;
 }
+
 .quantummanager .loader span:nth-child(4) {
     width: 4px;
     height: 100%;
@@ -757,6 +800,7 @@ body.com_quantummanager > .container-main {
     bottom: -100%;
     animation: animate4 2s linear infinite;
 }
+
 @keyframes animate1 {
     0%
     {
@@ -838,6 +882,7 @@ body.com_quantummanager > .container-main {
         right: 100%;
     }
 }
+
 @keyframes animate4 {
     0%
     {
@@ -888,14 +933,17 @@ body.com_quantummanager > .container-main {
         text-align: center;
         transition: background 0.2s;
     }
+
     .quantummanager .quantummanager-container .quantummanager-left .quantummanager-left-toggle:hover {
         background: rgba(245, 246, 247, 1);
         cursor: pointer;
         transition: background 0.2s;
     }
+
     .quantummanager .quantummanager-container .quantummanager-left.open .quantummanager-left-toggle {
         background: rgba(245, 246, 247, 1);
     }
+
     .quantummanager .quantummanager-container .quantummanager-left .quantummanager-left-toggle:after {
         content: "";
         display: inline-block;
@@ -904,9 +952,11 @@ body.com_quantummanager > .container-main {
         height: 14px;
         background-image: url("data:image/svg+xml,%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 492.004 492.004' style='enable-background:new 0 0 492.004 492.004;' xml:space='preserve'%3E%3Cg%3E%3Cg%3E%3Cpath d='M484.14,226.886L306.46,49.202c-5.072-5.072-11.832-7.856-19.04-7.856c-7.216,0-13.972,2.788-19.044,7.856l-16.132,16.136 c-5.068,5.064-7.86,11.828-7.86,19.04c0,7.208,2.792,14.2,7.86,19.264L355.9,207.526H26.58C11.732,207.526,0,219.15,0,234.002 v22.812c0,14.852,11.732,27.648,26.58,27.648h330.496L252.248,388.926c-5.068,5.072-7.86,11.652-7.86,18.864 c0,7.204,2.792,13.88,7.86,18.948l16.132,16.084c5.072,5.072,11.828,7.836,19.044,7.836c7.208,0,13.968-2.8,19.04-7.872 l177.68-177.68c5.084-5.088,7.88-11.88,7.86-19.1C492.02,238.762,489.228,231.966,484.14,226.886z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E%0A");
     }
+
     .quantummanager .quantummanager-container .quantummanager-left.open .quantummanager-left-toggle:after {
         background-image: url("data:image/svg+xml,%3Csvg xmlns:dc='http://purl.org/dc/elements/1.1/' xmlns:cc='http://creativecommons.org/ns%23' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns%23' xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' xmlns:sodipodi='http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd' xmlns:inkscape='http://www.inkscape.org/namespaces/inkscape' version='1.1' id='Layer_1' x='0px' y='0px' viewBox='0 0 492.004 492.004' style='enable-background:new 0 0 492.004 492.004;' xml:space='preserve' sodipodi:docname='left.svg' inkscape:version='0.92.3 (2405546, 2018-03-11)'%3E%3Cmetadata id='metadata43'%3E%3Crdf:RDF%3E%3Ccc:Work rdf:about=''%3E%3Cdc:format%3Eimage/svg+xml%3C/dc:format%3E%3Cdc:type rdf:resource='http://purl.org/dc/dcmitype/StillImage' /%3E%3Cdc:title%3E%3C/dc:title%3E%3C/cc:Work%3E%3C/rdf:RDF%3E%3C/metadata%3E%3Cdefs id='defs41' /%3E%3Csodipodi:namedview pagecolor='%23ffffff' bordercolor='%23666666' borderopacity='1' objecttolerance='10' gridtolerance='10' guidetolerance='10' inkscape:pageopacity='0' inkscape:pageshadow='2' inkscape:window-width='1920' inkscape:window-height='1017' id='namedview39' showgrid='false' inkscape:zoom='0.4796709' inkscape:cx='246.002' inkscape:cy='246.002' inkscape:window-x='-8' inkscape:window-y='-8' inkscape:window-maximized='1' inkscape:current-layer='g4' /%3E%3Cg id='g6'%3E%3Cg id='g4'%3E%3Cpath d='M 7.8641066,265.118 185.54411,442.802 c 5.072,5.072 11.832,7.856 19.04,7.856 7.216,0 13.972,-2.788 19.044,-7.856 l 16.132,-16.136 c 5.068,-5.064 7.86,-11.828 7.86,-19.04 0,-7.208 -2.792,-14.2 -7.86,-19.264 l -103.656,-103.884 329.32,0 c 14.848,0 26.58,-11.624 26.58,-26.476 V 235.19 c 0,-14.852 -11.732,-27.648 -26.58,-27.648 l -330.496,0 104.828,-104.464 c 5.068,-5.072 7.86,-11.652 7.86,-18.864 0,-7.204 -2.792,-13.88 -7.86,-18.948 l -16.132,-16.084 c -5.072,-5.072 -11.828,-7.836 -19.044,-7.836 -7.208,0 -13.968,2.8 -19.04,7.872 L 7.8601066,226.898 c -5.084,5.088 -7.88000004,11.88 -7.86000004225,19.1 C -0.01589344,253.242 2.7761066,260.038 7.8641066,265.118 Z' id='path2' inkscape:connector-curvature='0' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     }
+
     .quantummanager-left {
         position: fixed !important;
         left: -9999px;
@@ -915,12 +965,15 @@ body.com_quantummanager > .container-main {
         background: #fff;
         z-index: 5;
     }
+
     .quantummanager .quantummanager-left ~ .quantummanager-center {
         padding-left: 20px;
     }
+
     .quantummanager-left.open {
         left: 0;
     }
+
     .quantummanager-right {
         position: fixed;
         left: 9999px;
@@ -929,9 +982,11 @@ body.com_quantummanager > .container-main {
         background: #fff;
         z-index: 5;
     }
+
     .quantummanager-right.open {
         right: 0;
     }
+
     .quantummanager .quantummanager-container-bottom-fixed .quantummanager-jedreview .quantummanager-jedreview-content > div:first-child {
         display: block;
         width: 100%;

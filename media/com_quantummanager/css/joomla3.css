@@ -1,0 +1,62 @@
+/******************************** Buttons ********************************/
+.qm-btn {
+    margin-bottom: 0;
+    padding: 4px 12px;
+    background-color: #f3f3f3;
+    color: #333;
+    border: 1px solid #b3b3b3;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 5%);
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 18px;
+}
+
+.qm-btn:hover,
+.qm-btn:focus {
+    background-color: #e6e6e6;
+}
+
+.qm-btn:focus {
+    outline: thin dotted #333;
+    outline-offset: -2px;
+}
+
+.qm-btn.active,
+.qm-btn:active {
+    background-image: none;
+    outline: 0;
+}
+
+.qm-btn-primary {
+    background: #78abde;
+    color: #fff;
+    border: 1px solid transparent;
+}
+
+
+.qm-btn-primary:hover,
+.qm-btn-primary:focus {
+    background: #5882ad;
+}
+
+
+/******************************** Dropdown *******************************/
+.quantummanager-dropdown-content {
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.quantummanager-dropdown-content a {
+    color: black;
+}
+
+.quantummanager-dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.quantummanager-dropdown:hover .quantummanager-dropdown-title {
+    color: #78abde;
+}
