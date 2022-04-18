@@ -25,7 +25,7 @@ if(!is_array($buttonsBun))
 
 ?>
 
-<div class="quantummanager-module quantumtoolbar-module <?php echo $cssClass ?>" data-type="Quantumtoolbar" data-options="buttons:<?php echo implode(',', $buttons) ?>;buttonsBun:<?php echo implode(',', $buttonsBun) ?>;">
+<div class="quantummanager-module quantummanager-backgrounds-muted quantumtoolbar-module <?php echo $cssClass ?>" data-type="Quantumtoolbar" data-options="buttons:<?php echo implode(',', $buttons) ?>;buttonsBun:<?php echo implode(',', $buttonsBun) ?>;">
 	<div class="left"></div>
 	<div class="center"></div>
 	<div class="right"></div>

@@ -74,6 +74,10 @@
 }
 
 
+/************************** Upload module **********************************/
+.quantumupload-module .drop-area .button {
+}
+
 /************************** Toolbar module *********************************/
 .quantumtoolbar-module .quantumtoolbar-module-buttons-group .qm-btn-wrap:last-child button {
     border-right-color: hsl(var(--hue),20%,80%);

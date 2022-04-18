@@ -52,16 +52,16 @@
     margin: 0;
 }
 
+.quantumupload-module .drop-area label {
+    font-size: 13px;
+    line-height: 18px;
+}
+
 .quantumupload-module .drop-area .button {
     display: inline-block;
     cursor: pointer;
-    color: #4568DC !important;
     margin: 0 0 0 5px;
     background-color: transparent !important;
-}
-
-.quantumupload-module .drop-area .button:hover {
-    color: #3a5dbe;
 }
 
 .quantumupload-module .drop-area .fileElem {

@@ -23,7 +23,7 @@ let loadQuantum = setInterval(function () {
             }
 
             if(width > 800) {
-                let splitSizesContainer = [25, 75];
+                let splitSizesContainer = [20, 80];
 
                 if(localStorage !== undefined) {
                     if(localStorage.getItem('quantummanagerSplitSizesC') !== null) {
@@ -46,7 +46,7 @@ let loadQuantum = setInterval(function () {
             }
 
 
-            let splitSizesContainerToolbar = [25, 50];
+            let splitSizesContainerToolbar = [20, 55];
 
             if(localStorage !== undefined) {
                 if(localStorage.getItem('quantummanagerSplitSizesT') !== null) {

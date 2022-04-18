@@ -40,21 +40,19 @@ try {
 			'label' => '',
 			'directory' => $folderRoot,
 			'position' => 'left',
-			'cssClass' => 'quantummanager-backgrounds-muted'
 		],
 		'quantumupload' => [
 			'label' => '',
 			'maxsize' => QuantummanagerHelper::getParamsComponentValue('maxsize', '10'),
 			'dropAreaHidden' => QuantummanagerHelper::getParamsComponentValue('dropareahidden', '0'),
 			'directory' => $folderRoot,
-			'cssClass' => 'quantummanager-backgrounds-muted'
 		],
 		'quantumtoolbar' => [
 			'label' => '',
 			'position' => 'top',
 			'buttons' => 'all',
 			'buttonsBun' => '',
-			'cssClass' => 'quantummanager-backgrounds-muted quantummanager-module-height-1-1 quantumtoolbar-padding-horizontal',
+			'cssClass' => 'quantummanager-module-height-1-1 quantumtoolbar-padding-horizontal',
 		],
 		'quantumviewfiles' => [
 			'label' => '',
