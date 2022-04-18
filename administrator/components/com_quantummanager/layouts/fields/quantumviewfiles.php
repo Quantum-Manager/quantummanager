@@ -26,7 +26,7 @@ $options = [
 ?>
 
 <div class="quantummanager-module quantumviewfiles-module" data-type="Quantumviewfiles" data-options="<?php echo implode(';', $options)?>">
-    <div class="quantumviewfiles-module-heading">
+    <div class="quantumviewfiles-module-heading  quantummanager-backgrounds-muted ">
         <ul class="breadcumbs"></ul>
         <div class="filter-search">
             <div class="input-wrapper">
@@ -44,7 +44,7 @@ $options = [
         <div class="view"></div>
 
         <?php if($displayData['metafile'] === '1') :?>
-        <div class="meta-file hidden">
+        <div class="meta-file quantummanager-backgrounds-muted hidden">
             <div class="meta-file-list">
 
             </div>

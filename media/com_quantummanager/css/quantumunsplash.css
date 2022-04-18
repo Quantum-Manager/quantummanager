@@ -123,6 +123,7 @@
 
 .quantumunsplash-module .quantumunsplash-module-header .header-filters > div {
     display: flex;
+    flex-wrap: nowrap;
     align-items: center;
 }
 
@@ -131,14 +132,25 @@
 }
 
 .quantumunsplash-module .quantumunsplash-module-header .header-filters > div:last-child {
-    flex: 1;
     display: flex;
+    flex: 1;
+    flex-wrap: nowrap;
     align-items: center;
     justify-content: flex-end;
 }
 
-.quantumunsplash-module .quantumunsplash-module-header .header-filters > div:last-child .quantummanager-icon {
-    margin-left: 10px;
+.quantumunsplash-module .quantumunsplash-module-header .header-filters > div:last-child > * {
+    margin-right: 10px;
+}
+
+.quantumunsplash-module .quantumunsplash-module-header .header-filters > div:last-child > *:last-child {
+    margin-right: 0;
+}
+
+.quantumunsplash-module .quantumunsplash-module-header .header-filters > div:last-child > span {
+    display: flex;
+    align-content: center;
+    align-items: center;
 }
 
 .quantumunsplash-module .quantumunsplash-module-container-search-wrap {

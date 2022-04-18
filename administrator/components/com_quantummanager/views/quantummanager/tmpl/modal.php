@@ -13,110 +13,112 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
-$app = Factory::getApplication();
+$app    = Factory::getApplication();
 $folder = $app->input->get('folder', '', 'string');
 
-if(!empty($folder))
+if (!empty($folder))
 {
 	$app->getSession()->set('quantummanagerroot', 'images/' . $folder);
 }
 else
 {
 	$app->getSession()->clear('quantummanagerroot');
-    $app->getSession()->clear('quantummanagerrootcheck');
+	$app->getSession()->clear('quantummanagerrootcheck');
 }
 
 HTMLHelper::_('stylesheet', 'plg_system_quantummanagermedia/modal.css', [
-	'version' => filemtime(__FILE__),
+	'version'  => filemtime(__FILE__),
 	'relative' => true
 ]);
 
 $namespace = $app->input->get('namespace', 'default');
-$scripts = $app->getSession()->get('quantummanageraddscripts', '', $namespace);
+$scripts   = $app->getSession()->get('quantummanageraddscripts', '', $namespace);
 
-if(!empty($scripts))
+if (!empty($scripts))
 {
 	$scripts = json_decode($scripts, JSON_OBJECT_AS_ARRAY);
-	if(is_array($scripts))
-    {
-        foreach ($scripts as $script)
-        {
+	if (is_array($scripts))
+	{
+		foreach ($scripts as $script)
+		{
 			HTMLHelper::_('script', $script, [
-				'version' => filemtime(__FILE__),
+				'version'  => filemtime(__FILE__),
 				'relative' => true
 			]);
-        }
+		}
 
-    }
+	}
 }
 
 ?>
 
 <?php
 
-try {
+try
+{
 	JLoader::register('JFormFieldQuantumCombine', JPATH_ROOT . '/administrator/components/com_quantummanager/fields/quantumcombine.php');
 	JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 	$folderRoot = 'root';
 
 	$buttonsBun = [];
-	$fields = [
+	$fields     = [
 		'quantumtreecatalogs' => [
-			'label' => '',
+			'label'     => '',
 			'directory' => $folderRoot,
-			'position' => 'left',
-			'cssClass' => 'quantumtreecatalogs-module-muted'
+			'position'  => 'left',
+			'cssClass'  => 'quantummanager-backgrounds-muted'
 		],
-		'quantumupload' => [
-			'label' => '',
-			'maxsize' => QuantummanagerHelper::getParamsComponentValue('maxsize', '10'),
+		'quantumupload'       => [
+			'label'          => '',
+			'maxsize'        => QuantummanagerHelper::getParamsComponentValue('maxsize', '10'),
 			'dropAreaHidden' => QuantummanagerHelper::getParamsComponentValue('dropareahidden', '0'),
-			'directory' => $folderRoot
+			'directory'      => $folderRoot,
+			'cssClass'       => 'quantummanager-backgrounds-muted'
 		],
-		'quantumtoolbar' => [
-			'label' => '',
-			'position' => 'top',
-			'buttons' => 'all',
+		'quantumtoolbar'      => [
+			'label'      => '',
+			'position'   => 'top',
+			'buttons'    => 'all',
 			'buttonsBun' => '',
-			'cssClass' => 'quantummanager-module-height-1-1 quantumtoolbar-module-muted quantumtoolbar-padding-horizontal',
+			'cssClass'   => 'quantummanager-backgrounds-muted quantummanager-module-height-1-1 quantumtoolbar-padding-horizontal',
 		],
-		'quantumviewfiles' => [
-			'label' => '',
+		'quantumviewfiles'    => [
+			'label'     => '',
 			'directory' => $folderRoot,
-			'view' => 'list-grid',
+			'view'      => 'list-grid',
 			'onlyfiles' => '0',
-			'watermark' => QuantummanagerHelper::getParamsComponentValue('overlay' , 0) > 0 ? '1' : '0',
-			'help' => QuantummanagerHelper::getParamsComponentValue('help' , '1'),
-			'metafile' => QuantummanagerHelper::getParamsComponentValue('metafile' , '1'),
+			'watermark' => QuantummanagerHelper::getParamsComponentValue('overlay', 0) > 0 ? '1' : '0',
+			'help'      => QuantummanagerHelper::getParamsComponentValue('help', '1'),
+			'metafile'  => QuantummanagerHelper::getParamsComponentValue('metafile', '1'),
 		],
-		'quantumcropperjs' => [
-			'label' => '',
+		'quantumcropperjs'    => [
+			'label'    => '',
 			'position' => 'bottom'
 		]
 	];
 
-	if((int)QuantummanagerHelper::getParamsComponentValue('unsplash', '1'))
+	if ((int) QuantummanagerHelper::getParamsComponentValue('unsplash', '1'))
 	{
 		$fields['quantumunsplash'] = [
-			'label' => '',
+			'label'    => '',
 			'position' => 'bottom'
 		];
 	}
 
 
-    if((int)QuantummanagerHelper::getParamsComponentValue('pexels', '1'))
-    {
-        $fields['quantumpexels'] = [
-            'label' => '',
-            'position' => 'bottom'
-        ];
-    }
+	if ((int) QuantummanagerHelper::getParamsComponentValue('pexels', '1'))
+	{
+		$fields['quantumpexels'] = [
+			'label'    => '',
+			'position' => 'bottom'
+		];
+	}
 
 
-	if((int)QuantummanagerHelper::getParamsComponentValue('pixabay', '1'))
+	if ((int) QuantummanagerHelper::getParamsComponentValue('pixabay', '1'))
 	{
 		$fields['quantumpixabay'] = [
-			'label' => '',
+			'label'    => '',
 			'position' => 'bottom'
 		];
 	}
@@ -140,8 +142,8 @@ try {
 	}
 
 	$optionsForField = [
-		'name' => 'filemanager',
-		'label' => '',
+		'name'   => 'filemanager',
+		'label'  => '',
 		'fields' => json_encode($fields)
 	];
 
@@ -152,7 +154,8 @@ try {
 	}
 	echo $field->getInput();
 }
-catch (Exception $e) {
+catch (Exception $e)
+{
 	echo $e->getMessage();
 }
 ?>

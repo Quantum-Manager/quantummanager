@@ -123,6 +123,7 @@
 
 .quantumpexels-module .quantumpexels-module-header .header-filters > div {
     display: flex;
+    flex-wrap: nowrap;
     align-items: center;
 }
 
@@ -133,8 +134,23 @@
 .quantumpexels-module .quantumpexels-module-header .header-filters > div:last-child {
     flex: 1;
     display: flex;
+    flex-wrap: nowrap;
     align-items: center;
     justify-content: flex-end;
+}
+
+.quantumpexels-module .quantumpexels-module-header .header-filters > div:last-child > * {
+    margin-right: 10px;
+}
+
+.quantumpexels-module .quantumpexels-module-header .header-filters > div:last-child > *:last-child {
+    margin-right: 0;
+}
+
+.quantumpexels-module .quantumpexels-module-header .header-filters > div:last-child > span {
+    display: flex;
+    align-content: center;
+    align-items: center;
 }
 
 .quantumpexels-module .quantumpexels-module-header .header-filters > div:last-child a {
@@ -142,10 +158,6 @@
     margin: 0;
     padding: 0;
     line-height: 9px;
-}
-
-.quantumpexels-module .quantumpexels-module-header .header-filters > div:last-child .quantummanager-icon {
-    margin-left: 10px;
 }
 
 .quantumpexels-module .quantumpexels-module-header .header-filters .quantummanager-dropdown-title {

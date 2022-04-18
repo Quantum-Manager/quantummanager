@@ -1220,13 +1220,15 @@ class QuantummanagerFileSystemLocal
 
         if(empty($file))
         {
+			$prefix = QuantummanagerHelper::isJoomla4() ? 'j4-' : '';
+
             if(self::dirIisEmpty(JPATH_ROOT . DIRECTORY_SEPARATOR . $path))
             {
-                $app->redirect($siteUrl . $mediaIconsPath . 'folder.svg');
+                $app->redirect($siteUrl . $mediaIconsPath . $prefix . 'folder.svg');
             }
             else
             {
-                $app->redirect($siteUrl . $mediaIconsPath . 'folder-empty.svg');
+                $app->redirect($siteUrl . $mediaIconsPath . $prefix . 'folder-empty.svg');
             }
         }
 

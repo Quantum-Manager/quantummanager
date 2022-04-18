@@ -83,20 +83,17 @@ class QuantummanagerLibs
 			'relative' => true
 		]);
 
-		if (version_compare((new Version())->getShortVersion(), '4.0', '<'))
+		$joomla_style = 'joomla3';
+
+		if (QuantummanagerHelper::isJoomla4())
 		{
-			HTMLHelper::_('stylesheet', 'com_quantummanager/joomla3.css', [
-				'version'  => filemtime(__FILE__),
-				'relative' => true
-			]);
+			$joomla_style = 'joomla4';
 		}
-		else
-		{
-			HTMLHelper::_('stylesheet', 'com_quantummanager/joomla4.css', [
-				'version'  => filemtime(__FILE__),
-				'relative' => true
-			]);
-		}
+
+		HTMLHelper::_('stylesheet', 'com_quantummanager/' . $joomla_style . '.css', [
+			'version'  => filemtime(__FILE__),
+			'relative' => true
+		]);
 	}
 
 

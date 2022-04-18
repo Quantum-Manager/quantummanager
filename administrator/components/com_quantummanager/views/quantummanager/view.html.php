@@ -81,9 +81,19 @@ class QuantummanagerViewQuantummanager extends HtmlView
 
 		$toolbar = Toolbar::getInstance('toolbar');
 		$url = Uri::root(true) . '/administrator/index.php?option=com_quantummanager&layout=window&tmpl=component';
-		$button = '<a href="' . $url . '" class="btn btn-small" target="_blank">'
-			. '<span class="icon-new-tab" aria-hidden="true"></span>'
-			. Text::_('COM_QUANTUMMANAGER_CLEAN_WINDOW') . '</a>';
+
+		if (QuantummanagerHelper::isJoomla4())
+		{
+			$button = '<a href="' . $url . '" class="btn btn-small" target="_blank">'
+				. Text::_('COM_QUANTUMMANAGER_CLEAN_WINDOW') . '</a>';
+		}
+		else
+		{
+			$button = '<a href="' . $url . '" class="btn btn-small" target="_blank">'
+				. '<span class="icon-new-tab" aria-hidden="true"></span>'
+				. Text::_('COM_QUANTUMMANAGER_CLEAN_WINDOW') . '</a>';
+		}
+
 		$toolbar->appendButton('Custom', $button, 'generate');
 	}
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="80" height="64" viewBox="0 0 80 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 4C0 1.79086 1.79083 0 4 0H40L48 8H76C78.2092 8 80 9.79086 80 12V60C80 62.2091 78.2092 64 76 64H4C1.79083 64 0 62.2091 0 60V4Z" fill="#8596ad"/>
+    <g style="mix-blend-mode:overlay" opacity="0.5">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M48 8L40 0H32L40 8H48Z" fill="black"/>
+    </g>
+</svg>

@@ -498,7 +498,7 @@
 		<field name="resizefolders"
 			   type="subform"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_RESIZE_FOLDERS"
-			   layout="joomla.form.field.subform.repeatable-table"
+			   layout="joomla.form.field.subform.repeatable"
 			   multiple="true"
 			   min="0"
 			   max="20">
@@ -569,7 +569,7 @@
 			   type="subform"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_PREVIEWSLLIST_LABEL"
 			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_PREVIEWSLLIST_DESC"
-			   layout="joomla.form.field.subform.repeatable-table"
+			   layout="joomla.form.field.subform.repeatable"
 			   multiple="true"
 			   min="0"
 			   max="20">
@@ -636,7 +636,7 @@
 
 		<field name="profiles"
 			   type="subform"
-			   layout="joomla.form.field.subform.repeatable-table"
+			   layout="joomla.form.field.subform.repeatable"
 			   label="COM_QUANTUMMANAGER_CONFIG_PROFILES_VARIABLES"
 			   multiple="true">
 			<form>
