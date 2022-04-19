@@ -75,8 +75,8 @@
     transition: all 0.2s;
 }
 
-.quantumtoolbar-module button .quantummanager-icon {
-    margin-right: 5px;
+.quantumtoolbar-module button .quantummanager-icon + span {
+    margin-left: 5px;
 }
 
 .quantumtoolbar-module button span {

@@ -45,7 +45,9 @@ window.Quantumtoolbar = function(Filemanager, QuantumToolbarElement, options) {
             button.innerHTML = "<span class='quantummanager-icon " + icon + "'></span>";
         }
 
-        button.innerHTML += "<span>" + name + "</span>";
+        if(name !== '') {
+            button.innerHTML += "<span>" + name + "</span>";
+        }
 
         if(attr === null)  {
             attr = {};
