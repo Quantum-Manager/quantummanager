@@ -272,6 +272,11 @@
     width: 64.6%;
 }
 
+.quantumpixabay-module .quantumunsplash-module-search .grid-item img {
+    width: 100%;
+    height: 100%;
+}
+
 .quantumpixabay-module .quantumpixabay-module-search .pixabay-meta-wrap {
     position: absolute;
     left: 0;

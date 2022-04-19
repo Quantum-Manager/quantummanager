@@ -186,8 +186,7 @@
 }
 
 .quantumunsplash-module .quantumunsplash-module-search .grid-sizer,
-.quantumunsplash-module .quantumunsplash-module-search .grid-item
-{
+.quantumunsplash-module .quantumunsplash-module-search .grid-item {
     width: 31.3%;
     margin: 1%;
 }
@@ -198,6 +197,11 @@
 
 .quantumunsplash-module .quantumunsplash-module-search .grid-item--width2 {
     width: 64.6%;
+}
+
+.quantumunsplash-module .quantumunsplash-module-search .grid-item img {
+    width: 100%;
+    height: 100%;
 }
 
 .quantumunsplash-module .quantumunsplash-module-search .unsplash-meta-wrap {
