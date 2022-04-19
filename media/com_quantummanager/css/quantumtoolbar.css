@@ -17,12 +17,8 @@
     align-items: center;
 }
 
-.quantumtoolbar-module .gutter {
-    height: 100%;
-}
-
 .quantumtoolbar-module .left {
-    width: 25%;
+    width: auto;
 }
 
 .quantumtoolbar-module .center {
@@ -36,13 +32,13 @@
     justify-content: flex-end;
 }
 
-.quantumtoolbar-module .left > *:first-child {
+/*.quantumtoolbar-module .left > *:first-child {
     margin-left: 15px;
 }
 
 .quantumtoolbar-module .right > *:first-child {
     margin-right: 15px !important;
-}
+}*/
 
 .quantumtoolbar-module button {
     display: flex;

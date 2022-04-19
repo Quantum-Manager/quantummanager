@@ -38,22 +38,31 @@ foreach($scopes as $scope)
             </div>
 		<?php endif; ?>
 
-		<?php if(!empty($displayData['left'])) : ?>
+		<?php if(!empty($displayData['container-left'])) : ?>
             <div class="quantummanager-left">
-                <?php echo $displayData['left'] ?>
+                <?php echo $displayData['container-left'] ?>
                 <div class="quantummanager-left-toggle"></div>
             </div>
 		<?php endif; ?>
 
-        <?php if(!empty($displayData['center'])) : ?>
-            <div class="quantummanager-center">
-                <?php echo $displayData['center'] ?>
+        <div class="quantummanager-center">
+            <div class="quantummanager-center-top">
+	            <?php if(!empty($displayData['container-center-top'])) : ?>
+		            <?php echo $displayData['container-center-top'] ?>
+	            <?php endif; ?>
             </div>
-		<?php endif; ?>
 
-        <?php if(!empty($displayData['right'])) : ?>
+            <div class="quantummanager-center-center">
+	            <?php if(!empty($displayData['container-center-center'])) : ?>
+		            <?php echo $displayData['container-center-center'] ?>
+	            <?php endif; ?>
+            </div>
+
+        </div>
+
+        <?php if(!empty($displayData['container-right'])) : ?>
             <div class="quantummanager-right">
-                <?php echo $displayData['right'] ?>
+                <?php echo $displayData['container-right'] ?>
                 <div class="quantummanager-right-toggle"></div>
             </div>
         <?php endif; ?>

@@ -54,19 +54,6 @@ let loadQuantum = setInterval(function () {
                 }
             }
 
-            Split(['.quantumtoolbar-module .left', '.quantumtoolbar-module .center',], {
-                sizes: splitSizesContainerToolbar,
-                elementStyle: (dimension, size, gutterSize) => ({
-                    'flex-basis': `calc(${size}% - ${gutterSize}px)`,
-                }),
-                gutterStyle: (dimension, gutterSize) => ({
-                    'flex-basis':  `${gutterSize}px`,
-                }),
-                onDragEnd: function(sizes) {
-                    localStorage.setItem('quantummanagerSplitSizesT', JSON.stringify(sizes))
-                },
-            });
-
             function togglePositions(fm) {
                 let leftToggle = fm.element.querySelector('.quantummanager-left-toggle');
                 let rightToggle = fm.element.querySelector('.quantummanager-right-toggle');

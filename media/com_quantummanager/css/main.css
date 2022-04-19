@@ -157,8 +157,8 @@ body.com_quantummanager > .container-main {
     margin-left: -7px;
 }
 
-.quantummanager .quantummanager-container .quantummanager-center > div {
-    /*width: calc(100% - 15px);*/
+.quantummanager .quantummanager-container .quantummanager-center > .quantummanager-center-center {
+    flex: 1;
 }
 
 .quantummanager .quantummanager-container .quantummanager-right {
@@ -185,6 +185,23 @@ body.com_quantummanager > .container-main {
     height: 100%;
 }
 
+
+/***************************** padding ******************************/
+.qm-padding-small-top {
+   padding-top: 10px;
+}
+
+.qm-padding-small-left {
+    padding-left: 10px;
+}
+
+.qm-padding-small-right {
+    padding-right: 10px;
+}
+
+.qm-padding-small-bottom {
+    padding-bottom: 10px;
+}
 
 /******************************** Height *********************************/
 .quantummanager-height-medium {
@@ -272,7 +289,6 @@ body.com_quantummanager > .container-main {
     background: #59C173;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #5D26C1, #a17fe0, #59C173);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #5D26C1, #a17fe0, #59C173); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
     color: #fff;
     border: 1px solid #ddd;
     box-shadow: 0 5px 15px rgba(0,0,0,0.08);

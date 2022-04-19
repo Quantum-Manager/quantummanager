@@ -9,6 +9,7 @@
 .quantumviewfiles-module {
     position: relative;
     display: flex;
+    height: 100%;
     flex-wrap: wrap;
     -webkit-flex-wrap: wrap;
     flex-direction: column;
@@ -20,8 +21,8 @@
     display: flex;
     flex-direction: row-reverse;
     height: 30px;
-    margin: 0 -14px 0 0;
-    padding: 0px 4px 9px 18px;
+    margin: 0 -10px 0 0;
+    padding: 0 4px 9px 10px;
     align-items: center;
     align-content: center;
     border-bottom: 1px solid #ddddddb5;
