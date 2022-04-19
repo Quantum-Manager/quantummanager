@@ -185,8 +185,12 @@ body.com_quantummanager > .container-main {
     height: 100%;
 }
 
+/**************************** Visible ****************************/
+.qm-hide {
+    display: none;
+}
 
-/***************************** padding ******************************/
+/***************************** Padding ******************************/
 .qm-padding-small-top {
    padding-top: 10px;
 }
