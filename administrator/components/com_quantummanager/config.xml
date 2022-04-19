@@ -609,7 +609,7 @@
 			   type="subform"
 			   label="COM_QUANTUMMANAGER_CONFIG_COLORS_COLORSFILES_LABEL"
 			   description="COM_QUANTUMMANAGER_CONFIG_COLORS_COLORSFILES_DESC"
-			   layout="joomla.form.field.subform.repeatable-table"
+			   layout="joomla.form.field.subform.repeatable"
 			   multiple="true"
 			   min="0">
 			<form>
