@@ -13,48 +13,49 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
-$app = Factory::getApplication();
+$app    = Factory::getApplication();
 $folder = $app->input->get('folder', '', 'string');
 
-if(!empty($folder))
+if (!empty($folder))
 {
 	$app->getSession()->set('quantummanagerroot', 'images/' . $folder);
 }
 else
 {
 	$app->getSession()->clear('quantummanagerroot');
-    $app->getSession()->clear('quantummanagerrootcheck');
+	$app->getSession()->clear('quantummanagerrootcheck');
 }
 
 HTMLHelper::_('stylesheet', 'plg_system_quantummanagermedia/modal.css', [
-	'version' => filemtime(__FILE__),
+	'version'  => filemtime(__FILE__),
 	'relative' => true
 ]);
 
 $namespace = $app->input->get('namespace', 'default');
-$scripts = $app->getSession()->get('quantummanageraddscripts', '', $namespace);
+$scripts   = $app->getSession()->get('quantummanageraddscripts', '', $namespace);
 
-if(!empty($scripts))
+if (!empty($scripts))
 {
 	$scripts = json_decode($scripts, JSON_OBJECT_AS_ARRAY);
-	if(is_array($scripts))
-    {
-        foreach ($scripts as $script)
-        {
+	if (is_array($scripts))
+	{
+		foreach ($scripts as $script)
+		{
 			HTMLHelper::_('script', $script, [
-				'version' => filemtime(__FILE__),
+				'version'  => filemtime(__FILE__),
 				'relative' => true
 			]);
-        }
+		}
 
-    }
+	}
 }
 
 ?>
 
 <?php
 
-try {
+try
+{
 	JLoader::register('JFormFieldQuantumCombine', JPATH_ROOT . '/administrator/components/com_quantummanager/fields/quantumcombine.php');
 	JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 	$folderRoot = 'root';
@@ -64,24 +65,26 @@ try {
 		'quantumtreecatalogs' => [
 			'label' => '',
 			'directory' => $folderRoot,
-			'position' => 'left',
-			'cssClass' => 'quantumtreecatalogs-module-muted'
-		],
-		'quantumupload' => [
-			'label' => '',
-			'maxsize' => QuantummanagerHelper::getParamsComponentValue('maxsize', '10'),
-			'dropAreaHidden' => QuantummanagerHelper::getParamsComponentValue('dropareahidden', '0'),
-			'directory' => $folderRoot
+			'position' => 'container-left',
 		],
 		'quantumtoolbar' => [
 			'label' => '',
-			'position' => 'top',
+			'position' => 'container-center-top',
 			'buttons' => 'all',
 			'buttonsBun' => '',
-			'cssClass' => 'quantummanager-module-height-1-1 quantumtoolbar-module-muted quantumtoolbar-padding-horizontal',
+			'cssClass' => 'qm-padding-small-left qm-padding-small-right qm-padding-small-top qm-padding-small-bottom',
+		],
+		'quantumupload' => [
+			'label' => '',
+			'position' => 'container-center-top',
+			'maxsize' => QuantummanagerHelper::getParamsComponentValue('maxsize', '10'),
+			'dropAreaHidden' => QuantummanagerHelper::getParamsComponentValue('dropareahidden', '0'),
+			'directory' => $folderRoot,
+			'cssClass' => 'qm-padding-small-left qm-padding-small-right qm-padding-small-bottom',
 		],
 		'quantumviewfiles' => [
 			'label' => '',
+			'position' => 'container-center-center',
 			'directory' => $folderRoot,
 			'view' => 'list-grid',
 			'onlyfiles' => '0',
@@ -92,31 +95,31 @@ try {
 		'quantumcropperjs' => [
 			'label' => '',
 			'position' => 'bottom'
-		]
+		],
 	];
 
-	if((int)QuantummanagerHelper::getParamsComponentValue('unsplash', '1'))
+	if ((int) QuantummanagerHelper::getParamsComponentValue('unsplash', '1'))
 	{
 		$fields['quantumunsplash'] = [
-			'label' => '',
+			'label'    => '',
 			'position' => 'bottom'
 		];
 	}
 
 
-    if((int)QuantummanagerHelper::getParamsComponentValue('pexels', '1'))
-    {
-        $fields['quantumpexels'] = [
-            'label' => '',
-            'position' => 'bottom'
-        ];
-    }
+	if ((int) QuantummanagerHelper::getParamsComponentValue('pexels', '1'))
+	{
+		$fields['quantumpexels'] = [
+			'label'    => '',
+			'position' => 'bottom'
+		];
+	}
 
 
-	if((int)QuantummanagerHelper::getParamsComponentValue('pixabay', '1'))
+	if ((int) QuantummanagerHelper::getParamsComponentValue('pixabay', '1'))
 	{
 		$fields['quantumpixabay'] = [
-			'label' => '',
+			'label'    => '',
 			'position' => 'bottom'
 		];
 	}
@@ -140,8 +143,8 @@ try {
 	}
 
 	$optionsForField = [
-		'name' => 'filemanager',
-		'label' => '',
+		'name'   => 'filemanager',
+		'label'  => '',
 		'fields' => json_encode($fields)
 	];
 
@@ -152,7 +155,8 @@ try {
 	}
 	echo $field->getInput();
 }
-catch (Exception $e) {
+catch (Exception $e)
+{
 	echo $e->getMessage();
 }
 ?>

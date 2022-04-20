@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 
 $app = Factory::getApplication();
 $app->getSession()->clear('quantummanagerroot');
@@ -27,24 +28,26 @@ try {
         'quantumtreecatalogs' => [
             'label' => '',
             'directory' => $folderRoot,
-            'position' => 'left',
-            'cssClass' => 'quantumtreecatalogs-module-muted'
+            'position' => 'container-left',
+        ],
+        'quantumtoolbar' => [
+	        'label' => '',
+	        'position' => 'container-center-top',
+	        'buttons' => 'all',
+	        'buttonsBun' => '',
+	        'cssClass' => 'qm-padding-small-left qm-padding-small-right qm-padding-small-top qm-padding-small-bottom',
         ],
         'quantumupload' => [
 			'label' => '',
+			'position' => 'container-center-top',
 			'maxsize' => QuantummanagerHelper::getParamsComponentValue('maxsize', '10'),
             'dropAreaHidden' => QuantummanagerHelper::getParamsComponentValue('dropareahidden', '0'),
-            'directory' => $folderRoot
-        ],
-        'quantumtoolbar' => [
-			'label' => '',
-			'position' => 'top',
-            'buttons' => 'all',
-            'buttonsBun' => '',
-            'cssClass' => 'quantummanager-module-height-1-1 quantumtoolbar-module-muted quantumtoolbar-padding-horizontal',
+            'directory' => $folderRoot,
+			'cssClass' => 'qm-padding-small-left qm-padding-small-right qm-padding-small-bottom',
         ],
         'quantumviewfiles' => [
 			'label' => '',
+			'position' => 'container-center-center',
 			'directory' => $folderRoot,
             'view' => 'list-grid',
             'onlyfiles' => '0',

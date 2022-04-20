@@ -17,6 +17,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Version;
 use Joomla\Filesystem\Folder;
 use Joomla\Filesystem\Path;
 use Joomla\Registry\Registry;
@@ -1110,4 +1111,14 @@ class QuantummanagerHelper
 		$app->sendHeaders();
 	}
 
+
+	public static function isJoomla4()
+	{
+		if (version_compare((new Version())->getShortVersion(), '4.0', '<'))
+		{
+			return false;
+		}
+
+		return true;
+	}
 }

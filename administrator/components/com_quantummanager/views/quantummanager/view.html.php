@@ -10,6 +10,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
@@ -71,19 +72,39 @@ class QuantummanagerViewQuantummanager extends HtmlView
 	 */
 	private function toolbar()
 	{
-		JToolBarHelper::title(Text::_('COM_QUANTUMMANAGER'), '');
-
 		// Options button.
-		if (Factory::getUser()->authorise('core.admin', 'com_quantummanager'))
+		if (QuantummanagerHelper::isJoomla4())
 		{
-			JToolBarHelper::preferences('com_quantummanager');
-		}
+			if (Factory::getUser()->authorise('core.admin', 'com_quantummanager'))
+			{
+				HTMLHelper::_('script', 'com_quantummanager/configuration.js', [
+					'version'  => filemtime(__FILE__),
+					'relative' => true
+				]);
+			}
 
-		$toolbar = Toolbar::getInstance('toolbar');
-		$url = Uri::root(true) . '/administrator/index.php?option=com_quantummanager&layout=window&tmpl=component';
-		$button = '<a href="' . $url . '" class="btn btn-small" target="_blank">'
-			. '<span class="icon-new-tab" aria-hidden="true"></span>'
-			. Text::_('COM_QUANTUMMANAGER_CLEAN_WINDOW') . '</a>';
-		$toolbar->appendButton('Custom', $button, 'generate');
+			HTMLHelper::_('stylesheet', 'com_quantummanager/joomla4hidetoolbar.css', [
+				'version'  => filemtime(__FILE__),
+				'relative' => true
+			]);
+		}
+		else
+		{
+
+			JToolBarHelper::title(Text::_('COM_QUANTUMMANAGER'), '');
+
+			// Options button.
+			if (Factory::getUser()->authorise('core.admin', 'com_quantummanager'))
+			{
+				JToolBarHelper::preferences('com_quantummanager');
+			}
+
+			$toolbar = Toolbar::getInstance('toolbar');
+			$url     = Uri::root(true) . '/administrator/index.php?option=com_quantummanager&layout=window&tmpl=component';
+			$button  = '<a href="' . $url . '" class="btn btn-small" target="_blank">'
+				. '<span class="icon-new-tab" aria-hidden="true"></span>'
+				. Text::_('COM_QUANTUMMANAGER_CLEAN_WINDOW') . '</a>';
+			$toolbar->appendButton('Custom', $button, 'generate');
+		}
 	}
 }

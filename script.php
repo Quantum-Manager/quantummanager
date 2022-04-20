@@ -8,6 +8,8 @@
  */
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Version;
 
 defined('_JEXEC') or die;
 
@@ -17,7 +19,7 @@ defined('_JEXEC') or die;
  * @package     A package name
  * @since       1.0
  */
-class Com_QuantummanagerInstallerScript
+class com_quantummanagerInstallerScript
 {
 
 	/**
@@ -54,12 +56,6 @@ class Com_QuantummanagerInstallerScript
         'mbstring'
 	];
 
-	/**
-	 * Constructor
-	 *
-	 * @param   JAdapterInstance  $adapter  The object responsible for running this script
-	 */
-	public function __construct(JAdapterInstance $adapter) {}
 
 	/**
 	 * Called before any type of action
@@ -69,7 +65,7 @@ class Com_QuantummanagerInstallerScript
 	 *
 	 * @return  boolean  True on success
 	 */
-	public function preflight($route, JAdapterInstance $adapter)
+	public function preflight($route, $adapter)
     {
 		$app = Factory::getApplication();
 
@@ -81,7 +77,7 @@ class Com_QuantummanagerInstallerScript
 		}
 
 		jimport('joomla.version');
-		$jversion = new JVersion();
+		$jversion = new Version();
 		if (!$jversion->isCompatible('3.7'))
 		{
 			$app->enqueueMessage(Text::sprintf('COM_QUANTUMMANAGER_ERROR_COMPATIBLE_PHP', $this->minimumJoomla),
@@ -129,7 +125,7 @@ class Com_QuantummanagerInstallerScript
      *
      * @return  boolean  True on success
      */
-    public function postflight($route, JAdapterInstance $adapter)
+    public function postflight($route, $adapter)
     {
         JLoader::register('QuantummanagerHelper', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
         QuantummanagerHelper::setComponentsParams('helpURL', $this->helpURL);

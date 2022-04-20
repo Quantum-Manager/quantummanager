@@ -9,6 +9,7 @@
 .quantumviewfiles-module {
     position: relative;
     display: flex;
+    height: 100%;
     flex-wrap: wrap;
     -webkit-flex-wrap: wrap;
     flex-direction: column;
@@ -20,9 +21,10 @@
     display: flex;
     flex-direction: row-reverse;
     height: 30px;
-    background: #F0F0F0;
-    margin: 0 -14px 0 0;
-    padding: 0px 4px 9px 18px;
+    margin: 0 -10px 0 0;
+    padding: 0 4px 9px 10px;
+    align-items: center;
+    align-content: center;
     border-bottom: 1px solid #ddddddb5;
 }
 .quantumviewfiles-module .filters {
@@ -257,7 +259,6 @@
     position: relative;
     height: auto;
     width: 100%;
-    border-right: 1px solid #ddddddb5;
 }
 .quantumviewfiles-module .meta-file ~ .view {
     width: 80%;
@@ -266,8 +267,7 @@
     position: relative;
     width: 25%;
     min-width: 265px;
-    /*margin-top: -45px;*/
-    background: #F0F0F0;
+    border-left: 1px solid #ddddddb5;
 }
 .quantumviewfiles-module .meta-file.hidden {
     display: none;
@@ -571,7 +571,7 @@
 }
 .quantumviewfiles-module .field-list-files .list-grid .file-item {
     margin: 1%;
-    height: 130px;
+    height: 160px;
     padding-bottom: 30px;
     transition: all 0.2s;
 }
@@ -783,11 +783,9 @@ svg.svg-icon text {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: 50% 50%;
-    background-image: url("data:image/svg+xml,%3Csvg width='80' height='64' viewBox='0 0 80 64' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4C0 1.79086 1.79083 0 4 0H40L48 8H76C78.2092 8 80 9.79086 80 12V60C80 62.2091 78.2092 64 76 64H4C1.79083 64 0 62.2091 0 60V4Z' fill='%23A5C7E9'/%3E%3Cg style='mix-blend-mode:overlay' opacity='0.5'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M48 8L40 0H32L40 8H48Z' fill='black'/%3E%3C/g%3E%3C/svg%3E%0A");
     transition: opacity .25s ease-in;
 }
 .quantumviewfiles-module .field-list-files .list-grid .directory-item.empty .directory .directory-icon {
-    background-image: url("data:image/svg+xml,%3Csvg width='80' height='64' viewBox='0 0 80 64' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M47.2929 8.70711L47.5858 9H48H76C77.6569 9 79 10.3431 79 12V60C79 61.6569 77.6569 63 76 63H4C2.34312 63 1 61.6569 1 60V4C1 2.34314 2.34312 1 4 1H39.5858L47.2929 8.70711Z' stroke='%23A5C7E9' stroke-width='2'/%3E%3C/svg%3E%0A");
 }
 .quantumviewfiles-module .field-list-files .list-grid .directory-item:hover .directory .directory-icon {
     opacity: .6;
