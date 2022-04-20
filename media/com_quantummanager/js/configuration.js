@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded' ,function () {
             let fmIndex = parseInt(quantumAll[i].getAttribute('data-index'));
             fmIndex = parseInt(quantumAll[i].getAttribute('data-index'));
             QuantummanagerLists[fmIndex].Quantumtoolbar.buttonAdd('conf', 'right', 'file-other', 'hidden-label', 'Conf', 'quantummanager-icon-conf', {}, function (ev) {
-                location.href = '/administrator/index.php?option=com_quantummanager&layout=window&tmpl=component';
+                location.href = '/administrator/index.php?option=com_config&view=component&component=com_quantummanager';
             });
         }
     }, 10);
