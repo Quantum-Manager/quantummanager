@@ -2,7 +2,6 @@
     display: none;
 }
 
-
 body.com_quantummanager #content, body.com_quantummanager #content > *,
 body.com_quantummanager #content > * > * body.com_quantummanager #content > * > * > * {
     height: calc(100% - 34px) !important;
