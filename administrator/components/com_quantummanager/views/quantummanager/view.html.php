@@ -83,13 +83,16 @@ class QuantummanagerViewQuantummanager extends HtmlView
 				]);
 			}
 
-			HTMLHelper::_('stylesheet', 'com_quantummanager/hidetoolbar.css', [
+			HTMLHelper::_('stylesheet', 'com_quantummanager/joomla4hidetoolbar.css', [
 				'version'  => filemtime(__FILE__),
 				'relative' => true
 			]);
 		}
 		else
 		{
+
+			JToolBarHelper::title(Text::_('COM_QUANTUMMANAGER'), '');
+
 			// Options button.
 			if (Factory::getUser()->authorise('core.admin', 'com_quantummanager'))
 			{
