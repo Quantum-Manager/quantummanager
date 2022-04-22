@@ -137,7 +137,7 @@
 }
 
 @media screen and (max-width: 1360px) {
-    .quantumtoolbar-module button.hidden-label span:last-child {
+    .quantumtoolbar-module button.hidden-label span:not(.quantummanager-icon) {
         display: none;
     }
 }
