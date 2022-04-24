@@ -185,13 +185,11 @@
             clearInterval(self.turn_execute);
             self.turn_execute = null;
             self.turn_execute_time = 0;
-            console.log(self.turns_list);
         },
-
 
         addTurn: function(callback) {
             let self = this;
-            console.log(self.turns_list);
+
             self.turns_list.push(callback);
 
             if(self.turn_execute === null && self.turns_list.length > 0) {

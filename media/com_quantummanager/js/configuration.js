@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded' ,function () {
         for (let i = 0; i < quantumAll.length; i++) {
             let fmIndex = parseInt(quantumAll[i].getAttribute('data-index'));
             fmIndex = parseInt(quantumAll[i].getAttribute('data-index'));
-            QuantummanagerLists[fmIndex].Quantumtoolbar.buttonAdd('conf', 'right', 'file-other', 'hidden-label', 'Conf', 'quantummanager-icon-conf', {}, function (ev) {
+            QuantummanagerLists[fmIndex].Quantumtoolbar.buttonAdd('conf', 'right', 'file-other', 'hidden-label', QuantumtoolbarLang.buttonSettings , 'quantummanager-icon-settings', {}, function (ev) {
                 location.href = '/administrator/index.php?option=com_config&view=component&component=com_quantummanager';
             });
         }

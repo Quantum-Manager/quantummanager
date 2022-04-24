@@ -207,6 +207,20 @@ body.com_quantummanager > .container-main {
     padding-bottom: 10px;
 }
 
+/******************************* Flex ************************************/
+.qm-flex {
+    display: flex;
+}
+
+.qm-flex-nowrap {
+    flex-wrap: nowrap;
+}
+
+/******************************** Width *********************************/
+.qm-width-1-1 {
+    width: 100%;
+}
+
 /******************************** Height *********************************/
 .quantummanager-height-medium {
     height: 600px;
@@ -763,6 +777,12 @@ body.com_quantummanager > .container-main {
     width: 14px;
     height: 14px;
     background-image: url("../images/icons/action/crop-button.svg");
+}
+
+.quantummanager-icon-settings {
+  width: 14px;
+  height: 14px;
+  background-image: url("../images/icons/action/settings-cogwheel-button.svg");
 }
 
 

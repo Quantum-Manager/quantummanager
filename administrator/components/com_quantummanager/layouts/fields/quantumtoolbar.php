@@ -7,6 +7,8 @@
  * @link       https://www.norrnext.com
  */
 
+use Joomla\CMS\Language\Text;
+
 defined('_JEXEC') or die;
 extract($displayData);
 $buttons = $displayData['buttons'];
@@ -30,3 +32,14 @@ if(!is_array($buttonsBun))
 	<div class="center"></div>
 	<div class="right"></div>
 </div>
+
+<?php
+
+$langs = json_encode([
+	'buttonSettings' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_SETTINGS'), ENT_QUOTES),
+]);
+
+QuantummanagerHelper::scriptInsertOnPage('quantumToolbar', <<<EOF
+    window.QuantumtoolbarLang = $langs;
+EOF
+);
