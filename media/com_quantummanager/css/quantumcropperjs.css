@@ -45,10 +45,10 @@
 .quantumcropperjs-module .qm-select {
     display: inline-block;
     height: 30px;
-    border: 1px solid #333;
-    padding: 0 5px;
+    line-height: 30px;
+    border: none;
+    padding: 0 10px;
     font-size: 13px;
-    line-height: 18px;
     border-radius: 3px;
     vertical-align: middle;
 }
@@ -70,14 +70,14 @@
     margin: 0;
     background: #2b2b2b;
     color: #ffffff;
+    line-height: 30px;
     border: 1px solid #2b2b2b;
     border-left: 0;
-    font-weight: bold;
+    font-weight: normal;
 }
 .quantumcropperjs-module .toolbar {
     display: block;
     position: relative;
-    padding: 25px;
     width: 15%;
     min-width: 290px;
     height: 100%;
@@ -86,8 +86,7 @@
 .quantumcropperjs-module .toolbar .fields-list {
     max-height: 70%;
     overflow-y: auto;
-    margin: 0 -25px 0 -35px;
-    padding: 0 25px 0 35px;
+    padding: 25px;
 }
 .quantumcropperjs-module .toolbar > div > div {
     display: flex;
@@ -165,6 +164,7 @@
     border-bottom-right-radius: 0;
 }
 .quantumcropperjs-module .qm-name-file-wrap .qm-select {
+    width: 60px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
@@ -271,7 +271,8 @@
 
 .qm-input-width-height-wrap-bottom {
     position: absolute;
-    bottom: 25px
+    bottom: 25px;
+    padding: 0 25px;
 }
 .quantumcropperjs-module .qm-input-width-height-wrap > label {
     width: 100%;
@@ -392,7 +393,7 @@
     color: transparent;
 }
 .quantumcropperjs-module .qm-button-wrap {
-    margin-top: 35px;
+    padding: 25px;
     display: flex;
     justify-content: space-between;
 }

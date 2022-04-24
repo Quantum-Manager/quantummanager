@@ -192,27 +192,27 @@ $presets = $paramsComponents->get('custompresetscrop');
 
                 <div class="qm-btn-group">
                     <button type="button" class="qm-btn quantummanager-tooltip" data-method="rotate" data-option="-90" data-tooltip="<?php echo Text::_('COM_QUANTUMMANAGER_TOOLTIP_ROTATE_LEFT'); ?>">
-                        <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="cropper.rotate(-90)">
-                            <span class="quantummanager-icon quantummanager-icon-rotate-left"></span>
-                        </span>
+                    <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="cropper.rotate(-90)">
+                        <span class="quantummanager-icon quantummanager-icon-rotate-left"></span>
+                    </span>
                     </button>
                     <button type="button" class="qm-btn quantummanager-tooltip" data-method="rotate" data-option="90" data-tooltip="<?php echo Text::_('COM_QUANTUMMANAGER_TOOLTIP_ROTATE_RIGHT'); ?>">
-                        <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="cropper.rotate(90)">
-                            <span class="quantummanager-icon quantummanager-icon-rotate-right"></span>
-                        </span>
+                    <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="cropper.rotate(90)">
+                        <span class="quantummanager-icon quantummanager-icon-rotate-right"></span>
+                    </span>
                     </button>
                 </div>
 
                 <div class="qm-btn-group">
                     <button type="button" class="qm-btn quantummanager-tooltip" data-method="scaleX" data-option="-1" data-tooltip="<?php echo Text::_('COM_QUANTUMMANAGER_TOOLTIP_FLIP_VERTICAL'); ?>">
-                        <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="cropper.scaleX(-1)">
-                            <span class="quantummanager-icon quantummanager-icon-flip-horizontal"></span>
-                        </span>
+                    <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="cropper.scaleX(-1)">
+                        <span class="quantummanager-icon quantummanager-icon-flip-horizontal"></span>
+                    </span>
                     </button>
                     <button type="button" class="qm-btn quantummanager-tooltip" data-method="scaleY" data-option="-1" data-tooltip="<?php echo Text::_('COM_QUANTUMMANAGER_TOOLTIP_FLIP_HORIZONTAL'); ?>">
-                        <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="cropper.scaleY(-1)">
-                            <span class="quantummanager-icon quantummanager-icon-flip-vertical"></span>
-                        </span>
+                    <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="cropper.scaleY(-1)">
+                        <span class="quantummanager-icon quantummanager-icon-flip-vertical"></span>
+                    </span>
                     </button>
                 </div>
 
