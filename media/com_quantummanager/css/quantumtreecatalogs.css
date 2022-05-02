@@ -91,7 +91,8 @@
     left: 2px;
     width: 8px;
     height: 8px;
-    background-image: url("data:image/svg+xml,%3Csvg width='4' height='6' viewBox='0 0 4 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.295013 5.295L2.58501 3L0.295013 0.705L1.00001 0L4.00001 3L1.00001 6L0.295013 5.295Z' fill='%23122E4A'/%3E%3C/svg%3E%0A");    background-size: contain;
+    background-image: url("data:image/svg+xml,%3Csvg width='4' height='6' viewBox='0 0 4 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.295013 5.295L2.58501 3L0.295013 0.705L1.00001 0L4.00001 3L1.00001 6L0.295013 5.295Z' fill='%23122E4A'/%3E%3C/svg%3E%0A");
+    background-size: contain;
     background-repeat: no-repeat;
     transition: transform 0.2s;
 }

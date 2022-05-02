@@ -132,6 +132,7 @@ body.com_quantummanager > .container-main {
 
 .quantummanager .gutter {
     position: relative;
+    z-index: 1;
 }
 
 .quantummanager .gutter:after {
