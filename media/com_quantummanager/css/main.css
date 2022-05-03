@@ -777,7 +777,11 @@ body.com_quantummanager > .container-main {
   height: 14px;
   background-image: url("../images/icons/action/settings-cogwheel-button.svg");
 }
-
+.quantummanager-icon-filter {
+  width: 14px;
+  height: 14px;
+  background-image: url("../images/icons/action/filter-results-button.svg");
+}
 
 /****************************** Loader ********************************/
 .quantummanager .loader {

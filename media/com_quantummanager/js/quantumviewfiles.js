@@ -501,6 +501,135 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
 
                 });
 
+
+            let buttonFilter = Filemanager.Quantumtoolbar.buttonAdd(
+                'viewfilesFilter',
+                'center',
+                'file-actions',
+                'qm-btn-more',
+                '',
+                'quantummanager-icon-filter',
+                {},
+                function (ev) {}).parentElement;
+
+            Filemanager.Quantumtoolbar.buttonAdd(
+                'viewfilesFilterNone',
+                'center',
+                'file-actions',
+                'qm-btn-width-small',
+                QuantumUtils.htmlspecialcharsDecode('не выбрано', 'ENT_QUOTES'),
+                '',
+                {},
+                function (ev) {
+                },
+                buttonFilter
+            );
+
+            Filemanager.Quantumtoolbar.buttonAdd(
+                'viewfilesFilterName',
+                'center',
+                'file-actions',
+                'qm-btn-width-small',
+                QuantumUtils.htmlspecialcharsDecode('по названию', 'ENT_QUOTES'),
+                '',
+                {},
+                function (ev) {
+                },
+                buttonFilter
+            );
+
+            Filemanager.Quantumtoolbar.buttonAdd(
+                'viewfilesFilterSize',
+                'center',
+                'file-actions',
+                'qm-btn-width-small',
+                QuantumUtils.htmlspecialcharsDecode('по размеру', 'ENT_QUOTES'),
+                '',
+                {},
+                function (ev) {
+                },
+                buttonFilter
+            );
+
+            Filemanager.Quantumtoolbar.buttonAdd(
+                'viewfilesFilterCreated',
+                'center',
+                'file-actions',
+                'qm-btn-width-small',
+                QuantumUtils.htmlspecialcharsDecode('по времени создания', 'ENT_QUOTES'),
+                '',
+                {},
+                function (ev) {
+                },
+                buttonFilter
+            );
+
+            Filemanager.Quantumtoolbar.buttonAdd(
+                'viewfilesFilterUpdated',
+                'center',
+                'file-actions',
+                'qm-btn-width-small',
+                QuantumUtils.htmlspecialcharsDecode('по времени изменения', 'ENT_QUOTES'),
+                '',
+                {},
+                function (ev) {
+                },
+                buttonFilter
+            );
+
+
+            Filemanager.Quantumtoolbar.buttonAdd(
+                'viewfilesFilterUpdated',
+                'center',
+                'file-actions',
+                'qm-btn-width-small',
+                QuantumUtils.htmlspecialcharsDecode('по времени изменения', 'ENT_QUOTES'),
+                '',
+                {},
+                function (ev) {
+                },
+                buttonFilter
+            );
+
+            Filemanager.Quantumtoolbar.buttonAdd(
+                'viewfilesFilterDivider',
+                'center',
+                'file-actions',
+                'qm-btn-width-small qm-btn-divider',
+                '',
+                '',
+                {},
+                function (ev) {},
+                buttonFilter
+            );
+
+            Filemanager.Quantumtoolbar.buttonAdd(
+                'viewfilesFilterDesc',
+                'center',
+                'file-actions',
+                'qm-btn-width-small',
+                QuantumUtils.htmlspecialcharsDecode('сверху вниз', 'ENT_QUOTES'),
+                '',
+                {},
+                function (ev) {
+                },
+                buttonFilter
+            );
+
+            Filemanager.Quantumtoolbar.buttonAdd(
+                'viewfilesFilterAsc',
+                'center',
+                'file-actions',
+                'qm-btn-width-small',
+                QuantumUtils.htmlspecialcharsDecode('снизу вверх', 'ENT_QUOTES'),
+                '',
+                {},
+                function (ev) {
+                },
+                buttonFilter
+            );
+
+
             let buttonOther = Filemanager.Quantumtoolbar.buttonAdd(
                 'viewfilesOther',
                 'center',
@@ -739,6 +868,8 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 },
                 buttonOther
             );
+
+
 
             if(typeof QuantumviewfilesPreviews === 'object' && Object.keys(QuantumviewfilesPreviews).length > 0) {
                 let buttonPreviews = Filemanager.Quantumtoolbar.buttonAdd(
@@ -1030,6 +1161,8 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 if(files[i]['is_writable'] === 0) {
                     addClass = 'lock';
                 }
+
+                console.log(files[i]);
 
                 htmlfilesAndDirectories += "<div class='object-select file-item " + addClass + "' data-iswritable='" + files[i]['is_writable'] + "' data-size='" + files[i]['size'] + "' data-name='" + files[i]['name'] + "' data-exs='" + files[i]['exs'] + "' data-fileP='" + files[i]['fileP'] + "' data-dateC='" + files[i]['dateC'] + "' data-dateM='" + files[i]['dateM'] + "' data-file='" + files[i]['file'] + "' data-fullname='" + files[i]['file'] + "'><input type=\"checkbox\" class=\"import-files-check-file\"><span class='check'></span><div class='file'><div class='context-menu-open'><span></span></div><div class='file-exs icon-file-" + type + "'><div class='av-folderlist-label'></div></div><div class='file-name'>" + files[i]['file'] + "</div></div></div>" ;
             }

@@ -117,6 +117,7 @@
 
 .quantumtoolbar-module .qm-btn-dropdown > * {
     width: 100%;
+    border: none;
 }
 
 .quantumtoolbar-module .qm-btn-dropdown > *:last-child {
@@ -129,6 +130,12 @@
     max-width: 170px;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.quantumtoolbar-module .qm-btn-dropdown .qm-btn-divider {
+    height: 0;
+    padding: 0;
+    border-bottom: 1px solid #d2d2d2;
 }
 
 .quantumtoolbar-module .qm-btn-dropdown > .qm-btn-width-small > .quantummanager-icon {
