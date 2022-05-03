@@ -39,38 +39,37 @@ try {
 		'quantumtreecatalogs' => [
 			'label' => '',
 			'directory' => $folderRoot,
-			'position' => 'left',
-			'cssClass' => 'quantumtreecatalogs-module-muted'
-		],
-		'quantumupload' => [
-			'label' => '',
-			'maxsize' => QuantummanagerHelper::getParamsComponentValue('maxsize', '10'),
-			'dropAreaHidden' => QuantummanagerHelper::getParamsComponentValue('dropareahidden', '0'),
-			'directory' => $folderRoot
+			'position' => 'container-left',
 		],
 		'quantumtoolbar' => [
 			'label' => '',
-			'position' => 'top',
+			'position' => 'container-center-top',
 			'buttons' => 'all',
 			'buttonsBun' => '',
-			'cssClass' => 'quantummanager-module-height-1-1 quantumtoolbar-module-muted quantumtoolbar-padding-horizontal',
+			'cssClass' => 'qm-padding-small-left qm-padding-small-right qm-padding-small-top qm-padding-small-bottom',
+		],
+		'quantumupload' => [
+			'label' => '',
+			'position' => 'container-center-top',
+			'maxsize' => QuantummanagerHelper::getParamsComponentValue('maxsize', '10'),
+			'dropAreaHidden' => QuantummanagerHelper::getParamsComponentValue('dropareahidden', '0'),
+			'directory' => $folderRoot,
+			'cssClass' => 'qm-padding-small-left qm-padding-small-right qm-padding-small-bottom',
 		],
 		'quantumviewfiles' => [
 			'label' => '',
+			'position' => 'container-center-center',
 			'directory' => $folderRoot,
 			'view' => 'list-grid',
 			'onlyfiles' => '0',
 			'watermark' => QuantummanagerHelper::getParamsComponentValue('overlay' , 0) > 0 ? '1' : '0',
 			'help' => QuantummanagerHelper::getParamsComponentValue('help' , '1'),
-			'metafile' => QuantummanagerHelper::getParamsComponentValue('metafile', '1'),
+			'metafile' => QuantummanagerHelper::getParamsComponentValue('metafile' , '1'),
 		],
 		'quantumcropperjs' => [
 			'label' => '',
 			'position' => 'bottom'
 		],
-		/*'quantumcodemirror' => [
-			'position' => 'center'
-		],*/
 	];
 
 	if((int)QuantummanagerHelper::getParamsComponentValue('unsplash', '1'))

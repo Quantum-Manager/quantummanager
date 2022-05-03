@@ -47,13 +47,13 @@ class QuantummanagerController extends BaseController
 		// проверяем на включенность параметра
 		JLoader::register('QuantummanagerHelper', JPATH_ADMINISTRATOR . '/components/com_quantummanager/helpers/quantummanager.php');
 
-		if(!(int)QuantummanagerHelper::getParamsComponentValue('front', 0))
+		if (!(int) QuantummanagerHelper::getParamsComponentValue('front', 0))
 		{
 			throw new \InvalidArgumentException(Text::sprintf('JLIB_APPLICATION_ERROR_NOT_ACCESS'));
 		}
 
 		// проверяем что пользователь авторизован
-		if(Factory::getUser()->id === 0)
+		if (Factory::getUser()->id === 0)
 		{
 			throw new \InvalidArgumentException(Text::sprintf('JLIB_APPLICATION_ERROR_NOT_ACCESS'));
 		}
@@ -62,10 +62,11 @@ class QuantummanagerController extends BaseController
 		Factory::getLanguage()->load('com_quantummanager', JPATH_ADMINISTRATOR);
 
 		$input = Factory::getApplication()->input;
+		Factory::getApplication()->input->set('view', 'quantummanager');
 
 		// Get the environment configuration.
-		$format   = $input->getWord('format');
-		$command  = $input->get('task', 'display');
+		$format  = $input->getWord('format');
+		$command = $input->get('task', 'display');
 
 		// Check for array format.
 		$filter = InputFilter::getInstance();
@@ -86,8 +87,8 @@ class QuantummanagerController extends BaseController
 			list ($type, $task) = explode('.', $command);
 
 			// Define the controller filename and path.
-			$file = self::createFileName('controller', array('name' => $type, 'format' => $format));
-			$path = JPATH_ROOT . '/administrator/components/com_quantummanager/controllers/' . $file;
+			$file       = self::createFileName('controller', array('name' => $type, 'format' => $format));
+			$path       = JPATH_ROOT . '/administrator/components/com_quantummanager/controllers/' . $file;
 			$backuppath = JPATH_ROOT . '/administrator/components/com_quantummanager/controller/' . $file;
 
 			// Reset the task without the controller context.
