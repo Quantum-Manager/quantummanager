@@ -570,45 +570,12 @@
     min-height: 100%;
 }
 .quantumviewfiles-module .field-list-files .list-grid .file-item {
-    margin: 1%;
-    height: 160px;
-    padding-bottom: 30px;
     transition: all 0.2s;
 }
-.quantumviewfiles-module .field-list-files .list-grid-1-6 .file-item {
-    width: 14%;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-5 .file-item {
-    width: 18%;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-4 .file-item {
-    width: 23%;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-3 .file-item {
-    width: 31.3%;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-2 .file-item {
-    width: 47%;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-4 .file-item {
-    margin: 1%;
-    height: 150px;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-3 .file-item {
-    margin: 1%;
-    height: 200px;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-2 .file-item {
-    margin: 1%;
-    height: 270px;
-}
+
 .quantumviewfiles-module .field-list-files .list-grid .file-item:hover {
     cursor: pointer;
 }
-/*.quantumviewfiles-module .field-list-files .list-grid .file-item:hover .file-exs {
-    transition: all 0.2s;
-    transform: scale(1.2);
-}*/
 .quantumviewfiles-module .field-list-files .list-grid .object-select .import-files-check-file {
     display: none;
 }
@@ -695,7 +662,7 @@ svg.svg-icon text {
     padding-bottom: 5px;
     left: 0;
     right: 0;
-    bottom: -37px;
+    top: 100%;
     width: 100%;
     font-size: 13px;
     word-wrap: break-word;
@@ -724,65 +691,29 @@ svg.svg-icon text {
     opacity: .6;
 }
 .quantumviewfiles-module .field-list-files .list-grid .directory-item {
-    height: 130px;
-    margin: 1%;
-    padding-bottom: 40px;
     transition: all 0.2s;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-4 .directory-item {
-    height: 150px;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-3 .directory-item {
-    height: 200px;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-2 .directory-item {
-    height: 270px;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-6 .directory-item {
-    width: 14%;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-5 .directory-item {
-    width: 18%;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-4 .directory-item {
-    width: 23%;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-3 .directory-item {
-    width: 31.3%;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-2 .directory-item {
-    width: 47%;
 }
 .quantumviewfiles-module .field-list-files .list-grid .directory-item .directory {
-    display: flex;
-    align-items: center;
     width: 100%;
-    height: 130px;
+    height: 100%;
     position: relative;
     transition: all 0.2s;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-2 .directory-item .directory {
-    height: 270px;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-3 .directory-item .directory {
-    height: 200px;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-4 .directory-item .directory {
-    height: 150px;
-}
-.quantumviewfiles-module .field-list-files .list-grid .directory-item:hover .directory {
-    cursor: pointer;
 }
 .quantumviewfiles-module .field-list-files .list-grid .directory-item:hover {
     transition: all 0.2s;
 }
+.quantumviewfiles-module .field-list-files .list-grid .directory-item:hover .directory {
+    cursor: pointer;
+}
 .quantumviewfiles-module .field-list-files .list-grid .directory-item .directory .directory-icon {
     width: 100%;
-    height: 85%;
-    margin: auto;
-    background-size: contain;
-    background-repeat: no-repeat;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: contain;
     transition: opacity .25s ease-in;
 }
 .quantumviewfiles-module .field-list-files .list-grid .directory-item.empty .directory .directory-icon {
@@ -800,7 +731,7 @@ svg.svg-icon text {
     padding-bottom: 5px;
     left: 0;
     right: 0;
-    bottom: -40px;
+    top: 100%;
     width: 100%;
     font-size: 13px;
     word-wrap: break-word;
@@ -828,6 +759,64 @@ svg.svg-icon text {
 .quantumviewfiles-module .field-list-files .list-grid .directory-item.lock .directory-icon {
     opacity: .6;
 }
+
+
+.quantumviewfiles-module .field-list-files .list-grid > * {
+    margin: 1%;
+    height: 160px;
+    padding-bottom: 30px;
+}
+
+.quantumviewfiles-module .field-list-files .list-grid-1-10 > * {
+    width: 8%;
+    height: 130px;
+}
+
+.quantumviewfiles-module .field-list-files .list-grid-1-9 > * {
+    width: 9.1%;
+    height: 130px;
+}
+
+.quantumviewfiles-module .field-list-files .list-grid-1-8 > * {
+    width: 10.5%;
+    height: 130px;
+}
+
+.quantumviewfiles-module .field-list-files .list-grid-1-7 > * {
+    width: 12.285%;
+    height: 130px;
+}
+
+.quantumviewfiles-module .field-list-files .list-grid-1-6 > * {
+    width: 14.6%;
+    height: 130px;
+}
+
+.quantumviewfiles-module .field-list-files .list-grid-1-5 > * {
+    width: 18%;
+    height: 150px;
+}
+
+.quantumviewfiles-module .field-list-files .list-grid-1-4 > * {
+    width: 23%;
+    height: 180px;
+}
+
+.quantumviewfiles-module .field-list-files .list-grid-1-3 > * {
+    width: 31.3%;
+    height: 250px;
+}
+
+.quantumviewfiles-module .field-list-files .list-grid-1-2 > * {
+    width: 48%;
+    height: 350px;
+}
+
+.quantumviewfiles-module .field-list-files .list-grid-1-1 > * {
+    width: 98%;
+    height: 130px;
+}
+
 .quantumviewfiles-module .field-list-files .list-table {
     min-height: 100%;
 }

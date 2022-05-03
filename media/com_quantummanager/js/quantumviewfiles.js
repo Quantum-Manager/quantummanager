@@ -391,6 +391,10 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 '4',
                 '5',
                 '6',
+                '7',
+                '8',
+                '9',
+                '10',
             ];
 
             for(let i=0;i<buttonsGrid.length;i++) {
@@ -2047,7 +2051,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
         }
 
         if(this.lastTypeViewFiles === 'list-grid') {
-            this.gridColumn = 'list-grid-1-6';
+            this.gridColumn = 'list-grid-1-10';
             let gridColumnCache = '';
 
             if(this.gridColumnSet === undefined || this.gridColumnSet === '') {
@@ -2057,6 +2061,22 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
 
                 if (gridColumnCache !== null) {
                     this.gridColumn = gridColumnCache;
+                }
+
+                if(viewFiles.classList.contains('list-grid-1-10')) {
+                    this.gridColumn = 'list-grid-1-9';
+                }
+
+                if(viewFiles.classList.contains('list-grid-1-9')) {
+                    this.gridColumn = 'list-grid-1-8';
+                }
+
+                if(viewFiles.classList.contains('list-grid-1-8')) {
+                    this.gridColumn = 'list-grid-1-7';
+                }
+
+                if(viewFiles.classList.contains('list-grid-1-7')) {
+                    this.gridColumn = 'list-grid-1-6';
                 }
 
                 if(viewFiles.classList.contains('list-grid-1-6')) {
@@ -2076,7 +2096,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 }
 
                 if(viewFiles.classList.contains('list-grid-1-2')) {
-                    this.gridColumn = 'list-grid-1-6';
+                    this.gridColumn = 'list-grid-1-10';
                 }
             } else {
                 this.gridColumn = this.gridColumnSet;
