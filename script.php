@@ -40,9 +40,9 @@ class com_quantummanagerInstallerScript
 	 */
 	protected $minimumJoomla = '3.9.0';
 
-    /**
-     * @var string
-     */
+	/**
+	 * @var string
+	 */
 	protected $helpURL = 'https://norrnext.com/docs/joomla-extensions/quantum-manager';
 
 
@@ -51,28 +51,29 @@ class com_quantummanagerInstallerScript
 	 * @var array
 	 */
 	protected $extensions = [
-        'fileinfo',
-        'curl',
-        'mbstring'
+		'fileinfo',
+		'curl',
+		'mbstring'
 	];
 
 
 	/**
 	 * Called before any type of action
 	 *
-	 * @param   string  $route  Which action is happening (install|uninstall|discover_install|update)
+	 * @param   string            $route    Which action is happening (install|uninstall|discover_install|update)
 	 * @param   JAdapterInstance  $adapter  The object responsible for running this script
 	 *
 	 * @return  boolean  True on success
 	 */
 	public function preflight($route, $adapter)
-    {
+	{
 		$app = Factory::getApplication();
 
 		if (!(version_compare(PHP_VERSION, '7.1.0') >= 0))
 		{
 			$app->enqueueMessage(Text::sprintf('COM_QUANTUMMANAGER_ERROR_COMPATIBLE_PHP', $this->minimumPhp),
 				'error');
+
 			return false;
 		}
 
@@ -82,6 +83,7 @@ class com_quantummanagerInstallerScript
 		{
 			$app->enqueueMessage(Text::sprintf('COM_QUANTUMMANAGER_ERROR_COMPATIBLE_PHP', $this->minimumJoomla),
 				'error');
+
 			return false;
 		}
 
@@ -89,46 +91,50 @@ class com_quantummanagerInstallerScript
 		$extensionsNotLoaded = [];
 		foreach ($this->extensions as $extension)
 		{
-			if(!extension_loaded($extension))
+			if (!extension_loaded($extension))
 			{
 				$extensionsNotLoaded[] = $extension;
 			}
 		}
 
-		if(count($extensionsNotLoaded))
+		if (count($extensionsNotLoaded))
 		{
 			$app->enqueueMessage(Text::sprintf('COM_QUANTUMMANAGER_ERROR_EXTENSIONS', implode(',', $extensionsNotLoaded)),
 				'error');
+
 			return false;
 		}
 
 	}
 
-    /**
-     * This method is called after a component is updated.
-     *
-     * @param  \stdClass $parent - Parent object calling object.
-     *
-     * @return void
-     */
-    public function update($parent)
-    {
-        JLoader::register('QuantummanagerHelper', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
-        QuantummanagerHelper::setComponentsParams('helpURL', $this->helpURL);
-    }
+	/**
+	 * This method is called after a component is updated.
+	 *
+	 * @param   \stdClass  $parent  - Parent object calling object.
+	 *
+	 * @return void
+	 */
+	public function update($parent)
+	{
+		JLoader::register('QuantummanagerHelper', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+		QuantummanagerHelper::setComponentsParams('helpURL', $this->helpURL);
+	}
 
-    /**
-     * Called after any type of action
-     *
-     * @param   string  $route  Which action is happening (install|uninstall|discover_install|update)
-     * @param   JAdapterInstance  $adapter  The object responsible for running this script
-     *
-     * @return  boolean  True on success
-     */
-    public function postflight($route, $adapter)
-    {
-        JLoader::register('QuantummanagerHelper', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
-        QuantummanagerHelper::setComponentsParams('helpURL', $this->helpURL);
-    }
+	/**
+	 * Called after any type of action
+	 *
+	 * @param   string            $route    Which action is happening (install|uninstall|discover_install|update)
+	 * @param   JAdapterInstance  $adapter  The object responsible for running this script
+	 *
+	 * @return  boolean  True on success
+	 */
+	public function postflight($route, $adapter)
+	{
+		if ($route === 'install')
+		{
+			JLoader::register('QuantummanagerHelper', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+			QuantummanagerHelper::setComponentsParams('helpURL', $this->helpURL);
+		}
+	}
 
 }
