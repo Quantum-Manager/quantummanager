@@ -1,3 +1,11 @@
+/**************************** Content for component view  ********************************/
+body.com_quantummanager #content,
+body.com_quantummanager #content > * {
+    height: calc(100% - 68px);
+    padding: 0;
+}
+
+
 /**************************** Background ********************************/
 .quantummanager-backgrounds-muted {
     background: #F0F0F0;

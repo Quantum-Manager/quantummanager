@@ -1,4 +1,14 @@
-/* Links */
+/**************************** Content for component view  ********************************/
+body.com_quantummanager #content,
+body.com_quantummanager #content > *,
+body.com_quantummanager #content > * > *
+{
+    height: 100%;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/**************************** Links ********************************/
 .quantummanager a {
     display: flex;
     align-content: center;
