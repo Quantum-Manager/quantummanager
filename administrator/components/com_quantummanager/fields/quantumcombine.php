@@ -186,10 +186,14 @@ class JFormFieldQuantumCombine extends JFormField
 						$position = $optionsForField['position'];
 					}
 
+					if (!isset($htmlFields[$position]))
+					{
+						$htmlFields[$position] = '';
+					}
+
 					$fieldObject = new $classField;
 					$fieldObject->setup(new SimpleXMLElement('<field name="" type="' . $field . '" ' . implode(' ', $dataAttributes) . ' />'), '');
 					$htmlFields[$position] .= $fieldObject->getInput();
-
 
 				}
 
