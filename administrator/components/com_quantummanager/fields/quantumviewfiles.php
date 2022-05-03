@@ -90,7 +90,7 @@ class JFormFieldQuantumviewfiles extends JFormField
 			$this->__set('cssClass', $this->getAttribute('cssClass', ''));
 			$this->__set('metafile', $this->getAttribute('metafile', '1'));
 			$this->__set('watermark', $this->getAttribute('watermark', '0'));
-			$this->__set('folderdblclick', $this->getAttribute('folderdblclick', QuantummanagerHelper::getParamsComponentValue('folderdblclick', '1')));
+			$this->__set('folderdblclick', $this->getAttribute('folderdblclick', QuantummanagerHelper::getParamsComponentValue('folderdblclick', '0')));
 			$this->__set('help', $this->getAttribute('help', '1'));
 			$this->__set('previewsfolder', $this->getAttribute('previewsfolderopen', QuantummanagerHelper::getParamsComponentValue('previewsfolder', '1')));
 			$this->__set('previewsfolderopen', $this->getAttribute('previewsfolderopen', QuantummanagerHelper::getParamsComponentValue('previewsfolderopen', '1')));

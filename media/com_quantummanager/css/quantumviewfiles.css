@@ -759,14 +759,11 @@ svg.svg-icon text {
 .quantumviewfiles-module .field-list-files .list-grid .directory-item.lock .directory-icon {
     opacity: .6;
 }
-
-
 .quantumviewfiles-module .field-list-files .list-grid > * {
-    margin: 1%;
+    margin: 1% 1% 1% 1%;
     height: 160px;
     padding-bottom: 30px;
 }
-
 .quantumviewfiles-module .field-list-files .list-grid-1-10 > * {
     width: 8%;
     height: 130px;

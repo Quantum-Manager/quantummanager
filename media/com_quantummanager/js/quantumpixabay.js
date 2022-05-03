@@ -45,7 +45,7 @@ window.Quantumpixabay = function(Filemanager, QuantumPixbayElement, options) {
             'pixabaySearch',
             'right',
             'file-other',
-            'qm-btn-pixabay-search hidden-label',
+            'qm-btn-pixabay-search',
             QuantumpixabayLang.button,
             'quantummanager-icon-pixabay',
             {},
