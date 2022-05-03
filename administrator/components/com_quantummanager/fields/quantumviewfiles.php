@@ -9,10 +9,7 @@
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Filter\OutputFilter;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Layout\FileLayout;
 
 /**
@@ -61,17 +58,18 @@ class JFormFieldQuantumviewfiles extends JFormField
 
 		return array_merge(parent::getLayoutData(),
 			[
-				'directory' => $this->directory,
-				'onlyfiles' => $this->onlyfiles,
-				'metafile' => $this->metafile,
-				'watermark' => $this->watermark,
-				'help' => $this->help,
-				'previewsfolder' => $this->previewsfolder,
+				'directory'          => $this->directory,
+				'onlyfiles'          => $this->onlyfiles,
+				'metafile'           => $this->metafile,
+				'watermark'          => $this->watermark,
+				'help'               => $this->help,
+				'folderdblclick'     => $this->folderdblclick,
+				'previewsfolder'     => $this->previewsfolder,
 				'previewsfolderopen' => $this->previewsfolderopen,
-                'previewslist' => $this->previewslist,
-                'hash' => md5(QuantummanagerHelper::preparePath($this->directory)),
-				'cssClass' => $this->cssClass,
-				'quantumVersion' => QuantummanagerHelper::getVersion(),
+				'previewslist'       => $this->previewslist,
+				'hash'               => md5(QuantummanagerHelper::preparePath($this->directory)),
+				'cssClass'           => $this->cssClass,
+				'quantumVersion'     => QuantummanagerHelper::getVersion(),
 			]
 		);
 	}
@@ -85,12 +83,14 @@ class JFormFieldQuantumviewfiles extends JFormField
 	 */
 	public function getInput()
 	{
-		try {
+		try
+		{
 
 			$this->__set('standalone', $this->getAttribute('standalone', true));
 			$this->__set('cssClass', $this->getAttribute('cssClass', ''));
 			$this->__set('metafile', $this->getAttribute('metafile', '1'));
 			$this->__set('watermark', $this->getAttribute('watermark', '0'));
+			$this->__set('folderdblclick', $this->getAttribute('folderdblclick', QuantummanagerHelper::getParamsComponentValue('folderdblclick', '1')));
 			$this->__set('help', $this->getAttribute('help', '1'));
 			$this->__set('previewsfolder', $this->getAttribute('previewsfolderopen', QuantummanagerHelper::getParamsComponentValue('previewsfolder', '1')));
 			$this->__set('previewsfolderopen', $this->getAttribute('previewsfolderopen', QuantummanagerHelper::getParamsComponentValue('previewsfolderopen', '1')));
@@ -98,41 +98,43 @@ class JFormFieldQuantumviewfiles extends JFormField
 			$this->directory = $this->getAttribute('directory', 'images');
 			$this->onlyfiles = $this->getAttribute('onlyfiles', '0');
 
-            QuantummanagerLibs::includeScriptHead();
-            QuantummanagerLibs::includes([
-                'core',
-                'utils',
-                'alert',
-                'contextmenu',
-                'clipboard',
-                'notify',
-                'lazyload',
-                'dragSelect',
-            ]);
+			QuantummanagerLibs::includeScriptHead();
+			QuantummanagerLibs::includes([
+				'core',
+				'utils',
+				'alert',
+				'contextmenu',
+				'clipboard',
+				'notify',
+				'lazyload',
+				'dragSelect',
+			]);
 
 
 			HTMLHelper::_('stylesheet', 'com_quantummanager/quantumviewfiles.css', [
-				'version' => filemtime(__FILE__),
+				'version'  => filemtime(__FILE__),
 				'relative' => true
 			]);
 
 			HTMLHelper::_('script', 'com_quantummanager/quantumviewfiles.js', [
-				'version' => filemtime(__FILE__),
+				'version'  => filemtime(__FILE__),
 				'relative' => true
 			]);
 
 
 			$field = parent::getInput();
 
-			if($this->standalone)
+			if ($this->standalone)
 			{
-				$filemanager = new FileLayout( 'fieldstandalone', JPATH_ROOT . '/administrator/components/com_quantummanager/layouts');
+				$filemanager = new FileLayout('fieldstandalone', JPATH_ROOT . '/administrator/components/com_quantummanager/layouts');
+
 				return $filemanager->render(['field' => $field]);
 			}
 
 			return $field;
 		}
-		catch (Exception $e) {
+		catch (Exception $e)
+		{
 			echo $e->getMessage();
 		}
 	}

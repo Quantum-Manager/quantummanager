@@ -20,7 +20,8 @@ $options = [
     'watermark:' . $watermark,
     'help:' . $help,
     'previewsfolder:' . $previewsfolder,
-    'previewsfolderopen:' . $previewsfolderopen
+    'previewsfolderopen:' . $previewsfolderopen,
+    'folderdblclick:' . $folderdblclick,
 ];
 
 ?>

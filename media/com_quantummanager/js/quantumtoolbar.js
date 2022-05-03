@@ -99,6 +99,11 @@ window.Quantumtoolbar = function(Filemanager, QuantumToolbarElement, options) {
     };
 
 
+    this.executeButton = function(id) {
+        this.buttonsList[id].click();
+    };
+
+
     this.trigger = function(event) {
         Filemanager.events.trigger(event, Filemanager);
     };

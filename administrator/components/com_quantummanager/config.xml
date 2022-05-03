@@ -205,6 +205,18 @@
 			   filter="unset"
 		/>
 
+		<field name="folderdblclick"
+			   type="radio"
+			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_FOLDERDBLCLICK_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_FOLDERDBLCLICK_DESC"
+			   required="true"
+			   class="btn-group btn-group-yesno"
+			   default="1">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+
 		<field name="front"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_FRONT_LABEL"
