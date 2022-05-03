@@ -227,6 +227,29 @@
 			<option value="1">COM_QUANTUMMANAGER_ACTION_HIDE</option>
 		</field>
 
+		<field name="itemmenumove"
+			   type="radio"
+			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_ITEMMENUMOVE_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_ITEMMENUMOVE_DESC"
+			   required="true"
+			   class="btn-group btn-group-yesno"
+			   default="1">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field name="itemmenumovefiles"
+			   type="radio"
+			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_ITEMMENUMOVEFILES_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_ITEMMENUMOVEFILES_DESC"
+			   required="true"
+			   showon="itemmenumove:1"
+			   class="btn-group btn-group-yesno"
+			   default="1">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
 		<field name="help"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_HELP_LABEL"
@@ -542,7 +565,6 @@
 			   filter="unset"
 		/>
 
-
 		<field name="previewsfolder"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_PREVIEWSFOLDER_LABEL"
@@ -563,7 +585,6 @@
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
-
 
 		<field name="previewslist"
 			   type="subform"
