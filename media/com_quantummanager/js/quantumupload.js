@@ -246,26 +246,5 @@ window.Qantumupload = function (Filemanager, UploadElement, options) {
         }
     });
 
-    document.addEventListener('paste', function (ev) {
-        let check_element = ev.target.closest('.quantummanager');
-        if (check_element === null || check_element === undefined) {
-            return;
-        }
-
-        let items = (ev.clipboardData || ev.originalEvent.clipboardData).items;
-        for (let index in items) {
-            let item = items[index];
-            if (item.kind === 'file') {
-                let blob = item.getAsFile();
-                let reader = new FileReader();
-                reader.onload = function (event) {
-                    let ext = event.target.result.substring("data:image/".length, event.target.result.indexOf(";base64"));
-                    self.uploadFiles([new File([QuantumUtils.dataURItoBlob(event.target.result)], 'clipboard_' + QuantumUtils.randomInteger(1111111, 9999999) + '.' + ext)]);
-                }
-                reader.readAsDataURL(blob);
-            }
-        }
-    });
-
 };
 
