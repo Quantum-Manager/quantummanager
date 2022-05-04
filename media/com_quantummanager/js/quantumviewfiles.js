@@ -399,6 +399,7 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
             'copy': ['meta+c'],
             'cut': ['meta+x'],
             'paste': ['meta+v'],
+            'back': ['backspace']
         },
         'Windows': {
             'delete': ['delete'],
@@ -406,6 +407,7 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
             'copy': ['ctrl+c'],
             'cut': ['ctrl+x'],
             'paste': ['ctrl+v'],
+            'back': ['backspace']
         },
         'Linux': {
             'delete': ['delete'],
@@ -413,6 +415,7 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
             'copy': ['ctrl+c'],
             'cut': ['ctrl+x'],
             'paste': ['ctrl+v'],
+            'back': ['backspace']
         }
     };
 
@@ -2775,6 +2778,10 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
 
     Filemanager.events.add(this, 'hotKeysRename', function (fm, el) {
         fm.Quantumtoolbar.executeButton('viewfilesRename');
+    });
+
+    Filemanager.events.add(this, 'hotKeysBack', function (fm, el) {
+        fm.Quantumtoolbar.executeButton('viewfilesBack');
     });
 
 };
