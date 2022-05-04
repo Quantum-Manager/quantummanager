@@ -1284,38 +1284,33 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
                 }
             }
 
-
-            let sortAsc = function (a, b) {
-                if (a[self.sortField] > b[self.sortField]) {
-                    return 1;
-                }
-
-                if (a[self.sortField] < b[self.sortField]) {
-                    return -1;
-                }
-
-                return 0;
-            };
-
-            let sortDesc = function (a, b) {
-                if (a[self.sortField] > b[self.sortField]) {
-                    return -1;
-                }
-
-                if (a[self.sortField] < b[self.sortField]) {
-                    return 1;
-                }
-
-                return 0;
-            };
-
-            if (self.sortField !== '' && self.sortDir) {
+            if (self.sortField !== '' && self.sortDir !== '') {
                 if (self.sortDir === 'asc') {
-                    files.sort(sortAsc);
+                    files.sort(function (a, b) {
+                        if (a[self.sortField] > b[self.sortField]) {
+                            return 1;
+                        }
+
+                        if (a[self.sortField] < b[self.sortField]) {
+                            return -1;
+                        }
+
+                        return 0;
+                    });
                 }
 
                 if (self.sortDir === 'desc') {
-                    files.sort(sortDesc);
+                    files.sort(function (a, b) {
+                        if (a[self.sortField] > b[self.sortField]) {
+                            return -1;
+                        }
+
+                        if (a[self.sortField] < b[self.sortField]) {
+                            return 1;
+                        }
+
+                        return 0;
+                    });
                 }
             }
 
