@@ -702,8 +702,8 @@ body.com_quantummanager > .container-main {
 
 .quantummanager-icon-pixabay {
     display: inline-block;
-    width: 18px;
-    height: 18px;
+    width: 14px;
+    height: 14px;
     margin: 0;
     background-repeat: no-repeat;
     background-position: center;
@@ -716,7 +716,6 @@ body.com_quantummanager > .container-main {
     width: 15px;
     height: 15px;
     margin: 0;
-    margin-left: -2px;
     border-radius: 3px;
     background-repeat: no-repeat;
     background-position: center;
@@ -781,6 +780,18 @@ body.com_quantummanager > .container-main {
   width: 14px;
   height: 14px;
   background-image: url("../images/icons/action/filter-results-button.svg");
+}
+.quantummanager-icon-arrow-up {
+    width: 14px;
+    height: 14px;
+    background-image: url("../images/icons/action/left-arrow-key-1.svg");
+    transform: rotate(90deg);
+}
+.quantummanager-icon-arrow-down {
+    width: 14px;
+    height: 14px;
+    background-image: url("../images/icons/action/left-arrow-key-1.svg");
+    transform: rotate(-90deg);
 }
 
 /****************************** Loader ********************************/

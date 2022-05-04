@@ -309,6 +309,7 @@
 @media screen and (max-width: 1360px) {
     .quantumtoolbar-module .qm-btn-unsplash-search .quantummanager-icon-unsplash {
         width: 15px;
+        height: 15px;
         background-image: url("data:image/svg+xml,%0A%3Csvg width='32' height='32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 9V0h12v9H10zm12 5h10v18H0V14h10v9h12v-9z' fill='%23000000' fill-rule='nonzero' /%3E%3C/svg%3E%0A");
     }
 }

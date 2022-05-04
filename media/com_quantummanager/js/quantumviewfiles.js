@@ -33,6 +33,8 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
     this.bufferCut = false;
     this.bufferFromPath;
     this.buffer = [];
+    this.sortField = '';
+    this.sortDir = '';
     this.contextMenu = '';
     this.menuItemsArea = [
         {
@@ -307,15 +309,22 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
     ];
 
     this.init = function() {
-        let self = this;
         this.path = this.options.directory;
         let openLastDir = localStorage.getItem('quantummanagerLastDir');
         let openLastDirHash = localStorage.getItem('quantummanagerLastDirHash');
+        let sortField = localStorage.getItem('quantummanagerSortField');
+        let sortDir = localStorage.getItem('quantummanagerSortDir');
+
         if(openLastDir !== null)
         {
             if(openLastDirHash === this.options.hash) {
                 this.path = openLastDir;
             }
+        }
+
+        if(sortField !== null && sortDir !== null) {
+            self.sortField = sortField;
+            self.sortDir = sortDir;
         }
 
         this.loadDirectory();
@@ -506,7 +515,7 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 'viewfilesFilter',
                 'center',
                 'file-actions',
-                'qm-btn-more',
+                '',
                 '',
                 'quantummanager-icon-filter',
                 {},
@@ -517,10 +526,11 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 'center',
                 'file-actions',
                 'qm-btn-width-small',
-                QuantumUtils.htmlspecialcharsDecode('не выбрано', 'ENT_QUOTES'),
+                QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.buttonSortNone, 'ENT_QUOTES'),
                 '',
                 {},
                 function (ev) {
+                    self.setSort('', '');
                 },
                 buttonFilter
             );
@@ -530,10 +540,11 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 'center',
                 'file-actions',
                 'qm-btn-width-small',
-                QuantumUtils.htmlspecialcharsDecode('по названию', 'ENT_QUOTES'),
+                QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.buttonSortName, 'ENT_QUOTES'),
                 '',
                 {},
                 function (ev) {
+                    self.setSort('name', self.sortDir);
                 },
                 buttonFilter
             );
@@ -543,10 +554,11 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 'center',
                 'file-actions',
                 'qm-btn-width-small',
-                QuantumUtils.htmlspecialcharsDecode('по размеру', 'ENT_QUOTES'),
+                QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.buttonSortSize, 'ENT_QUOTES'),
                 '',
                 {},
                 function (ev) {
+                    self.setSort('size', self.sortDir);
                 },
                 buttonFilter
             );
@@ -556,10 +568,11 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 'center',
                 'file-actions',
                 'qm-btn-width-small',
-                QuantumUtils.htmlspecialcharsDecode('по времени создания', 'ENT_QUOTES'),
+                QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.buttonSortCreated, 'ENT_QUOTES'),
                 '',
                 {},
                 function (ev) {
+                    self.setSort('dateC', self.sortDir);
                 },
                 buttonFilter
             );
@@ -569,24 +582,11 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 'center',
                 'file-actions',
                 'qm-btn-width-small',
-                QuantumUtils.htmlspecialcharsDecode('по времени изменения', 'ENT_QUOTES'),
+                QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.buttonSortUpdated, 'ENT_QUOTES'),
                 '',
                 {},
                 function (ev) {
-                },
-                buttonFilter
-            );
-
-
-            Filemanager.Quantumtoolbar.buttonAdd(
-                'viewfilesFilterUpdated',
-                'center',
-                'file-actions',
-                'qm-btn-width-small',
-                QuantumUtils.htmlspecialcharsDecode('по времени изменения', 'ENT_QUOTES'),
-                '',
-                {},
-                function (ev) {
+                    self.setSort('dateM', self.sortDir);
                 },
                 buttonFilter
             );
@@ -604,27 +604,29 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             );
 
             Filemanager.Quantumtoolbar.buttonAdd(
-                'viewfilesFilterDesc',
+                'viewfilesFilterAsc',
                 'center',
                 'file-actions',
                 'qm-btn-width-small',
-                QuantumUtils.htmlspecialcharsDecode('сверху вниз', 'ENT_QUOTES'),
-                '',
+                QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.buttonSortAsc, 'ENT_QUOTES'),
+                'quantummanager-icon-arrow-up',
                 {},
                 function (ev) {
+                    self.setSort(self.sortField, 'asc');
                 },
                 buttonFilter
             );
 
             Filemanager.Quantumtoolbar.buttonAdd(
-                'viewfilesFilterAsc',
+                'viewfilesFilterDesc',
                 'center',
                 'file-actions',
                 'qm-btn-width-small',
-                QuantumUtils.htmlspecialcharsDecode('снизу вверх', 'ENT_QUOTES'),
-                '',
+                QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.buttonSortDesc, 'ENT_QUOTES'),
+                'quantummanager-icon-arrow-down',
                 {},
                 function (ev) {
+                    self.setSort(self.sortField, 'desc');
                 },
                 buttonFilter
             );
@@ -1155,14 +1157,47 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                 }
             }
 
+
+            let sortAsc = function(a, b) {
+                if(a[self.sortField] > b[self.sortField]) {
+                    return 1;
+                }
+
+                if(a[self.sortField] < b[self.sortField]) {
+                    return -1;
+                }
+
+                return 0;
+            };
+
+            let sortDesc = function(a, b) {
+                if(a[self.sortField] > b[self.sortField]) {
+                    return -1;
+                }
+
+                if(a[self.sortField] < b[self.sortField]) {
+                    return 1;
+                }
+
+                return 0;
+            };
+
+            if(self.sortField !== '' && self.sortDir) {
+                if(self.sortDir === 'asc') {
+                    files.sort(sortAsc);
+                }
+
+                if(self.sortDir === 'desc') {
+                    files.sort(sortDesc);
+                }
+            }
+
             for(let i = 0;i<files.length;i++) {
                 let type = files[i]['exs'];
                 let addClass = '';
                 if(files[i]['is_writable'] === 0) {
                     addClass = 'lock';
                 }
-
-                console.log(files[i]);
 
                 htmlfilesAndDirectories += "<div class='object-select file-item " + addClass + "' data-iswritable='" + files[i]['is_writable'] + "' data-size='" + files[i]['size'] + "' data-name='" + files[i]['name'] + "' data-exs='" + files[i]['exs'] + "' data-fileP='" + files[i]['fileP'] + "' data-dateC='" + files[i]['dateC'] + "' data-dateM='" + files[i]['dateM'] + "' data-file='" + files[i]['file'] + "' data-fullname='" + files[i]['file'] + "'><input type=\"checkbox\" class=\"import-files-check-file\"><span class='check'></span><div class='file'><div class='context-menu-open'><span></span></div><div class='file-exs icon-file-" + type + "'><div class='av-folderlist-label'></div></div><div class='file-name'>" + files[i]['file'] + "</div></div></div>" ;
             }
@@ -1960,6 +1995,23 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
         }
     };
 
+    this.setSort = function (name, dir) {
+
+        if(name !== '' && dir === '') {
+            dir = 'desc';
+        }
+
+        self.sortField = name;
+        self.sortDir = dir;
+        self.trigger('reloadPaths');
+
+        if(localStorage !== undefined) {
+            localStorage.setItem('quantummanagerSortField', self.sortField);
+            localStorage.setItem('quantummanagerSortDir', self.sortDir);
+        }
+
+    }
+
     this.initBreadcrumbs = function (callback) {
         let self = this;
         let fm = Filemanager;
@@ -2278,20 +2330,14 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
                     let image = document.createElement('img');
 
                     if(fileP.indexOf('index.php') === -1) {
-                        file = path.replace('root', path) + '/' + fileP;
-
-                        file = QuantumUtils.getFullUrl("/cache/com_quantummanager/" + file + '?' + QuantumUtils.randomInteger(111111, 999999));
-
-                        if(fileExs.toLowerCase() === 'svg') {
-                            file = "/" + path.replace('root', path) + '/' + fileP + '?' + QuantumUtils.randomInteger(111111, 999999);
-                        }
-
+                        file = '/' + fileP + '?' + QuantumUtils.randomInteger(111111, 999999);
+                        image.setAttribute('src', file);
                     } else {
                         file = fileP + '&path=' + path + '&v=' + QuantumUtils.randomInteger(111111, 999999);
+                        image.setAttribute('class', 'lazyLoad');
+                        image.setAttribute('data-src', file);
                     }
 
-                    image.setAttribute('class', 'lazyLoad');
-                    image.setAttribute('data-src', file);
                     filePreview.innerHTML = '';
                     filePreview.append(image);
                 } else {

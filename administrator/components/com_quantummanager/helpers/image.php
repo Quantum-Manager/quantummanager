@@ -518,7 +518,7 @@ class QuantummanagerHelperImage
     {
         try
         {
-            $cacheSource =  JPATH_ROOT . DIRECTORY_SEPARATOR . 'cache/com_quantummanager';
+            $cacheSource =  JPATH_ROOT . DIRECTORY_SEPARATOR . 'administrator/cache/com_quantummanager';
             $cache = $cacheSource . DIRECTORY_SEPARATOR . str_replace(JPATH_SITE . DIRECTORY_SEPARATOR,'', $file);
             if(file_exists($cache))
             {
