@@ -761,7 +761,7 @@ class QuantummanagerFileSystemLocal
 
 					if (file_exists($cache_file_full))
 					{
-						$fileMeta['fileP'] = $cache_file;
+						$fileMeta['fileP'] = Uri::root(false) . $cache_file;
 					}
 					else
 					{

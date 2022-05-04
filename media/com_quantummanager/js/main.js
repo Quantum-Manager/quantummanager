@@ -137,6 +137,11 @@ window.QuantumManagerInit = function(container) {
     document.addEventListener('touchstart', activeDetected);
 
     document.addEventListener('keydown', function(ev) {
+
+        if(ev.target.tagName.toLowerCase() === 'input') {
+            return;
+        }
+
         if(
             QuantummanagerLists[activeIndex] === undefined ||
             QuantummanagerLists[activeIndex] === null

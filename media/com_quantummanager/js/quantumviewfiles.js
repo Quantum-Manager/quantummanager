@@ -2013,15 +2013,12 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
                         if (exsImage.indexOf(dataExs) !== -1) {
                             let fileP = objectAll[i].getAttribute('data-filep');
 
-                            if (fileP.indexOf('index.php') === -1) {
-                                fileP = '/' + fileP;
-                            } else {
+                            if (fileP.indexOf('index.php') !== -1) {
                                 fileP += "&path=" + encodeURIComponent(Filemanager.data.path);
                             }
 
                             imgs += "<img src='" + fileP + "' />"
                         } else {
-                            //imgs += "<img src='/media/com_quantummanager/images/icons/files/" + dataExs + ".svg' />"
                             imgs += self.generateIconFile(dataExs);
                         }
                     } else {
@@ -2033,9 +2030,7 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
                             if (exsImage.indexOf(dataExs) !== -1) {
                                 let fileP = objectAll[i].getAttribute('data-filep');
 
-                                if (fileP.indexOf('index.php') === -1) {
-                                    fileP = '/' + fileP;
-                                } else {
+                                if (fileP.indexOf('index.php') !== -1) {
                                     fileP += "&path=" + encodeURIComponent(Filemanager.data.path)
                                 }
 
@@ -2487,7 +2482,7 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
                     let image = document.createElement('img');
 
                     if (fileP.indexOf('index.php') === -1) {
-                        file = '/' + fileP + '?' + QuantumUtils.randomInteger(111111, 999999);
+                        file = fileP + '?' + QuantumUtils.randomInteger(111111, 999999);
                         image.setAttribute('src', file);
                     } else {
                         file = fileP + '&path=' + path + '&v=' + QuantumUtils.randomInteger(111111, 999999);
