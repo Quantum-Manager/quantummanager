@@ -101,7 +101,7 @@ class QuantummanagerFileSystemLocal
 					}
 				}
 
-				$directories[] = self::showdir(JPATH_ROOT . DIRECTORY_SEPARATOR . $path, $root, $scope->title, $scope->id, true, true);
+				$directories[] = static::showdir(JPATH_ROOT . DIRECTORY_SEPARATOR . $path, $root, $scope->title, $scope->id, true, true);
 			}
 		}
 		else
@@ -112,7 +112,7 @@ class QuantummanagerFileSystemLocal
 				{
 					$path          = $scope->path;
 					$path          = JPATH_ROOT . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($path);
-					$directories[] = self::showdir($path, $root, $scope->title, $scope->id, true, true);
+					$directories[] = static::showdir($path, $root, $scope->title, $scope->id, true, true);
 					break;
 				}
 			}
@@ -135,7 +135,7 @@ class QuantummanagerFileSystemLocal
 	{
 		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 		$path        = JPATH_ROOT . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($path);
-		$directories = self::showdir($path, $root, '', true, true);
+		$directories = static::showdir($path, $root, '', true, true);
 
 		return json_encode([
 			'directories' => $directories
@@ -182,7 +182,7 @@ class QuantummanagerFileSystemLocal
 		if ($showRoot && (int) $level == 0)
 		{
 			JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
-			$subdir = self::showdir($dir, $root, $scopeTitle, $scopeId, $folderOnly, $showRoot, $level + 1, $ef);
+			$subdir = static::showdir($dir, $root, $scopeTitle, $scopeId, $folderOnly, $showRoot, $level + 1, $ef);
 
 			return [
 				//'path' => QuantummanagerHelper::getFolderRoot(),
@@ -190,7 +190,7 @@ class QuantummanagerFileSystemLocal
 				'title'    => $scopeTitle,
 				'scopeid'  => $scopeId,
 				'subpath'  => $subdir,
-				'is_empty' => (int) self::dirIisEmpty($dir)
+				'is_empty' => (int) static::dirIisEmpty($dir)
 			];
 		}
 
@@ -209,8 +209,8 @@ class QuantummanagerFileSystemLocal
 
 						$folders[] = [
 							'path'     => $name,
-							'subpath'  => self::showdir($dir . DIRECTORY_SEPARATOR . $name, $root, $scopeTitle, $scopeId, $folderOnly, $showRoot, $level + 1, $ef),
-							'is_empty' => (int) self::dirIisEmpty($dir . DIRECTORY_SEPARATOR . $name)
+							'subpath'  => static::showdir($dir . DIRECTORY_SEPARATOR . $name, $root, $scopeTitle, $scopeId, $folderOnly, $showRoot, $level + 1, $ef),
+							'is_empty' => (int) static::dirIisEmpty($dir . DIRECTORY_SEPARATOR . $name)
 						];
 					}
 					else
@@ -264,7 +264,7 @@ class QuantummanagerFileSystemLocal
 
 		foreach ($directories as $directory)
 		{
-			$search           = self::getSizeDirectory($dir . DIRECTORY_SEPARATOR . $directory, $level + 1);
+			$search           = static::getSizeDirectory($dir . DIRECTORY_SEPARATOR . $directory, $level + 1);
 			$size             += $search['size'];
 			$filesCount       += $search['filesCount'];
 			$directoriesCount += $search['directoriesCount'];
@@ -611,7 +611,7 @@ class QuantummanagerFileSystemLocal
 
 				if ($extended)
 				{
-					$size           = self::getSizeDirectory($directory);
+					$size           = static::getSizeDirectory($directory);
 					$meta['global'] = [
 						[
 							'key'   => Text::_('COM_QUANTUMMANAGER_METAINFO_COUNTDORECTORIES'),
@@ -641,7 +641,7 @@ class QuantummanagerFileSystemLocal
 				}
 				else
 				{
-					$size           = self::getSizeDirectory($directory, -1);
+					$size           = static::getSizeDirectory($directory, -1);
 					$meta['global'] = [
 						[
 							'key'   => Text::_('COM_QUANTUMMANAGER_METAINFO_DIRECTORYNAME'),
@@ -756,7 +756,7 @@ class QuantummanagerFileSystemLocal
 				if (in_array(strtolower($exs), ['jpg', 'png', 'jpeg', 'gif', 'svg', 'webp']))
 				{
 					$path            = QuantummanagerHelper::preparePath($path, false, $scopeName);
-					$cache_file      = 'administrator/cache/com_quantummanager/' . $path . '/' . $file;
+					$cache_file      = static::getPreviewImageFromFile('administrator/cache/com_quantummanager/' . $path . '/' . $file);
 					$cache_file_full = Path::clean(JPATH_ROOT . DIRECTORY_SEPARATOR . $cache_file);
 
 					if (file_exists($cache_file_full))
@@ -778,7 +778,7 @@ class QuantummanagerFileSystemLocal
 				$directoriesOutput[] = [
 					'name'        => $value,
 					'is_writable' => (int) is_writable($directory . DIRECTORY_SEPARATOR . $value),
-					'is_empty'    => (int) self::dirIisEmpty($directory . DIRECTORY_SEPARATOR . $value)
+					'is_empty'    => (int) static::dirIisEmpty($directory . DIRECTORY_SEPARATOR . $value)
 				];
 			}
 
@@ -1223,6 +1223,20 @@ class QuantummanagerFileSystemLocal
 
 	}
 
+
+	public static function getPreviewImageFromFile($file)
+	{
+		$splitFile = explode('.', $file);
+		$exs       = mb_strtolower(array_pop($splitFile));
+
+		if ($exs === 'webp')
+		{
+			return implode('.', $splitFile) . '.jpg';
+		}
+
+		return $file;
+	}
+
 	/**
 	 * @param $path
 	 * @param $file
@@ -1244,7 +1258,7 @@ class QuantummanagerFileSystemLocal
 		{
 			$prefix = QuantummanagerHelper::isJoomla4() ? 'j4-' : '';
 
-			if (self::dirIisEmpty(JPATH_ROOT . DIRECTORY_SEPARATOR . $path))
+			if (static::dirIisEmpty(JPATH_ROOT . DIRECTORY_SEPARATOR . $path))
 			{
 				$app->redirect($siteUrl . $mediaIconsPath . $prefix . 'folder.svg');
 			}
@@ -1301,7 +1315,7 @@ class QuantummanagerFileSystemLocal
 			JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
 			$directory   = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
 			$manager     = JInterventionimage::getInstance();
-			$cacheSource = JPATH_ROOT . DIRECTORY_SEPARATOR . 'cache/com_quantummanager';
+			$cacheSource = JPATH_ROOT . DIRECTORY_SEPARATOR . 'administrator/cache/com_quantummanager';
 			$cache       = $cacheSource;
 			$pathArr     = explode('/', $path);
 			$newFile     = implode('.', $splitFile) . '.jpg';
@@ -1333,6 +1347,7 @@ class QuantummanagerFileSystemLocal
 
 		$mapFileColors = include implode(DIRECTORY_SEPARATOR, [JPATH_ROOT, 'administrator', 'components', 'com_quantummanager', 'layouts', 'mapfilescolors.php']);
 		$colors        = $mapFileColors['default'];
+
 		if (isset($mapFileColors[$exs]))
 		{
 			$colors = $mapFileColors[$exs];

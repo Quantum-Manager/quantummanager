@@ -368,11 +368,20 @@ window.QuantumUtils = {
      * @param q
      * @param callback
      */
-    confirm: function (q, callback) {
+    confirm: function (q, callback, callback_check) {
         JSAlert.confirm(q).then(function (result) {
             if (!result) {
-                return;
+
+                if(typeof callback_check === 'function') {
+                    if(!callback_check()) {
+                        return;
+                    }
+                } else {
+                    return;
+                }
+
             }
+
             callback(result);
         });
     },
