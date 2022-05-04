@@ -127,10 +127,53 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             tip: '',
             icon: QuantumUtils.getFullUrl('/media/com_quantummanager/images/icons/action/copy-content.svg'),
             onClick: function() {
+                let objectAll = ViewfilesElement.querySelectorAll('.field-list-files .object-select');
                 let objectsPush = [];
+                let self_name = self.directoryContext.getAttribute('data-fullname');
+                objectsPush.push(self_name);
 
-                objectsPush.push(self.directoryContext.getAttribute('data-fullname'));
+                for(let i=0;i<objectAll.length;i++) {
+                    if (objectAll[i].querySelector('input').checked) {
+                        let object_name = objectAll[i].getAttribute('data-fullname');
+                        if(object_name !== self_name) {
+                            objectsPush.push(object_name);
+                        }
+                    }
+                }
+
+
                 self.bufferCut = 0;
+                self.bufferFromScope = Filemanager.data.scope;
+                self.bufferFromPath = Filemanager.data.path;
+                self.buffer = objectsPush;
+
+                Filemanager.Quantumtoolbar.buttonsList['viewfilesPaste'].classList.remove('qm-btn-hide');
+                self.trigger('updateContextMenuArea');
+            }
+        },
+        {
+            writeable: 1,
+            type: 'normal',
+            label: QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.buttonCut, 'ENT_QUOTES'),
+            tip: '',
+            icon: QuantumUtils.getFullUrl('/media/com_quantummanager/images/icons/action/cut-content-button.svg'),
+            onClick: function() {
+                let objectAll = ViewfilesElement.querySelectorAll('.field-list-files .object-select');
+                let objectsPush = [];
+                let self_name = self.directoryContext.getAttribute('data-fullname');
+                objectsPush.push(self_name);
+
+                for(let i=0;i<objectAll.length;i++) {
+                    if (objectAll[i].querySelector('input').checked) {
+                        let object_name = objectAll[i].getAttribute('data-fullname');
+                        if(object_name !== self_name) {
+                            objectsPush.push(object_name);
+                        }
+                    }
+                }
+
+
+                self.bufferCut = 1;
                 self.bufferFromScope = Filemanager.data.scope;
                 self.bufferFromPath = Filemanager.data.path;
                 self.buffer = objectsPush;
@@ -208,10 +251,51 @@ window.Quantumviewfiles = function(Filemanager, ViewfilesElement, options) {
             tip: '',
             icon: QuantumUtils.getFullUrl('/media/com_quantummanager/images/icons/action/copy-content.svg'),
             onClick: function() {
+                let objectAll = ViewfilesElement.querySelectorAll('.field-list-files .object-select');
                 let objectsPush = [];
+                let self_name = self.fileContext.getAttribute('data-fullname');
+                objectsPush.push(self_name);
 
-                objectsPush.push(self.fileContext.getAttribute('data-fullname'));
+                for(let i=0;i<objectAll.length;i++) {
+                    if (objectAll[i].querySelector('input').checked) {
+                        let object_name = objectAll[i].getAttribute('data-fullname');
+                        if(object_name !== self_name) {
+                            objectsPush.push(object_name);
+                        }
+                    }
+                }
+
                 self.bufferCut = 0;
+                self.bufferFromScope = Filemanager.data.scope;
+                self.bufferFromPath = Filemanager.data.path;
+                self.buffer = objectsPush;
+
+                Filemanager.Quantumtoolbar.buttonsList['viewfilesPaste'].classList.remove('qm-btn-hide');
+                self.trigger('updateContextMenuArea');
+            }
+        },
+        {
+            writeable: 1,
+            type: 'normal',
+            label: QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.buttonCut, 'ENT_QUOTES'),
+            tip: '',
+            icon: QuantumUtils.getFullUrl('/media/com_quantummanager/images/icons/action/cut-content-button.svg'),
+            onClick: function() {
+                let objectAll = ViewfilesElement.querySelectorAll('.field-list-files .object-select');
+                let objectsPush = [];
+                let self_name = self.fileContext.getAttribute('data-fullname');
+                objectsPush.push(self_name);
+
+                for(let i=0;i<objectAll.length;i++) {
+                    if (objectAll[i].querySelector('input').checked) {
+                        let object_name = objectAll[i].getAttribute('data-fullname');
+                        if(object_name !== self_name) {
+                            objectsPush.push(object_name);
+                        }
+                    }
+                }
+
+                self.bufferCut = 1;
                 self.bufferFromScope = Filemanager.data.scope;
                 self.bufferFromPath = Filemanager.data.path;
                 self.buffer = objectsPush;
