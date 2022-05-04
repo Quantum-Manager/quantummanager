@@ -1747,7 +1747,7 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
                         if (response.preview.link === 'none') {
                             html += '<div class="meta-preview">' + self.generateIconFile() + '</div>';
                         } else {
-                            html += '<div class="meta-preview meta-preview-open"><img src="' + response.preview.link + '" /></div>';
+                            html += '<div class="meta-preview meta-preview-open"><img src="' + response.preview.link + '" draggable="false" /></div>';
                         }
 
                         if (response.preview.name !== undefined) {
@@ -1914,7 +1914,7 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
                     let html = '<div>';
 
                     if (response.preview !== undefined) {
-                        html += '<div class="meta-preview meta-preview-folder"><img src="' + response.preview.link + '" /></div>';
+                        html += '<div class="meta-preview meta-preview-folder"><img src="' + response.preview.link + '" draggable="false" /></div>';
 
                         if (response.preview.name !== undefined) {
                             html += '<div class="meta-preview-name">' + response.preview.name + '</div>';
@@ -2017,13 +2017,13 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
                                 fileP += "&path=" + encodeURIComponent(Filemanager.data.path);
                             }
 
-                            imgs += "<img src='" + fileP + "' />"
+                            imgs += "<img src='" + fileP + "' draggable=\"false\" />"
                         } else {
                             imgs += self.generateIconFile(dataExs);
                         }
                     } else {
                         if (objectAll[i].querySelector('.directory') !== null) {
-                            imgs += "<img src='/media/com_quantummanager/images/icons/folder.svg' />";
+                            imgs += "<img src='/media/com_quantummanager/images/icons/folder.svg' draggable=\"false\" />";
                         } else {
                             let dataExs = objectAll[i].getAttribute('data-exs').toLocaleLowerCase();
 
@@ -2034,7 +2034,7 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
                                     fileP += "&path=" + encodeURIComponent(Filemanager.data.path)
                                 }
 
-                                imgs += "<img src='" + fileP + "' />";
+                                imgs += "<img src='" + fileP + "' draggable=\"false\" />";
                             } else {
                                 imgs += self.generateIconFile(dataExs);
                             }

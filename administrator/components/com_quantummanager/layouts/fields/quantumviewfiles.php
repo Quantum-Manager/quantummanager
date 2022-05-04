@@ -45,10 +45,8 @@ $options = [
         <div class="view"></div>
 
         <?php if($displayData['metafile'] === '1') :?>
-        <div class="meta-file quantummanager-backgrounds-muted">
-            <div class="meta-file-list">
-
-            </div>
+        <div class="meta-file quantummanager-backgrounds-muted" draggable="false">
+            <div class="meta-file-list"></div>
         </div>
         <?php endif; ?>
     </div>

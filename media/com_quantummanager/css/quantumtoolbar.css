@@ -32,14 +32,6 @@
     justify-content: flex-end;
 }
 
-/*.quantumtoolbar-module .left > *:first-child {
-    margin-left: 15px;
-}
-
-.quantumtoolbar-module .right > *:first-child {
-    margin-right: 15px !important;
-}*/
-
 .quantumtoolbar-module button {
     display: flex;
     align-items: center;
@@ -62,7 +54,6 @@
 }
 
 .quantumtoolbar-module button.qm-btn-hide {
-    /*display: none;*/
     pointer-events: none;
     color: #ccc;
 }
@@ -103,12 +94,13 @@
     width: 100%;
     background-color: #f9f9f9;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    transition: visibility 0.1s;
+    transition: visibility 100ms;
     z-index: 6;
 }
 
 .quantumtoolbar-module .qm-btn-wrap:hover .qm-btn-dropdown {
     visibility: visible;
+    transition: visibility 100ms;
 }
 
 .quantumtoolbar-module .qm-btn-dropdown .qm-btn {
