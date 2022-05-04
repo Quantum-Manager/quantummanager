@@ -822,7 +822,6 @@ svg.svg-icon text {
     display: flex;
     align-items: center;
     padding: 0;
-    border-bottom: 1px solid #ddd;
     font-size: 13px;
 }
 .quantumviewfiles-module .field-list-files .list-table .file-item:hover {
@@ -884,7 +883,6 @@ svg.svg-icon text {
     display: flex;
     align-items: center;
     padding: 0;
-    border-bottom: 1px solid #ddd;
     font-size: 13px;
 }
 .quantumviewfiles-module .field-list-files .list-table .directory-item:hover {
