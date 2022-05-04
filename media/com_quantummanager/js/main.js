@@ -27,6 +27,7 @@ window.QuantumManagerInit = function(container) {
     let quantummanagerAll = container.querySelectorAll('.quantummanager');
     let scopesEnabled = QuantumSettings.scopeEnabled.split(',');
     let quantummanagerForBuild = [];
+    let activeIndex = null;
 
     for (let i=0;i<quantummanagerAll.length;i++) {
 
@@ -115,5 +116,35 @@ window.QuantumManagerInit = function(container) {
         }
     }, 1);
 
+
+    let activeDetected = function (ev) {
+        let element = ev.target.closest('.quantummanager');
+
+        if(element === null || element === undefined) {
+            return;
+        }
+
+        if(!element.hasAttribute('data-index')) {
+            return;
+        }
+
+        activeIndex = parseInt(element.getAttribute('data-index'));
+    };
+
+    document.addEventListener('click', activeDetected);
+    document.addEventListener('dblclick', activeDetected);
+    document.addEventListener('contextmenu', activeDetected);
+    document.addEventListener('touchstart', activeDetected);
+
+    document.addEventListener('keydown', function(ev) {
+        if(
+            QuantummanagerLists[activeIndex] === undefined ||
+            QuantummanagerLists[activeIndex] === null
+        ) {
+            return;
+        }
+
+        QuantummanagerLists[activeIndex].events.trigger('hotKeysResolve', QuantummanagerLists[activeIndex], ev.key);
+    });
 
 };

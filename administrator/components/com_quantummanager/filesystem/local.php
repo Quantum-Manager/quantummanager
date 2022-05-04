@@ -1321,7 +1321,7 @@ class QuantummanagerFileSystemLocal
 				})->encode('jpg')->save($cache . DIRECTORY_SEPARATOR . $newFile);
 			}
 
-			$app->redirect($siteUrl . 'cache/com_quantummanager' . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $newFile . '?v=' . mt_rand(111111, 999999));
+			$app->redirect($siteUrl . 'administrator/cache/com_quantummanager' . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $newFile . '?v=' . mt_rand(111111, 999999));
 		}
 
 		if ($exs === 'svg')
