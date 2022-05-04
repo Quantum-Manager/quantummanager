@@ -2085,6 +2085,13 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
         this.searchNameValue = search;
         let filesAll = ViewfilesElement.querySelectorAll('.field-list-files .file-item');
         let directoryAll = ViewfilesElement.querySelectorAll('.field-list-files .directory-item');
+        let searchAlgh = 'default';
+        let searchRegex = function (name) {
+            return name.match(search);
+        };
+        let searchDefault = function (name) {
+            return (name.indexOf(search) !== -1)
+        };
 
         if (search === '') {
             for (let i = 0; i < filesAll.length; i++) {
@@ -2094,17 +2101,50 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
                 directoryAll[i].style.display = 'block';
             }
         } else {
+
+            if(
+                search.indexOf('*') !== -1 ||
+                search.indexOf('regex:') !== -1
+            ) {
+                searchAlgh = 'regex';
+                search = search.replace('regex:', '');
+                search = search.replace('.', '\\.');
+                search = search.replace('*', '.*?');
+                search = '^' + search + '$';
+            }
+
             for (let i = 0; i < filesAll.length; i++) {
                 let nameFile = filesAll[i].querySelector('.file-name').innerHTML.toLowerCase();
-                if (nameFile.indexOf(search) !== -1) {
+                let check = false;
+
+                if(searchAlgh === 'default') {
+                    check = searchDefault(nameFile);
+                }
+
+                if(searchAlgh === 'regex') {
+                    check = searchRegex(nameFile);
+                }
+
+                if (check) {
                     filesAll[i].style.display = 'flex';
                 } else {
                     filesAll[i].style.display = 'none';
                 }
             }
+
             for (let i = 0; i < directoryAll.length; i++) {
                 let nameDirectory = directoryAll[i].querySelector('.directory-name').innerHTML.toLowerCase();
-                if (nameDirectory.indexOf(search) !== -1) {
+                let check = false;
+
+                if(searchAlgh === 'default') {
+                    check = searchDefault(nameDirectory);
+                }
+
+                if(searchAlgh === 'regex') {
+                    check = searchRegex(nameDirectory);
+                }
+
+                if (check) {
                     directoryAll[i].style.display = 'block';
                 } else {
                     directoryAll[i].style.display = 'none';
