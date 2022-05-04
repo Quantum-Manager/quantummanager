@@ -843,8 +843,7 @@ svg.svg-icon text {
 }
 .quantumviewfiles-module .field-list-files .list-table .file-item .file {
     position: relative;
-    margin-left: 35px;
-    padding: 6px 0;
+    padding: 6px 0px 6px 35px;
 }
 .quantumviewfiles-module .field-list-files .list-table .file-item .file .file-exs {
     margin-right: 5px;
