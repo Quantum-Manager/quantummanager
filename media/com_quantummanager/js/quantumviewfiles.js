@@ -2107,10 +2107,14 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
                 search.indexOf('regex:') !== -1
             ) {
                 searchAlgh = 'regex';
+
+                if(search.indexOf('regex:') === -1) {
+                    search = search.replace('.', '\\.');
+                    search = search.replace('*', '.*?');
+                    search = '^' + search + '$';
+                }
+
                 search = search.replace('regex:', '');
-                search = search.replace('.', '\\.');
-                search = search.replace('*', '.*?');
-                search = '^' + search + '$';
             }
 
             for (let i = 0; i < filesAll.length; i++) {
