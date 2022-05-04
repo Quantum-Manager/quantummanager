@@ -843,7 +843,19 @@ svg.svg-icon text {
 }
 .quantumviewfiles-module .field-list-files .list-table .file-item .file {
     position: relative;
-    padding: 8px 4px 8px 30px;
+    margin-left: 30px;
+    padding: 6px 0;
+}
+.quantumviewfiles-module .field-list-files .list-table .file-item .file .file-exs {
+    margin-right: 5px;
+    width: 16px;
+    height: 16px;
+}
+.quantumviewfiles-module .field-list-files .list-table .file-item .file img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
 }
 .quantumviewfiles-module .field-list-files .list-table .file-item .check {
     position: absolute;

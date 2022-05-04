@@ -2464,7 +2464,10 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
                 break;
             }
 
-            if (this.lastTypeViewFiles === 'list-grid') {
+            if (
+                this.lastTypeViewFiles === 'list-grid' ||
+                this.lastTypeViewFiles === 'list-table'
+            ) {
                 let fileP = filesAll[i].getAttribute('data-fileP');
                 let fileName = filesAll[i].getAttribute('data-name');
                 let fileExs = filesAll[i].getAttribute('data-exs');
@@ -2503,8 +2506,8 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
                 let htmlFields = '';
                 let filePreview = filesAll[i].querySelector('.file-exs');
                 let checkFields = filesAll[i].querySelector('.fields');
-                filePreview.style.backgroundImage = "";
-                filePreview.innerHTML = '';
+                /*filePreview.style.backgroundImage = "";
+                filePreview.innerHTML = '';*/
 
                 if (checkFields === null) {
                     htmlFields += '<div class="fields">';
@@ -2765,7 +2768,10 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
     });
 
     Filemanager.events.add(this, 'afterReloadTypeViewFiles', function (fm, el) {
-        if (fm.Quantumviewfiles.lastTypeViewFiles === 'list-grid') {
+        if (
+            fm.Quantumviewfiles.lastTypeViewFiles === 'list-grid' ||
+            fm.Quantumviewfiles.lastTypeViewFiles === 'list-table'
+        ) {
             let images = fm.Quantumviewfiles.element.querySelectorAll('.lazyLoad');
 
             if (self.lazyload === undefined || self.lazyload === null) {
