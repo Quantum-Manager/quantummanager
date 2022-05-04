@@ -692,11 +692,11 @@ window.QuantumUtils = {
                 return this.child[this.child.length - 1];
             },
             build: function () {
-                var buildElement = this.el;
+                let buildElement = this.el;
 
                 if (this.child.length > 0) {
 
-                    for (var i = 0; i < this.child.length; i++) {
+                    for (let i = 0; i < this.child.length; i++) {
                         buildElement.appendChild(this.child[i].build());
                     }
 
@@ -753,23 +753,23 @@ window.QuantumUtils = {
 
 
     getPlatform: function () {
-        var unknown = '-';
+        let unknown = '-';
 
         // screen
-        var screenSize = '';
+        let screenSize = '';
         if (screen.width) {
-            width = (screen.width) ? screen.width : '';
-            height = (screen.height) ? screen.height : '';
+            let width = (screen.width) ? screen.width : '';
+            let height = (screen.height) ? screen.height : '';
             screenSize += '' + width + " x " + height;
         }
 
         // browser
-        var nVer = navigator.appVersion;
-        var nAgt = navigator.userAgent;
-        var browser = navigator.appName;
-        var version = '' + parseFloat(navigator.appVersion);
-        var majorVersion = parseInt(navigator.appVersion, 10);
-        var nameOffset, verOffset, ix;
+        let nVer = navigator.appVersion;
+        let nAgt = navigator.userAgent;
+        let browser = navigator.appName;
+        let version = '' + parseFloat(navigator.appVersion);
+        let majorVersion = parseInt(navigator.appVersion, 10);
+        let nameOffset, verOffset, ix;
 
         // Opera
         if ((verOffset = nAgt.indexOf('Opera')) != -1) {
@@ -842,10 +842,10 @@ window.QuantumUtils = {
         }
 
         // mobile version
-        var mobile = /Mobile|mini|Fennec|Android|iP(ad|od|hone)/.test(nVer);
+        let mobile = /Mobile|mini|Fennec|Android|iP(ad|od|hone)/.test(nVer);
 
         // cookie
-        var cookieEnabled = (navigator.cookieEnabled) ? true : false;
+        let cookieEnabled = (navigator.cookieEnabled) ? true : false;
 
         if (typeof navigator.cookieEnabled == 'undefined' && !cookieEnabled) {
             document.cookie = 'testcookie';
@@ -853,8 +853,8 @@ window.QuantumUtils = {
         }
 
         // system
-        var os = unknown;
-        var clientStrings = [
+        let os = unknown;
+        let clientStrings = [
             {s: 'Windows 10', r: /(Windows 10.0|Windows NT 10.0)/},
             {s: 'Windows 8.1', r: /(Windows 8.1|Windows NT 6.3)/},
             {s: 'Windows 8', r: /(Windows 8|Windows NT 6.2)/},
@@ -883,15 +883,15 @@ window.QuantumUtils = {
             {s: 'OS/2', r: /OS\/2/},
             {s: 'Search Bot', r: /(nuhk|Googlebot|Yammybot|Openbot|Slurp|MSNBot|Ask Jeeves\/Teoma|ia_archiver)/}
         ];
-        for (var id in clientStrings) {
-            var cs = clientStrings[id];
+        for (let id in clientStrings) {
+            let cs = clientStrings[id];
             if (cs.r.test(nAgt)) {
                 os = cs.s;
                 break;
             }
         }
 
-        var osVersion = unknown;
+        let osVersion = unknown;
 
         if (/Windows/.test(os)) {
             osVersion = /Windows (.*)/.exec(os)[1];
@@ -913,9 +913,9 @@ window.QuantumUtils = {
 
         // flash (you'll need to include swfobject)
         /* script src="//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js" */
-        var flashVersion = 'no check';
+        let flashVersion = 'no check';
         if (typeof swfobject != 'undefined') {
-            var fv = swfobject.getFlashPlayerVersion();
+            let fv = swfobject.getFlashPlayerVersion();
             if (fv.major > 0) {
                 flashVersion = fv.major + '.' + fv.minor + ' r' + fv.release;
             } else {

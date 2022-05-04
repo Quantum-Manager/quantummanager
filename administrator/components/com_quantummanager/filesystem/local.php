@@ -14,6 +14,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
+use Joomla\Filesystem\Path;
 
 class QuantummanagerFileSystemLocal
 {
@@ -756,7 +757,7 @@ class QuantummanagerFileSystemLocal
 				{
 					$path            = QuantummanagerHelper::preparePath($path, false, $scopeName);
 					$cache_file      = 'administrator/cache/com_quantummanager/' . $path . '/' . $file;
-					$cache_file_full = JPATH_ROOT . DIRECTORY_SEPARATOR . $cache_file;
+					$cache_file_full = Path::clean(JPATH_ROOT . DIRECTORY_SEPARATOR . $cache_file);
 
 					if (file_exists($cache_file_full))
 					{
@@ -873,9 +874,9 @@ class QuantummanagerFileSystemLocal
 						else
 						{
 							$rand            = 'copy_' . mt_rand(111111111, 999999999);
-							$cache           = JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'cache/com_quantummanager';
-							$cache_copy      = JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'cache/com_quantummanager/copy';
-							$cache_copy_copy = JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'cache/com_quantummanager/copy/' . $rand;
+							$cache           = JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . 'com_quantummanager';
+							$cache_copy      = JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . 'com_quantummanager' . DIRECTORY_SEPARATOR . 'copy';
+							$cache_copy_copy = JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . 'com_quantummanager' . DIRECTORY_SEPARATOR . 'copy' . DIRECTORY_SEPARATOR . $rand;
 
 							if (!file_exists($cache))
 							{
