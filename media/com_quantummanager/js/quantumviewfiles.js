@@ -392,7 +392,7 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
         }
     ];
     this.hotKeyPrev = '';
-    this.hotkeys = {
+    this.hotKeys = {
         'Mac OS': {
             'delete': ['delete'],
             'rename': ['f2'],
@@ -2741,14 +2741,14 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
         let os = QuantumUtils.getOS();
         let action = '';
 
-        if (self.hotkeys[os] === undefined || self.hotkeys[os] === null) {
+        if (self.hotKeys[os] === undefined || self.hotKeys[os] === null) {
             return;
         }
 
-        for (let action_hotkey in self.hotkeys[os]) {
+        for (let action_hotkey in self.hotKeys[os]) {
             if (
-                self.hotkeys[os][action_hotkey].indexOf(chain) !== -1 ||
-                self.hotkeys[os][action_hotkey].indexOf(key) !== -1
+                self.hotKeys[os][action_hotkey].indexOf(chain) !== -1 ||
+                self.hotKeys[os][action_hotkey].indexOf(key) !== -1
             ) {
                 action = action_hotkey;
             }
