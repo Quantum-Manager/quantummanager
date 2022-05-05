@@ -19,7 +19,7 @@
     border: 2px dashed #ccc;
     border-radius: 5px;
     width: auto;
-    padding: 15px;
+    padding: 15px 0;
     text-align: center;
     transition: all 0.2s ease;
 }

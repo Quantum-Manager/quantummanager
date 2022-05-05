@@ -18,6 +18,10 @@ if(window.jQuery !== undefined) {
     });
 }
 
+document.addEventListener('subform-row-add', function (event) {
+    window.QuantumManagerInit(event.target);
+});
+
 window.QuantumManagerInit = function(container) {
 
     if(container === null || container === undefined) {
