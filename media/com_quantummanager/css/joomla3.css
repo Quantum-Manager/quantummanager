@@ -112,7 +112,12 @@ body.com_quantummanager #content > * {
 .quantumviewfiles-module .field-list-files .list-grid .directory-item.empty .directory .directory-icon {
     background-image: url("data:image/svg+xml,%3Csvg width='80' height='64' viewBox='0 0 80 64' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M47.2929 8.70711L47.5858 9H48H76C77.6569 9 79 10.3431 79 12V60C79 61.6569 77.6569 63 76 63H4C2.34312 63 1 61.6569 1 60V4C1 2.34314 2.34312 1 4 1H39.5858L47.2929 8.70711Z' stroke='%23A5C7E9' stroke-width='2'/%3E%3C/svg%3E%0A");
 }
-
+.quantumviewfiles-module .field-list-files .list-table .directory-item .directory .directory-icon {
+    background-image: url("data:image/svg+xml,%3Csvg width='80' height='64' viewBox='0 0 80 64' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4C0 1.79086 1.79083 0 4 0H40L48 8H76C78.2092 8 80 9.79086 80 12V60C80 62.2091 78.2092 64 76 64H4C1.79083 64 0 62.2091 0 60V4Z' fill='%23A5C7E9'/%3E%3Cg style='mix-blend-mode:overlay' opacity='0.5'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M48 8L40 0H32L40 8H48Z' fill='black'/%3E%3C/g%3E%3C/svg%3E%0A");
+}
+.quantumviewfiles-module .field-list-files .list-table .directory-item.empty .directory .directory-icon {
+    background-image: url("data:image/svg+xml,%3Csvg width='20' height='16' viewBox='0 0 20 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M10 2H18C19.1 2 20 2.9 20 4V14C20 15.1 19.1 16 18 16H2C0.9 16 0 15.1 0 14L0.01 2C0.01 0.9 0.9 0 2 0H8L10 2ZM2 4V14H18V4H2Z' fill='%23A5C7E9'/%3E%3C/svg%3E%0A");
+}
 
 
 /**** Unsplash module */
