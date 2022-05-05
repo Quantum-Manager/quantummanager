@@ -416,8 +416,8 @@
 .quantumcropperjs-module .editor {
     position: relative;
     margin: auto;
-    max-width: 100%;
     height: 100%;
+    max-width: 85%;
     flex: 1;
 }
 .quantumcropperjs-module .editor .cropperjs {

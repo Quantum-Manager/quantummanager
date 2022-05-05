@@ -131,3 +131,7 @@ body.com_quantummanager #content > * > *
 .quantummanager-full-component-wrap .quantumcropperjs-module .toolbar {
     width: 18%;
 }
+
+.quantumcropperjs-module .editor {
+    max-width: 82%;
+}
