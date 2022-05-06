@@ -20,10 +20,10 @@ class QuantummanagerControllerQuantumviewfiles extends AdminController
 
 	public function createDirectory()
 	{
-		$app = Factory::getApplication();
+		$app  = Factory::getApplication();
 		$data = $app->input->getArray();
 
-		if(!isset($data['path'], $data['name'], $data['scope']))
+		if (!isset($data['path'], $data['name'], $data['scope']))
 		{
 			$app->close();
 		}
@@ -37,10 +37,10 @@ class QuantummanagerControllerQuantumviewfiles extends AdminController
 
 	public function getFiles()
 	{
-		$app = Factory::getApplication();
+		$app  = Factory::getApplication();
 		$data = $app->input->getArray();
 
-		if(!isset($data['path'], $data['scope']))
+		if (!isset($data['path'], $data['scope']))
 		{
 			$app->close();
 		}
@@ -54,17 +54,17 @@ class QuantummanagerControllerQuantumviewfiles extends AdminController
 
 	public function getMetaFile()
 	{
-		$app = Factory::getApplication();
+		$app  = Factory::getApplication();
 		$data = $app->input->getArray();
 
-		if(!isset($data['path'], $data['scope']))
+		if (!isset($data['path'], $data['scope']))
 		{
 			$app->close();
 		}
 
 		$name = '';
 
-		if(isset($data['name']))
+		if (isset($data['name']))
 		{
 			$name = $data['name'];
 		}
@@ -78,17 +78,17 @@ class QuantummanagerControllerQuantumviewfiles extends AdminController
 
 	public function watermark()
 	{
-		$app = Factory::getApplication();
+		$app  = Factory::getApplication();
 		$data = $app->input->getArray();
 
-		if(!isset($data['path'], $data['scope']))
+		if (!isset($data['path'], $data['scope']))
 		{
 			$app->close();
 		}
 
 		$list = '';
 
-		if(isset($data['list']))
+		if (isset($data['list']))
 		{
 			$list = json_decode($data['list']);
 		}
@@ -100,12 +100,42 @@ class QuantummanagerControllerQuantumviewfiles extends AdminController
 		$app->close();
 	}
 
-	public function paste()
+	public function duplicate()
 	{
-		$app = Factory::getApplication();
+		$app  = Factory::getApplication();
 		$data = $app->input->getArray();
 
-		if(!isset(
+		if (!isset(
+			$data['path'],
+			$data['scope'],
+			$data['list'])
+		)
+		{
+			$app->close();
+		}
+
+		$path  = $data['path'];
+		$scope = $data['scope'];
+		$list  = json_decode($data['list'], JSON_OBJECT_AS_ARRAY);
+
+		if (count($list) === 0)
+		{
+			$app->close();
+		}
+
+		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
+		echo QuantummanagerFileSystemLocal::duplicate($path, $scope, $list);
+
+		QuantummanagerHelper::setHeadersNoCache();
+		$app->close();
+	}
+
+	public function paste()
+	{
+		$app  = Factory::getApplication();
+		$data = $app->input->getArray();
+
+		if (!isset(
 			$data['pathFrom'],
 			$data['scopeFrom'],
 			$data['pathTo'],
@@ -117,14 +147,14 @@ class QuantummanagerControllerQuantumviewfiles extends AdminController
 			$app->close();
 		}
 
-		$pathFrom = $data['pathFrom'];
+		$pathFrom  = $data['pathFrom'];
 		$scopeFrom = $data['scopeFrom'];
-		$pathTo = $data['pathTo'];
-		$scopeTo = $data['scopeTo'];
-		$cut = (int)$data['cut'];
-		$list = json_decode($data['list'], JSON_OBJECT_AS_ARRAY);
+		$pathTo    = $data['pathTo'];
+		$scopeTo   = $data['scopeTo'];
+		$cut       = (int) $data['cut'];
+		$list      = json_decode($data['list'], JSON_OBJECT_AS_ARRAY);
 
-		if(count($list) === 0)
+		if (count($list) === 0)
 		{
 			$app->close();
 		}
@@ -138,17 +168,17 @@ class QuantummanagerControllerQuantumviewfiles extends AdminController
 
 	public function delete()
 	{
-		$app = Factory::getApplication();
+		$app  = Factory::getApplication();
 		$data = $app->input->getArray();
 
-		if(!isset($data['path'], $data['list'], $data['scope']))
+		if (!isset($data['path'], $data['list'], $data['scope']))
 		{
 			$app->close();
 		}
 
-		$path = $data['path'];
+		$path  = $data['path'];
 		$scope = $data['scope'];
-		$list = json_decode($data['list']);
+		$list  = json_decode($data['list']);
 
 		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
 		echo QuantummanagerFileSystemLocal::delete($path, $scope, $list);
@@ -160,20 +190,21 @@ class QuantummanagerControllerQuantumviewfiles extends AdminController
 
 	public function getParsePath()
 	{
-		try {
-			$app = Factory::getApplication();
+		try
+		{
+			$app  = Factory::getApplication();
 			$data = $app->input->getArray();
 
-			if(!isset($data['path'], $data['scope']))
+			if (!isset($data['path'], $data['scope']))
 			{
 				$app->close();
 			}
 
-			$path = $data['path'];
+			$path  = $data['path'];
 			$scope = $data['scope'];
-			$host = '';
+			$host  = '';
 
-			if(isset($data['host']))
+			if (isset($data['host']))
 			{
 				$host = $data['host'];
 			}
@@ -194,25 +225,26 @@ class QuantummanagerControllerQuantumviewfiles extends AdminController
 
 	public function renameFile()
 	{
-		try {
-			$app = Factory::getApplication();
+		try
+		{
+			$app  = Factory::getApplication();
 			$data = $app->input->getArray();
 			$file = '';
 
-			if(!isset($data['path'], $data['scope'], $data['file'], $data['name']))
+			if (!isset($data['path'], $data['scope'], $data['file'], $data['name']))
 			{
 				$app->close();
 			}
 
-			if(empty($data['path']) || empty($data['scope']) || empty($data['file']) || empty($data['name']))
+			if (empty($data['path']) || empty($data['scope']) || empty($data['file']) || empty($data['name']))
 			{
 				$app->close();
 			}
 
-			$path = $data['path'];
+			$path  = $data['path'];
 			$scope = $data['scope'];
-			$file = $data['file'];
-			$name = $data['name'];
+			$file  = $data['file'];
+			$name  = $data['name'];
 
 			JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
 			echo QuantummanagerFileSystemLocal::renameFile($path, $scope, $file, $name);
@@ -228,25 +260,26 @@ class QuantummanagerControllerQuantumviewfiles extends AdminController
 
 	public function renameDirectory()
 	{
-		try {
-			$app = Factory::getApplication();
+		try
+		{
+			$app  = Factory::getApplication();
 			$data = $app->input->getArray();
 			$file = '';
 
-			if(!isset($data['path'], $data['scope'], $data['oldName'], $data['name']))
+			if (!isset($data['path'], $data['scope'], $data['oldName'], $data['name']))
 			{
 				$app->close();
 			}
 
-			if(empty($data['path']) || empty($data['scope']) || empty($data['oldName']) || empty($data['name']))
+			if (empty($data['path']) || empty($data['scope']) || empty($data['oldName']) || empty($data['name']))
 			{
 				$app->close();
 			}
 
-			$path = $data['path'];
-			$scope = $data['scope'];
+			$path    = $data['path'];
+			$scope   = $data['scope'];
 			$oldName = $data['oldName'];
-			$name = $data['name'];
+			$name    = $data['name'];
 
 			JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
 			echo QuantummanagerFileSystemLocal::renameDirectory($path, $scope, $oldName, $name);
@@ -262,20 +295,21 @@ class QuantummanagerControllerQuantumviewfiles extends AdminController
 
 	public function generatePreviewImage()
 	{
-		try {
-			$app = Factory::getApplication();
+		try
+		{
+			$app  = Factory::getApplication();
 			$data = $app->input->getArray();
 			$file = '';
 
-			if(!isset($data['path'], $data['scope']))
+			if (!isset($data['path'], $data['scope']))
 			{
 				$app->close();
 			}
 
-			$path = $data['path'];
+			$path  = $data['path'];
 			$scope = $data['scope'];
 
-			if(isset($data['file']))
+			if (isset($data['file']))
 			{
 				$file = $data['file'];
 			}
@@ -293,32 +327,33 @@ class QuantummanagerControllerQuantumviewfiles extends AdminController
 	}
 
 	public function createPreview()
-    {
-        try {
-            $app = Factory::getApplication();
-            $data = $app->input->getArray();
-            $file = '';
+	{
+		try
+		{
+			$app  = Factory::getApplication();
+			$data = $app->input->getArray();
+			$file = '';
 
-            if(!isset($data['path'], $data['scope'], $data['list'], $data['preview']))
-            {
-                $app->close();
-            }
+			if (!isset($data['path'], $data['scope'], $data['list'], $data['preview']))
+			{
+				$app->close();
+			}
 
-            $path = $data['path'];
-            $scope = $data['scope'];
-            $list = json_decode($data['list'], true);
-            $preview = $data['preview'];
+			$path    = $data['path'];
+			$scope   = $data['scope'];
+			$list    = json_decode($data['list'], true);
+			$preview = $data['preview'];
 
-            JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
-            echo QuantummanagerFileSystemLocal::createPreview($path, $scope, $list, $preview);
+			JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
+			echo QuantummanagerFileSystemLocal::createPreview($path, $scope, $list, $preview);
 
-	        QuantummanagerHelper::setHeadersNoCache();
-	        $app->close();
-        }
-        catch (Exception $e)
-        {
-            echo $e->getMessage();
-        }
-    }
+			QuantummanagerHelper::setHeadersNoCache();
+			$app->close();
+		}
+		catch (Exception $e)
+		{
+			echo $e->getMessage();
+		}
+	}
 
 }

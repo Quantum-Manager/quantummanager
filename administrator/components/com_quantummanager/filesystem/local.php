@@ -820,6 +820,128 @@ class QuantummanagerFileSystemLocal
 	}
 
 
+	public static function duplicate($path, $scope, $list = [])
+	{
+		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+		$actions = QuantummanagerHelper::getActions();
+
+		if (!$actions->get('core.edit'))
+		{
+			return json_encode(['fail']);
+		}
+
+		if ($list === null)
+		{
+			$list = [];
+		}
+
+		$lang         = Factory::getLanguage();
+		$path_compile = JPATH_SITE . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($path, false, $scope);
+
+		$find_new_name = static function ($count = 0, $name, $is_file = true) use ($lang, $path_compile, &$find_new_name) {
+
+			if ($is_file)
+			{
+
+				$nameSplit = explode('.', $name);
+				$nameExs   = mb_strtolower(array_pop($nameSplit));
+
+				$nameSplit = array_merge($nameSplit, [Text::sprintf('COM_QUANTUMMANAGER_QUANTUMVIEWFILES_DUPLICATE', (string) $count)]);
+
+				if (!(int) QuantummanagerHelper::getParamsComponentValue('translit', 0))
+				{
+					$nameForSafe = preg_replace('#[\-]{2,}#isu', '-', str_replace(' ', '-', implode('_', $nameSplit)));
+					$nameForSafe = File::makeSafe($lang->transliterate($nameForSafe), ['#^\.#', '#\040#']);
+				}
+				else
+				{
+					$nameForSafe = implode('.', $nameSplit);
+				}
+
+				$maxSizeFileName = (int) QuantummanagerHelper::getParamsComponentValue('maxsizefilename', 63);
+
+				if (mb_strlen($nameForSafe) > $maxSizeFileName && $maxSizeFileName > 0)
+				{
+					$nameSafe = mb_substr($nameForSafe, 0, $maxSizeFileName) . '_p' . mt_rand(11111, 99999);
+				}
+				else
+				{
+					$nameSafe = $nameForSafe . ((int) QuantummanagerHelper::getParamsComponentValue('postfix', 0) ? ('_p' . mt_rand(11111, 99999)) : '');
+				}
+
+				if ((int) QuantummanagerHelper::getParamsComponentValue('hashname', 0))
+				{
+					$nameSafe = md5($nameSafe);
+				}
+
+				$nameSafe .= '.' . $nameExs;
+			}
+			else
+			{
+				$name .= Text::sprintf('COM_QUANTUMMANAGER_QUANTUMVIEWFILES_DUPLICATE', (string) $count);
+
+				if (!(int) QuantummanagerHelper::getParamsComponentValue('translit', 0))
+				{
+					$nameSafe = File::makeSafe($lang->transliterate($name), ['#^\.#', '#\040#']);
+				}
+				else
+				{
+					$nameSafe = $name;
+				}
+			}
+
+			$check_file = $path_compile . DIRECTORY_SEPARATOR . $nameSafe;
+
+			if (!file_exists($check_file))
+			{
+				return $nameSafe;
+			}
+
+			return $find_new_name(($count + 1), $name, $is_file);
+		};
+
+
+		if (file_exists($path_compile))
+		{
+			foreach ($list as $file)
+			{
+				$file_source = $path_compile . DIRECTORY_SEPARATOR . $file;
+
+				if (!file_exists($file_source))
+				{
+					continue;
+				}
+
+
+				if (is_file($file_source))
+				{
+					$file_new = $find_new_name(0, $file, true);
+
+					if ($file_source !== $file_new)
+					{
+						File::copy($file_source, $path_compile . DIRECTORY_SEPARATOR . $file_new);
+					}
+
+				}
+				else
+				{
+					$file_new = $find_new_name(0, $file, false);
+
+					if ($file_source !== $file_new)
+					{
+						Folder::copy($file_source, $path_compile . DIRECTORY_SEPARATOR . $file_new);
+					}
+				}
+			}
+
+			return json_encode(['ok']);
+		}
+
+		return json_encode(['fail']);
+
+	}
+
+
 	/**
 	 * @param          $pathFrom
 	 * @param          $scopeFrom
