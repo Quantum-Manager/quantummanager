@@ -125,10 +125,12 @@ window.QuantumManagerInit = function(container) {
         let element = ev.target.closest('.quantummanager');
 
         if(element === null || element === undefined) {
+            activeIndex = null;
             return;
         }
 
         if(!element.hasAttribute('data-index')) {
+            activeIndex = null;
             return;
         }
 
