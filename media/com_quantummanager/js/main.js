@@ -153,7 +153,12 @@ window.QuantumManagerInit = function(container) {
             return;
         }
 
-        QuantummanagerLists[activeIndex].events.trigger('hotKeysResolve', QuantummanagerLists[activeIndex], ev.key);
+        let results = QuantummanagerLists[activeIndex].events.trigger('hotKeysResolve', QuantummanagerLists[activeIndex], ev.key);
+
+        if(results.indexOf(false)) {
+            ev.preventDefault();
+        }
+
     });
 
 

@@ -124,3 +124,14 @@ body.com_quantummanager #content > * {
 .quantumunsplash-module .quantumunsplash-module-header .header-filters > div:last-child .quantummanager-icon {
     margin-left: 10px;
 }
+
+
+/************************** Cropperjs *********************************/
+.quantumcropperjs-module .qm-input-range-wrap > div input[type=range] {
+    background-color: #eee;
+    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #78abde), color-stop(100%, #78abde));
+    background-image: -webkit-linear-gradient(#78abde, #78abde);
+    background-image: -moz-linear-gradient(#78abde, #78abde);
+    background-image: -o-linear-gradient(#78abde, #78abde);
+    background-image: linear-gradient(#78abde, #78abde);
+}

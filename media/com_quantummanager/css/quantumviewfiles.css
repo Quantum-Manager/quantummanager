@@ -475,6 +475,13 @@
     text-align: center;
     padding: 40px 50px;
 }
+.quantumviewfiles-module .view > .error {
+    text-align: center;
+    padding: 40px 50px;
+}
+.quantumviewfiles-module .view > .error a {
+    display: inline-block;
+}
 .quantumviewfiles-module .field-list-files {
     -webkit-touch-callout: none;
     -webkit-user-select: none;

@@ -412,7 +412,8 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
             'copy': ['meta+c'],
             'cut': ['meta+x'],
             'paste': ['meta+v'],
-            'back': ['backspace']
+            'back': ['backspace'],
+            'reload': ['f5'],
         },
         'Windows': {
             'delete': ['delete'],
@@ -420,7 +421,8 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
             'copy': ['ctrl+c'],
             'cut': ['ctrl+x'],
             'paste': ['ctrl+v'],
-            'back': ['backspace']
+            'back': ['backspace'],
+            'reload': ['f5']
         },
         'Linux': {
             'delete': ['delete'],
@@ -428,7 +430,8 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
             'copy': ['ctrl+c'],
             'cut': ['ctrl+x'],
             'paste': ['ctrl+v'],
-            'back': ['backspace']
+            'back': ['backspace'],
+            'reload': ['f5']
         }
     };
 
@@ -1257,7 +1260,13 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
         this.preoloader();
 
         QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("index.php?option=com_quantummanager&task=quantumviewfiles.getFiles&path=" + encodeURIComponent(path) + '&scope=' + encodeURIComponent(scope) + '&v=' + QuantumUtils.randomInteger(111111, 999999))).done(function (response) {
-            response = JSON.parse(response);
+            try {
+                response = JSON.parse(response);
+            }
+            catch (e) {
+                ViewfilesElement.querySelector('.view-wrap .view').innerHTML = "<div class='error'><div>" + QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.error) + "</div></div>";
+                return;
+            }
 
             if (response.error !== undefined) {
                 Filemanager.data.path = self.options.directory;
@@ -2023,7 +2032,11 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
                         }
                     } else {
                         if (objectAll[i].querySelector('.directory') !== null) {
-                            imgs += "<img src='/media/com_quantummanager/images/icons/folder.svg' draggable=\"false\" />";
+                            if(QuantumSettings.isJoomla4 !== '0') {
+                                imgs += "<img src='/media/com_quantummanager/images/icons/j4-folder.svg' draggable=\"false\" />";
+                            } else {
+                                imgs += "<img src='/media/com_quantummanager/images/icons/folder.svg' draggable=\"false\" />";
+                            }
                         } else {
                             let dataExs = objectAll[i].getAttribute('data-exs').toLocaleLowerCase();
 
@@ -2817,6 +2830,12 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
         self.hotKeyPrev = key;
         action = action.charAt(0).toUpperCase() + action.slice(1);
         self.trigger('hotKeys' + action);
+
+        if(action === 'reload') {
+            return false;
+        }
+
+        return true;
     });
 
 
@@ -2842,6 +2861,10 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
 
     Filemanager.events.add(this, 'hotKeysBack', function (fm, el) {
         fm.Quantumtoolbar.executeButton('viewfilesBack');
+    });
+
+    Filemanager.events.add(this, 'hotKeysReload', function (fm, el) {
+        fm.Quantumtoolbar.executeButton('viewfilesReloadPaths');
     });
 
 };

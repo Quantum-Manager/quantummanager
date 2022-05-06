@@ -110,6 +110,16 @@ window.QuantumUtils = {
         ajax.request.onreadystatechange = function () {
             if (this.readyState === 4) {
                 if (this.status === 200) {
+
+                    // если возвращается html страница с содержанием form-login, то значит авторизации уже нет
+                    // не по коду статусу определяется, потому что джумла не отдает правильный код http на авторизацию
+                    if(
+                        this.responseText.indexOf('<html') !== -1 &&
+                        this.responseText.indexOf('form-login') !== -1
+                    ) {
+                        location.reload()
+                    }
+
                     if (ajax.done !== undefined) {
                         ajax.done(this.responseText, this);
                     }
@@ -476,7 +486,7 @@ window.QuantumUtils = {
 
         if (options.close) {
             modal = modal.add('button', {
-                'class': 'btn quatummanagermodal-close',
+                'class': 'qm-btn quatummanagermodal-close',
                 'events': [
                     ['click', function (ev) {
                         this.closest('.quatummanagermodal-wrap').remove();

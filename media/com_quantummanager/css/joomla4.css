@@ -63,6 +63,7 @@ body.com_quantummanager #content > * > *
 .qm-btn-primary:active {
     background-color: var(--template-bg-dark-70);
     border-color: var(--template-bg-dark-90);
+    color: #fff;
 }
 
 .qm-btn-primary:focus {
@@ -92,6 +93,7 @@ body.com_quantummanager #content > * > *
 /************************** Upload module **********************************/
 .quantumupload-module .drop-area .button {
 }
+
 
 /************************** Toolbar module *********************************/
 .quantumtoolbar-module .quantumtoolbar-module-buttons-group .qm-btn-wrap:last-child button {
@@ -125,12 +127,15 @@ body.com_quantummanager #content > * > *
 .quantumviewfiles-module .field-list-files .list-grid .file-item .file .file-exs.file-icons svg {
     font-family: var(--body-font-family);
 }
+
 .quantumviewfiles-module .field-list-files .list-table .directory-item .directory .directory-icon {
     background-image: url("data:image/svg+xml,%3Csvg width='80' height='64' viewBox='0 0 80 64' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4C0 1.79086 1.79083 0 4 0H40L48 8H76C78.2092 8 80 9.79086 80 12V60C80 62.2091 78.2092 64 76 64H4C1.79083 64 0 62.2091 0 60V4Z' fill='%238596ad'/%3E%3Cg style='mix-blend-mode:overlay' opacity='0.5'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M48 8L40 0H32L40 8H48Z' fill='black'/%3E%3C/g%3E%3C/svg%3E%0A");
 }
+
 .quantumviewfiles-module .field-list-files .list-table .directory-item.empty .directory .directory-icon {
     background-image: url("data:image/svg+xml,%3Csvg width='20' height='16' viewBox='0 0 20 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M10 2H18C19.1 2 20 2.9 20 4V14C20 15.1 19.1 16 18 16H2C0.9 16 0 15.1 0 14L0.01 2C0.01 0.9 0.9 0 2 0H8L10 2ZM2 4V14H18V4H2Z' fill='%238596ad'/%3E%3C/svg%3E%0A");
 }
+
 
 /************************** Cropperjs *********************************/
 .quantummanager-full-component-wrap .quantumcropperjs-module .toolbar {
@@ -139,4 +144,13 @@ body.com_quantummanager #content > * > *
 
 .quantumcropperjs-module .editor {
     max-width: 82%;
+}
+
+.quantumcropperjs-module .qm-input-range-wrap > div input[type=range] {
+    background-color: #eee;
+    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #78abde), color-stop(100%, #78abde));
+    background-image: -webkit-linear-gradient(var(--template-bg-dark-60), var(--template-bg-dark-60));
+    background-image: -moz-linear-gradient(var(--template-bg-dark-60), var(--template-bg-dark-60));
+    background-image: -o-linear-gradient(var(--template-bg-dark-60), var(--template-bg-dark-60));
+    background-image: linear-gradient(var(--template-bg-dark-60), var(--template-bg-dark-60));
 }

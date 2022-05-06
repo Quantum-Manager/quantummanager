@@ -68,10 +68,11 @@ class JFormFieldQuantumCombine extends JFormField
 
 		return array_merge(parent::getLayoutData(),
 			[
-				'cssClass' => $this->cssClass,
-				'urlFull'  => Uri::root(false),
-				'urlBase'  => Uri::root(true),
-				'scopes'   => $scopes,
+				'cssClass'  => $this->cssClass,
+				'urlFull'   => Uri::root(false),
+				'urlBase'   => Uri::root(true),
+				'scopes'    => $scopes,
+				'isJoomla4' => QuantummanagerHelper::isJoomla4() ? '1' : '0',
 			]
 		);
 	}

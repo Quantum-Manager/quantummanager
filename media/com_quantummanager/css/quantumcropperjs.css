@@ -144,6 +144,10 @@
 .quantumcropperjs-module .qm-input-group.hide {
     display: none;
 }
+.quantumcropperjs-module label {
+    font-size: 14px;
+    line-height: 18px;
+}
 .quantumcropperjs-module .qm-input-group > label {
     margin-bottom: 5px;
 }
@@ -250,7 +254,7 @@
     height: 30px;
 }
 .quantumcropperjs-module .change-ratio-wrap {
-    margin-top: 25px;
+    margin-top: 20px;
 }
 .quantumcropperjs-module .change-ratio-wrap label {
     width: 100%;
@@ -341,12 +345,6 @@
     padding: 0;
     width: 50%;
     height: 6px;
-    background-color: #eee;
-    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #78abde), color-stop(100%, #78abde));
-    background-image: -webkit-linear-gradient(#78abde, #78abde);
-    background-image: -moz-linear-gradient(#78abde, #78abde);
-    background-image: -o-linear-gradient(#78abde, #78abde);
-    background-image: linear-gradient(#78abde, #78abde);
     background-size: 50% 100%;
     background-repeat: no-repeat;
     border-radius: 10px;
