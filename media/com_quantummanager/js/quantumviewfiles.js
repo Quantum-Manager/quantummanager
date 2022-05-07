@@ -476,27 +476,27 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
         'Mac OS': {
             'delete': ['delete'],
             'rename': ['f2'],
-            'copy': ['meta+c'],
-            'cut': ['meta+x'],
-            'paste': ['meta+v'],
+            'copy': ['meta+c', 'meta+с'],
+            'cut': ['meta+x', 'meta+ч'],
+            'paste': ['meta+v', 'meta+м'],
             'back': ['backspace'],
             'reload': ['f5'],
         },
         'Windows': {
             'delete': ['delete'],
             'rename': ['f2'],
-            'copy': ['ctrl+c', 'control+c'],
-            'cut': ['ctrl+x', 'control+x'],
-            'paste': ['ctrl+v', 'control+v'],
+            'copy': ['ctrl+c', 'control+c', 'control+с'],
+            'cut': ['ctrl+x', 'control+x', 'control+ч'],
+            'paste': ['ctrl+v', 'control+v','control+м'],
             'back': ['backspace'],
             'reload': ['f5']
         },
         'Linux': {
             'delete': ['delete'],
             'rename': ['f2'],
-            'copy': ['ctrl+c', 'control+c'],
-            'cut': ['ctrl+x', 'control+x'],
-            'paste': ['ctrl+v', 'control+v'],
+            'copy': ['ctrl+c', 'control+c', 'control+с'],
+            'cut': ['ctrl+x', 'control+x', 'control+ч'],
+            'paste': ['ctrl+v', 'control+v', 'control+м'],
             'back': ['backspace'],
             'reload': ['f5']
         }
