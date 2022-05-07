@@ -485,18 +485,18 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
         'Windows': {
             'delete': ['delete'],
             'rename': ['f2'],
-            'copy': ['ctrl+c'],
-            'cut': ['ctrl+x'],
-            'paste': ['ctrl+v'],
+            'copy': ['ctrl+c', 'control+c'],
+            'cut': ['ctrl+x', 'control+x'],
+            'paste': ['ctrl+v', 'control+v'],
             'back': ['backspace'],
             'reload': ['f5']
         },
         'Linux': {
             'delete': ['delete'],
             'rename': ['f2'],
-            'copy': ['ctrl+c'],
-            'cut': ['ctrl+x'],
-            'paste': ['ctrl+v'],
+            'copy': ['ctrl+c', 'control+c'],
+            'cut': ['ctrl+x', 'control+x'],
+            'paste': ['ctrl+v', 'control+v'],
             'back': ['backspace'],
             'reload': ['f5']
         }
@@ -2911,8 +2911,6 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
         let chain = self.hotKeyPrev + '+' + key;
         let os = QuantumUtils.getOS();
         let action = '';
-
-        console.log(os, chain, key);
 
         if (self.hotKeys[os] === undefined || self.hotKeys[os] === null) {
             return;
