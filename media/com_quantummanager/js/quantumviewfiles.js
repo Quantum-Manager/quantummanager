@@ -487,7 +487,7 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
             'rename': ['f2'],
             'copy': ['ctrl+c', 'control+c', 'control+с'],
             'cut': ['ctrl+x', 'control+x', 'control+ч'],
-            'paste': ['ctrl+v', 'control+v','control+м'],
+            'paste': ['ctrl+v', 'control+v', 'control+м'],
             'back': ['backspace'],
             'reload': ['f5']
         },

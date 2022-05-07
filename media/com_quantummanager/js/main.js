@@ -157,7 +157,7 @@ window.QuantumManagerInit = function(container) {
 
         let results = QuantummanagerLists[activeIndex].events.trigger('hotKeysResolve', QuantummanagerLists[activeIndex], ev.key);
 
-        if(results.indexOf(false)) {
+        if(results.indexOf(false) !== -1) {
             ev.preventDefault();
         }
 
@@ -165,6 +165,7 @@ window.QuantumManagerInit = function(container) {
 
 
     document.addEventListener('paste', function (ev) {
+
         if(
             QuantummanagerLists[activeIndex] === undefined ||
             QuantummanagerLists[activeIndex] === null
