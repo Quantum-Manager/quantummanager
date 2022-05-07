@@ -2912,6 +2912,8 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
         let os = QuantumUtils.getOS();
         let action = '';
 
+        console.log(os, chain, key);
+
         if (self.hotKeys[os] === undefined || self.hotKeys[os] === null) {
             return;
         }
