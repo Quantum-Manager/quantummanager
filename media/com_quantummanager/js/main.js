@@ -163,36 +163,42 @@ window.QuantumManagerInit = function(container) {
 
     });
 
+    if(
+        QuantumSettings['bufferPaste'] !== undefined &&
+        QuantumSettings['bufferPaste'] !== null &&
+        QuantumSettings['bufferPaste'] === '1'
+    ) {
+        document.addEventListener('paste', function (ev) {
 
-    document.addEventListener('paste', function (ev) {
-
-        if(
-            QuantummanagerLists[activeIndex] === undefined ||
-            QuantummanagerLists[activeIndex] === null
-        ) {
-            return;
-        }
-
-        if(
-            QuantummanagerLists[activeIndex].Qantumupload === undefined ||
-            QuantummanagerLists[activeIndex].Qantumupload === null
-        ) {
-            return;
-        }
-
-        let items = (ev.clipboardData || ev.originalEvent.clipboardData).items;
-        for (let index in items) {
-            let item = items[index];
-            if (item.kind === 'file') {
-                let blob = item.getAsFile();
-                let reader = new FileReader();
-                reader.onload = function (event) {
-                    let ext = event.target.result.substring("data:image/".length, event.target.result.indexOf(";base64"));
-                    QuantummanagerLists[activeIndex].Qantumupload.uploadFiles([new File([QuantumUtils.dataURItoBlob(event.target.result)], 'clipboard_' + QuantumUtils.randomInteger(1111111, 9999999) + '.' + ext)]);
-                }
-                reader.readAsDataURL(blob);
+            if(
+                QuantummanagerLists[activeIndex] === undefined ||
+                QuantummanagerLists[activeIndex] === null
+            ) {
+                return;
             }
-        }
-    });
+
+            if(
+                QuantummanagerLists[activeIndex].Qantumupload === undefined ||
+                QuantummanagerLists[activeIndex].Qantumupload === null
+            ) {
+                return;
+            }
+
+            let items = (ev.clipboardData || ev.originalEvent.clipboardData).items;
+            for (let index in items) {
+                let item = items[index];
+                if (item.kind === 'file') {
+                    let blob = item.getAsFile();
+                    let reader = new FileReader();
+                    reader.onload = function (event) {
+                        let ext = event.target.result.substring("data:image/".length, event.target.result.indexOf(";base64"));
+                        QuantummanagerLists[activeIndex].Qantumupload.uploadFiles([new File([QuantumUtils.dataURItoBlob(event.target.result)], 'clipboard_' + QuantumUtils.randomInteger(1111111, 9999999) + '.' + ext)]);
+                    }
+                    reader.readAsDataURL(blob);
+                }
+            }
+        });
+    }
+
 
 };
