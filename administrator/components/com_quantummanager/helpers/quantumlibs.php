@@ -71,6 +71,7 @@ class QuantummanagerLibs
 		}
 	}
 
+
 	public static function core()
 	{
 		HTMLHelper::_('stylesheet', 'com_quantummanager/main.css', [
@@ -83,6 +84,12 @@ class QuantummanagerLibs
 			'relative' => true
 		]);
 
+		static::theme();
+	}
+
+
+	public static function theme()
+	{
 		$joomla_style = 'joomla3';
 
 		if (QuantummanagerHelper::isJoomla4())
