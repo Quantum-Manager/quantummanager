@@ -765,20 +765,6 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
             );
 
             Filemanager.Quantumtoolbar.buttonAdd(
-                'viewfilesFilterCreated',
-                'center',
-                'file-actions',
-                'qm-btn-width-small',
-                QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.buttonSortCreated, 'ENT_QUOTES'),
-                '',
-                {},
-                function (ev) {
-                    self.setSort('dateC', self.sortDir);
-                },
-                buttonFilter
-            );
-
-            Filemanager.Quantumtoolbar.buttonAdd(
                 'viewfilesFilterUpdated',
                 'center',
                 'file-actions',
