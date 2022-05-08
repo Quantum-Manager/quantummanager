@@ -2915,7 +2915,7 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
         action = action.charAt(0).toUpperCase() + action.slice(1);
         self.trigger('hotKeys' + action);
 
-        if(action === 'reload') {
+        if(action === 'Reload') {
             return false;
         }
 
