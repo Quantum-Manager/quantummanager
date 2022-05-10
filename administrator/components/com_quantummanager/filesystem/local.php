@@ -310,7 +310,7 @@ class QuantummanagerFileSystemLocal
 			$output         = [];
 			$app            = Factory::getApplication();
 			$data           = $app->input->getArray();
-			$file           = $app->input->files->get('file', '', 'raw');
+			$file           = $app->input->files->get('file', null, 'raw');
 			$contentcheck   = (int) QuantummanagerHelper::getParamsComponentValue('contentcheck', 1);
 			$optionsForSafe = [
 				'forbidden_extensions' => QuantummanagerHelper::$forbiddenExtensions,
@@ -321,6 +321,13 @@ class QuantummanagerFileSystemLocal
 				$optionsForSafe['php_ext_content_extensions'] = ['null'];
 			}
 
+
+			if($file === null || !isset($file['name']))
+			{
+				$output['error'] = Text::_('COM_QUANTUMMANAGER_ERROR_FILE_NOTFOUND');
+
+				return json_encode($output);
+			}
 
 			if (!QuantummanagerHelper::isSafeFile($file, $optionsForSafe))
 			{

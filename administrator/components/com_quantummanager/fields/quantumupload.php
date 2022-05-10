@@ -39,11 +39,12 @@ class JFormFieldQuantumupload extends JFormField
 	 */
 	protected function getLayoutPaths()
 	{
-        $renderer = new FileLayout('default');
-        $renderer->getDefaultIncludePaths();
-        return array_merge(parent::getLayoutPaths(), [
-            JPATH_ROOT . '/administrator/components/com_quantummanager/layouts/fields'
-        ], $renderer->getDefaultIncludePaths());
+		$renderer = new FileLayout('default');
+		$renderer->getDefaultIncludePaths();
+
+		return array_merge(parent::getLayoutPaths(), [
+			JPATH_ROOT . '/administrator/components/com_quantummanager/layouts/fields'
+		], $renderer->getDefaultIncludePaths());
 	}
 
 
@@ -55,61 +56,66 @@ class JFormFieldQuantumupload extends JFormField
 
 		return array_merge(parent::getLayoutData(),
 			[
-				'urlFull' => Uri::root(false),
-				'urlBase' => Uri::root(true),
-				'scope' => $this->scope,
-				'directory' => $this->directory,
+				'urlFull'        => Uri::root(false),
+				'urlBase'        => Uri::root(true),
+				'scope'          => $this->scope,
+				'directory'      => $this->directory,
 				'dropAreaHidden' => $this->dropAreaHidden,
-				'maxsize' => $this->maxsize,
-				'cssClass' => $this->cssClass,
-				'other' => '',
+				'maxsize'        => $this->maxsize,
+				'maxsizeServer'  => $this->maxsizeServer,
+				'cssClass'       => $this->cssClass,
+				'other'          => '',
 			]
 		);
 	}
 
 	public function getInput()
 	{
-		try {
+		try
+		{
 
 			JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
-            JLoader::register('QuantummanagerLibs', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantumlibs.php');
+			JLoader::register('QuantummanagerLibs', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantumlibs.php');
 
 			$this->__set('standalone', $this->getAttribute('standalone', true));
 			$this->__set('cssClass', $this->getAttribute('cssClass', ''));
 			$this->__set('maxsize', $this->getAttribute('maxsize', QuantummanagerHelper::getParamsComponentValue('maxsize', 2)));
-			$this->directory = isset($this->directory) ? $this->directory : $this->getAttribute('directory', 'images');
-			$this->scope = isset($this->scope) ? $this->scope : $this->getAttribute('scope', 'images');
+			$this->__set('maxsizeServer', QuantummanagerHelper::fileUploadMaxSize());
+			$this->directory      = isset($this->directory) ? $this->directory : $this->getAttribute('directory', 'images');
+			$this->scope          = isset($this->scope) ? $this->scope : $this->getAttribute('scope', 'images');
 			$this->dropAreaHidden = isset($this->dropAreaHidden) ? $this->dropAreaHidden : $this->getAttribute('dropAreaHidden', QuantummanagerHelper::getParamsComponentValue('dropareahidden', 0));
 
-            QuantummanagerHelper::loadLang();
-            QuantummanagerLibs::includeScriptHead();
-            QuantummanagerLibs::includes([
-                'core',
-                'utils',
-            ]);
+			QuantummanagerHelper::loadLang();
+			QuantummanagerLibs::includeScriptHead();
+			QuantummanagerLibs::includes([
+				'core',
+				'utils',
+			]);
 
 
 			HTMLHelper::_('stylesheet', 'com_quantummanager/quantumupload.css', [
-				'version' => filemtime(__FILE__),
+				'version'  => filemtime(__FILE__),
 				'relative' => true
 			]);
 
 			HTMLHelper::_('script', 'com_quantummanager/quantumupload.js', [
-				'version' => filemtime(__FILE__),
+				'version'  => filemtime(__FILE__),
 				'relative' => true
 			]);
 
 			$field = parent::getInput();
 
-			if($this->standalone)
+			if ($this->standalone)
 			{
-				$filemanager = new FileLayout( 'fieldstandalone', JPATH_ROOT . '/administrator/components/com_quantummanager/layouts');
+				$filemanager = new FileLayout('fieldstandalone', JPATH_ROOT . '/administrator/components/com_quantummanager/layouts');
+
 				return $filemanager->render(array_merge($this->getLayoutData(), ['field' => $field]));
 			}
 
 			return $field;
 		}
-		catch (Exception $e) {
+		catch (Exception $e)
+		{
 			echo $e->getMessage();
 		}
 	}

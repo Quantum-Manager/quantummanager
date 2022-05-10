@@ -627,15 +627,14 @@ window.QuantumUtils = {
             // Toast position - left, right, or center
             position: 'right',
             // Background color
-            backgroundColor: "linear-gradient(135deg, #78abde, #5477f5)",
+            backgroundColor: "",
             // Avatar
             avatar: "",
             // Additional classes for the toast
-            classes: "",
+            className: "",
             // Prevents dismissing of toast on hover
             stopOnFocus: true,
-            callback: function () {
-            },
+            callback: function () {},
         };
 
         if (options.fm !== undefined) {
@@ -643,8 +642,16 @@ window.QuantumUtils = {
         }
 
         for (let k in options) {
+
+            if(k === 'type') {
+                optionsMerge.className += ' toastify-' + options[k];
+                continue;
+            }
+
             optionsMerge[k] = options[k];
         }
+
+        console.log(optionsMerge);
 
         let notify = Toastify(optionsMerge);
         notify.showToast();
