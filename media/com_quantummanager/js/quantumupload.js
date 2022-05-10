@@ -139,11 +139,21 @@ window.Qantumupload = function (Filemanager, UploadElement, options) {
                     text: QuantumuploadLang.file + file.name + QuantumuploadLang.maxsize + (Math.round(this.maxsizeServer / 1024 / 1024)) + QuantumuploadLang.megabyte
                 });
 
+                this.countFiles--;
+
+                if (this.countFiles === 0) {
+                    this.progressBar.style.display = "none";
+                }
+
                 return false;
             }
 
             if ((file.size / 1024 / 1024) > this.maxsize) {
-                QuantumUtils.alert(QuantumuploadLang.file + file.name + QuantumuploadLang.maxsize + this.maxsize + QuantumuploadLang.megabyte);
+                QuantumUtils.notify({
+                    type: 'danger',
+                    text: QuantumuploadLang.file + file.name + QuantumuploadLang.maxsize + this.maxsize + QuantumuploadLang.megabyte
+                });
+
                 this.countFiles--;
 
                 if (this.countFiles === 0) {
