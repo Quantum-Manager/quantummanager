@@ -145,7 +145,7 @@ window.Qantumupload = function (Filemanager, UploadElement, options) {
                     this.progressBar.style.display = "none";
                 }
 
-                return false;
+                continue;
             }
 
             if ((file.size / 1024 / 1024) > this.maxsize) {
@@ -160,7 +160,7 @@ window.Qantumupload = function (Filemanager, UploadElement, options) {
                     this.progressBar.style.display = "none";
                 }
 
-                return false;
+                continue;
             }
 
             let currExs = file.name.split('.');
@@ -168,7 +168,8 @@ window.Qantumupload = function (Filemanager, UploadElement, options) {
             if (currExs.length === 1) {
                 QuantumUtils.alert(QuantumuploadLang.file + file.name + QuantumuploadLang.exs);
                 this.countFiles--;
-                return false;
+
+                continue;
             }
 
 
