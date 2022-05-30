@@ -9,17 +9,9 @@
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Cache\Cache;
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Table\Table;
-use Joomla\CMS\Uri\Uri;
-use Joomla\Filesystem\Folder;
-use Joomla\Filesystem\Path;
-use Joomla\Registry\Registry;
+use Joomla\CMS\Version;
 
 /**
  * Quantummanager helper.
@@ -30,171 +22,190 @@ use Joomla\Registry\Registry;
 class QuantummanagerLibs
 {
 
-    /**
-     * @var bool
-     * @since version
-     */
-    private static $flagScriptHead = false;
+	/**
+	 * @var bool
+	 * @since version
+	 */
+	private static $flagScriptHead = false;
 
 
-    /**
-     *
-     *
-     * @since version
-     */
-    public static function includeScriptHead()
-    {
-        if(!self::$flagScriptHead)
-        {
+	/**
+	 *
+	 *
+	 * @since version
+	 */
+	public static function includeScriptHead()
+	{
+		if (!self::$flagScriptHead)
+		{
 
-            Factory::getDocument()
-                ->addScriptDeclaration(file_get_contents(JPATH_ROOT . '/media/com_quantummanager/js/dispatcher.js'));
-            self::$flagScriptHead = true;
-        }
-    }
-
-
-    /**
-     * @param $includes
-     */
-    public static function includes($includes)
-    {
-        if(is_array($includes))
-        {
-            foreach ($includes as $static_method)
-            {
-                if(method_exists('QuantummanagerLibs', $static_method))
-                {
-                    forward_static_call(__CLASS__ . "::" . $static_method);
-                }
-            }
-        }
-
-        if(is_string($includes))
-        {
-            if(method_exists('QuantummanagerLibs', $includes))
-            {
-                forward_static_call(__CLASS__ . "::" . $includes);
-            }
-        }
-    }
-
-    public static function core()
-    {
-        HTMLHelper::_('stylesheet', 'com_quantummanager/main.css', [
-            'version' => filemtime(__FILE__),
-            'relative' => true
-        ]);
-
-        HTMLHelper::_('script', 'com_quantummanager/main.js', [
-            'version' => filemtime(__FILE__),
-            'relative' => true
-        ]);
-    }
+			Factory::getDocument()
+				->addScriptDeclaration(file_get_contents(JPATH_ROOT . '/media/com_quantummanager/js/dispatcher.js'));
+			self::$flagScriptHead = true;
+		}
+	}
 
 
-    public static function utils()
-    {
-        HTMLHelper::_('script', 'com_quantummanager/utils.js', [
-            'version' => filemtime(__FILE__),
-            'relative' => true
-        ]);
-    }
+	/**
+	 * @param $includes
+	 */
+	public static function includes($includes)
+	{
+		if (is_array($includes))
+		{
+			foreach ($includes as $static_method)
+			{
+				if (method_exists('QuantummanagerLibs', $static_method))
+				{
+					forward_static_call(__CLASS__ . "::" . $static_method);
+				}
+			}
+		}
+
+		if (is_string($includes))
+		{
+			if (method_exists('QuantummanagerLibs', $includes))
+			{
+				forward_static_call(__CLASS__ . "::" . $includes);
+			}
+		}
+	}
 
 
-    public static function alert()
-    {
-        HTMLHelper::_('script', 'com_quantummanager/jsalert.min.js', [
-            'version' => filemtime(__FILE__),
-            'relative' => true
-        ]);
-    }
+	public static function core()
+	{
+		HTMLHelper::_('stylesheet', 'com_quantummanager/main.css', [
+			'version'  => filemtime(__FILE__),
+			'relative' => true
+		]);
+
+		HTMLHelper::_('script', 'com_quantummanager/main.js', [
+			'version'  => filemtime(__FILE__),
+			'relative' => true
+		]);
+
+		static::theme();
+	}
 
 
-    public static function contextmenu()
-    {
-        HTMLHelper::_('stylesheet', 'com_quantummanager/contextual.css', [
-            'version' => filemtime(__FILE__),
-            'relative' => true
-        ]);
+	public static function theme()
+	{
+		$joomla_style = 'joomla3';
 
-        HTMLHelper::_('script', 'com_quantummanager/contentual.js', [
-            'version' => filemtime(__FILE__),
-            'relative' => true
-        ]);
-    }
+		if (QuantummanagerHelper::isJoomla4())
+		{
+			$joomla_style = 'joomla4';
+		}
 
-
-    public static function clipboard()
-    {
-        HTMLHelper::_('script', 'com_quantummanager/clipboard.min.js', [
-            'version' => filemtime(__FILE__),
-            'relative' => true
-        ]);
-    }
+		HTMLHelper::_('stylesheet', 'com_quantummanager/' . $joomla_style . '.css', [
+			'version'  => filemtime(__FILE__),
+			'relative' => true
+		]);
+	}
 
 
-    public static function notify()
-    {
-        HTMLHelper::_('stylesheet', 'com_quantummanager/notify.css', [
-            'version' => filemtime(__FILE__),
-            'relative' => true
-        ]);
-
-        HTMLHelper::_('script', 'com_quantummanager/notify.js', [
-            'version' => filemtime(__FILE__),
-            'relative' => true
-        ]);
-    }
+	public static function utils()
+	{
+		HTMLHelper::_('script', 'com_quantummanager/utils.js', [
+			'version'  => filemtime(__FILE__),
+			'relative' => true
+		]);
+	}
 
 
-    public static function lazyload()
-    {
-        HTMLHelper::_('script', 'com_quantummanager/lazyload.min.js', [
-            'version' => filemtime(__FILE__),
-            'relative' => true
-        ]);
-    }
+	public static function alert()
+	{
+		HTMLHelper::_('script', 'com_quantummanager/jsalert.min.js', [
+			'version'  => filemtime(__FILE__),
+			'relative' => true
+		]);
+	}
 
 
-    public static function dragSelect()
-    {
-        HTMLHelper::_('script', 'com_quantummanager/ds.min.js', [
-            'version' => filemtime(__FILE__),
-            'relative' => true
-        ]);
-    }
+	public static function contextmenu()
+	{
+		HTMLHelper::_('stylesheet', 'com_quantummanager/contextual.css', [
+			'version'  => filemtime(__FILE__),
+			'relative' => true
+		]);
+
+		HTMLHelper::_('script', 'com_quantummanager/contentual.js', [
+			'version'  => filemtime(__FILE__),
+			'relative' => true
+		]);
+	}
 
 
-    public static function dynamicGrid()
-    {
-        HTMLHelper::_('script', 'com_quantummanager/masonry.min.js', [
-            'version' => filemtime(__FILE__),
-            'relative' => true
-        ]);
-    }
+	public static function clipboard()
+	{
+		HTMLHelper::_('script', 'com_quantummanager/clipboard.min.js', [
+			'version'  => filemtime(__FILE__),
+			'relative' => true
+		]);
+	}
 
 
-    public static function split()
-    {
-        HTMLHelper::_('script', 'com_quantummanager/split.min.js', [
-            'version' => filemtime(__FILE__),
-            'relative' => true
-        ]);
-    }
+	public static function notify()
+	{
+		HTMLHelper::_('stylesheet', 'com_quantummanager/notify.css', [
+			'version'  => filemtime(__FILE__),
+			'relative' => true
+		]);
+
+		HTMLHelper::_('script', 'com_quantummanager/notify.js', [
+			'version'  => filemtime(__FILE__),
+			'relative' => true
+		]);
+	}
 
 
-    public static function imageEditor()
-    {
-        HTMLHelper::_('stylesheet', 'com_quantummanager/cropperjs.min.css', [
-            'version' => filemtime(__FILE__),
-            'relative' => true
-        ]);
+	public static function lazyload()
+	{
+		HTMLHelper::_('script', 'com_quantummanager/lazyload.js', [
+			'version'  => filemtime(__FILE__),
+			'relative' => true
+		]);
+	}
 
-        HTMLHelper::_('script', 'com_quantummanager/cropperjs.min.js', [
-            'version' => filemtime(__FILE__),
-            'relative' => true
-        ]);
-    }
+
+	public static function dragSelect()
+	{
+		HTMLHelper::_('script', 'com_quantummanager/ds.min.js', [
+			'version'  => filemtime(__FILE__),
+			'relative' => true
+		]);
+	}
+
+
+	public static function dynamicGrid()
+	{
+		HTMLHelper::_('script', 'com_quantummanager/masonry.min.js', [
+			'version'  => filemtime(__FILE__),
+			'relative' => true
+		]);
+	}
+
+
+	public static function split()
+	{
+		HTMLHelper::_('script', 'com_quantummanager/split.min.js', [
+			'version'  => filemtime(__FILE__),
+			'relative' => true
+		]);
+	}
+
+
+	public static function imageEditor()
+	{
+		HTMLHelper::_('stylesheet', 'com_quantummanager/cropperjs.min.css', [
+			'version'  => filemtime(__FILE__),
+			'relative' => true
+		]);
+
+		HTMLHelper::_('script', 'com_quantummanager/cropperjs.min.js', [
+			'version'  => filemtime(__FILE__),
+			'relative' => true
+		]);
+	}
 
 }

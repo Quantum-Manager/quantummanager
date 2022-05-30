@@ -15,7 +15,7 @@ $cssClass = $displayData['cssClass'];
 
 ?>
 
-<div class="quantummanager-module quantumtreecatalogs-module <?php echo $cssClass ?>" data-type="Quantumtreecatalogs" data-options="directory:<?php echo $displayData['directory'] ?>">
+<div class="quantummanager-module quantummanager-backgrounds-muted quantumtreecatalogs-module <?php echo $cssClass ?>" data-type="Quantumtreecatalogs" data-options="directory:<?php echo $displayData['directory'] ?>">
     <div class="tree-scroll"></div>
 </div>
 

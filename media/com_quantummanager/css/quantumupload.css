@@ -7,29 +7,31 @@
  */
 
 .quantumupload-module {
-    background: #F0F0F0;
 }
+
 .quantumupload-module .drop-area {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    margin: 10px;
     min-height: 25px;
     height: auto;
     border: 2px dashed #ccc;
     border-radius: 5px;
     width: auto;
-    padding: 15px;
+    padding: 15px 0;
     text-align: center;
     transition: all 0.2s ease;
 }
+
 .quantumupload-module  .drop-area.drop-area-hidden {
     display: none;
 }
+
 .quantumupload-module  .drop-area.highlight {
     border-color: #d8d7d8;
 }
+
 .quantumupload-module .drop-area .form-upload {
     display: flex;
     align-items: center;
@@ -37,38 +39,46 @@
     font-size: 13px;
     line-height: 18px;
 }
+
 .quantumupload-module .drop-area .quantummanager-icon {
     width: 20px;
     height: 20px;
     margin-right: 5px;
 }
+
 .quantumupload-module .drop-area p {
     display: inline-block;
     margin: 0;
 }
+
+.quantumupload-module .drop-area label {
+    font-size: 13px;
+    line-height: 18px;
+}
+
 .quantumupload-module .drop-area .button {
     display: inline-block;
     cursor: pointer;
-    color: #4568DC !important;
     margin: 0 0 0 5px;
     background-color: transparent !important;
 }
-.quantumupload-module .drop-area .button:hover {
-    color: #3a5dbe;
-}
+
 .quantumupload-module .drop-area .fileElem {
     display: none;
 }
+
 .quantumupload-module .drop-area:hover {
     cursor: pointer;
     background: #eeeeee;
 }
+
 .quantumupload-module progress {
     display: none;
     width: 100%;
     margin: 10px 10px 0 0;
     padding: 0 10px 0 10px;
 }
+
 .quantumupload-module progress {
     vertical-align: baseline;
     -webkit-appearance: none;
@@ -81,31 +91,38 @@
     border-radius: 500px;
     overflow: hidden;
 }
+
 * + .quantumupload-module progress {
     margin-top: 20px;
 }
+
 .quantumupload-module progress:indeterminate {
     color: transparent;
 }
+
 .quantumupload-module progress::-webkit-progress-bar {
     background-color: #ffffff;
     border-radius: 500px;
     overflow: hidden;
 }
+
 .quantumupload-module progress:indeterminate::-moz-progress-bar {
     width: 0;
 }
+
 .quantumupload-module progress::-webkit-progress-value {
     background: #4568DC;
     background: -webkit-linear-gradient(to right, #B06AB3, #4568DC);
     background: linear-gradient(to right, #B06AB3, #4568DC);
     transition: width 0.6s ease;
 }
+
 .quantumupload-module progress::-moz-progress-bar {
     background: #4568DC;
     background: -webkit-linear-gradient(to right, #B06AB3, #4568DC);
     background: linear-gradient(to right, #B06AB3, #4568DC);
 }
+
 .quantumupload-module progress::-ms-fill {
     background: #4568DC;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #B06AB3, #4568DC);
@@ -113,6 +130,7 @@
     transition: width 0.6s ease;
     border: 0;
 }
+
 .upload-errors {
     display: none;
     margin-top: 15px;
@@ -121,10 +139,12 @@
     color: #f0506e;
     padding: 15px 29px 15px 20px;
 }
+
 .upload-errors div {
     width: 100%;
     margin-bottom: 5px;
 }
+
 .upload-errors .uk-alert-close {
     position: absolute;
     top: 17px;
@@ -143,6 +163,7 @@
     fill: currentcolor;
     line-height: 0;
 }
+
 .upload-errors .uk-alert-close:hover {
     cursor: pointer;
 }

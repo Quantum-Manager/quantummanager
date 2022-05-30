@@ -123,6 +123,7 @@
 
 .quantumunsplash-module .quantumunsplash-module-header .header-filters > div {
     display: flex;
+    flex-wrap: nowrap;
     align-items: center;
 }
 
@@ -131,14 +132,25 @@
 }
 
 .quantumunsplash-module .quantumunsplash-module-header .header-filters > div:last-child {
-    flex: 1;
     display: flex;
+    flex: 1;
+    flex-wrap: nowrap;
     align-items: center;
     justify-content: flex-end;
 }
 
-.quantumunsplash-module .quantumunsplash-module-header .header-filters > div:last-child .quantummanager-icon {
-    margin-left: 10px;
+.quantumunsplash-module .quantumunsplash-module-header .header-filters > div:last-child > * {
+    margin-right: 10px;
+}
+
+.quantumunsplash-module .quantumunsplash-module-header .header-filters > div:last-child > *:last-child {
+    margin-right: 0;
+}
+
+.quantumunsplash-module .quantumunsplash-module-header .header-filters > div:last-child > span {
+    display: flex;
+    align-content: center;
+    align-items: center;
 }
 
 .quantumunsplash-module .quantumunsplash-module-container-search-wrap {
@@ -174,8 +186,7 @@
 }
 
 .quantumunsplash-module .quantumunsplash-module-search .grid-sizer,
-.quantumunsplash-module .quantumunsplash-module-search .grid-item
-{
+.quantumunsplash-module .quantumunsplash-module-search .grid-item {
     width: 31.3%;
     margin: 1%;
 }
@@ -186,6 +197,11 @@
 
 .quantumunsplash-module .quantumunsplash-module-search .grid-item--width2 {
     width: 64.6%;
+}
+
+.quantumunsplash-module .quantumunsplash-module-search .grid-item img {
+    width: 100%;
+    height: 100%;
 }
 
 .quantumunsplash-module .quantumunsplash-module-search .unsplash-meta-wrap {
@@ -293,6 +309,7 @@
 @media screen and (max-width: 1360px) {
     .quantumtoolbar-module .qm-btn-unsplash-search .quantummanager-icon-unsplash {
         width: 15px;
+        height: 15px;
         background-image: url("data:image/svg+xml,%0A%3Csvg width='32' height='32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 9V0h12v9H10zm12 5h10v18H0V14h10v9h12v-9z' fill='%23000000' fill-rule='nonzero' /%3E%3C/svg%3E%0A");
     }
 }

@@ -20,13 +20,14 @@ $options = [
     'watermark:' . $watermark,
     'help:' . $help,
     'previewsfolder:' . $previewsfolder,
-    'previewsfolderopen:' . $previewsfolderopen
+    'previewsfolderopen:' . $previewsfolderopen,
+    'folderdblclick:' . $folderdblclick,
 ];
 
 ?>
 
 <div class="quantummanager-module quantumviewfiles-module" data-type="Quantumviewfiles" data-options="<?php echo implode(';', $options)?>">
-    <div class="quantumviewfiles-module-heading">
+    <div class="quantumviewfiles-module-heading  quantummanager-backgrounds-muted ">
         <ul class="breadcumbs"></ul>
         <div class="filter-search">
             <div class="input-wrapper">
@@ -44,10 +45,8 @@ $options = [
         <div class="view"></div>
 
         <?php if($displayData['metafile'] === '1') :?>
-        <div class="meta-file hidden">
-            <div class="meta-file-list">
-
-            </div>
+        <div class="meta-file quantummanager-backgrounds-muted" draggable="false">
+            <div class="meta-file-list"></div>
         </div>
         <?php endif; ?>
     </div>
@@ -87,6 +86,7 @@ $options = [
         'cancel' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_CANCEL'), ENT_QUOTES),
         'loading' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_LOADING'), ENT_QUOTES),
         'empty' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_QUANTUMVIEWFILES_EMPTY'), ENT_QUOTES),
+        'error' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_QUANTUMVIEWFILES_ERROR'), ENT_QUOTES),
         'buttonBack'=> htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_BACK'), ENT_QUOTES),
         'buttonUp' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_UP'), ENT_QUOTES),
         'buttonUpload' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_UPLOADING'), ENT_QUOTES),
@@ -97,7 +97,15 @@ $options = [
         'buttonCopy' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_COPY'), ENT_QUOTES),
         'buttonSelectAll' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_SELECT_ALL'), ENT_QUOTES),
         'buttonCut' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_CUT'), ENT_QUOTES),
+        'buttonDuplicate' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_DUPLICATE'), ENT_QUOTES),
         'buttonDelete' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_DELETE'), ENT_QUOTES),
+        'buttonSortNone' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_SORT_NONE'), ENT_QUOTES),
+        'buttonSortName' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_SORT_NAME'), ENT_QUOTES),
+        'buttonSortSize' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_SORT_SIZE'), ENT_QUOTES),
+        'buttonSortCreated' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_SORT_CREATED'), ENT_QUOTES),
+        'buttonSortUpdated' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_SORT_UPDATED'), ENT_QUOTES),
+        'buttonSortAsc' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_SORT_ASC'), ENT_QUOTES),
+        'buttonSortDesc' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_SORT_DESC'), ENT_QUOTES),
         'buttonTable' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_TABLE'), ENT_QUOTES),
         'buttonGrid' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_GRID'), ENT_QUOTES),
         'buttonPreviews' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_PREVIEWS'), ENT_QUOTES),

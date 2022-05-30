@@ -1,0 +1,137 @@
+/**************************** Content for component view  ********************************/
+body.com_quantummanager #content,
+body.com_quantummanager #content > * {
+    height: calc(100% - 68px);
+    padding: 0;
+}
+
+
+/**************************** Background ********************************/
+.quantummanager-backgrounds-muted {
+    background: #F0F0F0;
+}
+
+/******************************** Buttons ********************************/
+.qm-btn {
+    margin-bottom: 0;
+    padding: 4px 12px;
+    background-color: #f3f3f3;
+    color: #333;
+    border: 1px solid #b3b3b3;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 5%);
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 18px;
+}
+
+.qm-btn:hover,
+.qm-btn:focus {
+    background-color: #e6e6e6;
+}
+
+.qm-btn:focus {
+    outline: thin dotted #333;
+    outline-offset: -2px;
+}
+
+.qm-btn.active,
+.qm-btn:active {
+    background-image: none;
+    outline: 0;
+}
+
+.qm-btn-primary {
+    background: #78abde;
+    color: #fff;
+    border: 1px solid transparent;
+}
+
+
+.qm-btn-primary:hover,
+.qm-btn-primary:focus {
+    background: #5882ad;
+}
+
+
+/******************************** Dropdown *******************************/
+.quantummanager-dropdown-content {
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.quantummanager-dropdown-content a {
+    color: black;
+}
+
+.quantummanager-dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.quantummanager-dropdown:hover .quantummanager-dropdown-title {
+    color: #78abde;
+}
+
+/************************** Toolbar module *********************************/
+.quantumtoolbar-module .quantumtoolbar-module-buttons-group .qm-btn-wrap:last-child button {
+    border-right-color: #b3b3b3;
+}
+
+/************************** Upload module **********************************/
+.quantumupload-module .drop-area .button {
+    color: #4568DC !important;
+}
+
+.quantumupload-module .drop-area .button:hover {
+    color: #3a5dbe;
+}
+
+
+/************************** Tree catalogs module *********************************/
+.quantumtreecatalogs-module ul li span.tree-path:after {
+    background-image: url("data:image/svg+xml,%3Csvg width='20' height='16' viewBox='0 0 20 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 0H2C0.9 0 0.01 0.9 0.01 2L0 14C0 15.1 0.9 16 2 16H18C19.1 16 20 15.1 20 14V4C20 2.9 19.1 2 18 2H10L8 0Z' fill='%23A5C7E9'/%3E%3C/svg%3E%0A");
+}
+
+.quantumtreecatalogs-module ul li span.tree-path.empty:after {
+    background-image: url("data:image/svg+xml,%3Csvg width='20' height='16' viewBox='0 0 20 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M10 2H18C19.1 2 20 2.9 20 4V14C20 15.1 19.1 16 18 16H2C0.9 16 0 15.1 0 14L0.01 2C0.01 0.9 0.9 0 2 0H8L10 2ZM2 4V14H18V4H2Z' fill='%23A5C7E9'/%3E%3C/svg%3E%0A");
+}
+
+.quantumtreecatalogs-module ul li span.tree-caret-down ~ .tree-path:after {
+    background-image: url("data:image/svg+xml,%3Csvg width='24' height='16' viewBox='0 0 24 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23clip0)'%3E%3Cpath d='M17 16H19.8C20.9 16 21.9 15.1 22 14L23.2 4C23.3 2.9 22.5 2 21.4 2H17V16Z' fill='%23A5C7E9'/%3E%3Cpath d='M7.79999 0H1.79999C0.699993 0 -0.100007 0.9 -6.55651e-06 2L1.49999 14C1.59999 15.1 2.59999 16 3.69999 16H19.7C20.8 16 21.6 15.1 21.5 14L20.3 4C20.2 2.9 19.2 2 18.1 2H10.1L7.79999 0Z' fill='%237BADDF'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0'%3E%3Crect x='-7.62939e-06' width='23.2' height='16' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E%0A");
+}
+
+
+
+/**** Viewfiles module ****/
+.quantumviewfiles-module .field-list-files .list-grid .directory-item .directory .directory-icon {
+    background-image: url("data:image/svg+xml,%3Csvg width='80' height='64' viewBox='0 0 80 64' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4C0 1.79086 1.79083 0 4 0H40L48 8H76C78.2092 8 80 9.79086 80 12V60C80 62.2091 78.2092 64 76 64H4C1.79083 64 0 62.2091 0 60V4Z' fill='%23A5C7E9'/%3E%3Cg style='mix-blend-mode:overlay' opacity='0.5'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M48 8L40 0H32L40 8H48Z' fill='black'/%3E%3C/g%3E%3C/svg%3E%0A");
+}
+
+.quantumviewfiles-module .field-list-files .list-grid .directory-item.empty .directory .directory-icon {
+    background-image: url("data:image/svg+xml,%3Csvg width='80' height='64' viewBox='0 0 80 64' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M47.2929 8.70711L47.5858 9H48H76C77.6569 9 79 10.3431 79 12V60C79 61.6569 77.6569 63 76 63H4C2.34312 63 1 61.6569 1 60V4C1 2.34314 2.34312 1 4 1H39.5858L47.2929 8.70711Z' stroke='%23A5C7E9' stroke-width='2'/%3E%3C/svg%3E%0A");
+}
+.quantumviewfiles-module .field-list-files .list-table .directory-item .directory .directory-icon {
+    background-image: url("data:image/svg+xml,%3Csvg width='80' height='64' viewBox='0 0 80 64' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4C0 1.79086 1.79083 0 4 0H40L48 8H76C78.2092 8 80 9.79086 80 12V60C80 62.2091 78.2092 64 76 64H4C1.79083 64 0 62.2091 0 60V4Z' fill='%23A5C7E9'/%3E%3Cg style='mix-blend-mode:overlay' opacity='0.5'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M48 8L40 0H32L40 8H48Z' fill='black'/%3E%3C/g%3E%3C/svg%3E%0A");
+}
+.quantumviewfiles-module .field-list-files .list-table .directory-item.empty .directory .directory-icon {
+    background-image: url("data:image/svg+xml,%3Csvg width='20' height='16' viewBox='0 0 20 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M10 2H18C19.1 2 20 2.9 20 4V14C20 15.1 19.1 16 18 16H2C0.9 16 0 15.1 0 14L0.01 2C0.01 0.9 0.9 0 2 0H8L10 2ZM2 4V14H18V4H2Z' fill='%23A5C7E9'/%3E%3C/svg%3E%0A");
+}
+
+
+/**** Unsplash module */
+.quantumunsplash-module .quantumunsplash-module-header .header-filters > div:last-child .quantummanager-icon {
+    margin-left: 10px;
+}
+
+
+/************************** Cropperjs *********************************/
+.quantumcropperjs-module .qm-input-range-wrap > div input[type=range] {
+    background-color: #eee;
+    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #78abde), color-stop(100%, #78abde));
+    background-image: -webkit-linear-gradient(#78abde, #78abde);
+    background-image: -moz-linear-gradient(#78abde, #78abde);
+    background-image: -o-linear-gradient(#78abde, #78abde);
+    background-image: linear-gradient(#78abde, #78abde);
+}

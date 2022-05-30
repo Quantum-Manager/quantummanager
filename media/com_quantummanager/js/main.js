@@ -18,6 +18,10 @@ if(window.jQuery !== undefined) {
     });
 }
 
+document.addEventListener('subform-row-add', function (event) {
+    window.QuantumManagerInit(event.target);
+});
+
 window.QuantumManagerInit = function(container) {
 
     if(container === null || container === undefined) {
@@ -27,6 +31,7 @@ window.QuantumManagerInit = function(container) {
     let quantummanagerAll = container.querySelectorAll('.quantummanager');
     let scopesEnabled = QuantumSettings.scopeEnabled.split(',');
     let quantummanagerForBuild = [];
+    let activeIndex = null;
 
     for (let i=0;i<quantummanagerAll.length;i++) {
 
@@ -99,7 +104,7 @@ window.QuantumManagerInit = function(container) {
             QuantumUtils.replaceImgToSvg('.quantummanager-jedreview');
             helpButtonClose.addEventListener('click', function (ev) {
                 quantummanagerHelp.remove();
-                QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("/administrator/index.php?option=com_quantummanager&task=quantummanager.hideJedReview"));
+                QuantumUtils.ajaxGet(QuantumUtils.getFullUrl("index.php?option=com_quantummanager&task=quantummanager.hideJedReview"));
                 ev.preventDefault();
             });
         }
@@ -114,6 +119,86 @@ window.QuantumManagerInit = function(container) {
             clearInterval(loadQuantum)
         }
     }, 1);
+
+
+    let activeDetected = function (ev) {
+        let element = ev.target.closest('.quantummanager');
+
+        if(element === null || element === undefined) {
+            activeIndex = null;
+            return;
+        }
+
+        if(!element.hasAttribute('data-index')) {
+            activeIndex = null;
+            return;
+        }
+
+        activeIndex = parseInt(element.getAttribute('data-index'));
+    };
+
+    document.addEventListener('click', activeDetected);
+    document.addEventListener('dblclick', activeDetected);
+    document.addEventListener('contextmenu', activeDetected);
+    document.addEventListener('touchstart', activeDetected);
+
+    document.addEventListener('keydown', function(ev) {
+
+        if(ev.target.tagName.toLowerCase() === 'input') {
+            return;
+        }
+
+        if(
+            QuantummanagerLists[activeIndex] === undefined ||
+            QuantummanagerLists[activeIndex] === null
+        ) {
+            return;
+        }
+
+        let results = QuantummanagerLists[activeIndex].events.trigger('hotKeysResolve', QuantummanagerLists[activeIndex], ev.key);
+
+        if(results.indexOf(false) !== -1) {
+            ev.preventDefault();
+        }
+
+    });
+
+    if(
+        QuantumSettings['bufferPaste'] !== undefined &&
+        QuantumSettings['bufferPaste'] !== null &&
+        QuantumSettings['bufferPaste'] === '1'
+    ) {
+        document.addEventListener('paste', function (ev) {
+
+            if(
+                QuantummanagerLists[activeIndex] === undefined ||
+                QuantummanagerLists[activeIndex] === null
+            ) {
+                return;
+            }
+
+            if(
+                QuantummanagerLists[activeIndex].Qantumupload === undefined ||
+                QuantummanagerLists[activeIndex].Qantumupload === null
+            ) {
+                return;
+            }
+
+            let items = (ev.clipboardData || ev.originalEvent.clipboardData).items;
+            for (let index in items) {
+                let item = items[index];
+                if (item.kind === 'file') {
+                    let blob = item.getAsFile();
+                    let reader = new FileReader();
+                    reader.onload = function (event) {
+                        let ext = event.target.result.substring("data:image/".length, event.target.result.indexOf(";base64"));
+                        QuantummanagerLists[activeIndex].Qantumupload.uploadFiles([new File([QuantumUtils.dataURItoBlob(event.target.result)], 'clipboard_' + QuantumUtils.randomInteger(1111111, 9999999) + '.' + ext)]);
+                    }
+                    reader.readAsDataURL(blob);
+                }
+            }
+        });
+    }
 
 
 };

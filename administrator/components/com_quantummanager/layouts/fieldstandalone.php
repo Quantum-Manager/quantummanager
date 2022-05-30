@@ -7,37 +7,38 @@
  * @link       https://www.norrnext.com
  */
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 
 defined('_JEXEC') or die;
 extract($displayData);
 
-$scopeEnabled = [];
+$scopeEnabled   = [];
 $scopeEnabled[] = $scope;
 
 ?>
 
-<div class="quantummanager quantummanager-fieldstandalone <?php echo $cssClass ?>">
-	<?php echo $displayData['field'] ?>
-	<?php echo $displayData['other'] ?>
-</div>
+    <div class="quantummanager quantummanager-fieldstandalone <?php echo $cssClass ?>">
+		<?php echo $displayData['field'] ?>
+		<?php echo $displayData['other'] ?>
+    </div>
 
 <?php
 $options = [
-    'isUserAdmin' => QuantummanagerHelper::isUserAdmin() ? 'true' : 'false',
-    'urlFull' => $urlFull,
-    'urlBase' => $urlBase,
-    'scopeEnabled' => implode(',', $scopeEnabled),
-    'alertBigData' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ALERT_BIG_IMAGE'), ENT_QUOTES),
-    'ok' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_OK'), ENT_QUOTES),
-    'close' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_CLOSE'), ENT_QUOTES),
-    'copied' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_COPIED'), ENT_QUOTES),
-    'cancel' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_CANCEL'), ENT_QUOTES),
+	'isUserAdmin'  => QuantummanagerHelper::isUserAdmin() ? 'true' : 'false',
+	'urlFull'      => $urlFull,
+	'urlBase'      => $urlBase,
+	'isJoomla4'    => QuantummanagerHelper::isJoomla4() ? '1' : '0',
+	'bufferPaste'    => (string) QuantummanagerHelper::getParamsComponentValue('bufferpaste', 0),
+	'scopeEnabled' => implode(',', $scopeEnabled),
+	'alertBigData' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ALERT_BIG_IMAGE'), ENT_QUOTES),
+	'ok'           => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_OK'), ENT_QUOTES),
+	'close'        => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_CLOSE'), ENT_QUOTES),
+	'copied'       => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_COPIED'), ENT_QUOTES),
+	'cancel'       => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_WINDOW_CANCEL'), ENT_QUOTES),
 ];
 
-$optionsOutput = function ($name) use (&$options) {
-    return $options[$name];
+$optionsOutput = static function ($name) use (&$options) {
+	return $options[$name];
 };
 
 QuantummanagerHelper::scriptInsertOnPage('quantumSettings', <<<EOF
@@ -46,6 +47,8 @@ window.QuantumSettings = {
         urlFull: '{$optionsOutput('urlFull')}',
         urlBase: '{$optionsOutput('urlBase')}',
         scopeEnabled: '{$optionsOutput('scopeEnabled')}',
+        isJoomla4: '{$optionsOutput('isJoomla4')}',
+        bufferPaste: '{$optionsOutput('bufferPaste')}'
     };
 
     window.QuantumLang = {

@@ -205,10 +205,32 @@
 			   filter="unset"
 		/>
 
+		<field name="folderdblclick"
+			   type="radio"
+			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_FOLDERDBLCLICK_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_FOLDERDBLCLICK_DESC"
+			   required="true"
+			   class="btn-group btn-group-yesno"
+			   default="0">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
 		<field name="front"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_FRONT_LABEL"
 			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_FRONT_DESC"
+			   required="true"
+			   class="btn-group btn-group-yesno"
+			   default="0">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field name="bufferpaste"
+			   type="radio"
+			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_BUFFERPASTE_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_BUFFERPASTE_DESC"
 			   required="true"
 			   class="btn-group btn-group-yesno"
 			   default="0">
@@ -225,6 +247,29 @@
 			   default="0">
 			<option value="0">COM_QUANTUMMANAGER_ACTION_SHOW</option>
 			<option value="1">COM_QUANTUMMANAGER_ACTION_HIDE</option>
+		</field>
+
+		<field name="itemmenumove"
+			   type="radio"
+			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_ITEMMENUMOVE_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_ITEMMENUMOVE_DESC"
+			   required="true"
+			   class="btn-group btn-group-yesno"
+			   default="0">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field name="itemmenumovefiles"
+			   type="radio"
+			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_ITEMMENUMOVEFILES_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_GENERAL_ITEMMENUMOVEFILES_DESC"
+			   required="true"
+			   showon="itemmenumove:1"
+			   class="btn-group btn-group-yesno"
+			   default="1">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
 		</field>
 
 		<field name="help"
@@ -498,7 +543,7 @@
 		<field name="resizefolders"
 			   type="subform"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_RESIZE_FOLDERS"
-			   layout="joomla.form.field.subform.repeatable-table"
+			   layout="joomla.form.field.subform.repeatable"
 			   multiple="true"
 			   min="0"
 			   max="20">
@@ -542,7 +587,6 @@
 			   filter="unset"
 		/>
 
-
 		<field name="previewsfolder"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_PREVIEWSFOLDER_LABEL"
@@ -564,12 +608,11 @@
 			<option value="0">JNO</option>
 		</field>
 
-
 		<field name="previewslist"
 			   type="subform"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_PREVIEWSLLIST_LABEL"
 			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_PREVIEWSLLIST_DESC"
-			   layout="joomla.form.field.subform.repeatable-table"
+			   layout="joomla.form.field.subform.repeatable"
 			   multiple="true"
 			   min="0"
 			   max="20">
@@ -609,7 +652,7 @@
 			   type="subform"
 			   label="COM_QUANTUMMANAGER_CONFIG_COLORS_COLORSFILES_LABEL"
 			   description="COM_QUANTUMMANAGER_CONFIG_COLORS_COLORSFILES_DESC"
-			   layout="joomla.form.field.subform.repeatable-table"
+			   layout="joomla.form.field.subform.repeatable"
 			   multiple="true"
 			   min="0">
 			<form>
@@ -636,7 +679,7 @@
 
 		<field name="profiles"
 			   type="subform"
-			   layout="joomla.form.field.subform.repeatable-table"
+			   layout="joomla.form.field.subform.repeatable"
 			   label="COM_QUANTUMMANAGER_CONFIG_PROFILES_VARIABLES"
 			   multiple="true">
 			<form>

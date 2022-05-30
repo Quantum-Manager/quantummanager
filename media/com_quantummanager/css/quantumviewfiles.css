@@ -9,6 +9,7 @@
 .quantumviewfiles-module {
     position: relative;
     display: flex;
+    height: 100%;
     flex-wrap: wrap;
     -webkit-flex-wrap: wrap;
     flex-direction: column;
@@ -20,9 +21,10 @@
     display: flex;
     flex-direction: row-reverse;
     height: 30px;
-    background: #F0F0F0;
-    margin: 0 -14px 0 0;
-    padding: 0px 4px 9px 18px;
+    margin: 0 -10px 0 0;
+    padding: 0 4px 9px 10px;
+    align-items: center;
+    align-content: center;
     border-bottom: 1px solid #ddddddb5;
 }
 .quantumviewfiles-module .filters {
@@ -88,6 +90,7 @@
     background: #fff;
     color: #666;
     border: 1px solid #e5e5e5;
+    border-radius: 3px;
     transition: .2s ease-in-out;
     transition-property: color,background-color,border,width;
 }
@@ -257,7 +260,6 @@
     position: relative;
     height: auto;
     width: 100%;
-    border-right: 1px solid #ddddddb5;
 }
 .quantumviewfiles-module .meta-file ~ .view {
     width: 80%;
@@ -266,8 +268,7 @@
     position: relative;
     width: 25%;
     min-width: 265px;
-    /*margin-top: -45px;*/
-    background: #F0F0F0;
+    border-left: 1px solid #ddddddb5;
 }
 .quantumviewfiles-module .meta-file.hidden {
     display: none;
@@ -474,6 +475,13 @@
     text-align: center;
     padding: 40px 50px;
 }
+.quantumviewfiles-module .view > .error {
+    text-align: center;
+    padding: 40px 50px;
+}
+.quantumviewfiles-module .view > .error a {
+    display: inline-block;
+}
 .quantumviewfiles-module .field-list-files {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -570,45 +578,12 @@
     min-height: 100%;
 }
 .quantumviewfiles-module .field-list-files .list-grid .file-item {
-    margin: 1%;
-    height: 130px;
-    padding-bottom: 30px;
     transition: all 0.2s;
 }
-.quantumviewfiles-module .field-list-files .list-grid-1-6 .file-item {
-    width: 14%;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-5 .file-item {
-    width: 18%;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-4 .file-item {
-    width: 23%;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-3 .file-item {
-    width: 31.3%;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-2 .file-item {
-    width: 47%;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-4 .file-item {
-    margin: 1%;
-    height: 150px;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-3 .file-item {
-    margin: 1%;
-    height: 200px;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-2 .file-item {
-    margin: 1%;
-    height: 270px;
-}
+
 .quantumviewfiles-module .field-list-files .list-grid .file-item:hover {
     cursor: pointer;
 }
-/*.quantumviewfiles-module .field-list-files .list-grid .file-item:hover .file-exs {
-    transition: all 0.2s;
-    transform: scale(1.2);
-}*/
 .quantumviewfiles-module .field-list-files .list-grid .object-select .import-files-check-file {
     display: none;
 }
@@ -695,7 +670,7 @@ svg.svg-icon text {
     padding-bottom: 5px;
     left: 0;
     right: 0;
-    bottom: -37px;
+    top: 100%;
     width: 100%;
     font-size: 13px;
     word-wrap: break-word;
@@ -724,70 +699,32 @@ svg.svg-icon text {
     opacity: .6;
 }
 .quantumviewfiles-module .field-list-files .list-grid .directory-item {
-    height: 130px;
-    margin: 1%;
-    padding-bottom: 40px;
     transition: all 0.2s;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-4 .directory-item {
-    height: 150px;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-3 .directory-item {
-    height: 200px;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-2 .directory-item {
-    height: 270px;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-6 .directory-item {
-    width: 14%;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-5 .directory-item {
-    width: 18%;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-4 .directory-item {
-    width: 23%;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-3 .directory-item {
-    width: 31.3%;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-2 .directory-item {
-    width: 47%;
 }
 .quantumviewfiles-module .field-list-files .list-grid .directory-item .directory {
-    display: flex;
-    align-items: center;
     width: 100%;
-    height: 130px;
+    height: 100%;
     position: relative;
     transition: all 0.2s;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-2 .directory-item .directory {
-    height: 270px;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-3 .directory-item .directory {
-    height: 200px;
-}
-.quantumviewfiles-module .field-list-files .list-grid-1-4 .directory-item .directory {
-    height: 150px;
-}
-.quantumviewfiles-module .field-list-files .list-grid .directory-item:hover .directory {
-    cursor: pointer;
 }
 .quantumviewfiles-module .field-list-files .list-grid .directory-item:hover {
     transition: all 0.2s;
 }
+.quantumviewfiles-module .field-list-files .list-grid .directory-item:hover .directory {
+    cursor: pointer;
+}
 .quantumviewfiles-module .field-list-files .list-grid .directory-item .directory .directory-icon {
     width: 100%;
-    height: 85%;
-    margin: auto;
-    background-size: contain;
-    background-repeat: no-repeat;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-position: 50% 50%;
-    background-image: url("data:image/svg+xml,%3Csvg width='80' height='64' viewBox='0 0 80 64' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4C0 1.79086 1.79083 0 4 0H40L48 8H76C78.2092 8 80 9.79086 80 12V60C80 62.2091 78.2092 64 76 64H4C1.79083 64 0 62.2091 0 60V4Z' fill='%23A5C7E9'/%3E%3Cg style='mix-blend-mode:overlay' opacity='0.5'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M48 8L40 0H32L40 8H48Z' fill='black'/%3E%3C/g%3E%3C/svg%3E%0A");
+    background-repeat: no-repeat;
+    background-size: contain;
     transition: opacity .25s ease-in;
 }
 .quantumviewfiles-module .field-list-files .list-grid .directory-item.empty .directory .directory-icon {
-    background-image: url("data:image/svg+xml,%3Csvg width='80' height='64' viewBox='0 0 80 64' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M47.2929 8.70711L47.5858 9H48H76C77.6569 9 79 10.3431 79 12V60C79 61.6569 77.6569 63 76 63H4C2.34312 63 1 61.6569 1 60V4C1 2.34314 2.34312 1 4 1H39.5858L47.2929 8.70711Z' stroke='%23A5C7E9' stroke-width='2'/%3E%3C/svg%3E%0A");
 }
 .quantumviewfiles-module .field-list-files .list-grid .directory-item:hover .directory .directory-icon {
     opacity: .6;
@@ -802,7 +739,7 @@ svg.svg-icon text {
     padding-bottom: 5px;
     left: 0;
     right: 0;
-    bottom: -40px;
+    top: 100%;
     width: 100%;
     font-size: 13px;
     word-wrap: break-word;
@@ -830,6 +767,61 @@ svg.svg-icon text {
 .quantumviewfiles-module .field-list-files .list-grid .directory-item.lock .directory-icon {
     opacity: .6;
 }
+.quantumviewfiles-module .field-list-files .list-grid > * {
+    margin: 1% 1% 1% 1%;
+    height: 160px;
+    padding-bottom: 30px;
+}
+.quantumviewfiles-module .field-list-files .list-grid-1-10 > * {
+    width: 8%;
+    height: 130px;
+}
+
+.quantumviewfiles-module .field-list-files .list-grid-1-9 > * {
+    width: 9.1%;
+    height: 130px;
+}
+
+.quantumviewfiles-module .field-list-files .list-grid-1-8 > * {
+    width: 10.5%;
+    height: 130px;
+}
+
+.quantumviewfiles-module .field-list-files .list-grid-1-7 > * {
+    width: 12.285%;
+    height: 130px;
+}
+
+.quantumviewfiles-module .field-list-files .list-grid-1-6 > * {
+    width: 14.6%;
+    height: 140px;
+}
+
+.quantumviewfiles-module .field-list-files .list-grid-1-5 > * {
+    width: 18%;
+    height: 150px;
+}
+
+.quantumviewfiles-module .field-list-files .list-grid-1-4 > * {
+    width: 23%;
+    height: 180px;
+}
+
+.quantumviewfiles-module .field-list-files .list-grid-1-3 > * {
+    width: 31.3%;
+    height: 250px;
+}
+
+.quantumviewfiles-module .field-list-files .list-grid-1-2 > * {
+    width: 48%;
+    height: 350px;
+}
+
+.quantumviewfiles-module .field-list-files .list-grid-1-1 > * {
+    width: 98%;
+    height: 130px;
+}
+
 .quantumviewfiles-module .field-list-files .list-table {
     min-height: 100%;
 }
@@ -837,7 +829,6 @@ svg.svg-icon text {
     display: flex;
     align-items: center;
     padding: 0;
-    border-bottom: 1px solid #ddd;
     font-size: 13px;
 }
 .quantumviewfiles-module .field-list-files .list-table .file-item:hover {
@@ -859,23 +850,37 @@ svg.svg-icon text {
 }
 .quantumviewfiles-module .field-list-files .list-table .file-item .file {
     position: relative;
-    padding: 8px 4px 8px 30px;
+    padding: 6px 0px 6px 35px;
+}
+.quantumviewfiles-module .field-list-files .list-table .file-item .file .file-exs {
+    margin-right: 5px;
+    width: 16px;
+    height: 16px;
+}
+.quantumviewfiles-module .field-list-files .list-table .file-item .file img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
 }
 .quantumviewfiles-module .field-list-files .list-table .file-item .check {
     position: absolute;
     content: "";
-    left: 5px;
+    left: 10px;
     width: 17px;
     height: 17px;
     border: 1px solid #dddddd;
-    transition: all 0.4s ease;
+    border-radius: 3px;
+    transition: background-color,border 0.4s ease;
     z-index: 2;
 }
 .quantumviewfiles-module .field-list-files .list-table .file-item input:checked ~ .check {
     border: 1px solid;
     background-color: #444;
-    background-size: cover;
     background-image: url("data:image/svg+xml,%3Csvg version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='448.8px' height='448.8px' viewBox='0 0 448.8 448.8' style='enable-background:new 0 0 448.8 448.8;' xml:space='preserve' %3E%3Cg%3E%3Cg fill='%23fff' id='check'%3E%3Cpolygon points='142.8,323.85 35.7,216.75 0,252.45 142.8,395.25 448.8,89.25 413.1,53.55 '/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
 }
 .quantumviewfiles-module .field-list-files .list-table .file .file-exs .av-folderlist-label:after {
     margin-top: 4px;
@@ -884,7 +889,6 @@ svg.svg-icon text {
     display: flex;
     align-items: center;
     padding: 0;
-    border-bottom: 1px solid #ddd;
     font-size: 13px;
 }
 .quantumviewfiles-module .field-list-files .list-table .directory-item:hover {
@@ -902,7 +906,7 @@ svg.svg-icon text {
 }
 .quantumviewfiles-module .field-list-files .list-table .directory-item .directory {
     position: relative;
-    padding: 8px 4px 8px 31px;
+    padding: 8px 4px 8px 35px;
     width: 100%;
     display: flex;
     align-self: center;
@@ -912,18 +916,21 @@ svg.svg-icon text {
 .quantumviewfiles-module .field-list-files .list-table .directory-item .check {
     position: absolute;
     content: "";
-    left: 5px;
+    left: 10px;
     width: 17px;
     height: 17px;
     border: 1px solid #dddddd;
-    transition: all 0.4s ease;
+    border-radius: 3px;
+    transition: background-color,border 0.4s ease;
     z-index: 2;
 }
 .quantumviewfiles-module .field-list-files .list-table .directory-item input:checked ~ .check {
     border: 1px solid;
     background-color: #444;
-    background-size: cover;
     background-image: url("data:image/svg+xml,%3Csvg version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='448.8px' height='448.8px' viewBox='0 0 448.8 448.8' style='enable-background:new 0 0 448.8 448.8;' xml:space='preserve' %3E%3Cg%3E%3Cg fill='%23fff' id='check'%3E%3Cpolygon points='142.8,323.85 35.7,216.75 0,252.45 142.8,395.25 448.8,89.25 413.1,53.55 '/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
 }
 .quantumviewfiles-module .field-list-files .list-table .directory-item .directory .directory-icon {
     width: 16px;
@@ -933,10 +940,9 @@ svg.svg-icon text {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: 50% 50%;
-    background-image: url("data:image/svg+xml,%3Csvg width='80' height='64' viewBox='0 0 80 64' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4C0 1.79086 1.79083 0 4 0H40L48 8H76C78.2092 8 80 9.79086 80 12V60C80 62.2091 78.2092 64 76 64H4C1.79083 64 0 62.2091 0 60V4Z' fill='%23A5C7E9'/%3E%3Cg style='mix-blend-mode:overlay' opacity='0.5'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M48 8L40 0H32L40 8H48Z' fill='black'/%3E%3C/g%3E%3C/svg%3E%0A");    transition: opacity .25s ease-in;
+    transition: opacity .25s ease-in;
 }
 .quantumviewfiles-module .field-list-files .list-table .directory-item.empty .directory .directory-icon {
-    background-image: url("data:image/svg+xml,%3Csvg width='20' height='16' viewBox='0 0 20 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M10 2H18C19.1 2 20 2.9 20 4V14C20 15.1 19.1 16 18 16H2C0.9 16 0 15.1 0 14L0.01 2C0.01 0.9 0.9 0 2 0H8L10 2ZM2 4V14H18V4H2Z' fill='%23A5C7E9'/%3E%3C/svg%3E%0A");
 }
 .quantumviewfiles-module .field-list-files .list-table .directory-item .directory .directory-name {
     height: 100%;

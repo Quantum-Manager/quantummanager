@@ -19,9 +19,9 @@ window.Qantumupload = function (Filemanager, UploadElement, options) {
     this.countFiles = 0;
     this.uploadI = 0;
     this.filesLists = [];
-    this.errorsWrap = '';
-    this.errorsHtml = '';
+    this.errors = [];
     this.maxsize = options.maxsize;
+    this.maxsizeServer = parseInt(options.maxsizeServer);
     this.exs = '';
 
     this.init = function () {
@@ -91,11 +91,6 @@ window.Qantumupload = function (Filemanager, UploadElement, options) {
             }
         });
 
-        let closeError = self.errorsWrap.querySelector('.upload-errors-close');
-        closeError.addEventListener('click', function () {
-            self.errorsWrap.style.display = "none";
-        });
-
     };
 
 
@@ -131,22 +126,41 @@ window.Qantumupload = function (Filemanager, UploadElement, options) {
 
         files = [...files];
         this.initializeProgress(files.length);
-        this.errorsHtml = '';
+        this.errors = [];
         this.uploadI = [];
         this.filesLists = [];
         for (let i = 0; i < files.length; i++) {
 
             let file = files[i];
 
-            if ((file.size / 1024 / 1024) > this.maxsize) {
-                QuantumUtils.alert(QuantumuploadLang.file + file.name + QuantumuploadLang.maxsize + this.maxsize + QuantumuploadLang.megabyte);
+            if (file.size > this.maxsizeServer) {
+                QuantumUtils.notify({
+                    type: 'danger',
+                    text: QuantumuploadLang.file + file.name + QuantumuploadLang.maxsize + (Math.round(this.maxsizeServer / 1024 / 1024)) + QuantumuploadLang.megabyte
+                });
+
                 this.countFiles--;
 
                 if (this.countFiles === 0) {
                     this.progressBar.style.display = "none";
                 }
 
-                return false;
+                continue;
+            }
+
+            if ((file.size / 1024 / 1024) > this.maxsize) {
+                QuantumUtils.notify({
+                    type: 'danger',
+                    text: QuantumuploadLang.file + file.name + QuantumuploadLang.maxsize + this.maxsize + QuantumuploadLang.megabyte
+                });
+
+                this.countFiles--;
+
+                if (this.countFiles === 0) {
+                    this.progressBar.style.display = "none";
+                }
+
+                continue;
             }
 
             let currExs = file.name.split('.');
@@ -154,7 +168,8 @@ window.Qantumupload = function (Filemanager, UploadElement, options) {
             if (currExs.length === 1) {
                 QuantumUtils.alert(QuantumuploadLang.file + file.name + QuantumuploadLang.exs);
                 this.countFiles--;
-                return false;
+
+                continue;
             }
 
 
@@ -181,7 +196,7 @@ window.Qantumupload = function (Filemanager, UploadElement, options) {
                         }
 
                         if (response.error !== undefined) {
-                            self.errorsHtml += '<div>' + file.name + ': ' + QuantumUtils.htmlspecialcharsDecode(response.error, 'ENT_QUOTES') + '</div>';
+                            self.errors.push(file.name + ': ' + QuantumUtils.htmlspecialcharsDecode(response.error, 'ENT_QUOTES'));
                         }
 
                     } catch (e) {
@@ -196,9 +211,13 @@ window.Qantumupload = function (Filemanager, UploadElement, options) {
 
                         self.trigger('uploadComplete');
 
-                        if (self.errorsHtml !== '') {
-                            self.errorsWrap.querySelector('div').innerHTML = self.errorsHtml;
-                            self.errorsWrap.style.display = "block";
+                        if (self.errors.length > 0) {
+                            for(let k in self.errors) {
+                                QuantumUtils.notify({
+                                    type: 'danger',
+                                    text: self.errors[k]
+                                });
+                            }
                         }
 
                         self.trigger('uploadAfter');
@@ -212,9 +231,13 @@ window.Qantumupload = function (Filemanager, UploadElement, options) {
                     if (self.countFiles === self.uploadI.length) {
                         self.progressBar.style.display = "none";
 
-                        if (self.errorsHtml !== '') {
-                            self.errorsWrap.innerHTML = self.errorsHtml;
-                            self.errorsWrap.style.display = "block";
+                        if (self.errors.length > 0) {
+                            for(let k in self.errors) {
+                                QuantumUtils.notify({
+                                    type: 'danger',
+                                    text: self.errors[k]
+                                });
+                            }
                         }
 
                         self.trigger('uploadAfter');
@@ -243,27 +266,6 @@ window.Qantumupload = function (Filemanager, UploadElement, options) {
     Filemanager.events.add(this, 'uploadAfter', function (fm, el) {
         for (let i = 0; i < fm.Qantumupload.inputFileAll.length; i++) {
             fm.Qantumupload.inputFileAll[i].value = '';
-        }
-    });
-
-    document.addEventListener('paste', function (ev) {
-        let check_element = ev.target.closest('.quantummanager');
-        if (check_element === null || check_element === undefined) {
-            return;
-        }
-
-        let items = (ev.clipboardData || ev.originalEvent.clipboardData).items;
-        for (let index in items) {
-            let item = items[index];
-            if (item.kind === 'file') {
-                let blob = item.getAsFile();
-                let reader = new FileReader();
-                reader.onload = function (event) {
-                    let ext = event.target.result.substring("data:image/".length, event.target.result.indexOf(";base64"));
-                    self.uploadFiles([new File([QuantumUtils.dataURItoBlob(event.target.result)], 'clipboard_' + QuantumUtils.randomInteger(1111111, 9999999) + '.' + ext)]);
-                }
-                reader.readAsDataURL(blob);
-            }
         }
     });
 
