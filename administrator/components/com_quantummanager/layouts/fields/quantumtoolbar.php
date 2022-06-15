@@ -36,7 +36,7 @@ if(!is_array($buttonsBun))
 <?php
 
 $langs = json_encode([
-	'buttonSettings' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_SETTINGS'), ENT_QUOTES),
+	'buttonOptions' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ACTION_OPTIONS'), ENT_QUOTES),
 ]);
 
 QuantummanagerHelper::scriptInsertOnPage('quantumToolbar', <<<EOF
