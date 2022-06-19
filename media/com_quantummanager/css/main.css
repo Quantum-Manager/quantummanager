@@ -379,6 +379,10 @@ body.com_quantummanager > .container-main {
     line-height: 18px;
 }
 
+.quantummanager-help a:before {
+    display: none;
+}
+
 .quantummanager-about {
     width: 360px;
     color: #444;
