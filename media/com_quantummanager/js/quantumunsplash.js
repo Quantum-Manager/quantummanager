@@ -29,7 +29,7 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
 
         self.areaSave.style.display = 'none';
 
-        let buttonPhotostock = Filemanager.Quantumtoolbar.buttonAdd(
+        /*let buttonPhotostock = Filemanager.Quantumtoolbar.buttonAdd(
             'photostock',
             'center',
             'file-other',
@@ -37,13 +37,13 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
             QuantumunsplashLang.photostock,
             'quantummanager-icon-photostock',
             {},
-            function (ev) {}).parentElement;
+            function (ev) {}).parentElement;*/
 
         Filemanager.Quantumtoolbar.buttonAdd(
             'unsplashSearch',
-            'right',
+            'center',
             'file-other',
-            'qm-btn-unsplash-search hidden-label',
+            'qm-btn-unsplash-search',
             QuantumunsplashLang.button,
             'quantummanager-icon-unsplash-short',
             {},
@@ -79,8 +79,7 @@ window.Quantumunsplash = function(Filemanager, QuantumUnsplashElement, options) 
 
                 self.inputSearch.focus();
                 ev.preventDefault();
-            },
-            buttonPhotostock
+            }
         );
 
         self.closeButton.addEventListener('click', function () {
