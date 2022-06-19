@@ -13,10 +13,10 @@ use Joomla\CMS\Language\Text;
 $cssClass = $displayData['cssClass'];
 ?>
 
-<div class="quantummanager-module quantummanager-backgrounds-muted quantumupload-module <?php echo $cssClass ?> <?php if($displayData['dropAreaHidden'] === '1') : ?> qm-hide <?php endif; ?>" data-type="Qantumupload" data-options="maxsize:<?php echo $displayData['maxsize'] ?>;maxsizeServer:<?php echo $displayData['maxsizeServer'] ?>;scope:<?php echo $displayData['scope'] ?>;directory:<?php echo $displayData['directory'] ?>;dropAreaHidden:<?php echo $displayData['dropAreaHidden'] ?>">
+<div class="quantummanager-module quantummanager-backgrounds-muted quantumupload-module <?php echo $cssClass ?> <?php if($displayData['dropAreaHidden'] === '1') : ?> qm-padding-none <?php endif; ?>" data-type="Qantumupload" data-options="maxsize:<?php echo $displayData['maxsize'] ?>;maxsizeServer:<?php echo $displayData['maxsizeServer'] ?>;scope:<?php echo $displayData['scope'] ?>;directory:<?php echo $displayData['directory'] ?>;dropAreaHidden:<?php echo $displayData['dropAreaHidden'] ?>">
 
 	<?php $id = mt_rand(11111, 99999); ?>
-    <div class="drop-area">
+    <div class="drop-area <?php if($displayData['dropAreaHidden'] === '1') : ?> qm-hide <?php endif; ?>">
         <div class="form-upload">
             <input type="hidden" class="pathElem" name="path">
             <span class="quantummanager-icon quantummanager-icon-upload"></span>

@@ -212,10 +212,14 @@ body.com_quantummanager > .container-main {
 
 /**************************** Visible ****************************/
 .qm-hide {
-    display: none;
+    display: none !important;
 }
 
 /***************************** Padding ******************************/
+.qm-padding-none {
+    padding: 0 !important;
+}
+
 .qm-padding-small-top {
    padding-top: 10px;
 }
