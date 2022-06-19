@@ -135,7 +135,15 @@ $options = [
         'helpButtonDocumentation' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HELP_BUTTON_DOCUMENTATION'), ENT_QUOTES),
         'helpButtonLocalizations' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HELP_BUTTON_LOCALIZATIONS'), ENT_QUOTES),
         'helpButtonSupport' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HELP_BUTTON_SUPPORT'), ENT_QUOTES),
-        'helpButtonReview' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HELP_BUTTON_REVIEW'), ENT_QUOTES)
+        'helpButtonReview' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HELP_BUTTON_REVIEW'), ENT_QUOTES),
+        'helpHotkeys' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HOTKEYS'), ENT_QUOTES),
+        'helpHotkeysCopy' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HOTKEYS_COPY'), ENT_QUOTES),
+        'helpHotkeysCut' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HOTKEYS_CUT'), ENT_QUOTES),
+        'helpHotkeysPaste' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HOTKEYS_PASTE'), ENT_QUOTES),
+        'helpHotkeysRename' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HOTKEYS_RENAME'), ENT_QUOTES),
+        'helpHotkeysDelete' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HOTKEYS_DELETE'), ENT_QUOTES),
+        'helpHotkeysRefresh' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HOTKEYS_REFRESH'), ENT_QUOTES),
+        'helpHotkeysBack' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_HOTKEYS_BACK'), ENT_QUOTES),
     ]);
 
     QuantummanagerHelper::scriptInsertOnPage('quantumViewfiles', <<<EOF

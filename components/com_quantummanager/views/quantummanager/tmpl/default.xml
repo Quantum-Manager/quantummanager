@@ -2,7 +2,7 @@
 <metadata>
     <layout title="COM_QUANTUMMANAGER_MENU">
         <message>
-            <![CDATA[COM_QUANTUMMANAGER_MENU_DESC_MENU]]>
+            <![CDATA[COM_QUANTUMMANAGER_MENU_DESC]]>
         </message>
     </layout>
 </metadata>

@@ -61,6 +61,7 @@ try {
         ],
     ];
 
+
     if((int)QuantummanagerHelper::getParamsComponentValue('unsplash', '1'))
     {
 		$fields['quantumunsplash'] = [
@@ -70,6 +71,7 @@ try {
     }
 
 
+	/*
     if((int)QuantummanagerHelper::getParamsComponentValue('pexels', '1'))
     {
         $fields['quantumpexels'] = [
@@ -77,6 +79,7 @@ try {
             'position' => 'bottom'
         ];
     }
+	*/
 
 	/*
     if((int)QuantummanagerHelper::getParamsComponentValue('pixabay', '1'))

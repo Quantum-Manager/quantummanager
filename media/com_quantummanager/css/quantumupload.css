@@ -86,14 +86,14 @@
     width: 100%;
     border: 0;
     background-color: #f8f8f8;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     height: 15px;
     border-radius: 500px;
     overflow: hidden;
 }
 
 * + .quantumupload-module progress {
-    margin-top: 20px;
+    margin-top: 0;
 }
 
 .quantumupload-module progress:indeterminate {
