@@ -1284,11 +1284,11 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
                     '<div>' +
                     '<div>' +
                     '<ul class="quantummanager-list quantummanager-text-left">' +
-                    '<li><a href="https://www.norrnext.com/quantum-manager">'+ QuantumviewfilesLang.helpButtonProductPage + '</a></li>' +
-                    '<li><a href="https://www.norrnext.com/docs/joomla-extensions/quantum-manager">' + QuantumviewfilesLang.helpButtonDocumentation + '</a></li>' +
-                    '<li><a href="https://www.norrnext.com/quantum-manager-localizations">' + QuantumviewfilesLang.helpButtonLocalizations + '</a></li>' +
-                    '<li><a href="https://github.com/Quantum-Manager/tracker">' + QuantumviewfilesLang.helpButtonSupport + '</a></li>' +
-                    '<li><a href="https://extensions.joomla.org/extension/quantum-manager/">' + QuantumviewfilesLang.helpButtonReview + '</a></li>' +
+                    '<li><a href="https://www.norrnext.com/quantum-manager" target="_blank">'+ QuantumviewfilesLang.helpButtonProductPage + '</a></li>' +
+                    '<li><a href="https://www.norrnext.com/docs/joomla-extensions/quantum-manager" target="_blank">' + QuantumviewfilesLang.helpButtonDocumentation + '</a></li>' +
+                    '<li><a href="https://www.norrnext.com/quantum-manager-localizations" target="_blank">' + QuantumviewfilesLang.helpButtonLocalizations + '</a></li>' +
+                    '<li><a href="https://github.com/Quantum-Manager/tracker" target="_blank">' + QuantumviewfilesLang.helpButtonSupport + '</a></li>' +
+                    '<li><a href="https://extensions.joomla.org/extension/quantum-manager/" target="_blank">' + QuantumviewfilesLang.helpButtonReview + '</a></li>' +
                     '</ul>' +
                     '</div>' +
                     '<div>' +
