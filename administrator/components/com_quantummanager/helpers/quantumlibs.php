@@ -11,7 +11,6 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Version;
 
 /**
  * Quantummanager helper.
@@ -101,6 +100,16 @@ class QuantummanagerLibs
 			'version'  => filemtime(__FILE__),
 			'relative' => true
 		]);
+
+		if (Factory::getApplication()->isClient('site') &&
+			QuantummanagerHelper::isJoomla4()
+		)
+		{
+			HTMLHelper::_('stylesheet', 'com_quantummanager/joomla4-front.css', [
+				'version'  => filemtime(__FILE__),
+				'relative' => true
+			]);
+		}
 	}
 
 
