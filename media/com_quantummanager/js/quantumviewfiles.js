@@ -1280,43 +1280,38 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
 
         if (parseInt(this.options.help)) {
             Filemanager.Quantumtoolbar.buttonAdd('viewfilesHelp', 'right', 'file-other', 'qm-btn-back hidden-label', QuantumviewfilesLang.help, 'quantummanager-icon-info', {}, function (ev) {
-                QuantumUtils.alert('<div class="quantummanager-about"><div class="text">Quantum Manager ' + QuantumviewfilesVerison + ' ' + QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.helpText, 'ENT_QUOTES') +
+                QuantumUtils.alert('<div class="quantummanager-help quantummanager-flex quantummanager-flex-divider">' +
+                    '<div>' +
+                    '<div>' +
+                    '<ul class="quantummanager-list quantummanager-text-left">' +
+                    '<li><a href="https://www.norrnext.com/quantum-manager">'+ QuantumviewfilesLang.helpButtonProductPage + '</a></li>' +
+                    '<li><a href="https://www.norrnext.com/docs/joomla-extensions/quantum-manager">' + QuantumviewfilesLang.helpButtonDocumentation + '</a></li>' +
+                    '<li><a href="https://www.norrnext.com/quantum-manager-localizations">' + QuantumviewfilesLang.helpButtonLocalizations + '</a></li>' +
+                    '<li><a href="https://github.com/Quantum-Manager/tracker">' + QuantumviewfilesLang.helpButtonSupport + '</a></li>' +
+                    '<li><a href="https://extensions.joomla.org/extension/quantum-manager/">' + QuantumviewfilesLang.helpButtonReview + '</a></li>' +
+                    '</ul>' +
+                    '</div>' +
+                    '<div>' +
+                    '<h3 class="quantummanager-text-left">Горячие клавиши</h3>' +
+                    '<ul class="quantummanager-list quantummanager-text-left">' +
+                    '<li>Ctrl+C/Cmd+C - Копировать</li>' +
+                    '<li>Ctrl+X/Cmd+X - Вырезать</li>' +
+                    '<li>Ctrl+V/Cmd+V - Вставить</li>' +
+                    '<li>F2 - Переименовать</li>' +
+                    '<li>F5 - Обновление папки</li>' +
+                    '<li>Delete - Удалить</li>' +
+                    '<li>Backspace - Вернуться назад</li>' +
+                    '</ul>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="quantummanager-about quantummanager-text-left"><div class="text">Quantum Manager ' + QuantumviewfilesVerison + ' ' + QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.helpText, 'ENT_QUOTES') +
                     '</div><div class="copyright">' + QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.helpCopyright, 'ENT_QUOTES') +
                     '</div><div class="copyright-images">' + QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.helpCopyrightImages, 'ENT_QUOTES') +
                     '</div><div class="love">' + QuantumUtils.htmlspecialcharsDecode(QuantumviewfilesLang.helpLove, 'ENT_QUOTES') +
-                    ' <img src="' + QuantumUtils.getFullUrl('/media/com_quantummanager/images/icons/action/favorite-heart-button.svg') + '" class="svg" /></div>',
-                    [
-                        {
-                            name: QuantumviewfilesLang.helpButtonProductPage,
-                            callback: function () {
-                                QuantumUtils.openInNewTab('https://www.norrnext.com/quantum-manager');
-                            }
-                        },
-                        {
-                            name: QuantumviewfilesLang.helpButtonDocumentation,
-                            callback: function () {
-                                QuantumUtils.openInNewTab('https://www.norrnext.com/docs/joomla-extensions/quantum-manager');
-                            }
-                        },
-                        {
-                            name: QuantumviewfilesLang.helpButtonLocalizations,
-                            callback: function () {
-                                QuantumUtils.openInNewTab('https://www.norrnext.com/quantum-manager-localizations');
-                            }
-                        },
-                        {
-                            name: QuantumviewfilesLang.helpButtonSupport,
-                            callback: function () {
-                                QuantumUtils.openInNewTab('https://github.com/Quantum-Manager/tracker');
-                            }
-                        },
-                        {
-                            name: QuantumviewfilesLang.helpButtonReview,
-                            callback: function () {
-                                QuantumUtils.openInNewTab('https://extensions.joomla.org/extension/quantum-manager/');
-                            }
-                        }
-                    ]);
+                    ' <img src="' + QuantumUtils.getFullUrl('/media/com_quantummanager/images/icons/action/favorite-heart-button.svg') + '" class="svg" />' +
+                    '</div>' +
+                    '</div>'
+                );
                 setTimeout(function () {
                     QuantumUtils.replaceImgToSvg('.quantummanager-about .love');
                 }, 100);

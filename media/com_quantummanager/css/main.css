@@ -178,6 +178,38 @@ body.com_quantummanager > .container-main {
     height: 100%;
 }
 
+/**************************** Text ****************************/
+.quantummanager-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+/**************************** Text ****************************/
+.quantummanager-text-left {
+    text-align: left;
+}
+
+/**************************** Flex ****************************/
+.quantummanager-flex {
+    display: flex;
+}
+
+.quantummanager-flex-divider > *:first-child {
+    position: relative;
+    padding-right: 25px;
+    margin-right: 25px
+}
+
+.quantummanager-flex-divider > *:first-child:after {
+    display: block;
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    border-right: 1px solid #eee;
+}
+
 /**************************** Visible ****************************/
 .qm-hide {
     display: none;
@@ -341,12 +373,20 @@ body.com_quantummanager > .container-main {
 }
 
 
-/***************************** About ***********************************/
-.quantummanager-about {
-    width: 350px;
-    margin: auto;
+/***************************** Help ***********************************/
+.quantummanager-help {
     font-size: 14px;
+    line-height: 18px;
+}
+
+.quantummanager-about {
+    width: 360px;
     color: #444;
+}
+
+.quantummanager-help h3 {
+    font-size: 17px;
+    line-height: 21px;
 }
 
 .quantummanager-about .text {
@@ -364,8 +404,6 @@ body.com_quantummanager > .container-main {
 
 .quantummanager-about .love {
     display: flex;
-    align-items: center;
-    justify-content: center;
     margin-top: 8px;
     color: #5f5f5f;
     font-size: 14px;
