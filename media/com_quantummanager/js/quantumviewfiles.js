@@ -1292,15 +1292,15 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
                     '</ul>' +
                     '</div>' +
                     '<div>' +
-                    '<h3 class="quantummanager-text-left">Горячие клавиши</h3>' +
+                    '<h3 class="quantummanager-text-left">' + QuantumviewfilesLang.helpHotkeys  + '</h3>' +
                     '<ul class="quantummanager-list quantummanager-text-left">' +
-                    '<li>Ctrl+C/Cmd+C - Копировать</li>' +
-                    '<li>Ctrl+X/Cmd+X - Вырезать</li>' +
-                    '<li>Ctrl+V/Cmd+V - Вставить</li>' +
-                    '<li>F2 - Переименовать</li>' +
-                    '<li>F5 - Обновление папки</li>' +
-                    '<li>Delete - Удалить</li>' +
-                    '<li>Backspace - Вернуться назад</li>' +
+                    '<li>Ctrl+C/Cmd+C - ' + QuantumviewfilesLang.helpHotkeysCopy + '</li>' +
+                    '<li>Ctrl+X/Cmd+X - ' + QuantumviewfilesLang.helpHotkeysCut + '</li>' +
+                    '<li>Ctrl+V/Cmd+V - ' + QuantumviewfilesLang.helpHotkeysPaste + '</li>' +
+                    '<li>F2 - ' + QuantumviewfilesLang.helpHotkeysRename + '</li>' +
+                    '<li>F5 - ' + QuantumviewfilesLang.helpHotkeysRefresh + '</li>' +
+                    '<li>Delete - ' + QuantumviewfilesLang.helpHotkeysDelete + '</li>' +
+                    '<li>Backspace - ' + QuantumviewfilesLang.helpHotkeysBack + '</li>' +
                     '</ul>' +
                     '</div>' +
                     '</div>' +
