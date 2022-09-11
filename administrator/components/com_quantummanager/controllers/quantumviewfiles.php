@@ -181,7 +181,7 @@ class QuantummanagerControllerQuantumviewfiles extends AdminController
 		$list  = json_decode($data['list']);
 
 		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
-		echo QuantummanagerFileSystemLocal::delete($path, $scope, $list);
+		echo QuantummanagerFileSystemLocal::delete($scope, $path, $list);
 
 		QuantummanagerHelper::setHeadersNoCache();
 		$app->close();

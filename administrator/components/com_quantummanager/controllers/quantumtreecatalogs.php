@@ -48,7 +48,7 @@ class QuantummanagerControllerQuantumtreecatalogs extends AdminController
 		}
 
 		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
-		echo QuantummanagerFileSystemLocal::getScopesDirectories($scope, $path, $root);
+		echo QuantummanagerFileSystemLocal::getScopesDirectories($path, $root, $scope);
 
 		QuantummanagerHelper::setHeadersNoCache();
 		$app->close();
