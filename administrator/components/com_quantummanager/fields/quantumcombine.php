@@ -69,7 +69,7 @@ class JFormFieldQuantumCombine extends JFormField
 		$urlFull = Uri::root(false);
 		$urlBase = Uri::root(true);
 
-		if(substr($urlFull,-1) !== '/')
+		if(substr($urlBase,-1) !== '/')
 		{
 			$urlBase .= '/';
 		}
