@@ -10,6 +10,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Uri\Uri;
@@ -72,6 +73,12 @@ class JFormFieldQuantumCombine extends JFormField
 		if(substr($urlBase,-1) !== '/')
 		{
 			$urlBase .= '/';
+		}
+
+		if(Factory::getApplication()->isClient('administrator'))
+		{
+			$urlFull .= 'administrator/';
+			$urlBase = '/administrator' . $urlBase;
 		}
 
 		return array_merge(parent::getLayoutData(),
