@@ -78,7 +78,7 @@ class JFormFieldQuantumCombine extends JFormField
 		if(Factory::getApplication()->isClient('administrator'))
 		{
 			$urlFull .= 'administrator/';
-			$urlBase = '/administrator' . $urlBase;
+			$urlBase .= 'administrator/';
 		}
 
 		return array_merge(parent::getLayoutData(),
