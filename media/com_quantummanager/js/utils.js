@@ -22,7 +22,6 @@ window.QuantumUtils = {
             if (root === null || root === undefined) {
                 if (QuantumSettings.urlBase !== undefined) {
                     prefix = QuantumSettings.urlBase;
-                    console.log(QuantumSettings.urlBase);
                 }
             } else {
                 if (QuantumSettings.urlFull !== undefined) {
@@ -353,9 +352,7 @@ window.QuantumUtils = {
         try {
             let successful = document.execCommand('copy');
             let msg = successful ? 'successful' : 'unsuccessful';
-            console.log('Fallback: Copying text command was ' + msg);
         } catch (err) {
-            console.error('Fallback: Oops, unable to copy', err);
         }
 
         document.body.removeChild(textArea);
@@ -657,8 +654,6 @@ window.QuantumUtils = {
 
             optionsMerge[k] = options[k];
         }
-
-        console.log(optionsMerge);
 
         let notify = Toastify(optionsMerge);
         notify.showToast();
