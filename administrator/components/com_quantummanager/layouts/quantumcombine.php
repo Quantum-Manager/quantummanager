@@ -93,6 +93,7 @@ $options = [
 	'isUserAdmin'  => QuantummanagerHelper::isUserAdmin() ? 'true' : 'false',
 	'urlFull'      => $urlFull,
 	'urlBase'      => $urlBase,
+	'urlMedia'     => $urlMedia,
 	'isJoomla4'    => $isJoomla4,
 	'bufferPaste'  => (string) QuantummanagerHelper::getParamsComponentValue('bufferpaste', 0),
 	'scopeEnabled' => implode(',', $scopeEnabled),
@@ -112,6 +113,7 @@ window.QuantumSettings = {
         isUserAdmin: {$optionsOutput('isUserAdmin')},
         urlFull: '{$optionsOutput('urlFull')}',
         urlBase: '{$optionsOutput('urlBase')}',
+        urlMedia: '{$optionsOutput('urlMedia')}',
         scopeEnabled: '{$optionsOutput('scopeEnabled')}',
         isJoomla4: '{$optionsOutput('isJoomla4')}',
         bufferPaste: '{$optionsOutput('bufferPaste')}'

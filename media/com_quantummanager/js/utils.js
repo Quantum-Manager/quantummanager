@@ -17,14 +17,21 @@ window.QuantumUtils = {
     getFullUrl: function (url, root) {
         let prefix = '';
 
-        if (root === null || root === undefined) {
-            if (QuantumSettings.urlBase !== undefined) {
-                prefix = QuantumSettings.urlBase;
+        // its script
+        if(url.indexOf('.php') !== -1) {
+            if (root === null || root === undefined) {
+                if (QuantumSettings.urlBase !== undefined) {
+                    prefix = QuantumSettings.urlBase;
+                    console.log(QuantumSettings.urlBase);
+                }
+            } else {
+                if (QuantumSettings.urlFull !== undefined) {
+                    prefix = QuantumSettings.urlFull;
+                }
             }
         } else {
-            if (QuantumSettings.urlFull !== undefined) {
-                prefix = QuantumSettings.urlFull;
-            }
+            // its assets
+            prefix = QuantumSettings.urlMedia;
         }
 
         return prefix + url;

@@ -67,15 +67,16 @@ class JFormFieldQuantumCombine extends JFormField
 			];
 		}
 
-		$urlFull = Uri::root(false);
-		$urlBase = Uri::root(true);
+		$urlFull  = Uri::root(false);
+		$urlBase  = Uri::root(true);
+		$urlMedia = $urlFull;
 
-		if(substr($urlBase,-1) !== '/')
+		if (substr($urlBase, -1) !== '/')
 		{
 			$urlBase .= '/';
 		}
 
-		if(Factory::getApplication()->isClient('administrator'))
+		if (Factory::getApplication()->isClient('administrator'))
 		{
 			$urlFull .= 'administrator/';
 			$urlBase .= 'administrator/';
@@ -83,11 +84,12 @@ class JFormFieldQuantumCombine extends JFormField
 
 		return array_merge(parent::getLayoutData(),
 			[
-				'cssClass'    => $this->cssClass,
-				'urlFull'     => $urlFull,
-				'urlBase'     => $urlBase,
-				'scopes'      => $scopes,
-				'isJoomla4'   => QuantummanagerHelper::isJoomla4() ? '1' : '0',
+				'cssClass'  => $this->cssClass,
+				'urlFull'   => $urlFull,
+				'urlBase'   => $urlBase,
+				'urlMedia'  => $urlMedia,
+				'scopes'    => $scopes,
+				'isJoomla4' => QuantummanagerHelper::isJoomla4() ? '1' : '0',
 			]
 		);
 	}
