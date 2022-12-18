@@ -10,6 +10,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\Plugin\PluginHelper;
 
 /**
  * Quantummanager Controller.
@@ -19,4 +20,12 @@ use Joomla\CMS\MVC\Controller\BaseController;
  */
 class QuantummanagerController extends BaseController
 {
+
+	public function __construct($config = array())
+	{
+		parent::__construct($config);
+
+		PluginHelper::importPlugin('quantummanager');
+	}
+
 }

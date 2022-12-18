@@ -13,9 +13,11 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\Filesystem\Folder;
 
+JLoader::register('QuantummanagerController', JPATH_ADMINISTRATOR . '/components/com_quantummanager/controller.php');
+
 /**
  * Class QuantummanagerControllerQuantumcodemirror
  */
-class QuantummanagerControllerQuantumcodemirror extends AdminController
+class QuantummanagerControllerQuantumcodemirror extends QuantummanagerController
 {
 }

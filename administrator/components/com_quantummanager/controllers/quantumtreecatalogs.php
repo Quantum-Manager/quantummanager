@@ -13,10 +13,12 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\Filesystem\Folder;
 
+JLoader::register('QuantummanagerController', JPATH_ADMINISTRATOR . '/components/com_quantummanager/controller.php');
+
 /**
  * Class QuantummanagerControllerQuantumtreecatalogs
  */
-class QuantummanagerControllerQuantumtreecatalogs extends AdminController
+class QuantummanagerControllerQuantumtreecatalogs extends QuantummanagerController
 {
 
 	public function getDirectories()

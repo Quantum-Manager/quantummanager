@@ -423,6 +423,13 @@ class QuantummanagerFileSystemLocal
 						$image->afterUpload($path_source, $path . DIRECTORY_SEPARATOR . $uploadedFileName, ['rotateExif' => 1]);
 					}
 
+					Factory::getApplication()->triggerEvent('onQuantumManagerAfterUpload', [
+						$path . DIRECTORY_SEPARATOR . $uploadedFileName,
+						$path,
+						$uploadedFileName,
+						$data['scope'],
+						$data['path']
+					]);
 				}
 
 			}

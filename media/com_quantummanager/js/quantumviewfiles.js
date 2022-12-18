@@ -1715,6 +1715,51 @@ window.Quantumviewfiles = function (Filemanager, ViewfilesElement, options) {
         return 0;
     };
 
+    this.getSelectObjects = function() {
+        let output = [];
+        let objectAll = this.element.querySelectorAll('.field-list-files .object-select');
+
+        for (let i = 0; i < objectAll.length; i++) {
+            if (!objectAll[i].querySelector('input').checked) {
+                continue;
+            }
+
+            output.push(objectAll[i]);
+        }
+
+        return output;
+    }
+
+    this.getSelectFolders = function() {
+        let output = [];
+        let objectAll = this.getSelectObjects();
+
+        for (let i = 0; i < objectAll.length; i++) {
+            if (!objectAll[i].classList.contains('directory-item')) {
+                continue;
+            }
+
+            output.push(objectAll[i]);
+        }
+
+        return output;
+    }
+
+    this.getSelectFiles = function() {
+        let output = [];
+        let objectAll = this.getSelectObjects();
+
+        for (let i = 0; i < objectAll.length; i++) {
+            if (!objectAll[i].classList.contains('file-item')) {
+                continue;
+            }
+
+            output.push(objectAll[i]);
+        }
+
+        return output;
+    }
+
     this.selectFile = function (element, triggerFlag) {
         let self = this;
         let tmpInput = element.closest('.object-select').querySelector('.import-files-check-file');
