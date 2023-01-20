@@ -376,6 +376,11 @@ body.com_quantummanager > .container-main {
 .quantummanager .quantummanager-container-bottom-fixed .quantummanager-jedreview .quantummanager-jedreview-content > div:last-child {
     margin-right: 0;
 }
+.quantummanager .quantummanager-container-bottom-fixed .quantummanager-jedreview .quantummanager-jedreview-content a.qm-btn {
+    background: transparent;
+    border: none;
+    color: #fff;
+}
 
 
 /***************************** Help ***********************************/
