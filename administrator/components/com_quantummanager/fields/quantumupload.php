@@ -11,12 +11,13 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\FileLayout;
-use Joomla\CMS\Uri\Uri;
+
+JLoader::register('JFormFieldQuantumbase', __DIR__ . DIRECTORY_SEPARATOR . 'quantumbase.php');
 
 /**
  * Class JFormFieldQuantumUpload
  */
-class JFormFieldQuantumupload extends JFormField
+class JFormFieldQuantumupload extends JFormFieldQuantumbase
 {
 
 	/**
@@ -56,8 +57,6 @@ class JFormFieldQuantumupload extends JFormField
 
 		return array_merge(parent::getLayoutData(),
 			[
-				'urlFull'        => Uri::root(false),
-				'urlBase'        => Uri::root(true),
 				'scope'          => $this->scope,
 				'directory'      => $this->directory,
 				'dropAreaHidden' => $this->dropAreaHidden,

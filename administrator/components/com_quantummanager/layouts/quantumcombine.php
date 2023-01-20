@@ -18,7 +18,6 @@ foreach ($scopes as $scope)
 	$scopeEnabled[] = $scope->id;
 }
 
-
 ?>
 
 <div class="quantummanager <?php echo $cssClass ?>">
@@ -93,6 +92,7 @@ $options = [
 	'isUserAdmin'  => QuantummanagerHelper::isUserAdmin() ? 'true' : 'false',
 	'urlFull'      => $urlFull,
 	'urlBase'      => $urlBase,
+	'urlRoot'      => $urlRoot,
 	'urlMedia'     => $urlMedia,
 	'isJoomla4'    => $isJoomla4,
 	'bufferPaste'  => (string) QuantummanagerHelper::getParamsComponentValue('bufferpaste', 0),
@@ -113,6 +113,7 @@ window.QuantumSettings = {
         isUserAdmin: {$optionsOutput('isUserAdmin')},
         urlFull: '{$optionsOutput('urlFull')}',
         urlBase: '{$optionsOutput('urlBase')}',
+        urlRoot: '{$optionsOutput('urlRoot')}',
         urlMedia: '{$optionsOutput('urlMedia')}',
         scopeEnabled: '{$optionsOutput('scopeEnabled')}',
         isJoomla4: '{$optionsOutput('isJoomla4')}',

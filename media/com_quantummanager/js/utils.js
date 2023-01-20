@@ -33,6 +33,13 @@ window.QuantumUtils = {
             prefix = QuantumSettings.urlMedia;
         }
 
+        if(
+            prefix.slice(-1) !== '/' &&
+            url.slice(0, 1) !== '/'
+        ) {
+            return prefix + '/' + url;
+        }
+
         return prefix + url;
     },
 
