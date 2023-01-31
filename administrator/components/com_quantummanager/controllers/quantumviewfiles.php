@@ -10,12 +10,13 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\MVC\Controller\AdminController;
+
+JLoader::register('QuantummanagerController', JPATH_ADMINISTRATOR . '/components/com_quantummanager/controller.php');
 
 /**
  * Class QuantummanagerControllerquantumviewfiles
  */
-class QuantummanagerControllerQuantumviewfiles extends AdminController
+class QuantummanagerControllerQuantumviewfiles extends QuantummanagerController
 {
 
 	public function createDirectory()
@@ -181,7 +182,7 @@ class QuantummanagerControllerQuantumviewfiles extends AdminController
 		$list  = json_decode($data['list']);
 
 		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
-		echo QuantummanagerFileSystemLocal::delete($path, $scope, $list);
+		echo QuantummanagerFileSystemLocal::delete($scope, $path, $list);
 
 		QuantummanagerHelper::setHeadersNoCache();
 		$app->close();

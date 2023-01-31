@@ -12,6 +12,8 @@ defined('_JEXEC') or die;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\FileLayout;
 
+JLoader::register('JFormFieldQuantumbase', __DIR__ . DIRECTORY_SEPARATOR . 'quantumbase.php');
+
 /**
  * Class JFormFieldQuantumviewfiles
  */

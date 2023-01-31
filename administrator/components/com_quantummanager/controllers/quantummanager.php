@@ -12,10 +12,12 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\AdminController;
 
+JLoader::register('QuantummanagerController', JPATH_ADMINISTRATOR . '/components/com_quantummanager/controller.php');
+
 /**
  * Class QuantummanagerControllerQuantummanager
  */
-class QuantummanagerControllerQuantummanager extends AdminController
+class QuantummanagerControllerQuantummanager extends QuantummanagerController
 {
 
 

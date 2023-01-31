@@ -16,6 +16,9 @@ use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 use Joomla\Filesystem\Path;
 
+JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
+JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');
+
 class QuantummanagerFileSystemLocal
 {
 
@@ -31,7 +34,6 @@ class QuantummanagerFileSystemLocal
 	 */
 	public static function createDirectory($path, $scope, $name)
 	{
-		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 
 		$actions = QuantummanagerHelper::getActions();
 		if (!$actions->get('core.create'))
@@ -65,18 +67,17 @@ class QuantummanagerFileSystemLocal
 
 
 	/**
-	 * @param   string  $scopeSource
 	 * @param           $path
 	 * @param           $root
+	 * @param   string  $scopeSource
 	 *
 	 * @return false|string
 	 *
 	 * @throws Exception
 	 * @since version
 	 */
-	public static function getScopesDirectories($scopeSource = 'all', $path, $root)
+	public static function getScopesDirectories($path, $root, $scopeSource = 'all')
 	{
-		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 		$scopes = QuantummanagerHelper::getAllScope();
 
 		if ($scopeSource === 'all')
@@ -133,7 +134,6 @@ class QuantummanagerFileSystemLocal
 	 */
 	public static function getDirectories($path, $root)
 	{
-		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 		$path        = JPATH_ROOT . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($path);
 		$directories = static::showdir($path, $root, '', true, true);
 
@@ -181,7 +181,6 @@ class QuantummanagerFileSystemLocal
 
 		if ($showRoot && (int) $level == 0)
 		{
-			JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 			$subdir = static::showdir($dir, $root, $scopeTitle, $scopeId, $folderOnly, $showRoot, $level + 1, $ef);
 
 			return [
@@ -299,7 +298,6 @@ class QuantummanagerFileSystemLocal
 	{
 		try
 		{
-			JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 
 			$actions = QuantummanagerHelper::getActions();
 			if (!$actions->get('core.create'))
@@ -421,11 +419,17 @@ class QuantummanagerFileSystemLocal
 
 					if ($type === 'image')
 					{
-						JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');
 						$image = new QuantummanagerHelperImage;
 						$image->afterUpload($path_source, $path . DIRECTORY_SEPARATOR . $uploadedFileName, ['rotateExif' => 1]);
 					}
 
+					Factory::getApplication()->triggerEvent('onQuantumManagerAfterUpload', [
+						$path . DIRECTORY_SEPARATOR . $uploadedFileName,
+						$path,
+						$uploadedFileName,
+						$data['scope'],
+						$data['path']
+					]);
 				}
 
 			}
@@ -829,7 +833,6 @@ class QuantummanagerFileSystemLocal
 
 	public static function duplicate($path, $scope, $list = [])
 	{
-		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 		$actions = QuantummanagerHelper::getActions();
 
 		if (!$actions->get('core.edit'))
@@ -845,7 +848,7 @@ class QuantummanagerFileSystemLocal
 		$lang         = Factory::getLanguage();
 		$path_compile = JPATH_SITE . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($path, false, $scope);
 
-		$find_new_name = static function ($count = 0, $name, $is_file = true) use ($lang, $path_compile, &$find_new_name) {
+		$find_new_name = static function ($name, $count = 0, $is_file = true) use ($lang, $path_compile, &$find_new_name) {
 
 			if ($is_file)
 			{
@@ -904,7 +907,7 @@ class QuantummanagerFileSystemLocal
 				return $nameSafe;
 			}
 
-			return $find_new_name(($count + 1), $name, $is_file);
+			return $find_new_name($name, ($count + 1), $is_file);
 		};
 
 
@@ -922,7 +925,7 @@ class QuantummanagerFileSystemLocal
 
 				if (is_file($file_source))
 				{
-					$file_new = $find_new_name(0, $file, true);
+					$file_new = $find_new_name($file, 0,true);
 
 					if ($file_source !== $file_new)
 					{
@@ -932,7 +935,7 @@ class QuantummanagerFileSystemLocal
 				}
 				else
 				{
-					$file_new = $find_new_name(0, $file, false);
+					$file_new = $find_new_name($file, 0, false);
 
 					if ($file_source !== $file_new)
 					{
@@ -962,7 +965,6 @@ class QuantummanagerFileSystemLocal
 	 */
 	public static function paste($pathFrom, $scopeFrom, $pathTo, $scopeTo, $cut = 0, $list = [])
 	{
-		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 		$actions = QuantummanagerHelper::getActions();
 		if (!$actions->get('core.edit'))
 		{
@@ -1050,9 +1052,8 @@ class QuantummanagerFileSystemLocal
 	 * @throws Exception
 	 * @since version
 	 */
-	public static function delete($path = '', $scope, $list = [])
+	public static function delete($scope, $path = '', $list = [])
 	{
-		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 
 		$actions = QuantummanagerHelper::getActions();
 		if (!$actions->get('core.delete'))
@@ -1101,7 +1102,6 @@ class QuantummanagerFileSystemLocal
 	 */
 	public static function converterSave()
 	{
-		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 
 		$actions = QuantummanagerHelper::getActions();
 		if (!$actions->get('core.edit'))
@@ -1173,9 +1173,7 @@ class QuantummanagerFileSystemLocal
 					Folder::create($path);
 				}
 
-				JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');
 				$image = new QuantummanagerHelperImage;
-
 
 				if (isset($data['source']) && !empty($data['source']))
 				{
@@ -1233,7 +1231,6 @@ class QuantummanagerFileSystemLocal
 
 			@ini_set('memory_limit', '256M');
 
-			JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 			$lang        = Factory::getLanguage();
 			$path_source = QuantummanagerHelper::preparePathRoot($path_source, $scope);
 			$path        = QuantummanagerHelper::preparePath($path_source, false, $scope);
@@ -1244,7 +1241,6 @@ class QuantummanagerFileSystemLocal
 			$fileName    = $id . '.jpg';
 			file_put_contents($filePath . DIRECTORY_SEPARATOR . $fileName, $fileContent);
 
-			JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');
 			$image = new QuantummanagerHelperImage;
 			$image->afterUpload($path_source, $filePath . DIRECTORY_SEPARATOR . $fileName);
 
@@ -1276,7 +1272,6 @@ class QuantummanagerFileSystemLocal
 
 			@ini_set('memory_limit', '256M');
 
-			JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 			$lang        = Factory::getLanguage();
 			$path_source = QuantummanagerHelper::preparePathRoot($path_source, $scope);
 			$path        = QuantummanagerHelper::preparePath($path_source, false, $scope);
@@ -1288,7 +1283,6 @@ class QuantummanagerFileSystemLocal
 			$fileName    = $id . '.' . $exs;
 			file_put_contents($filePath . DIRECTORY_SEPARATOR . $fileName, $fileContent);
 
-			JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');
 			$image = new QuantummanagerHelperImage;
 			$image->afterUpload($path_source, $filePath . DIRECTORY_SEPARATOR . $fileName);
 
@@ -1320,7 +1314,6 @@ class QuantummanagerFileSystemLocal
 
 			@ini_set('memory_limit', '256M');
 
-			JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 			$lang        = Factory::getLanguage();
 			$path_source = QuantummanagerHelper::preparePathRoot($path_source, $scope);
 			$path        = QuantummanagerHelper::preparePath($path_source, false, $scope);
@@ -1340,7 +1333,6 @@ class QuantummanagerFileSystemLocal
 
 			file_put_contents($filePath . DIRECTORY_SEPARATOR . $fileName, $fileContent);
 
-			JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');
 			$image = new QuantummanagerHelperImage;
 			$image->afterUpload($path_source, $filePath . DIRECTORY_SEPARATOR . $fileName);
 
@@ -1502,8 +1494,6 @@ class QuantummanagerFileSystemLocal
 	 */
 	public static function createPreview($path, $scope, $list, $previewTitle)
 	{
-		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
-		JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');
 
 		$path   = QuantummanagerHelper::preparePath($path, false, $scope);
 		$image  = new QuantummanagerHelperImage;
@@ -1593,7 +1583,6 @@ class QuantummanagerFileSystemLocal
 	 */
 	public static function renameFile($path, $scope, $file, $name = '')
 	{
-		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 		$path      = QuantummanagerHelper::preparePath($path, false, $scope);
 		$app       = Factory::getApplication();
 		$splitFile = explode('.', $file);
@@ -1645,7 +1634,6 @@ class QuantummanagerFileSystemLocal
 	 */
 	public static function renameDirectory($path, $scope, $oldName, $name = '')
 	{
-		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 		$path   = QuantummanagerHelper::preparePath($path, false, $scope);
 		$app    = Factory::getApplication();
 		$output = [
@@ -1685,7 +1673,6 @@ class QuantummanagerFileSystemLocal
 	 */
 	public static function getImageForCrop($path, $scope, $file)
 	{
-		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 		$path           = QuantummanagerHelper::preparePath($path, false, $scope);
 		$originalresize = (int) QuantummanagerHelper::getParamsComponentValue('originalresize', 0);
 		$output         = [];
@@ -1721,8 +1708,6 @@ class QuantummanagerFileSystemLocal
 	 */
 	public static function setWatermark($path, $scope, $list)
 	{
-		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
-		JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');
 
 		$path  = QuantummanagerHelper::preparePath($path, false, $scope);
 		$image = new QuantummanagerHelperImage;

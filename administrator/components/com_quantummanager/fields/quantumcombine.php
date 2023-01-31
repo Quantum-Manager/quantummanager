@@ -12,19 +12,14 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\FileLayout;
-use Joomla\CMS\Uri\Uri;
+
+JLoader::register('JFormFieldQuantumbase', __DIR__ . DIRECTORY_SEPARATOR . 'quantumbase.php');
 
 /**
  * Class JFormFieldQuantumCombine
  */
-class JFormFieldQuantumCombine extends JFormField
+class JFormFieldQuantumCombine extends JFormFieldQuantumbase
 {
-
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $addLayouts = [];
 
 	/**
 	 * @var string
@@ -36,68 +31,6 @@ class JFormFieldQuantumCombine extends JFormField
 	 */
 	protected $layout = 'quantumcombine';
 
-
-	/**
-	 * JFormFieldQuantumCombine constructor.
-	 *
-	 * @param   null  $form
-	 */
-	public function __construct($form = null)
-	{
-		JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
-		JLoader::register('QuantummanagerLibs', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantumlibs.php');
-
-		parent::__construct($form);
-	}
-
-
-	/**
-	 * @return array
-	 */
-	protected function getLayoutData()
-	{
-		$scopes = QuantummanagerHelper::getAllScope();
-
-		if (empty($this->element))
-		{
-			$this->element = [
-				'name'  => '',
-				'label' => ''
-			];
-		}
-
-		return array_merge(parent::getLayoutData(),
-			[
-				'cssClass'    => $this->cssClass,
-				'urlFull'     => Uri::root(false),
-				'urlBase'     => Uri::root(true),
-				'scopes'      => $scopes,
-				'isJoomla4'   => QuantummanagerHelper::isJoomla4() ? '1' : '0',
-			]
-		);
-	}
-
-
-	/**
-	 * Allow to override renderer include paths in child fields
-	 *
-	 * @return  array
-	 *
-	 * @since   3.5
-	 */
-	protected function getLayoutPaths()
-	{
-		return array_merge(parent::getLayoutPaths(), $this->addLayouts, [
-			JPATH_ROOT . '/administrator/components/com_quantummanager/layouts/fields',
-			JPATH_ROOT . '/layouts/joomla/form',
-		]);
-	}
-
-
-	public function addCustomLayoutsPath($layouts)
-	{
-		$this->addLayouts = array_merge($this->addLayouts, $layouts);
-	}
 
 	/**
 	 *

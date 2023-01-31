@@ -18,10 +18,12 @@ use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 use Joomla\Registry\Registry;
 
+JLoader::register('QuantummanagerController', JPATH_ADMINISTRATOR . '/components/com_quantummanager/controller.php');
+
 /**
  * Class QuantummanagerControllerquantumunsplash
  */
-class QuantummanagerControllerquantumunsplash extends AdminController
+class QuantummanagerControllerquantumunsplash extends QuantummanagerController
 {
 
 

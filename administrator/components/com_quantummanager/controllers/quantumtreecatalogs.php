@@ -13,10 +13,12 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\Filesystem\Folder;
 
+JLoader::register('QuantummanagerController', JPATH_ADMINISTRATOR . '/components/com_quantummanager/controller.php');
+
 /**
  * Class QuantummanagerControllerQuantumtreecatalogs
  */
-class QuantummanagerControllerQuantumtreecatalogs extends AdminController
+class QuantummanagerControllerQuantumtreecatalogs extends QuantummanagerController
 {
 
 	public function getDirectories()
@@ -48,7 +50,7 @@ class QuantummanagerControllerQuantumtreecatalogs extends AdminController
 		}
 
 		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
-		echo QuantummanagerFileSystemLocal::getScopesDirectories($scope, $path, $root);
+		echo QuantummanagerFileSystemLocal::getScopesDirectories($path, $root, $scope);
 
 		QuantummanagerHelper::setHeadersNoCache();
 		$app->close();

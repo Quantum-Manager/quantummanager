@@ -28,7 +28,7 @@ $linkStar = Uri::root(true) . '/media/com_quantummanager/images/icons/action/rat
                 <img class="svg" src="<?php echo $linkStar ?>" />
                 <img class="svg" src="<?php echo $linkStar ?>" />
             </a>
-            <a href="https://extensions.joomla.org/extension/quantum-manager/" class="btn" target="_blank"><?php echo Text::_('COM_QUANTUMMANAGER_JEDREIVIEW_REIVEW'); ?></a>
+            <a href="https://extensions.joomla.org/extension/quantum-manager/" class="qm-btn" target="_blank"><?php echo Text::_('COM_QUANTUMMANAGER_JEDREIVIEW_REIVEW'); ?></a>
         </div>
 		<div>
 			<button class="qm-btn qm-btn-close"><?php echo Text::_('COM_QUANTUMMANAGER_ACTION_HIDE'); ?></button>

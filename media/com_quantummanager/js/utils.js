@@ -17,14 +17,27 @@ window.QuantumUtils = {
     getFullUrl: function (url, root) {
         let prefix = '';
 
-        if (root === null || root === undefined) {
-            if (QuantumSettings.urlBase !== undefined) {
-                prefix = QuantumSettings.urlBase;
+        // its script
+        if(url.indexOf('.php') !== -1) {
+            if (root === null || root === undefined) {
+                if (QuantumSettings.urlBase !== undefined) {
+                    prefix = QuantumSettings.urlBase;
+                }
+            } else {
+                if (QuantumSettings.urlFull !== undefined) {
+                    prefix = QuantumSettings.urlFull;
+                }
             }
         } else {
-            if (QuantumSettings.urlFull !== undefined) {
-                prefix = QuantumSettings.urlFull;
-            }
+            // its assets
+            prefix = QuantumSettings.urlMedia;
+        }
+
+        if(
+            prefix.slice(-1) !== '/' &&
+            url.slice(0, 1) !== '/'
+        ) {
+            return prefix + '/' + url;
         }
 
         return prefix + url;
@@ -346,9 +359,7 @@ window.QuantumUtils = {
         try {
             let successful = document.execCommand('copy');
             let msg = successful ? 'successful' : 'unsuccessful';
-            console.log('Fallback: Copying text command was ' + msg);
         } catch (err) {
-            console.error('Fallback: Oops, unable to copy', err);
         }
 
         document.body.removeChild(textArea);
@@ -650,8 +661,6 @@ window.QuantumUtils = {
 
             optionsMerge[k] = options[k];
         }
-
-        console.log(optionsMerge);
 
         let notify = Toastify(optionsMerge);
         notify.showToast();

@@ -13,10 +13,12 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\Filesystem\Folder;
 
+JLoader::register('QuantummanagerController', JPATH_ADMINISTRATOR . '/components/com_quantummanager/controller.php');
+
 /**
  * Class QuantummanagerControllerQuantumcropperjs
  */
-class QuantummanagerControllerQuantumcropperjs extends AdminController
+class QuantummanagerControllerQuantumcropperjs extends QuantummanagerController
 {
 
 	public function getImageForCrop()
