@@ -84,8 +84,7 @@ class QuantummanagerFileSystemLocal
 		{
 			foreach ($scopes as $scope)
 			{
-				$path     = $scope->path;
-				$path     = DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($path);
+				$path     = DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath('root', false, $scope->id);
 				$pathArr  = explode(DIRECTORY_SEPARATOR, $path);
 				$pathCurr = '';
 
@@ -111,8 +110,7 @@ class QuantummanagerFileSystemLocal
 			{
 				if ($scope->id === $scopeSource)
 				{
-					$path          = $scope->path;
-					$path          = JPATH_ROOT . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($path);
+					$path          = JPATH_ROOT . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath('root', false, $scope->id);
 					$directories[] = static::showdir($path, $root, $scope->title, $scope->id, true, true);
 					break;
 				}
@@ -320,7 +318,7 @@ class QuantummanagerFileSystemLocal
 			}
 
 
-			if($file === null || !isset($file['name']))
+			if ($file === null || !isset($file['name']))
 			{
 				$output['error'] = Text::_('COM_QUANTUMMANAGER_ERROR_FILE_NOTFOUND');
 
@@ -925,7 +923,7 @@ class QuantummanagerFileSystemLocal
 
 				if (is_file($file_source))
 				{
-					$file_new = $find_new_name($file, 0,true);
+					$file_new = $find_new_name($file, 0, true);
 
 					if ($file_source !== $file_new)
 					{
@@ -1462,7 +1460,6 @@ class QuantummanagerFileSystemLocal
 
 		if ($exs === 'svg')
 		{
-			$path = QuantummanagerHelper::preparePath($path, false, $scope);
 			$app->redirect($siteUrl . $path . DIRECTORY_SEPARATOR . $file . '?=' . mt_rand(111111, 999999));
 		}
 

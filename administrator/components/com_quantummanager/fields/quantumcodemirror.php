@@ -10,6 +10,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Filter\OutputFilter;
+use Joomla\CMS\Form\FormField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
@@ -20,7 +21,7 @@ JLoader::register('JFormFieldQuantumbase', __DIR__ . DIRECTORY_SEPARATOR . 'quan
 /**
  * Class JFormFieldQuantumcodemirror
  */
-class JFormFieldQuantumcodemirror extends JFormField
+class JFormFieldQuantumcodemirror extends FormField
 {
 
 	/**
@@ -63,7 +64,8 @@ class JFormFieldQuantumcodemirror extends JFormField
 
 	public function getInput()
 	{
-		try {
+		try
+		{
 
 			$doc = Factory::getDocument();
 			$this->__set('standalone', $this->getAttribute('standalone', true));
@@ -72,28 +74,28 @@ class JFormFieldQuantumcodemirror extends JFormField
 			QuantummanagerHelper::includeScriptHead();
 
 			HTMLHelper::_('stylesheet', 'com_quantummanager/main.css', [
-				'version' => filemtime(__FILE__),
+				'version'  => filemtime(__FILE__),
 				'relative' => true
 			]);
 
 			HTMLHelper::_('stylesheet', 'com_quantummanager/quantumcodemirror.css', [
-				'version' => filemtime(__FILE__),
+				'version'  => filemtime(__FILE__),
 				'relative' => true
 			]);
 
 			HTMLHelper::_('script', 'com_quantummanager/main.js', [
-				'version' => filemtime(__FILE__),
+				'version'  => filemtime(__FILE__),
 				'relative' => true
 			]);
 
 
 			HTMLHelper::_('script', 'com_quantummanager/utils.js', [
-				'version' => filemtime(__FILE__),
+				'version'  => filemtime(__FILE__),
 				'relative' => true
 			]);
 
 			HTMLHelper::_('script', 'com_quantummanager/quantumcodemirror.js', [
-				'version' => filemtime(__FILE__),
+				'version'  => filemtime(__FILE__),
 				'relative' => true
 			]);
 
@@ -106,15 +108,17 @@ class JFormFieldQuantumcodemirror extends JFormField
 
 			$field = parent::getInput();
 
-			if($this->standalone)
+			if ($this->standalone)
 			{
-				$filemanager = new FileLayout( 'fieldstandalone', JPATH_ROOT . '/administrator/components/com_quantummanager/layouts');
+				$filemanager = new FileLayout('fieldstandalone', JPATH_ROOT . '/administrator/components/com_quantummanager/layouts');
+
 				return $filemanager->render(['field' => $field]);
 			}
 
 			return $field;
 		}
-		catch (Exception $e) {
+		catch (Exception $e)
+		{
 			echo $e->getMessage();
 		}
 	}

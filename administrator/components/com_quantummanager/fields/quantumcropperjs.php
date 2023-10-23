@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Filter\OutputFilter;
+use Joomla\CMS\Form\FormField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
@@ -21,7 +22,7 @@ JLoader::register('JFormFieldQuantumbase', __DIR__ . DIRECTORY_SEPARATOR . 'quan
 /**
  * Class JFormFieldQuantumcropperjs
  */
-class JFormFieldQuantumcropperjs extends JFormField
+class JFormFieldQuantumcropperjs extends FormField
 {
 
 	/**
@@ -58,19 +59,19 @@ class JFormFieldQuantumcropperjs extends JFormField
 		JLoader::register('QuantummanagerHelperImage', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/image.php');
 		$driver = (new QuantummanagerHelperImage)->getNameDriver();
 
-        $values_default = [
-            'compression' => QuantummanagerHelper::getParamsComponentValue('compression', 90),
-            'sharpen' => QuantummanagerHelper::getParamsComponentValue('sharpen', 0),
-            'brightness' => QuantummanagerHelper::getParamsComponentValue('brightness', 0),
-            'blur' => QuantummanagerHelper::getParamsComponentValue('blur', 0),
-        ];
+		$values_default = [
+			'compression' => QuantummanagerHelper::getParamsComponentValue('compression', 90),
+			'sharpen'     => QuantummanagerHelper::getParamsComponentValue('sharpen', 0),
+			'brightness'  => QuantummanagerHelper::getParamsComponentValue('brightness', 0),
+			'blur'        => QuantummanagerHelper::getParamsComponentValue('blur', 0),
+		];
 
 		return array_merge(parent::getLayoutData(),
 			[
 				'paramsComponents' => ComponentHelper::getParams('com_quantummanager'),
-				'cssClass' => $this->cssClass,
-				'driver' => $driver,
-                'values_default' => $values_default
+				'cssClass'         => $this->cssClass,
+				'driver'           => $driver,
+				'values_default'   => $values_default
 			]
 		);
 	}
@@ -78,46 +79,49 @@ class JFormFieldQuantumcropperjs extends JFormField
 
 	public function getInput()
 	{
-		try {
+		try
+		{
 
 
 			$this->__set('standalone', $this->getAttribute('standalone', true));
 			$this->__set('cssClass', $this->getAttribute('cssClass', ''));
 
 			JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
-            JLoader::register('QuantummanagerLibs', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantumlibs.php');
+			JLoader::register('QuantummanagerLibs', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantumlibs.php');
 
-            QuantummanagerLibs::includeScriptHead();
-            QuantummanagerLibs::includes([
-                'core',
-                'utils',
-                'imageEditor',
+			QuantummanagerLibs::includeScriptHead();
+			QuantummanagerLibs::includes([
+				'core',
+				'utils',
+				'imageEditor',
 
-            ]);
+			]);
 
 
 			HTMLHelper::_('stylesheet', 'com_quantummanager/quantumcropperjs.css', [
-				'version' => filemtime(__FILE__),
+				'version'  => filemtime(__FILE__),
 				'relative' => true
 			]);
 
 			HTMLHelper::_('script', 'com_quantummanager/quantumcropperjs.js', [
-				'version' => filemtime(__FILE__),
+				'version'  => filemtime(__FILE__),
 				'relative' => true
 			]);
 
 
 			$field = parent::getInput();
 
-			if($this->standalone)
+			if ($this->standalone)
 			{
-				$filemanager = new FileLayout( 'fieldstandalone', JPATH_ROOT . '/administrator/components/com_quantummanager/layouts');
+				$filemanager = new FileLayout('fieldstandalone', JPATH_ROOT . '/administrator/components/com_quantummanager/layouts');
+
 				return $filemanager->render(['field' => $field]);
 			}
 
 			return $field;
 		}
-		catch (Exception $e) {
+		catch (Exception $e)
+		{
 			echo $e->getMessage();
 		}
 	}

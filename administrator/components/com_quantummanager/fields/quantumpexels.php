@@ -10,6 +10,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Filter\OutputFilter;
+use Joomla\CMS\Form\FormField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
@@ -20,7 +21,7 @@ JLoader::register('JFormFieldQuantumbase', __DIR__ . DIRECTORY_SEPARATOR . 'quan
 /**
  * Class JFormFieldQuantumpexels
  */
-class JFormFieldQuantumpexels extends JFormField
+class JFormFieldQuantumpexels extends FormField
 {
 
 	/**

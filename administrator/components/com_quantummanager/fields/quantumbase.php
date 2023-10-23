@@ -10,12 +10,13 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Uri\Uri;
 
 /**
  * Class JFormFieldQuantumbase
  */
-class JFormFieldQuantumbase extends JFormField
+class JFormFieldQuantumbase extends FormField
 {
 
 	/**

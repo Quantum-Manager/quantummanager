@@ -10,6 +10,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Filter\OutputFilter;
+use Joomla\CMS\Form\FormField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
@@ -20,7 +21,7 @@ JLoader::register('JFormFieldQuantumbase', __DIR__ . DIRECTORY_SEPARATOR . 'quan
 /**
  * Class JFormFieldQuantumtoolbar
  */
-class JFormFieldQuantumtoolbar extends JFormField
+class JFormFieldQuantumtoolbar extends FormField
 {
 
 	/**
@@ -56,9 +57,9 @@ class JFormFieldQuantumtoolbar extends JFormField
 	{
 		return array_merge(parent::getLayoutData(),
 			[
-				'buttons' => explode(',', $this->buttons),
+				'buttons'    => explode(',', $this->buttons),
 				'buttonsBun' => explode(',', $this->buttonsBun),
-				'cssClass' => $this->cssClass,
+				'cssClass'   => $this->cssClass,
 			]
 		);
 	}
@@ -66,7 +67,8 @@ class JFormFieldQuantumtoolbar extends JFormField
 
 	public function getInput()
 	{
-		try {
+		try
+		{
 
 			$this->__set('standalone', $this->getAttribute('standalone', true));
 			$this->__set('buttons', $this->getAttribute('buttons', 'all'));
@@ -74,36 +76,38 @@ class JFormFieldQuantumtoolbar extends JFormField
 			$this->__set('cssClass', $this->getAttribute('cssClass', ''));
 
 			JLoader::register('QuantummanagerHelper', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
-            JLoader::register('QuantummanagerLibs', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantumlibs.php');
+			JLoader::register('QuantummanagerLibs', JPATH_SITE . '/administrator/components/com_quantummanager/helpers/quantumlibs.php');
 
-            QuantummanagerLibs::includeScriptHead();
-            QuantummanagerLibs::includes([
-                'core',
-                'utils',
-            ]);
+			QuantummanagerLibs::includeScriptHead();
+			QuantummanagerLibs::includes([
+				'core',
+				'utils',
+			]);
 
 
 			HTMLHelper::_('stylesheet', 'com_quantummanager/quantumtoolbar.css', [
-				'version' => filemtime(__FILE__),
+				'version'  => filemtime(__FILE__),
 				'relative' => true
 			]);
 
 			HTMLHelper::_('script', 'com_quantummanager/quantumtoolbar.js', [
-				'version' => filemtime(__FILE__),
+				'version'  => filemtime(__FILE__),
 				'relative' => true
 			]);
 
 			$field = parent::getInput();
 
-			if($this->standalone)
+			if ($this->standalone)
 			{
-				$filemanager = new FileLayout( 'fieldstandalone', JPATH_ROOT . '/administrator/components/com_quantummanager/layouts');
+				$filemanager = new FileLayout('fieldstandalone', JPATH_ROOT . '/administrator/components/com_quantummanager/layouts');
+
 				return $filemanager->render(['field' => $field]);
 			}
 
 			return $field;
 		}
-		catch (Exception $e) {
+		catch (Exception $e)
+		{
 			echo $e->getMessage();
 		}
 	}

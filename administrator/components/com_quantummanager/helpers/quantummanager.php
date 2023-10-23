@@ -202,10 +202,13 @@ class QuantummanagerHelper
 	 */
 	public static function preparePathRoot($path, $scopeName, $pathUnix = false)
 	{
-		$session         = Factory::getSession();
-		$path            = trim($path);
-		$componentParams = ComponentHelper::getParams('com_quantummanager');
-		$pathConfig      = '';
+		$path       = trim($path);
+		$pathConfig = '';
+
+		if (!preg_match('#^root.*#', $path))
+		{
+			$path = 'root/' . $path;
+		}
 
 		if (empty(static::$cachePathRoot[$scopeName]))
 		{
@@ -248,10 +251,13 @@ class QuantummanagerHelper
 	 */
 	public static function preparePath($path, $host = false, $scopeName = '', $pathUnix = false)
 	{
-		$session         = Factory::getSession();
-		$path            = trim($path);
-		$componentParams = ComponentHelper::getParams('com_quantummanager');
-		$pathConfig      = '';
+		$path       = trim($path);
+		$pathConfig = '';
+
+		if (!preg_match('#^root.*#', $path))
+		{
+			$path = 'root/' . $path;
+		}
 
 		if (empty(static::$cachePathRoot[$scopeName]))
 		{
@@ -263,7 +269,6 @@ class QuantummanagerHelper
 		{
 			$pathConfig = static::$cachePathRoot[$scopeName];
 		}
-
 
 		$path = str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
 		$path = preg_replace('#' . str_replace('\\', '\\\\', JPATH_ROOT) . "\/root?#", $pathConfig, $path);

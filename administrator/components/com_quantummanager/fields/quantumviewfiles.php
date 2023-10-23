@@ -9,6 +9,7 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Form\FormField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\FileLayout;
 
@@ -17,7 +18,7 @@ JLoader::register('JFormFieldQuantumbase', __DIR__ . DIRECTORY_SEPARATOR . 'quan
 /**
  * Class JFormFieldQuantumviewfiles
  */
-class JFormFieldQuantumviewfiles extends JFormField
+class JFormFieldQuantumviewfiles extends FormField
 {
 
 	/**
