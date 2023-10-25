@@ -499,15 +499,24 @@ class QuantummanagerHelper
 		}
 
 		$scopes = self::getAllScope();
+		$find   = null;
+		$first  = $scopes[0] ?? null;
 
 		foreach ($scopes as $scope)
 		{
 			$scope = (object) $scope;
 			if ($scope->id === $scopeName)
 			{
-				return $scope;
+				$find = $scope;
 			}
 		}
+
+		if ($find === null && $first !== null)
+		{
+			$find = $first;
+		}
+
+		return $find;
 	}
 
 
@@ -562,6 +571,7 @@ class QuantummanagerHelper
 
 		foreach ($scopes as $scope)
 		{
+			$scope        = (object) $scope;
 			$scope->title = Text::_('COM_QUANTUMMANAGER_SCOPE_' . mb_strtoupper($scope->id));
 		}
 
