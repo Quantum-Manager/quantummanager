@@ -9,6 +9,7 @@
 	<license>GNU General Public License version 3 or later; see license.txt</license>
 	<version>2.0.4</version>
 	<description>COM_QUANTUMMANAGER_XML_DESCRIPTION</description>
+	<namespace path="src">Joomla\Component\QuantumManager</namespace>
 
 	<scriptfile>script.php</scriptfile>
 
