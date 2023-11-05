@@ -12,6 +12,8 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\AdminController;
+use Joomla\Component\QuantumManager\Administrator\Filesystem\LocalFilesystem;
+use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
 use Joomla\Filesystem\Folder;
 
 /**
@@ -30,8 +32,7 @@ class QuantumcropperjsController extends QuantummanagerController
 			$app->close();
 		}
 
-		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
-		echo QuantummanagerFileSystemLocal::getImageForCrop($data['path'],  $data['scope'], $data['file']);
+		echo LocalFilesystem::getImageForCrop($data['path'],  $data['scope'], $data['file']);
 
 		QuantummanagerHelper::setHeadersNoCache();
 		$app->close();
@@ -43,8 +44,7 @@ class QuantumcropperjsController extends QuantummanagerController
 
 		$app = Factory::getApplication();
 
-		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
-		echo QuantummanagerFileSystemLocal::converterSave();
+		echo LocalFilesystem::converterSave();
 
 		QuantummanagerHelper::setHeadersNoCache();
 		$app->close();

@@ -10,6 +10,8 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\Component\QuantumManager\Administrator\Filesystem\LocalFilesystem;
+use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
 
 JLoader::register('QuantummanagerController', JPATH_ADMINISTRATOR . '/components/com_quantummanager/controller.php');
 
@@ -29,8 +31,7 @@ class QuantumviewfilesController extends QuantummanagerController
 			$app->close();
 		}
 
-		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
-		echo QuantummanagerFileSystemLocal::createDirectory($data['path'], $data['scope'], $data['name']);
+		echo LocalFilesystem::createDirectory($data['path'], $data['scope'], $data['name']);
 
 		QuantummanagerHelper::setHeadersNoCache();
 		$app->close();
@@ -46,8 +47,7 @@ class QuantumviewfilesController extends QuantummanagerController
 			$app->close();
 		}
 
-		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
-		echo QuantummanagerFileSystemLocal::getFiles($data['path'], $data['scope']);
+		echo LocalFilesystem::getFiles($data['path'], $data['scope']);
 
 		QuantummanagerHelper::setHeadersNoCache();
 		$app->close();
@@ -70,8 +70,7 @@ class QuantumviewfilesController extends QuantummanagerController
 			$name = $data['name'];
 		}
 
-		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
-		echo QuantummanagerFileSystemLocal::getMetaFile($data['path'], $data['scope'], $name);
+		echo LocalFilesystem::getMetaFile($data['path'], $data['scope'], $name);
 
 		QuantummanagerHelper::setHeadersNoCache();
 		$app->close();
@@ -94,8 +93,7 @@ class QuantumviewfilesController extends QuantummanagerController
 			$list = json_decode($data['list']);
 		}
 
-		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
-		echo QuantummanagerFileSystemLocal::setWatermark($data['path'], $data['scope'], $list);
+		echo LocalFilesystem::setWatermark($data['path'], $data['scope'], $list);
 
 		QuantummanagerHelper::setHeadersNoCache();
 		$app->close();
@@ -160,8 +158,7 @@ class QuantumviewfilesController extends QuantummanagerController
 			$app->close();
 		}
 
-		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
-		echo QuantummanagerFileSystemLocal::paste($pathFrom, $scopeFrom, $pathTo, $scopeTo, $cut, $list);
+		echo LocalFilesystem::paste($pathFrom, $scopeFrom, $pathTo, $scopeTo, $cut, $list);
 
 		QuantummanagerHelper::setHeadersNoCache();
 		$app->close();
@@ -181,8 +178,7 @@ class QuantumviewfilesController extends QuantummanagerController
 		$scope = $data['scope'];
 		$list  = json_decode($data['list']);
 
-		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
-		echo QuantummanagerFileSystemLocal::delete($scope, $path, $list);
+		echo LocalFilesystem::delete($scope, $path, $list);
 
 		QuantummanagerHelper::setHeadersNoCache();
 		$app->close();
@@ -210,7 +206,6 @@ class QuantumviewfilesController extends QuantummanagerController
 				$host = $data['host'];
 			}
 
-			JLoader::register('QuantummanagerHelper', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
 			echo json_encode([
 				'path' => QuantummanagerHelper::preparePath($path, $host, $scope, true)
 			]);
@@ -247,8 +242,7 @@ class QuantumviewfilesController extends QuantummanagerController
 			$file  = $data['file'];
 			$name  = $data['name'];
 
-			JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
-			echo QuantummanagerFileSystemLocal::renameFile($path, $scope, $file, $name);
+			echo LocalFilesystem::renameFile($path, $scope, $file, $name);
 
 			QuantummanagerHelper::setHeadersNoCache();
 			$app->close();
@@ -282,8 +276,7 @@ class QuantumviewfilesController extends QuantummanagerController
 			$oldName = $data['oldName'];
 			$name    = $data['name'];
 
-			JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
-			echo QuantummanagerFileSystemLocal::renameDirectory($path, $scope, $oldName, $name);
+			echo LocalFilesystem::renameDirectory($path, $scope, $oldName, $name);
 
 			QuantummanagerHelper::setHeadersNoCache();
 			$app->close();
@@ -315,8 +308,7 @@ class QuantumviewfilesController extends QuantummanagerController
 				$file = $data['file'];
 			}
 
-			JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
-			QuantummanagerFileSystemLocal::generatePreviewImage($path, $scope, $file);
+			LocalFilesystem::generatePreviewImage($path, $scope, $file);
 
 			QuantummanagerHelper::setHeadersNoCache();
 			$app->close();
@@ -345,8 +337,7 @@ class QuantumviewfilesController extends QuantummanagerController
 			$list    = json_decode($data['list'], true);
 			$preview = $data['preview'];
 
-			JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
-			echo QuantummanagerFileSystemLocal::createPreview($path, $scope, $list, $preview);
+			echo LocalFilesystem::createPreview($path, $scope, $list, $preview);
 
 			QuantummanagerHelper::setHeadersNoCache();
 			$app->close();

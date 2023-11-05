@@ -12,6 +12,8 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\AdminController;
+use Joomla\Component\QuantumManager\Administrator\Filesystem\LocalFilesystem;
+use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 
@@ -34,8 +36,7 @@ class QuantumuploadController extends QuantummanagerController
 			$app->close();
 		}
 
-		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
-		echo QuantummanagerFileSystemLocal::upload();
+		echo LocalFilesystem::upload();
 
 		QuantummanagerHelper::setHeadersNoCache();
 		$app->close();

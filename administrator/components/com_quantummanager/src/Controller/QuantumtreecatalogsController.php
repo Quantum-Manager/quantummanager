@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
 
 /**
  * Class QuantumtreecatalogsController
@@ -46,8 +47,7 @@ class QuantumtreecatalogsController extends QuantummanagerController
 			$scope = 'all';
 		}
 
-		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
-		echo QuantummanagerFileSystemLocal::getScopesDirectories($path, $root, $scope);
+		echo LocalFilesystem::getScopesDirectories($path, $root, $scope);
 
 		QuantummanagerHelper::setHeadersNoCache();
 		$app->close();

@@ -14,6 +14,7 @@ use Joomla\CMS\Http\Transport\CurlTransport;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 use Joomla\Registry\Registry;
@@ -91,8 +92,7 @@ class QuantumunsplashController extends QuantummanagerController
 		$file = $data['file'];
 		$id = $data['id'];
 
-		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
-		echo QuantummanagerFileSystemLocal::downloadFileUnsplash($path, $scope, $file, $id);
+		echo LocalFilesystem::downloadFileUnsplash($path, $scope, $file, $id);
 
 		QuantummanagerHelper::setHeadersNoCache();
 		$app->close();
