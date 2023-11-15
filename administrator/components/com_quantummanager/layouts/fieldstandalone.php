@@ -8,6 +8,7 @@
  */
 
 use Joomla\CMS\Language\Text;
+use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
 
 defined('_JEXEC') or die;
 extract($displayData);

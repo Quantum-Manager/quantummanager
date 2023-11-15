@@ -35,6 +35,8 @@ class QuantumcombineField extends QuantumbaseField
 	protected $layout = 'quantumcombine';
 
 
+	protected $fields = [];
+
 	/**
 	 *
 	 * @return string

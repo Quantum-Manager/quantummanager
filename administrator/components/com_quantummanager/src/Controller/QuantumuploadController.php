@@ -1,4 +1,5 @@
-<?php
+<?php namespace Joomla\Component\QuantumManager\Administrator\Controller;
+
 /**
  * @package    quantummanager
  * @author     Dmitry Tsymbal <cymbal@delo-design.ru>
@@ -12,26 +13,25 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\AdminController;
+use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\Component\QuantumManager\Administrator\Filesystem\LocalFilesystem;
 use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 
-JLoader::register('QuantummanagerController', JPATH_ADMINISTRATOR . '/components/com_quantummanager/controller.php');
-
 /**
  * Class QuantumuploadController
  */
-class QuantumuploadController extends QuantummanagerController
+class QuantumuploadController extends BaseController
 {
 
 
 	public function upload()
 	{
-		$app = Factory::getApplication();
+		$app  = Factory::getApplication();
 		$data = $app->input->getArray();
 
-		if(!isset($data['path'], $data['scope']))
+		if (!isset($data['path'], $data['scope']))
 		{
 			$app->close();
 		}

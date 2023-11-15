@@ -14,11 +14,12 @@ use Exception;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\FileLayout;
+use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerLibsHelper;
 
 /**
  * Class QuantumunsplashField
  */
-class QuantumunsplashField extends FormField
+class QuantumunsplashField extends QuantumbaseField
 {
 
 	/**

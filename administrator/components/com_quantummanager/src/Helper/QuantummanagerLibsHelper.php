@@ -55,7 +55,7 @@ class QuantummanagerLibsHelper
 		{
 			foreach ($includes as $static_method)
 			{
-				if (method_exists('QuantummanagerLibs', $static_method))
+				if (method_exists(QuantummanagerLibsHelper::class, $static_method))
 				{
 					forward_static_call(__CLASS__ . "::" . $static_method);
 				}
@@ -64,7 +64,7 @@ class QuantummanagerLibsHelper
 
 		if (is_string($includes))
 		{
-			if (method_exists('QuantummanagerLibs', $includes))
+			if (method_exists(QuantummanagerLibsHelper::class, $includes))
 			{
 				forward_static_call(__CLASS__ . "::" . $includes);
 			}

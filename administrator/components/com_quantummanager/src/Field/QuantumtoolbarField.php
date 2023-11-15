@@ -22,7 +22,7 @@ use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerLibsHelpe
 /**
  * Class QuantumtoolbarField
  */
-class QuantumtoolbarField extends FormField
+class QuantumtoolbarField extends QuantumbaseField
 {
 
 	/**
@@ -34,6 +34,12 @@ class QuantumtoolbarField extends FormField
 	 * @var string
 	 */
 	protected $layout = 'quantumtoolbar';
+
+
+	protected $buttons = [];
+
+
+	protected $buttonsBun = [];
 
 
 	/**

@@ -9,6 +9,8 @@
 
 defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
+use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
+
 extract($displayData);
 $id = mt_rand(111111, 999999);
 $document = \Joomla\CMS\Factory::getDocument();

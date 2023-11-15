@@ -20,6 +20,7 @@ use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 use Joomla\Filesystem\Path;
+use Joomla\Libraries\JInterventionimage\Manager;
 
 class LocalFilesystem
 {
@@ -709,8 +710,6 @@ class LocalFilesystem
 	{
 		try
 		{
-
-			JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
 			$path = QuantummanagerHelper::preparePath($path, false, $scopeName);
 
 			$directory = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
@@ -726,7 +725,7 @@ class LocalFilesystem
 			$filesOutput = [];
 			$files       = Folder::files($directory);
 			$directories = Folder::folders($directory);
-			$manager     = JInterventionimage::getInstance();
+			$manager     = Manager::getInstance();
 
 			//создаем кеш для файлов
 			if (!file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . 'cache/com_quantummanager'))
@@ -1230,20 +1229,27 @@ class LocalFilesystem
 
 			@ini_set('memory_limit', '256M');
 
-			$lang        = Factory::getLanguage();
-			$path_source = QuantummanagerHelper::preparePathRoot($path_source, $scope);
-			$path        = QuantummanagerHelper::preparePath($path_source, false, $scope);
+			$lang = Factory::getLanguage();
+			$path = QuantummanagerHelper::preparePath($path_source, false, $scope);
 
 			$fileContent = file_get_contents($file);
 			$filePath    = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
 			$id          = File::makeSafe($lang->transliterate($id), ['#^\.#', '#\040#']);
 			$fileName    = $id . '.jpg';
-			file_put_contents($filePath . DIRECTORY_SEPARATOR . $fileName, $fileContent);
 
-			$image = new ImageHelper;
-			$image->afterUpload($path_source, $filePath . DIRECTORY_SEPARATOR . $fileName);
+			try
+			{
+				@file_put_contents($filePath . DIRECTORY_SEPARATOR . $fileName, $fileContent);
 
-			$output['name'] = $fileName;
+				$image = new ImageHelper;
+				$image->afterUpload($path, $filePath . DIRECTORY_SEPARATOR . $fileName);
+
+				$output['name'] = $fileName;
+			}
+			catch (Exception $e)
+			{
+				$output['name'] = '';
+			}
 
 		}
 
@@ -1300,9 +1306,8 @@ class LocalFilesystem
 		if (in_array($exs, ['jpg', 'jpeg', 'png', 'gif']))
 		{
 
-			JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
 			$directory   = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
-			$manager     = JInterventionimage::getInstance();
+			$manager     = Manager::getInstance();
 			$cacheSource = JPATH_ROOT . DIRECTORY_SEPARATOR . 'administrator/cache/com_quantummanager';
 			$cache       = $cacheSource;
 			$pathArr     = explode('/', $path);
@@ -1340,9 +1345,8 @@ class LocalFilesystem
 		if ($exs === 'webp')
 		{
 
-			JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
 			$directory   = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
-			$manager     = JInterventionimage::getInstance();
+			$manager     = Manager::getInstance();
 			$cacheSource = JPATH_ROOT . DIRECTORY_SEPARATOR . 'administrator/cache/com_quantummanager';
 			$cache       = $cacheSource;
 			$pathArr     = explode('/', $path);

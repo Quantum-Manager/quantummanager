@@ -1,4 +1,5 @@
-<?php
+<?php namespace Joomla\Component\QuantumManager\Administrator\Controller;
+
 /**
  * @package    quantummanager
  * @author     Dmitry Tsymbal <cymbal@delo-design.ru>
@@ -10,15 +11,14 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\Component\QuantumManager\Administrator\Filesystem\LocalFilesystem;
 use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
-
-JLoader::register('QuantummanagerController', JPATH_ADMINISTRATOR . '/components/com_quantummanager/controller.php');
 
 /**
  * Class QuantumviewfilesController
  */
-class QuantumviewfilesController extends QuantummanagerController
+class QuantumviewfilesController extends BaseController
 {
 
 	public function createDirectory()
@@ -122,8 +122,7 @@ class QuantumviewfilesController extends QuantummanagerController
 			$app->close();
 		}
 
-		JLoader::register('QuantummanagerFileSystemLocal', JPATH_ROOT . '/administrator/components/com_quantummanager/filesystem/local.php');
-		echo QuantummanagerFileSystemLocal::duplicate($path, $scope, $list);
+		echo LocalFilesystem::duplicate($path, $scope, $list);
 
 		QuantummanagerHelper::setHeadersNoCache();
 		$app->close();

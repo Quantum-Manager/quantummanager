@@ -22,7 +22,7 @@ use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerLibsHelpe
 /**
  * Class QuantumcropperjsField
  */
-class QuantumcropperjsField extends FormField
+class QuantumcropperjsField extends QuantumbaseField
 {
 
 	/**

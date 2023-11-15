@@ -1,4 +1,5 @@
-<?php
+<?php namespace Joomla\Component\QuantumManager\Administrator\Controller;
+
 /**
  * @package    quantummanager
  * @author     Dmitry Tsymbal <cymbal@delo-design.ru>
@@ -13,18 +14,18 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Http\Transport\CurlTransport;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\AdminController;
+use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Component\QuantumManager\Administrator\Filesystem\LocalFilesystem;
 use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 use Joomla\Registry\Registry;
 
-JLoader::register('QuantummanagerController', JPATH_ADMINISTRATOR . '/components/com_quantummanager/controller.php');
-
 /**
  * Class QuantumunsplashController
  */
-class QuantumunsplashController extends QuantummanagerController
+class QuantumunsplashController extends BaseController
 {
 
 
@@ -35,29 +36,29 @@ class QuantumunsplashController extends QuantummanagerController
 
 		try
 		{
-			$data = Factory::getApplication()->input->getArray();
+			$data           = Factory::getApplication()->input->getArray();
 			$dataForRequest = [
-				'q' => '',
+				'q'    => '',
 				'page' => '1',
 			];
 
-			if(isset($data['q']))
+			if (isset($data['q']))
 			{
 				$dataForRequest['q'] = $data['q'];
 			}
 
-			if(isset($data['page']))
+			if (isset($data['page']))
 			{
 				$dataForRequest['page'] = $data['page'];
 			}
 
 			$query = http_build_query([
 				'option' => 'com_yoohikashop',
-				'task' => 'unsplash.search'
+				'task'   => 'unsplash.search'
 			]);
 
 			$curlTransport = new CurlTransport(new Registry());
-			$uri = new Uri();
+			$uri           = new Uri();
 			$uri->setScheme('https');
 			$uri->setHost('hika.su/');
 			$uri->setPath('index.php');
@@ -78,19 +79,19 @@ class QuantumunsplashController extends QuantummanagerController
 
 	public function download()
 	{
-		$app = Factory::getApplication();
+		$app  = Factory::getApplication();
 		$data = Factory::getApplication()->input->getArray();
 		$file = $data['file'];
 
-		if(!isset($data['file'], $data['path'], $data['scope']))
+		if (!isset($data['file'], $data['path'], $data['scope']))
 		{
 			$app->close();
 		}
 
-		$path = $data['path'];
+		$path  = $data['path'];
 		$scope = $data['scope'];
-		$file = $data['file'];
-		$id = $data['id'];
+		$file  = $data['file'];
+		$id    = $data['id'];
 
 		echo LocalFilesystem::downloadFileUnsplash($path, $scope, $file, $id);
 
@@ -102,23 +103,23 @@ class QuantumunsplashController extends QuantummanagerController
 
 	public function downloadTrigger()
 	{
-		$app = Factory::getApplication();
+		$app  = Factory::getApplication();
 		$data = $app->input->getArray();
 
 		$query = http_build_query([
 			'option' => 'com_yoohikashop',
-			'task' => 'unsplash.downloadTrigger',
-			'uid' => $data['id']
+			'task'   => 'unsplash.downloadTrigger',
+			'uid'    => $data['id']
 		]);
 
 		$curlTransport = new CurlTransport(new Registry());
-		$uri = new Uri();
+		$uri           = new Uri();
 		$uri->setScheme('https');
 		$uri->setHost('hika.su/');
 		$uri->setPath('index.php');
 		$uri->setQuery($query);
 		$request = $curlTransport->request('GET', $uri);
-		$photo = json_decode($request->body, JSON_OBJECT_AS_ARRAY);
+		$photo   = json_decode($request->body, JSON_OBJECT_AS_ARRAY);
 
 		QuantummanagerHelper::setHeadersNoCache();
 		$app->close();

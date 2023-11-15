@@ -33,6 +33,22 @@ class QuantumuploadField extends QuantumbaseField
 	 */
 	protected $layout = 'quantumupload';
 
+
+	protected $maxsize = 0;
+
+
+	protected $maxsizeServer = 0;
+
+
+	protected $directory = '';
+
+
+	protected $scope = '';
+
+
+	protected $dropAreaHidden = false;
+
+
 	/**
 	 * Allow to override renderer include paths in child fields
 	 *

@@ -28,6 +28,12 @@ class QuantumbaseField extends FormField
 	private $addLayouts = [];
 
 
+	protected $cssClass = '';
+
+
+	protected $standalone = false;
+
+
 	/**
 	 * @return array
 	 */

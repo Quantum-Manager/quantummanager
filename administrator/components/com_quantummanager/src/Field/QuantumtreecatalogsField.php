@@ -20,7 +20,7 @@ use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerLibsHelpe
 /**
  * Class QuantumtreecatalogsField
  */
-class QuantumtreecatalogsField extends FormField
+class QuantumtreecatalogsField extends QuantumbaseField
 {
 
 	/**
@@ -33,6 +33,8 @@ class QuantumtreecatalogsField extends FormField
 	 */
 	protected $layout = 'quantumtreecatalogs';
 
+
+	protected $directory = '';
 
 	/**
 	 * Allow to override renderer include paths in child fields

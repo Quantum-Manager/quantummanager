@@ -10,27 +10,31 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
+use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
+
 extract($displayData);
 $cssClass = $displayData['cssClass'];
 
 ?>
 
-<div class="quantumtreecatalogs-module-select">
-    <div class="quantummanager-module quantumtreecatalogs-module <?php echo $cssClass ?>" data-type="Quantumtreecatalogs" data-options="directory:<?php echo $displayData['directory'] ?>">
-        <input type="text" name="<?php echo $name ?>" value="<?php echo $value ?>" class="inputbox quantumtreecatalogs-path-to">
-        <div class="tree-scroll"></div>
+    <div class="quantumtreecatalogs-module-select">
+        <div class="quantummanager-module quantumtreecatalogs-module <?php echo $cssClass ?>"
+             data-type="Quantumtreecatalogs" data-options="directory:<?php echo $displayData['directory'] ?>">
+            <input type="text" name="<?php echo $name ?>" value="<?php echo $value ?>"
+                   class="inputbox quantumtreecatalogs-path-to">
+            <div class="tree-scroll"></div>
+        </div>
     </div>
-</div>
 
 
 <?php
-    $langs = json_encode([
-        'fileName' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ALERT_FILE_NAME'), ENT_QUOTES),
-        'directoryName' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ALERT_DIRECTORY_NAME'), ENT_QUOTES),
-        'confirmDelete' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ALERT_CONFIRM_DELETE'), ENT_QUOTES),
-    ]);
+$langs = json_encode([
+	'fileName'      => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ALERT_FILE_NAME'), ENT_QUOTES),
+	'directoryName' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ALERT_DIRECTORY_NAME'), ENT_QUOTES),
+	'confirmDelete' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ALERT_CONFIRM_DELETE'), ENT_QUOTES),
+]);
 
-    QuantummanagerHelper::scriptInsertOnPage('quantumTreecatalogs', <<<EOF
+QuantummanagerHelper::scriptInsertOnPage('quantumTreecatalogs', <<<EOF
     window.QuantumtreecatalogsLang = {$langs};
 EOF
 );

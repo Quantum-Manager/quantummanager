@@ -20,7 +20,7 @@ use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerLibsHelpe
 /**
  * Class QuantumviewfilesField
  */
-class QuantumviewfilesField extends FormField
+class QuantumviewfilesField extends QuantumbaseField
 {
 
 	/**
@@ -32,6 +32,33 @@ class QuantumviewfilesField extends FormField
 	 * @var string
 	 */
 	protected $layout = 'quantumviewfiles';
+
+
+	protected $metafile = '1';
+
+
+	protected $watermark = '0';
+
+
+	protected $folderdblclick = '0';
+
+
+	protected $help = '1';
+
+
+	protected $previewsfolder = '1';
+
+
+	protected $previewsfolderopen = '1';
+
+
+	protected $previewslist = [];
+
+
+	protected $directory = '';
+
+
+	protected $onlyfiles = '0';
 
 
 	/**

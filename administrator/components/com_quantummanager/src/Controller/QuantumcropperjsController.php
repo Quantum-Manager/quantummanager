@@ -11,28 +11,27 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\MVC\Controller\AdminController;
+use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\Component\QuantumManager\Administrator\Filesystem\LocalFilesystem;
 use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
-use Joomla\Filesystem\Folder;
 
 /**
  * Class QuantumcropperjsController
  */
-class QuantumcropperjsController extends QuantummanagerController
+class QuantumcropperjsController extends BaseController
 {
 
 	public function getImageForCrop()
 	{
-		$app = Factory::getApplication();
+		$app  = Factory::getApplication();
 		$data = $app->input->getArray();
 
-		if(!isset($data['path'],  $data['scope'], $data['file']))
+		if (!isset($data['path'], $data['scope'], $data['file']))
 		{
 			$app->close();
 		}
 
-		echo LocalFilesystem::getImageForCrop($data['path'],  $data['scope'], $data['file']);
+		echo LocalFilesystem::getImageForCrop($data['path'], $data['scope'], $data['file']);
 
 		QuantummanagerHelper::setHeadersNoCache();
 		$app->close();
