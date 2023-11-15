@@ -28,12 +28,13 @@
         <menu view="quantummanager">COM_QUANTUMMANAGER</menu>
 
         <files folder="administrator/components/com_quantummanager">
-            <filename>quantummanager.php</filename>
             <filename>access.xml</filename>
             <filename>config.xml</filename>
             <filename>mimetype.txt</filename>
             <folder>src</folder>
+            <folder>services</folder>
             <folder>layouts</folder>
+            <folder>tmpl</folder>
             <folder>language</folder>
         </files>
 
