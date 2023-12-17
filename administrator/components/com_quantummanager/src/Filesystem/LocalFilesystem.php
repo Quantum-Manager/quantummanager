@@ -249,8 +249,8 @@ class LocalFilesystem
 
 		foreach ($files as $file)
 		{
-			$size        += filesize($dir . DIRECTORY_SEPARATOR . $file);
-			$sizeCurrent += filesize($dir . DIRECTORY_SEPARATOR . $file);
+			$size        += @filesize($dir . DIRECTORY_SEPARATOR . $file);
+			$sizeCurrent += @filesize($dir . DIRECTORY_SEPARATOR . $file);
 		}
 
 		if ($level === -1)

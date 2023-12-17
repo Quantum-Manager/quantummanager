@@ -90,27 +90,17 @@ class QuantummanagerLibsHelper
 
 	public static function theme()
 	{
-		$joomla_style = 'joomla3';
 
-		if (QuantummanagerHelper::isJoomla4())
-		{
-			$joomla_style = 'joomla4';
-		}
-
-		HTMLHelper::_('stylesheet', 'com_quantummanager/' . $joomla_style . '.css', [
+		HTMLHelper::_('stylesheet', 'com_quantummanager/joomla.css', [
 			'version'  => filemtime(__FILE__),
 			'relative' => true
 		]);
 
-		if (Factory::getApplication()->isClient('site') &&
-			QuantummanagerHelper::isJoomla4()
-		)
-		{
-			HTMLHelper::_('stylesheet', 'com_quantummanager/joomla4-front.css', [
-				'version'  => filemtime(__FILE__),
-				'relative' => true
-			]);
-		}
+		HTMLHelper::_('stylesheet', 'com_quantummanager/joomla-front.css', [
+			'version'  => filemtime(__FILE__),
+			'relative' => true
+		]);
+
 	}
 
 

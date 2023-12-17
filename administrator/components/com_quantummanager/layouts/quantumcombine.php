@@ -95,7 +95,6 @@ $options = [
 	'urlBase'      => $urlBase,
 	'urlRoot'      => $urlRoot,
 	'urlMedia'     => $urlMedia,
-	'isJoomla4'    => $isJoomla4,
 	'bufferPaste'  => (string) QuantummanagerHelper::getParamsComponentValue('bufferpaste', 0),
 	'scopeEnabled' => implode(',', $scopeEnabled),
 	'alertBigData' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ALERT_BIG_IMAGE'), ENT_QUOTES),
@@ -117,7 +116,6 @@ window.QuantumSettings = {
         urlRoot: '{$optionsOutput('urlRoot')}',
         urlMedia: '{$optionsOutput('urlMedia')}',
         scopeEnabled: '{$optionsOutput('scopeEnabled')}',
-        isJoomla4: '{$optionsOutput('isJoomla4')}',
         bufferPaste: '{$optionsOutput('bufferPaste')}'
     };
 
