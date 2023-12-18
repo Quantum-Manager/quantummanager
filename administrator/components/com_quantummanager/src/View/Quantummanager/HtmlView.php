@@ -75,39 +75,18 @@ class HtmlView extends BaseHtmlView
 	 */
 	private function toolbar()
 	{
-		// Options button.
-		if (QuantummanagerHelper::isJoomla4())
+		if (Factory::getUser()->authorise('core.admin', 'com_quantummanager'))
 		{
-			if (Factory::getUser()->authorise('core.admin', 'com_quantummanager'))
-			{
-				HTMLHelper::_('script', 'com_quantummanager/configuration.js', [
-					'version'  => filemtime(__FILE__),
-					'relative' => true
-				]);
-			}
-
-			HTMLHelper::_('stylesheet', 'com_quantummanager/joomla4hidetoolbar.css', [
+			HTMLHelper::_('script', 'com_quantummanager/configuration.js', [
 				'version'  => filemtime(__FILE__),
 				'relative' => true
 			]);
 		}
-		else
-		{
 
-			ToolBarHelper::title(Text::_('COM_QUANTUMMANAGER'), '');
+		HTMLHelper::_('stylesheet', 'com_quantummanager/joomla4hidetoolbar.css', [
+			'version'  => filemtime(__FILE__),
+			'relative' => true
+		]);
 
-			// Options button.
-			if (Factory::getUser()->authorise('core.admin', 'com_quantummanager'))
-			{
-				ToolBarHelper::preferences('com_quantummanager');
-			}
-
-			$toolbar = Toolbar::getInstance('toolbar');
-			$url     = Uri::root(true) . '/administrator/index.php?option=com_quantummanager&layout=window&tmpl=component';
-			$button  = '<a href="' . $url . '" class="btn btn-small" target="_blank">'
-				. '<span class="icon-new-tab" aria-hidden="true"></span>'
-				. Text::_('COM_QUANTUMMANAGER_CLEAN_WINDOW') . '</a>';
-			$toolbar->appendButton('Custom', $button, 'generate');
-		}
 	}
 }

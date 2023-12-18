@@ -18,6 +18,6 @@ use Joomla\CMS\MVC\Controller\BaseController;
 class DisplayController extends BaseController
 {
 
-	protected $default_view = 'quantumamanager';
+	protected $default_view = 'quantummanager';
 
 }
