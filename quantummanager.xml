@@ -1,56 +1,50 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <extension type="component" version="3.8" method="upgrade">
-	<name>COM_QUANTUMMANAGER</name>
-	<creationDate>21.12.2018</creationDate>
-	<author>Tsymbal</author>
-	<authorEmail>cymbal@delo-design.ru</authorEmail>
-	<authorUrl>https://www.norrnext.com</authorUrl>
-	<copyright>Copyright © 2019 Delo Design &amp; NorrNext. All rights reserved.</copyright>
-	<license>GNU General Public License version 3 or later; see license.txt</license>
-	<version>2.0.4</version>
-	<description>COM_QUANTUMMANAGER_XML_DESCRIPTION</description>
+    <name>COM_QUANTUMMANAGER</name>
+    <creationDate>21.12.2018</creationDate>
+    <author>Tsymbal</author>
+    <authorEmail>cymbal@delo-design.ru</authorEmail>
+    <authorUrl>https://www.norrnext.com</authorUrl>
+    <copyright>Copyright © 2019 Delo Design &amp; NorrNext. All rights reserved.</copyright>
+    <license>GNU General Public License version 3 or later; see license.txt</license>
+    <version>2.1.0</version>
+    <description>COM_QUANTUMMANAGER_XML_DESCRIPTION</description>
+    <namespace path="src">Joomla\Component\QuantumManager</namespace>
 
-	<scriptfile>script.php</scriptfile>
+    <scriptfile>script.php</scriptfile>
 
-	<media folder="media/com_quantummanager" destination="com_quantummanager">
-		<folder>css</folder>
-		<folder>images</folder>
-		<folder>js</folder>
-	</media>
+    <media folder="media/com_quantummanager" destination="com_quantummanager">
+        <folder>css</folder>
+        <folder>images</folder>
+        <folder>js</folder>
+    </media>
 
-	<files folder="components/com_quantummanager">
-		<filename>quantummanager.php</filename>
-		<filename>controller.php</filename>
-		<folder>language</folder>
-		<folder>views</folder>
-	</files>
+    <files folder="components/com_quantummanager">
+        <folder>language</folder>
+        <folder>src</folder>
+    </files>
 
-	<administration>
-		<menu view="quantummanager">COM_QUANTUMMANAGER</menu>
+    <administration>
+        <menu view="quantummanager">COM_QUANTUMMANAGER</menu>
 
-		<files folder="administrator/components/com_quantummanager">
-			<filename>quantummanager.php</filename>
-			<filename>access.xml</filename>
-			<filename>config.xml</filename>
-			<filename>controller.php</filename>
-			<filename>LICENSE.txt</filename>
-			<filename>mimetype.txt</filename>
-			<folder>controllers</folder>
-			<folder>fields</folder>
-			<folder>filesystem</folder>
-			<folder>helpers</folder>
-			<folder>layouts</folder>
-			<folder>language</folder>
-			<folder>views</folder>
-		</files>
+        <files folder="administrator/components/com_quantummanager">
+            <filename>access.xml</filename>
+            <filename>config.xml</filename>
+            <filename>mimetype.txt</filename>
+            <folder>src</folder>
+            <folder>services</folder>
+            <folder>layouts</folder>
+            <folder>tmpl</folder>
+            <folder>language</folder>
+        </files>
 
-		<languages folder="administrator/components/com_quantummanager/language">
-			<language tag="en-GB">en-GB/en-GB.com_quantummanager.ini</language>
-			<language tag="en-GB">en-GB/en-GB.com_quantummanager.sys.ini</language>
-			<language tag="ru-RU">ru-RU/ru-RU.com_quantummanager.ini</language>
-			<language tag="ru-RU">ru-RU/ru-RU.com_quantummanager.sys.ini</language>
-		</languages>
+        <languages folder="administrator/components/com_quantummanager/language">
+            <language tag="en-GB">en-GB/en-GB.com_quantummanager.ini</language>
+            <language tag="en-GB">en-GB/en-GB.com_quantummanager.sys.ini</language>
+            <language tag="ru-RU">ru-RU/ru-RU.com_quantummanager.ini</language>
+            <language tag="ru-RU">ru-RU/ru-RU.com_quantummanager.sys.ini</language>
+        </languages>
 
-	</administration>
+    </administration>
 
 </extension>

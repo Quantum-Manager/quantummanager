@@ -8,6 +8,7 @@
  */
 
 use Joomla\CMS\Language\Text;
+use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
 
 defined('_JEXEC') or die;
 extract($displayData);
@@ -29,7 +30,6 @@ $options = [
 	'urlBase'      => $urlBase,
 	'urlRoot'      => $urlRoot,
 	'urlMedia'     => $urlMedia,
-	'isJoomla4'    => QuantummanagerHelper::isJoomla4() ? '1' : '0',
 	'bufferPaste'  => (string) QuantummanagerHelper::getParamsComponentValue('bufferpaste', 0),
 	'scopeEnabled' => implode(',', $scopeEnabled),
 	'alertBigData' => htmlspecialchars(Text::_('COM_QUANTUMMANAGER_ALERT_BIG_IMAGE'), ENT_QUOTES),
@@ -51,7 +51,6 @@ window.QuantumSettings = {
         urlRoot: '{$optionsOutput('urlRoot')}',
         urlMedia: '{$optionsOutput('urlMedia')}',
         scopeEnabled: '{$optionsOutput('scopeEnabled')}',
-        isJoomla4: '{$optionsOutput('isJoomla4')}',
         bufferPaste: '{$optionsOutput('bufferPaste')}'
     };
 

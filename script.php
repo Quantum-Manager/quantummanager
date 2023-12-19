@@ -10,6 +10,7 @@
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Version;
+use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
 
 defined('_JEXEC') or die;
 
@@ -77,7 +78,6 @@ class com_quantummanagerInstallerScript
 			return false;
 		}
 
-		jimport('joomla.version');
 		$jversion = new Version();
 		if (!$jversion->isCompatible('3.7'))
 		{
@@ -116,8 +116,7 @@ class com_quantummanagerInstallerScript
 	 */
 	public function update($parent)
 	{
-		JLoader::register('QuantummanagerHelper', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
-		QuantummanagerHelper::setComponentsParams('helpURL', $this->helpURL);
+		//QuantummanagerHelper::setComponentsParams('helpURL', $this->helpURL);
 	}
 
 	/**
@@ -132,8 +131,7 @@ class com_quantummanagerInstallerScript
 	{
 		if ($route === 'install')
 		{
-			JLoader::register('QuantummanagerHelper', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
-			QuantummanagerHelper::setComponentsParams('helpURL', $this->helpURL);
+			//QuantummanagerHelper::setComponentsParams('helpURL', $this->helpURL);
 		}
 	}
 
