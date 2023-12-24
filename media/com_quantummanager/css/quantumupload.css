@@ -167,3 +167,16 @@
 .upload-errors .uk-alert-close:hover {
     cursor: pointer;
 }
+
+@media (prefers-color-scheme: dark) {
+    .quantumupload-module .drop-area {
+        border-color: #ddddddb5;
+    }
+
+    .quantumupload-module .drop-area:hover {
+        --subhead-btn-accent: var(--template-bg-dark-60);
+        color: rgba(255, 255, 255, 0.9);
+        background-color: var(--subhead-btn-accent);
+        border-color: var(--subhead-btn-accent);
+    }
+}

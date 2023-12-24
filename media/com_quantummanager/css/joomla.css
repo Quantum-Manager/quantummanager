@@ -20,6 +20,12 @@ body.com_quantummanager #content > * > *
     background: rgb(244, 247, 250);
 }
 
+@media (prefers-color-scheme: dark) {
+    .quantummanager-backgrounds-muted {
+        background-color: var(--com-media-manager-content-bg, #fff);
+        color: #fff;
+    }
+}
 /******************************** Buttons ********************************/
 .qm-btn {
     margin-bottom: 0;
@@ -70,6 +76,22 @@ body.com_quantummanager #content > * > *
     box-shadow: 0 0 0 .25rem rgba(54,78,109,.5);
 }
 
+@media (prefers-color-scheme: dark) {
+    .qm-btn {
+        --subhead-btn-accent: var(--template-text-light);
+        color: var(--template-text-light);
+        background: var(--body-bg);
+        border-color: hsl(var(--hue), 20%, 80%);
+    }
+
+    .qm-btn:hover,
+    .qm-btn:focus {
+        --subhead-btn-accent: var(--template-bg-dark-60);
+        color: rgba(255, 255, 255, 0.9);
+        background-color: var(--subhead-btn-accent);
+        border-color: var(--subhead-btn-accent);
+    }
+}
 
 /******************************** Dropdown *******************************/
 .quantummanager-dropdown-content {
