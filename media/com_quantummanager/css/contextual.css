@@ -13,7 +13,7 @@
     background-color: rgba(255, 255, 255, 1);
     box-shadow: rgba(0, 0, 0, 0.25) 0 0 20px;
     border-radius: 5px;
-    margin:0;
+    margin: 0;
     list-style: none;
     color: #1b1b1b;
     overflow: hidden;
@@ -36,7 +36,7 @@
 
 .contextualMenuItemIcon {
     float: left;
-    width:16px;
+    width: 16px;
     height: 16px;
 }
 
@@ -57,7 +57,7 @@
 
 .contextualMenuItemOverflow {
     float: right;
-    width:16px;
+    width: 16px;
     height: 16px;
     padding: 1px 0 0 7px;
 }
@@ -79,8 +79,8 @@
 }
 
 .contextualMenuSeperator div {
-    width:100%;
-    height:1px;
+    width: 100%;
+    height: 1px;
     background: #999;
 }
 
@@ -95,8 +95,8 @@
     width: 100%;
     left: 0;
     transition: left 0.25s;
- }
- 
+}
+
 .contextualSubMenu .contextualMenuItem:hover {
     background: #eee;
     cursor: pointer;
@@ -109,11 +109,11 @@
 .contextualHeader input {
     background: transparent;
     color: #cccccc;
-    border:none;
+    border: none;
     width: 30px;
     height: 30px;
     position: absolute;
-    left:0;
+    left: 0;
     font-weight: bold;
 }
 
@@ -122,9 +122,28 @@
 }
 
 .contextualHeader span {
-    width:100%;
+    width: 100%;
     text-align: center;
     display: inline-block;
     line-height: 30px;
     font-weight: bold;
+}
+
+@media (prefers-color-scheme: dark) {
+    .contextualMenu {
+        background-color: var(--com-media-manager-content-bg, #fff);
+        border: var(--border-width) solid var(--template-bg-dark-20);
+        color: inherit;
+    }
+
+    .contextualMenu object {
+        display: none;
+    }
+
+    .contextualMenuItem:hover {
+        background-color: var(--subhead-btn-accent);
+        border-color: var(--subhead-btn-accent);
+        --subhead-btn-accent: var(--template-bg-dark-60);
+        color: rgba(255, 255, 255, 0.9);
+    }
 }
