@@ -852,6 +852,13 @@ body.com_quantummanager > .container-main {
     transform: rotate(-90deg);
 }
 
+@media (prefers-color-scheme: dark) {
+    .quantummanager-icon {
+        filter: invert(100%);
+        -webkit-filter: invert(100%);
+    }
+}
+
 /****************************** Loader ********************************/
 .quantummanager .loader {
     position: absolute;

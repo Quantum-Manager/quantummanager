@@ -207,8 +207,14 @@
 }
 
 @media (prefers-color-scheme: dark) {
+
     .quantumtreecatalogs-module ul li span.tree-path {
         color: inherit;
+    }
+
+    .quantumtreecatalogs-module ul li span.tree-caret:before {
+        filter: invert(100%);
+        -webkit-filter: invert(100%);
     }
 
     .quantumtreecatalogs-module ul li.active > span.tree-path {

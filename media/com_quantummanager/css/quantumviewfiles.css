@@ -1075,6 +1075,11 @@ svg.svg-icon text {
         color: rgba(255, 255, 255, 0.9);
     }
 
+    .quantumviewfiles-module .breadcumbs > li.carret > span {
+        filter: invert(100%);
+        -webkit-filter: invert(100%);
+    }
+
     .quantumviewfiles-module .meta-file .meta-preview-album > * {
         background-color: #404040;
         border-color: #404040;
