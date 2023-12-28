@@ -1,4 +1,5 @@
-<?php
+<?php namespace Joomla\Component\QuantumManager\Site\View\Quantummanager;
+
 /**
  * @package    quantummanager
  * @author     Dmitry Tsymbal <cymbal@delo-design.ru>
@@ -9,15 +10,16 @@
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\MVC\View\HtmlView as BaseView;
+use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
 
 /**
- * Quantummanager view.
+ * HtmlView.
  *
  * @package  quantummanager
  * @since    1.0
  */
-class QuantummanagerViewQuantummanager extends HtmlView
+class HtmlView extends BaseView
 {
 
 	/**
@@ -40,7 +42,6 @@ class QuantummanagerViewQuantummanager extends HtmlView
 	 */
 	public function display($tpl = null)
 	{
-
 		// Show the sidebar
 		$this->helper = new QuantummanagerHelper;
 
