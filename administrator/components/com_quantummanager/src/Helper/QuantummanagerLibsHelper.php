@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Version;
 
 /**
  * Quantummanager helper.
@@ -101,6 +102,13 @@ class QuantummanagerLibsHelper
 			'relative' => true
 		]);
 
+		if(version_compare((new Version)->getShortVersion(), '5.0.0', '>='))
+		{
+			HTMLHelper::_('stylesheet', 'com_quantummanager/darkmode.css', [
+				'version'  => filemtime(__FILE__),
+				'relative' => true
+			]);
+		}
 	}
 
 

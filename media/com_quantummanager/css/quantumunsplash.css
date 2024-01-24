@@ -321,15 +321,3 @@
     }
 
 }
-
-@media (prefers-color-scheme: dark) {
-    .quantumunsplash-module {
-        background-color: var(--com-media-manager-content-bg, #fff);
-    }
-
-    .quantumunsplash-module .quantumunsplash-module-header input {
-        background-color: var(--body-bg);
-        border: var(--border-width) solid var(--template-bg-dark-20);
-        background-clip: padding-box;
-    }
-}

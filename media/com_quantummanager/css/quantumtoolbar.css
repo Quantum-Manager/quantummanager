@@ -152,10 +152,3 @@
         width: 10%;
     }
 }
-
-@media (prefers-color-scheme: dark) {
-    .quantumtoolbar-module .qm-btn-dropdown {
-        background-color: var(--com-media-manager-content-bg, #fff);
-        border: var(--border-width) solid var(--template-bg-dark-20);
-    }
-}

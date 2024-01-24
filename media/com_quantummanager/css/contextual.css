@@ -128,22 +128,3 @@
     line-height: 30px;
     font-weight: bold;
 }
-
-@media (prefers-color-scheme: dark) {
-    .contextualMenu {
-        background-color: var(--com-media-manager-content-bg, #fff);
-        border: var(--border-width) solid var(--template-bg-dark-20);
-        color: inherit;
-    }
-
-    .contextualMenu object {
-        display: none;
-    }
-
-    .contextualMenuItem:hover {
-        background-color: var(--subhead-btn-accent);
-        border-color: var(--subhead-btn-accent);
-        --subhead-btn-accent: var(--template-bg-dark-60);
-        color: rgba(255, 255, 255, 0.9);
-    }
-}

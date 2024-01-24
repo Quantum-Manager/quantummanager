@@ -26,6 +26,8 @@ class QuantumconfigpathField extends TextField
 	 */
 	public $type = 'QuantumConfigpath';
 
+	protected $prefix = '';
+
 	/**
 	 *
 	 * @return string

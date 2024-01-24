@@ -178,12 +178,6 @@ body.com_quantummanager > .container-main {
     height: 100%;
 }
 
-@media (prefers-color-scheme: dark) {
-    .quantummanager .gutter:after {
-        background: #ddddddb5;
-        border-left-color: #ddddddb5;
-    }
-}
 /**************************** Text ****************************/
 .quantummanager-list {
     list-style: none;
@@ -850,13 +844,6 @@ body.com_quantummanager > .container-main {
     height: 14px;
     background-image: url("../images/icons/action/left-arrow-key-1.svg");
     transform: rotate(-90deg);
-}
-
-@media (prefers-color-scheme: dark) {
-    .quantummanager-icon {
-        filter: invert(100%);
-        -webkit-filter: invert(100%);
-    }
 }
 
 /****************************** Loader ********************************/
