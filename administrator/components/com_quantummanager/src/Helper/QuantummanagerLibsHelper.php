@@ -102,7 +102,10 @@ class QuantummanagerLibsHelper
 			'relative' => true
 		]);
 
-		if(version_compare((new Version)->getShortVersion(), '5.0.0', '>='))
+		if(
+			version_compare((new Version)->getShortVersion(), '5.0.0', '>=') &&
+			Factory::getApplication()->isClient('administrator')
+		)
 		{
 			HTMLHelper::_('stylesheet', 'com_quantummanager/darkmode.css', [
 				'version'  => filemtime(__FILE__),
