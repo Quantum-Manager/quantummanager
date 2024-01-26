@@ -14,6 +14,9 @@
         border-color: var(--subhead-btn-accent) !important;
     }
 
+    .quantumtoolbar-module button.qm-btn-hide {
+        color: #797c7f !important;
+    }
 
     .contextualMenu {
         background-color: var(--com-media-manager-content-bg, #fff) !important;
@@ -105,6 +108,11 @@
         background-color: var(--body-bg) !important;
         border: var(--border-width) solid var(--template-bg-dark-20) !important;
         background-clip: padding-box !important;
+    }
+
+    .quantumviewfiles-module .filter-search svg {
+        filter: invert(100%) !important;
+        -webkit-filter: invert(100%) !important;
     }
 
     .quantumviewfiles-module .breadcumbs li:hover {
