@@ -21,4 +21,13 @@ use Joomla\CMS\Dispatcher\ComponentDispatcher;
  */
 class Dispatcher extends ComponentDispatcher
 {
+
+	protected function loadLanguage()
+	{
+		// Load common and local language files.
+		$this->app->getLanguage()->load($this->option, JPATH_BASE) ||
+		$this->app->getLanguage()->load($this->option, JPATH_COMPONENT);
+		$this->app->getLanguage()->load($this->option, JPATH_ADMINISTRATOR);
+	}
+
 }
