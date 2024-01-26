@@ -10,7 +10,13 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Application\CMSWebApplicationInterface;
+use Joomla\CMS\Cache\Exception\CacheExceptionInterface;
+use Joomla\CMS\Document\DocumentAwareInterface;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\LanguageAwareInterface;
 use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\User\CurrentUserInterface;
 
 /**
  * DisplayController Controller.

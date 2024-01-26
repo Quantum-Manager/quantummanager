@@ -70,8 +70,7 @@ return new class implements ServiceProviderInterface {
 				return $component;
 			}
 		);
-
-		Factory::getApplication()->getLanguage()->load('com_quantummanager', JPATH_ADMINISTRATOR, null, true);
 	}
+
 };
 
