@@ -764,7 +764,6 @@ class LocalFilesystem
 
 				if (in_array(strtolower($exs), ['jpg', 'png', 'jpeg', 'gif', 'svg', 'webp']))
 				{
-					$path            = QuantummanagerHelper::preparePath($path, false, $scopeName);
 					$cache_file      = static::getPreviewImageFromFile('administrator/cache/com_quantummanager/' . $path . '/' . $file);
 					$cache_file_full = Path::clean(JPATH_ROOT . DIRECTORY_SEPARATOR . $cache_file);
 
