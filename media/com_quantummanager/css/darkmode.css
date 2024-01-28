@@ -141,9 +141,31 @@
         -webkit-filter: invert(100%) !important;
     }
 
+    .quantumviewfiles-module .field-list-files .list-table .directory-item input:checked ~ .directory,
+    .quantumviewfiles-module .field-list-files .list-table .directory-item:hover,
+    .quantumviewfiles-module .field-list-files .list-table .file-item input:checked ~ .file,
+    .quantumviewfiles-module .field-list-files .list-table .file-item input:checked ~ .fields,
+    .quantumviewfiles-module .field-list-files .list-table .file-item:hover {
+        --subhead-btn-accent: var(--template-bg-dark-60) !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+        background-color: var(--subhead-btn-accent) !important;
+    }
+
     .quantumviewfiles-module .meta-file .meta-preview-album > * {
         background-color: #404040 !important;
         border-color: #404040 !important;
+    }
+
+    .quantumviewfiles-module .meta-preview-name {
+        color: inherit !important;
+    }
+
+    .quantumviewfiles-module .meta-file .meta-table > div {
+        color: inherit !important;
+    }
+
+    .quantumviewfiles-module .meta-file .show-all-tags {
+        color: inherit !important;
     }
 
     .quantumviewfiles-module .field-list-files .list-grid .file-item .file .file-exs img {
