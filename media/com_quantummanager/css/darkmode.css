@@ -156,5 +156,25 @@
     .quantumuploadimage-field .quantumuploadimage-preview {
         background-color: #404040 !important;
     }
+
+    .qm-dialog {
+        background-color: var(--body-bg) !important;
+        border: var(--border-width) solid var(--template-bg-dark-20) !important;
+        color: inherit !important;
+    }
+
+    .qm-dialog * {
+        color: inherit !important;
+    }
+
+    .qm-dialog input {
+        background-color: var(--body-bg) !important;
+        border: var(--border-width) solid var(--template-bg-dark-20) !important;
+        background-clip: padding-box !important;
+    }
+
+    .qm-dialog a {
+        text-decoration: underline !important;
+    }
 }
 
