@@ -10,6 +10,7 @@
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Version;
+use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
 
 defined('_JEXEC') or die;
 
@@ -29,7 +30,7 @@ class com_quantummanagerInstallerScript
 	 *
 	 * @since  0.0.1
 	 */
-	protected $minimumPhp = '7.1';
+	protected $minimumPhp = '7.4';
 
 	/**
 	 * Minimum Joomla version required to install the extension.
@@ -38,12 +39,12 @@ class com_quantummanagerInstallerScript
 	 *
 	 * @since  0.0.1
 	 */
-	protected $minimumJoomla = '3.9.0';
+	protected $minimumJoomla = '4.0.0';
 
 	/**
 	 * @var string
 	 */
-	protected $helpURL = 'https://norrnext.com/docs/joomla-extensions/quantum-manager';
+	protected $helpURL = 'https://docs.norrnext.com/quantum-manager/';
 
 
 	/**
@@ -77,7 +78,6 @@ class com_quantummanagerInstallerScript
 			return false;
 		}
 
-		jimport('joomla.version');
 		$jversion = new Version();
 		if (!$jversion->isCompatible('3.7'))
 		{
@@ -116,8 +116,7 @@ class com_quantummanagerInstallerScript
 	 */
 	public function update($parent)
 	{
-		JLoader::register('QuantummanagerHelper', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
-		QuantummanagerHelper::setComponentsParams('helpURL', $this->helpURL);
+		//QuantummanagerHelper::setComponentsParams('helpURL', $this->helpURL);
 	}
 
 	/**
@@ -132,8 +131,7 @@ class com_quantummanagerInstallerScript
 	{
 		if ($route === 'install')
 		{
-			JLoader::register('QuantummanagerHelper', JPATH_ROOT . '/administrator/components/com_quantummanager/helpers/quantummanager.php');
-			QuantummanagerHelper::setComponentsParams('helpURL', $this->helpURL);
+			//QuantummanagerHelper::setComponentsParams('helpURL', $this->helpURL);
 		}
 	}
 
