@@ -30,7 +30,7 @@ class com_quantummanagerInstallerScript
 	 *
 	 * @since  0.0.1
 	 */
-	protected $minimumPhp = '7.1';
+	protected $minimumPhp = '7.4';
 
 	/**
 	 * Minimum Joomla version required to install the extension.
@@ -39,12 +39,12 @@ class com_quantummanagerInstallerScript
 	 *
 	 * @since  0.0.1
 	 */
-	protected $minimumJoomla = '3.9.0';
+	protected $minimumJoomla = '4.0.0';
 
 	/**
 	 * @var string
 	 */
-	protected $helpURL = 'https://norrnext.com/docs/joomla-extensions/quantum-manager';
+	protected $helpURL = 'https://docs.norrnext.com/quantum-manager/';
 
 
 	/**
