@@ -70,7 +70,7 @@ class com_quantummanagerInstallerScript
 	{
 		$app = Factory::getApplication();
 
-		if (!(version_compare(PHP_VERSION, '7.1.0') >= 0))
+		if (!(version_compare(PHP_VERSION, $this->minimumPhp) >= 0))
 		{
 			$app->enqueueMessage(Text::sprintf('COM_QUANTUMMANAGER_ERROR_COMPATIBLE_PHP', $this->minimumPhp),
 				'error');
@@ -79,7 +79,7 @@ class com_quantummanagerInstallerScript
 		}
 
 		$jversion = new Version();
-		if (!$jversion->isCompatible('3.7'))
+		if (!$jversion->isCompatible($this->minimumJoomla))
 		{
 			$app->enqueueMessage(Text::sprintf('COM_QUANTUMMANAGER_ERROR_COMPATIBLE_PHP', $this->minimumJoomla),
 				'error');
@@ -116,7 +116,7 @@ class com_quantummanagerInstallerScript
 	 */
 	public function update($parent)
 	{
-		//QuantummanagerHelper::setComponentsParams('helpURL', $this->helpURL);
+		QuantummanagerHelper::setComponentsParams('helpURL', $this->helpURL);
 	}
 
 	/**
@@ -131,7 +131,7 @@ class com_quantummanagerInstallerScript
 	{
 		if ($route === 'install')
 		{
-			//QuantummanagerHelper::setComponentsParams('helpURL', $this->helpURL);
+			QuantummanagerHelper::setComponentsParams('helpURL', $this->helpURL);
 		}
 	}
 
