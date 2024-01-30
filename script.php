@@ -116,7 +116,7 @@ class com_quantummanagerInstallerScript
 	 */
 	public function update($parent)
 	{
-		QuantummanagerHelper::setComponentsParams('helpURL', $this->helpURL);
+		//QuantummanagerHelper::setComponentsParams('helpURL', $this->helpURL);
 	}
 
 	/**
@@ -131,7 +131,7 @@ class com_quantummanagerInstallerScript
 	{
 		if ($route === 'install')
 		{
-			QuantummanagerHelper::setComponentsParams('helpURL', $this->helpURL);
+			//QuantummanagerHelper::setComponentsParams('helpURL', $this->helpURL);
 		}
 	}
 
