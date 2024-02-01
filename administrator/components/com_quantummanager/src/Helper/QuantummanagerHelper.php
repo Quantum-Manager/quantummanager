@@ -428,7 +428,7 @@ class QuantummanagerHelper
 	 */
 	public static function getParamsComponentValue($name, $default = '', $withProfiles = true)
 	{
-		$componentParams = ComponentHelper::getParams('com_quantummanager');
+		$componentParams = static::getComponentsParams($name, $default);
 		$profiles        = $componentParams->get('profiles', '');
 		$value           = $componentParams->get($name, $default);
 		$groups          = Factory::getUser()->groups;
@@ -684,6 +684,8 @@ class QuantummanagerHelper
 	public static function getComponentsParams($name, $default = null)
 	{
 		$params = ComponentHelper::getParams('com_quantummanager');
+
+		Factory::getApplication()->triggerEvent('onQuantumManagerConfiguration', [&$params]);
 
 		return $params->get($name, $default);
 	}
