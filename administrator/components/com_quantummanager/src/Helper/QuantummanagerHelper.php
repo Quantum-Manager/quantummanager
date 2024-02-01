@@ -428,10 +428,9 @@ class QuantummanagerHelper
 	 */
 	public static function getParamsComponentValue($name, $default = '', $withProfiles = true)
 	{
-		$componentParams = static::getComponentsParams($name, $default);
-		$profiles        = $componentParams->get('profiles', '');
-		$value           = $componentParams->get($name, $default);
-		$groups          = Factory::getUser()->groups;
+		$profiles = static::getComponentsParams('profiles', '');
+		$value    = static::getComponentsParams($name, $default);
+		$groups   = Factory::getUser()->groups;
 
 		if ($withProfiles)
 		{
