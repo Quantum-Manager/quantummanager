@@ -36,6 +36,12 @@ class QuantummanagerHelper
 {
 
 	/**
+	 * @var null
+	 * @since version
+	 */
+	protected static $cacheParams = null;
+
+	/**
 	 * @var string
 	 * @since version
 	 */
@@ -682,11 +688,19 @@ class QuantummanagerHelper
 	 */
 	public static function getComponentsParams($name, $default = null)
 	{
+		if (static::$cacheParams !== null)
+		{
+			return static::$cacheParams->get($name, $default);
+		}
+
 		$params = ComponentHelper::getParams('com_quantummanager');
 
+		PluginHelper::importPlugin('quantummanager');
 		Factory::getApplication()->triggerEvent('onQuantumManagerConfiguration', [&$params]);
 
-		return $params->get($name, $default);
+		static::$cacheParams = $params;
+
+		return static::$cacheParams->get($name, $default);
 	}
 
 
