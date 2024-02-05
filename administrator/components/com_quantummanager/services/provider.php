@@ -64,7 +64,7 @@ return new class implements ServiceProviderInterface {
 				$component = new QuantumManagerComponent($container->get(ComponentDispatcherFactoryInterface::class));
 
 				$component->setRegistry($container->get(Registry::class));
-				//$component->setMVCFactory($container->get(MVCFactoryInterface::class));
+				$component->setMVCFactory($container->get(MVCFactoryInterface::class));
 				$component->setRouterFactory($container->get(RouterFactoryInterface::class));
 
 				return $component;
