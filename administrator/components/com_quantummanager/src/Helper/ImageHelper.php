@@ -556,8 +556,11 @@ class ImageHelper
 		$exifSave = (int) QuantummanagerHelper::getParamsComponentValue('exifsave', 0);
 		if ($exifSave)
 		{
+			$error_reporting = error_reporting();
+			error_reporting($error_reporting & ~E_DEPRECATED);
+
 			JLoader::register('JPel', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jpel' . DIRECTORY_SEPARATOR . 'jpel.php');
-			$fi = JPel::instance($file);
+			$fi = \JPel::instance($file);
 			if ($fi)
 			{
 				$this->exifs = $fi->getExif();
@@ -580,8 +583,11 @@ class ImageHelper
 		$exifSave = (int) QuantummanagerHelper::getParamsComponentValue('exifsave', 0);
 		if ($exifSave)
 		{
+			$error_reporting = error_reporting();
+			error_reporting($error_reporting & ~E_DEPRECATED);
+
 			JLoader::register('JPel', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jpel' . DIRECTORY_SEPARATOR . 'jpel.php');
-			$fi = JPel::instance($file);
+			$fi = \JPel::instance($file);
 			if ($fi)
 			{
 				$fi->setExif($this->exifs);

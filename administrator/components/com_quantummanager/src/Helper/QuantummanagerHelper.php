@@ -11,12 +11,12 @@
 defined('_JEXEC') or die;
 
 use Exception;
-use JObject;
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Cache\Cache;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
@@ -181,12 +181,12 @@ class QuantummanagerHelper
 	}
 
 	/**
-	 * @return JObject
+	 * @return CMSObject
 	 */
 	public static function getActions()
 	{
 		$user      = Factory::getUser();
-		$result    = new JObject;
+		$result    = new CMSObject;
 		$assetName = 'com_quantummanager';
 		$actions   = Access::getActionsFromFile(
 			JPATH_ADMINISTRATOR . '/components/' . $assetName . '/access.xml',
