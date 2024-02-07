@@ -73,6 +73,12 @@
     max-width: fit-content;
 }
 
+@media only screen and (max-width: 968px) {
+    .toastify {
+        max-width: calc(50% - 20px);
+    }
+}
+
 @media only screen and (max-width: 360px) {
     .toastify-right, .toastify-left {
         margin-left: auto;

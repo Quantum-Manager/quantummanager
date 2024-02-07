@@ -11,12 +11,12 @@
 defined('_JEXEC') or die;
 
 use Exception;
-use JObject;
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Cache\Cache;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
@@ -34,6 +34,12 @@ use stdClass;
  */
 class QuantummanagerHelper
 {
+
+	/**
+	 * @var null
+	 * @since version
+	 */
+	protected static $cacheParams = null;
 
 	/**
 	 * @var string
@@ -175,12 +181,12 @@ class QuantummanagerHelper
 	}
 
 	/**
-	 * @return JObject
+	 * @return CMSObject
 	 */
 	public static function getActions()
 	{
 		$user      = Factory::getUser();
-		$result    = new JObject;
+		$result    = new CMSObject;
 		$assetName = 'com_quantummanager';
 		$actions   = Access::getActionsFromFile(
 			JPATH_ADMINISTRATOR . '/components/' . $assetName . '/access.xml',
@@ -428,10 +434,9 @@ class QuantummanagerHelper
 	 */
 	public static function getParamsComponentValue($name, $default = '', $withProfiles = true)
 	{
-		$componentParams = ComponentHelper::getParams('com_quantummanager');
-		$profiles        = $componentParams->get('profiles', '');
-		$value           = $componentParams->get($name, $default);
-		$groups          = Factory::getUser()->groups;
+		$profiles = static::getComponentsParams('profiles', '');
+		$value    = static::getComponentsParams($name, $default);
+		$groups   = Factory::getUser()->groups;
 
 		if ($withProfiles)
 		{
@@ -683,9 +688,19 @@ class QuantummanagerHelper
 	 */
 	public static function getComponentsParams($name, $default = null)
 	{
+		if (static::$cacheParams !== null)
+		{
+			return static::$cacheParams->get($name, $default);
+		}
+
 		$params = ComponentHelper::getParams('com_quantummanager');
 
-		return $params->get($name, $default);
+		PluginHelper::importPlugin('quantummanager');
+		Factory::getApplication()->triggerEvent('onQuantumManagerConfiguration', [&$params]);
+
+		static::$cacheParams = $params;
+
+		return static::$cacheParams->get($name, $default);
 	}
 
 

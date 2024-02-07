@@ -60,7 +60,7 @@
     display: inline-block;
     cursor: pointer;
     margin: 0 0 0 5px;
-    background-color: transparent !important;
+    background-color: transparent;
 }
 
 .quantumupload-module .drop-area .fileElem {

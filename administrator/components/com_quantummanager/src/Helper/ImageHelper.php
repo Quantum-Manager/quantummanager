@@ -15,6 +15,7 @@ use JLoader;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 use Joomla\CMS\Helper\MediaHelper;
+use Joomla\Libraries\JInterventionimage\Manager;
 
 /**
  * Class ImageHelper
@@ -107,11 +108,10 @@ class ImageHelper
 			if (file_exists($file) && file_exists($fileWatermark))
 			{
 
-				JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
-				$manager = JInterventionimage::getInstance(['driver' => $this->getNameDriver()]);
+				$manager = Manager::getInstance(['driver' => $this->getNameDriver()]);
 				$image   = $manager->make($file);
 
-				$managerForWatermark = JInterventionimage::getInstance(['driver' => $this->getNameDriver()]);
+				$managerForWatermark = Manager::getInstance(['driver' => $this->getNameDriver()]);
 				$watermark           = $managerForWatermark->make($fileWatermark);
 
 				$logoWidth   = $watermark->width();
@@ -158,7 +158,6 @@ class ImageHelper
 	 */
 	public function bestFit($file, $widthFit = null, $heightFit = null)
 	{
-		JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
 		list($width, $height, $type, $attr) = getimagesize($file);
 		$newWidth  = $width;
 		$newHeight = $height;
@@ -196,7 +195,7 @@ class ImageHelper
 		}
 
 
-		$manager = JInterventionimage::getInstance(['driver' => $this->getNameDriver()]);
+		$manager = Manager::getInstance(['driver' => $this->getNameDriver()]);
 		$manager
 			->make($file)
 			->resize($newWidth, $newHeight, function ($constraint) {
@@ -215,7 +214,6 @@ class ImageHelper
 	 */
 	public function fit($file, $widthFit = null, $heightFit = null)
 	{
-		JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
 		list($width, $height, $type, $attr) = getimagesize($file);
 		$newWidth  = $width;
 		$newHeight = $height;
@@ -238,7 +236,7 @@ class ImageHelper
 			$maxHeight = (int) $heightFit;
 		}
 
-		$manager = JInterventionimage::getInstance(['driver' => $this->getNameDriver()]);
+		$manager = Manager::getInstance(['driver' => $this->getNameDriver()]);
 		$manager
 			->make($file)
 			->fit($maxWidth, $maxHeight, function ($constraint) {
@@ -318,7 +316,6 @@ class ImageHelper
 	 */
 	public function resize($file, $widthFit = null, $heightFit = null)
 	{
-		JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
 		list($width, $height, $type, $attr) = getimagesize($file);
 		$newWidth  = $width;
 		$newHeight = $height;
@@ -341,7 +338,7 @@ class ImageHelper
 			$maxHeight = (int) $heightFit;
 		}
 
-		$manager = JInterventionimage::getInstance(['driver' => $this->getNameDriver()]);
+		$manager = Manager::getInstance(['driver' => $this->getNameDriver()]);
 		$manager
 			->make($file)
 			->resize($maxWidth, $maxHeight, function ($constraint) {
@@ -388,8 +385,7 @@ class ImageHelper
 
 				if ($rotated)
 				{
-					JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
-					$manager = JInterventionimage::getInstance(['driver' => $this->getNameDriver()]);
+					$manager = Manager::getInstance(['driver' => $this->getNameDriver()]);
 					$manager
 						->make($fileSource)
 						->rotate($angle)
@@ -448,8 +444,6 @@ class ImageHelper
 				return false;
 			}
 
-			JLoader::register('JInterventionimage', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jinterventionimage' . DIRECTORY_SEPARATOR . 'jinterventionimage.php');
-
 			$input   = \Joomla\CMS\Factory::getApplication()->input;
 			$filters = $input->getString('filters', '');
 			if (!empty($filters))
@@ -457,7 +451,7 @@ class ImageHelper
 				$filters = json_decode($filters, JSON_OBJECT_AS_ARRAY);
 				if (is_array($filters))
 				{
-					$manager = JInterventionimage::getInstance(['driver' => $this->getNameDriver()]);
+					$manager = Manager::getInstance(['driver' => $this->getNameDriver()]);
 					$manager = $manager->make($file);
 
 
@@ -470,7 +464,7 @@ class ImageHelper
 								$manager = $manager->encode('jpg', (int) $filters['compression']);
 								$manager->save($file, (int) $filters['compression']);
 
-								$manager = JInterventionimage::getInstance(['driver' => $this->getNameDriver()]);
+								$manager = Manager::getInstance(['driver' => $this->getNameDriver()]);
 								$manager = $manager->make($file);
 							}
 						}
@@ -562,8 +556,11 @@ class ImageHelper
 		$exifSave = (int) QuantummanagerHelper::getParamsComponentValue('exifsave', 0);
 		if ($exifSave)
 		{
+			$error_reporting = error_reporting();
+			error_reporting($error_reporting & ~E_DEPRECATED);
+
 			JLoader::register('JPel', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jpel' . DIRECTORY_SEPARATOR . 'jpel.php');
-			$fi = JPel::instance($file);
+			$fi = \JPel::instance($file);
 			if ($fi)
 			{
 				$this->exifs = $fi->getExif();
@@ -586,8 +583,11 @@ class ImageHelper
 		$exifSave = (int) QuantummanagerHelper::getParamsComponentValue('exifsave', 0);
 		if ($exifSave)
 		{
+			$error_reporting = error_reporting();
+			error_reporting($error_reporting & ~E_DEPRECATED);
+
 			JLoader::register('JPel', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jpel' . DIRECTORY_SEPARATOR . 'jpel.php');
-			$fi = JPel::instance($file);
+			$fi = \JPel::instance($file);
 			if ($fi)
 			{
 				$fi->setExif($this->exifs);

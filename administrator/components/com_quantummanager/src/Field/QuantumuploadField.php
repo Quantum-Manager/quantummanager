@@ -104,6 +104,7 @@ class QuantumuploadField extends QuantumbaseField
 			QuantummanagerLibsHelper::includes([
 				'core',
 				'utils',
+				'notify',
 			]);
 
 			HTMLHelper::_('stylesheet', 'com_quantummanager/quantumupload.css', [
