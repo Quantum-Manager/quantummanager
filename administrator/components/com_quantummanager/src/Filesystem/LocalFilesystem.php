@@ -777,6 +777,11 @@ class LocalFilesystem
 					}
 				}
 
+				if (strtolower($exs) == 'svg')
+				{
+					$fileMeta['fileP'] = Uri::root(false) . $path . '/' . $file;
+				}
+
 				$filesOutput[] = $fileMeta;
 			}
 

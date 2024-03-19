@@ -231,7 +231,6 @@ class QuantummanagerHelper
 			$pathConfig = static::$cachePathRoot[$scopeName];
 		}
 
-
 		$path = str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
 		$path = preg_replace('#' . str_replace('\\', '\\\\', JPATH_ROOT) . "\/root?#", $pathConfig, $path);
 		$path = preg_replace('#^root?#', $pathConfig, $path);
@@ -375,17 +374,25 @@ class QuantummanagerHelper
 			$path = str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
 		}
 
-		$pathCurrent = str_replace([
-			JPATH_ROOT,
-			DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR
-		], ['', DIRECTORY_SEPARATOR], $path);
+		$pathCurrent = str_replace(
+			[
+				JPATH_ROOT,
+				DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR
+			],
+			[
+				'',
+				DIRECTORY_SEPARATOR
+			],
+			$path
+		);
 
-		$folders    = explode(DIRECTORY_SEPARATOR, $pathConfigParse);
-		$currentTmp = '';
+		$folders    = explode(DIRECTORY_SEPARATOR, $pathCurrent);
+		$currentTmp = JPATH_ROOT;
 
 		foreach ($folders as $tmpFolder)
 		{
 			$currentTmp .= DIRECTORY_SEPARATOR . $tmpFolder;
+
 			if (!file_exists(JPATH_ROOT . $currentTmp))
 			{
 				Folder::create(JPATH_ROOT . $currentTmp);
