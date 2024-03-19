@@ -393,9 +393,9 @@ class QuantummanagerHelper
 		{
 			$currentTmp .= DIRECTORY_SEPARATOR . $tmpFolder;
 
-			if (!file_exists(JPATH_ROOT . $currentTmp))
+			if (!file_exists($currentTmp))
 			{
-				Folder::create(JPATH_ROOT . $currentTmp);
+				Folder::create($currentTmp);
 			}
 		}
 
