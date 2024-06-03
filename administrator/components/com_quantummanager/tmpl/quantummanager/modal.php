@@ -20,7 +20,7 @@ $folder = $app->input->get('folder', '', 'string');
 
 if (!empty($folder) && (str_starts_with($folder, 'images')))
 {
-	$app->getSession()->set('quantummanagerroot', 'images/' . $folder);
+	$app->getSession()->set('quantummanagerroot', $folder);
 }
 else
 {
