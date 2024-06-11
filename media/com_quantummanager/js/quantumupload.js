@@ -37,9 +37,23 @@ window.Qantumupload = function (Filemanager, UploadElement, options) {
         this.inputFileAll = UploadElement.querySelectorAll(".fileElem");
         this.exs = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
         this.path = options.directory;
+        this.scope = options.scope;
         Filemanager.element.setAttribute('data-drag-drop-title', QuantumuploadLang.dragDrop);
 
-        if (Filemanager.data.path === undefined) {
+        if (
+            (Filemanager.data.scope === undefined ||
+                Filemanager.data.scope === '') &&
+            (this.scope !== undefined && this.scope !== null)
+        ) {
+            Filemanager.data.scope = this.scope;
+        }
+
+        if (
+            (Filemanager.data.path === undefined ||
+                Filemanager.data.path === '') &&
+            (this.path !== undefined && this.path !== null)
+
+        ) {
             Filemanager.data.path = this.path;
         }
 
@@ -212,7 +226,7 @@ window.Qantumupload = function (Filemanager, UploadElement, options) {
                         self.trigger('uploadComplete');
 
                         if (self.errors.length > 0) {
-                            for(let k in self.errors) {
+                            for (let k in self.errors) {
                                 QuantumUtils.notify({
                                     type: 'danger',
                                     text: self.errors[k]
@@ -232,7 +246,7 @@ window.Qantumupload = function (Filemanager, UploadElement, options) {
                         self.progressBar.style.display = "none";
 
                         if (self.errors.length > 0) {
-                            for(let k in self.errors) {
+                            for (let k in self.errors) {
                                 QuantumUtils.notify({
                                     type: 'danger',
                                     text: self.errors[k]
