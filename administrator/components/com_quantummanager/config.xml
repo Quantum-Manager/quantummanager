@@ -36,14 +36,16 @@
 			<form>
 				<field
 						name="id"
-						type="hidden"
+						type="text"
 						label="ID"
+						readonly="readonly"
 				/>
 				<field
 						name="title"
 						type="quantumconfigscopetitle"
 						label="COM_QUANTUMMANAGER_CONFIG_GENERAL_SCOPES_NAME_LABEL"
 						disabled="disabled"
+						addfieldprefix="Joomla\Component\QuantumManager\Administrator\Field"
 				/>
 				<field name="enable"
 					   type="radio"
@@ -57,6 +59,7 @@
 						name="path"
 						type="quantumconfigpath"
 						label="COM_QUANTUMMANAGER_CONFIG_GENERAL_SCOPES_PATH_LABEL"
+						addfieldprefix="Joomla\Component\QuantumManager\Administrator\Field"
 				/>
 			</form>
 		</field>
@@ -65,8 +68,15 @@
 			   type="subform"
 			   label="COM_QUANTUMMANAGER_CONFIG_GENERAL_SCOPES_CUSTOM_LABEL"
 			   multiple="true"
-			   addfieldpath="/administrator/components/com_quantummanager/fields">
+			   addfieldprefix="Joomla\Component\QuantumManager\Administrator\Field"
+		>
 			<form>
+				<field
+						name="id"
+						type="text"
+						label="ID"
+						readonly="readonly"
+				/>
 				<field
 						name="title"
 						type="text"
@@ -76,11 +86,6 @@
 						name="path"
 						type="quantumconfigpath"
 						label="COM_QUANTUMMANAGER_CONFIG_GENERAL_SCOPES_PATH_LABEL"
-				/>
-				<field
-						name="id"
-						type="hidden"
-						label="ID"
 				/>
 			</form>
 		</field>
