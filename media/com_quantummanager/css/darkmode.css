@@ -200,3 +200,205 @@
     }
 }
 
+[data-bs-theme="dark"] {
+    .qm-btn {
+        --subhead-btn-accent: var(--template-text-light) !important;
+        color: var(--template-text-light) !important;
+        background: var(--body-bg) !important;
+        border-color: hsl(var(--hue), 20%, 80%) !important;
+    }
+
+    .qm-btn:hover,
+    .qm-btn:focus {
+        --subhead-btn-accent: var(--template-bg-dark-60) !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+        background-color: var(--subhead-btn-accent) !important;
+        border-color: var(--subhead-btn-accent) !important;
+    }
+
+    .quantumtoolbar-module button.qm-btn-hide {
+        color: #797c7f !important;
+    }
+
+    .contextualMenu {
+        background-color: var(--com-media-manager-content-bg, #fff) !important;
+        border: var(--border-width) solid var(--template-bg-dark-20) !important;
+        color: inherit !important;
+    }
+
+    .contextualMenu object {
+        display: none !important;
+    }
+
+    .contextualMenuItem:hover {
+        background-color: var(--subhead-btn-accent) !important;
+        border-color: var(--subhead-btn-accent) !important;
+        --subhead-btn-accent: var(--template-bg-dark-60) !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+    }
+
+    .quantummanager-backgrounds-muted {
+        background-color: var(--com-media-manager-content-bg, #fff) !important;
+        color: #fff !important;
+    }
+
+    .quantummanager .gutter:after {
+        background: #ddddddb5 !important;
+        border-left-color: #ddddddb5 !important;
+    }
+
+    .quantummanager-icon {
+        filter: invert(100%) !important;
+        -webkit-filter: invert(100%) !important;
+    }
+
+    .quantumtoolbar-module .qm-btn-dropdown {
+        background-color: var(--com-media-manager-content-bg, #fff) !important;
+        border: var(--border-width) solid var(--template-bg-dark-20) !important;
+    }
+
+    .quantumtreecatalogs-module ul li span.tree-path {
+        color: inherit !important;
+    }
+
+    .quantumtreecatalogs-module ul li span.tree-caret:before {
+        filter: invert(100%) !important;
+        -webkit-filter: invert(100%) !important;
+    }
+
+    .quantumtreecatalogs-module ul li.active > span.tree-path {
+        color: inherit !important;
+        font-weight: bold !important;
+    }
+
+    .quantumunsplash-module {
+        background-color: var(--com-media-manager-content-bg, #fff) !important;
+    }
+
+    .quantumunsplash-module .quantumunsplash-module-header input {
+        background-color: var(--body-bg) !important;
+        border: var(--border-width) solid var(--template-bg-dark-20) !important;
+        background-clip: padding-box !important;
+    }
+
+    .quantumupload-module .drop-area {
+        border-color: #ddddddb5 !important;
+    }
+
+    .quantumupload-module .drop-area:hover {
+        --subhead-btn-accent: var(--template-bg-dark-60) !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+        background-color: var(--subhead-btn-accent) !important;
+        border-color: var(--subhead-btn-accent) !important;
+    }
+
+    .quantumviewfiles-module .view-wrap {
+        background-color: var(--com-media-manager-content-bg, #fff) !important;
+    }
+
+    .quantumviewfiles-module .breadcumbs > li > span {
+        color: inherit !important;
+    }
+
+    .quantumviewfiles-module .field-list-files .list-grid .directory-item .directory .directory-name,
+    .quantumviewfiles-module .field-list-files .list-grid .file-item .file .file-name {
+        background-color: var(--com-media-manager-content-bg, #fff) !important;
+        color: inherit !important;
+    }
+
+    .quantumviewfiles-module .filter-search .input-wrapper input {
+        background-color: var(--body-bg) !important;
+        border: var(--border-width) solid var(--template-bg-dark-20) !important;
+        background-clip: padding-box !important;
+    }
+
+    .quantumviewfiles-module .filter-search svg {
+        filter: invert(100%) !important;
+        -webkit-filter: invert(100%) !important;
+    }
+
+    .quantumviewfiles-module .breadcumbs li:hover {
+        background-color: var(--com-media-manager-content-bg, #fff) !important;
+        text-decoration: underline !important;
+    }
+
+    .quantumviewfiles-module .breadcumbs li .dropdown-content {
+        background-color: var(--com-media-manager-content-bg, #fff) !important;
+        border: var(--border-width) solid var(--template-bg-dark-20) !important;
+    }
+
+    .quantumviewfiles-module .breadcumbs li .dropdown-content ul li {
+        color: inherit !important;
+    }
+
+    .quantumviewfiles-module .breadcumbs li .dropdown-content ul li:hover {
+        background-color: var(--subhead-btn-accent) !important;
+        border-color: var(--subhead-btn-accent) !important;
+        --subhead-btn-accent: var(--template-bg-dark-60) !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+    }
+
+    .quantumviewfiles-module .breadcumbs > li.carret > span {
+        filter: invert(100%) !important;
+        -webkit-filter: invert(100%) !important;
+    }
+
+    .quantumviewfiles-module .field-list-files .list-table .directory-item input:checked ~ .directory,
+    .quantumviewfiles-module .field-list-files .list-table .directory-item:hover,
+    .quantumviewfiles-module .field-list-files .list-table .file-item input:checked ~ .file,
+    .quantumviewfiles-module .field-list-files .list-table .file-item input:checked ~ .fields,
+    .quantumviewfiles-module .field-list-files .list-table .file-item:hover {
+        --subhead-btn-accent: var(--template-bg-dark-60) !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+        background-color: var(--subhead-btn-accent) !important;
+    }
+
+    .quantumviewfiles-module .meta-file .meta-preview-album > * {
+        background-color: #404040 !important;
+        border-color: #404040 !important;
+    }
+
+    .quantumviewfiles-module .meta-preview-name {
+        color: inherit !important;
+    }
+
+    .quantumviewfiles-module .meta-file .meta-table > div {
+        color: inherit !important;
+    }
+
+    .quantumviewfiles-module .meta-file .show-all-tags {
+        color: inherit !important;
+    }
+
+    .quantumviewfiles-module .field-list-files .list-grid .file-item .file .file-exs img {
+        background-color: #404040 !important;
+        border-color: #404040 !important;
+    }
+
+    .quantumuploadimage-field .quantumupload-module,
+    .quantumuploadimage-field .quantumupload-module .drop-area,
+    .quantumuploadimage-field .quantumuploadimage-preview {
+        background-color: #404040 !important;
+    }
+
+    .qm-dialog {
+        background-color: var(--body-bg) !important;
+        border: var(--border-width) solid var(--template-bg-dark-20) !important;
+        color: inherit !important;
+    }
+
+    .qm-dialog * {
+        color: inherit !important;
+    }
+
+    .qm-dialog input {
+        background-color: var(--body-bg) !important;
+        border: var(--border-width) solid var(--template-bg-dark-20) !important;
+        background-clip: padding-box !important;
+    }
+
+    .qm-dialog a {
+        text-decoration: underline !important;
+    }
+}
+
