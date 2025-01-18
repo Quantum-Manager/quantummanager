@@ -12,10 +12,33 @@ defined('_JEXEC') or die;
 
 use Exception;
 use JLoader;
+use Joomla\CMS\Factory;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 use Joomla\CMS\Helper\MediaHelper;
 use Joomla\Libraries\JInterventionimage\Manager;
+
+use function defined;
+use function exif_read_data;
+use function function_exists;
+use function is_array;
+use function json_decode;
+use function pathinfo;
+use function in_array;
+use function mb_strtolower;
+use function error_reporting;
+use function explode;
+use function array_pop;
+use function implode;
+use function file_exists;
+use function getimagesize;
+use function is_null;
+use function round;
+use function extension_loaded;
+use function substr;
+use function mb_strpos;
+use function mb_strlen;
+use function str_replace;
 
 /**
  * Class ImageHelper
@@ -88,68 +111,59 @@ class ImageHelper
 
 	}
 
-
 	/**
 	 * @param $file
 	 */
-	public function resizeWatermark($file)
+	public function saveExif($file)
+	{
+		if (!empty($this->exifs))
+		{
+			return;
+		}
+
+		$exifSave = (int) QuantummanagerHelper::getParamsComponentValue('exifsave', 0);
+		if ($exifSave)
+		{
+			$error_reporting = error_reporting();
+			error_reporting($error_reporting & ~E_DEPRECATED);
+
+			JLoader::register('JPel', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jpel' . DIRECTORY_SEPARATOR . 'jpel.php');
+			$fi = \JPel::instance($file);
+			if ($fi)
+			{
+				$this->exifs = $fi->getExif();
+			}
+		}
+
+	}
+
+	/**
+	 * @param $fileSource
+	 */
+	public function originalSave($fileSource)
 	{
 		try
 		{
+			$path     = explode(DIRECTORY_SEPARATOR, $fileSource);
+			$file     = array_pop($path);
+			$pathSave = implode(DIRECTORY_SEPARATOR, $path) . DIRECTORY_SEPARATOR . '_original';
 
-			$fileWatermark = JPATH_SITE . DIRECTORY_SEPARATOR . QuantummanagerHelper::getParamsComponentValue('overlayfile');
-			$position      = QuantummanagerHelper::getParamsComponentValue('overlaypos', 'bottom-right');
-			$padding       = QuantummanagerHelper::getParamsComponentValue('overlaypadding', 10);
-
-			if (QuantummanagerHelper::isJoomla4())
+			if (!file_exists($pathSave))
 			{
-				$fileWatermark = MediaHelper::getCleanMediaFieldValue($fileWatermark);
-			}
-			if (file_exists($file) && file_exists($fileWatermark))
-			{
-
-				$manager = Manager::getInstance(['driver' => $this->getNameDriver()]);
-				$image   = $manager->make($file);
-
-				$managerForWatermark = Manager::getInstance(['driver' => $this->getNameDriver()]);
-				$watermark           = $managerForWatermark->make($fileWatermark);
-
-				$logoWidth   = $watermark->width();
-				$logoHeight  = $watermark->height();
-				$imageWidth  = $image->width();
-				$imageHeight = $image->height();
-
-				if ((int) QuantummanagerHelper::getParamsComponentValue('overlaypercent', 0))
-				{
-					//сжимаем водяной знак по процентному соотношению от изображения на который накладывается
-					$precent       = (double) QuantummanagerHelper::getParamsComponentValue('overlaypercentvalue', 10);
-					$logoWidthMax  = $imageWidth / 100 * $precent;
-					$logoHeightMax = $imageHeight / 100 * $precent;
-					$watermark->resize((int) $logoWidthMax, (int) $logoHeightMax, function ($constraint) {
-						$constraint->aspectRatio();
-						$constraint->upsize();
-					});
-				}
-
-				if ($logoWidth > $imageWidth && $logoHeight > $imageHeight)
-				{
-					return false;
-				}
-
-				$image->insert($watermark, $position, $padding, $padding);
-				$image->save($file);
-
+				Folder::create($pathSave);
 			}
 
+			if (!file_exists($pathSave . DIRECTORY_SEPARATOR . $file))
+			{
+				File::copy($fileSource, $pathSave . DIRECTORY_SEPARATOR . $file);
+			}
 
 		}
 		catch (Exception $e)
 		{
 			echo $e->getMessage();
 		}
-
 	}
-
 
 	/**
 	 * @param         $file
@@ -197,55 +211,27 @@ class ImageHelper
 
 		$manager = Manager::getInstance(['driver' => $this->getNameDriver()]);
 		$manager
-			->make($file)
-			->resize($newWidth, $newHeight, function ($constraint) {
-				$constraint->aspectRatio();
-				$constraint->upsize();
-			})
+			->read($file)
+			->resizeDown($newWidth, $newHeight)
 			->save($file);
 
 	}
-
 
 	/**
-	 * @param         $file
-	 * @param   null  $widthFit
-	 * @param   null  $heightFit
+	 *
+	 * @return string
+	 *
+	 * @since version
 	 */
-	public function fit($file, $widthFit = null, $heightFit = null)
+	public function getNameDriver()
 	{
-		list($width, $height, $type, $attr) = getimagesize($file);
-		$newWidth  = $width;
-		$newHeight = $height;
-
-		if (is_null($widthFit))
+		if (extension_loaded('imagick'))
 		{
-			$maxWidth = (int) QuantummanagerHelper::getParamsComponentValue('rezizemaxwidth', 1920);
-		}
-		else
-		{
-			$maxWidth = (int) $widthFit;
+			return 'imagick';
 		}
 
-		if (is_null($heightFit))
-		{
-			$maxHeight = (int) QuantummanagerHelper::getParamsComponentValue('rezizemaxwidth', 1920);
-		}
-		else
-		{
-			$maxHeight = (int) $heightFit;
-		}
-
-		$manager = Manager::getInstance(['driver' => $this->getNameDriver()]);
-		$manager
-			->make($file)
-			->fit($maxWidth, $maxHeight, function ($constraint) {
-				$constraint->aspectRatio();
-			})
-			->save($file);
-
+		return 'gd';
 	}
-
 
 	public function foldersResize($path_source, $file)
 	{
@@ -299,15 +285,44 @@ class ImageHelper
 						{
 							$this->resize($file, (int) $folder_rule->maxwidth, (int) $folder_rule->maxheight);
 						}
-
 					}
-
 				}
 			}
-
 		}
 	}
 
+	/**
+	 * @param         $file
+	 * @param   null  $widthFit
+	 * @param   null  $heightFit
+	 */
+	public function fit($file, $widthFit = null, $heightFit = null)
+	{
+		if (is_null($widthFit))
+		{
+			$maxWidth = (int) QuantummanagerHelper::getParamsComponentValue('rezizemaxwidth', 1920);
+		}
+		else
+		{
+			$maxWidth = (int) $widthFit;
+		}
+
+		if (is_null($heightFit))
+		{
+			$maxHeight = (int) QuantummanagerHelper::getParamsComponentValue('rezizemaxwidth', 1920);
+		}
+		else
+		{
+			$maxHeight = (int) $heightFit;
+		}
+
+		$manager = Manager::getInstance(['driver' => $this->getNameDriver()]);
+		$manager
+			->read($file)
+			->cover($maxWidth, $maxHeight)
+			->save($file);
+
+	}
 
 	/**
 	 * @param         $file
@@ -316,9 +331,6 @@ class ImageHelper
 	 */
 	public function resize($file, $widthFit = null, $heightFit = null)
 	{
-		list($width, $height, $type, $attr) = getimagesize($file);
-		$newWidth  = $width;
-		$newHeight = $height;
 
 		if (is_null($widthFit))
 		{
@@ -340,15 +352,67 @@ class ImageHelper
 
 		$manager = Manager::getInstance(['driver' => $this->getNameDriver()]);
 		$manager
-			->make($file)
-			->resize($maxWidth, $maxHeight, function ($constraint) {
-				$constraint->aspectRatio();
-			})
+			->read($file)
+			->resize($maxWidth, $maxHeight)
 			->resizeCanvas($maxWidth, $maxHeight)
 			->save($file);
 
 	}
 
+	/**
+	 * @param $file
+	 */
+	public function resizeWatermark($file)
+	{
+		try
+		{
+
+			$fileWatermark = JPATH_SITE . DIRECTORY_SEPARATOR . QuantummanagerHelper::getParamsComponentValue('overlayfile');
+			$fileWatermark = MediaHelper::getCleanMediaFieldValue($fileWatermark);
+			$position      = QuantummanagerHelper::getParamsComponentValue('overlaypos', 'bottom-right');
+			$padding       = QuantummanagerHelper::getParamsComponentValue('overlaypadding', 10);
+
+			if (file_exists($file) && file_exists($fileWatermark))
+			{
+
+				$manager = Manager::getInstance(['driver' => $this->getNameDriver()]);
+				$image   = $manager->read($file);
+
+				$managerForWatermark = Manager::getInstance(['driver' => $this->getNameDriver()]);
+				$watermark           = $managerForWatermark->read($fileWatermark);
+
+				$logoWidth   = $watermark->width();
+				$logoHeight  = $watermark->height();
+				$imageWidth  = $image->width();
+				$imageHeight = $image->height();
+
+				if ((int) QuantummanagerHelper::getParamsComponentValue('overlaypercent', 0))
+				{
+					//сжимаем водяной знак по процентному соотношению от изображения на который накладывается
+					$precent       = (double) QuantummanagerHelper::getParamsComponentValue('overlaypercentvalue', 10);
+					$logoWidthMax  = $imageWidth / 100 * $precent;
+					$logoHeightMax = $imageHeight / 100 * $precent;
+					$watermark->scale((int) $logoWidthMax, (int) $logoHeightMax);
+				}
+
+				if ($logoWidth > $imageWidth && $logoHeight > $imageHeight)
+				{
+					return false;
+				}
+
+				$image->place($watermark, $position, $padding, $padding);
+				$image->save($file);
+
+			}
+
+
+		}
+		catch (Exception $e)
+		{
+			echo $e->getMessage();
+		}
+
+	}
 
 	/**
 	 * @param $fileSource
@@ -387,7 +451,7 @@ class ImageHelper
 				{
 					$manager = Manager::getInstance(['driver' => $this->getNameDriver()]);
 					$manager
-						->make($fileSource)
+						->read($fileSource)
 						->rotate($angle)
 						->save($fileSource);
 				}
@@ -395,36 +459,6 @@ class ImageHelper
 		}
 
 	}
-
-
-	/**
-	 * @param $fileSource
-	 */
-	public function originalSave($fileSource)
-	{
-		try
-		{
-			$path     = explode(DIRECTORY_SEPARATOR, $fileSource);
-			$file     = array_pop($path);
-			$pathSave = implode(DIRECTORY_SEPARATOR, $path) . DIRECTORY_SEPARATOR . '_original';
-
-			if (!file_exists($pathSave))
-			{
-				Folder::create($pathSave);
-			}
-
-			if (!file_exists($pathSave . DIRECTORY_SEPARATOR . $file))
-			{
-				File::copy($fileSource, $pathSave . DIRECTORY_SEPARATOR . $file);
-			}
-
-		}
-		catch (Exception $e)
-		{
-			echo $e->getMessage();
-		}
-	}
-
 
 	/**
 	 * @param $file
@@ -444,7 +478,7 @@ class ImageHelper
 				return false;
 			}
 
-			$input   = \Joomla\CMS\Factory::getApplication()->input;
+			$input   = Factory::getApplication()->getInput();
 			$filters = $input->getString('filters', '');
 			if (!empty($filters))
 			{
@@ -452,8 +486,7 @@ class ImageHelper
 				if (is_array($filters))
 				{
 					$manager = Manager::getInstance(['driver' => $this->getNameDriver()]);
-					$manager = $manager->make($file);
-
+					$manager = $manager->read($file);
 
 					if (isset($filters['compression']))
 					{
@@ -461,11 +494,11 @@ class ImageHelper
 						{
 							if (in_array($info['extension'], ['jpg', 'jpeg']))
 							{
-								$manager = $manager->encode('jpg', (int) $filters['compression']);
-								$manager->save($file, (int) $filters['compression']);
+								$manager = $manager->toJpeg((int) $filters['compression']);
+								$manager->save($file);
 
 								$manager = Manager::getInstance(['driver' => $this->getNameDriver()]);
-								$manager = $manager->make($file);
+								$manager = $manager->read($file);
 							}
 						}
 					}
@@ -504,72 +537,6 @@ class ImageHelper
 		}
 	}
 
-
-	/**
-	 * @param $file
-	 */
-	public function reloadCache($file)
-	{
-		try
-		{
-			$cacheSource = JPATH_ROOT . DIRECTORY_SEPARATOR . 'administrator/cache/com_quantummanager';
-			$cache       = $cacheSource . DIRECTORY_SEPARATOR . str_replace(JPATH_SITE . DIRECTORY_SEPARATOR, '', $file);
-			if (file_exists($cache))
-			{
-				File::delete($cache);
-			}
-		}
-		catch (Exception $e)
-		{
-			echo $e->getMessage();
-		}
-	}
-
-
-	/**
-	 *
-	 * @return string
-	 *
-	 * @since version
-	 */
-	public function getNameDriver()
-	{
-		if (extension_loaded('imagick'))
-		{
-			return 'imagick';
-		}
-
-		return 'gd';
-	}
-
-
-	/**
-	 * @param $file
-	 */
-	public function saveExif($file)
-	{
-		if (!empty($this->exifs))
-		{
-			return;
-		}
-
-		$exifSave = (int) QuantummanagerHelper::getParamsComponentValue('exifsave', 0);
-		if ($exifSave)
-		{
-			$error_reporting = error_reporting();
-			error_reporting($error_reporting & ~E_DEPRECATED);
-
-			JLoader::register('JPel', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jpel' . DIRECTORY_SEPARATOR . 'jpel.php');
-			$fi = \JPel::instance($file);
-			if ($fi)
-			{
-				$this->exifs = $fi->getExif();
-			}
-		}
-
-	}
-
-
 	/**
 	 * @param $file
 	 */
@@ -596,6 +563,26 @@ class ImageHelper
 			}
 		}
 
+	}
+
+	/**
+	 * @param $file
+	 */
+	public function reloadCache($file)
+	{
+		try
+		{
+			$cacheSource = JPATH_ROOT . DIRECTORY_SEPARATOR . 'administrator/cache/com_quantummanager';
+			$cache       = $cacheSource . DIRECTORY_SEPARATOR . str_replace(JPATH_SITE . DIRECTORY_SEPARATOR, '', $file);
+			if (file_exists($cache))
+			{
+				File::delete($cache);
+			}
+		}
+		catch (Exception $e)
+		{
+			echo $e->getMessage();
+		}
 	}
 
 }
