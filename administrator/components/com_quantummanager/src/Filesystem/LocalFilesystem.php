@@ -1368,7 +1368,7 @@ class LocalFilesystem
 				if ($fileSize !== 0 && ($fileSize < ((QuantummanagerHelper::getMemoryLimit() * 1024 * 1024) / 2)))
 				{
 					$manager->read($directory . DIRECTORY_SEPARATOR . $file)
-						->resize(null, 320)
+						->scale(null, 320)
 						->save($cache . DIRECTORY_SEPARATOR . $file);
 
 					$app->redirect($siteUrl . 'administrator/cache/com_quantummanager' . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file . '?v=' . mt_rand(111111, 999999));
@@ -1404,7 +1404,7 @@ class LocalFilesystem
 			if (!file_exists($cache . DIRECTORY_SEPARATOR . $newFile))
 			{
 				$manager->read($directory . DIRECTORY_SEPARATOR . $file)
-					->resize(null, 320)
+					->scale(null, 320)
 					->toJpeg()
 					->save($cache . DIRECTORY_SEPARATOR . $newFile);
 			}
