@@ -1553,7 +1553,6 @@ class LocalFilesystem
 	public static function renameDirectory($path, $scope, $oldName, $name = '')
 	{
 		$path   = QuantummanagerHelper::preparePath($path, false, $scope);
-		$app    = Factory::getApplication();
 		$output = [
 			'status' => 'fail'
 		];
@@ -1566,7 +1565,7 @@ class LocalFilesystem
 		}
 		else
 		{
-			$nameSafe = $name;
+			$nameSafe = preg_replace("#[\"\'\%\<\>]#", '', strip_tags($name));
 		}
 
 		if (rename(JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $oldName, JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $nameSafe))
