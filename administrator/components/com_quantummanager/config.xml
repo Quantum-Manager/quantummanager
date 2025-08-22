@@ -5,7 +5,7 @@
 
 		<field type="hidden"
 			   name="helpURL"
-			   default="https://norrnext.com/docs/joomla-extensions/quantum-manager"
+			   default="https://docs.norrnext.com/quantum-manager/"
 		/>
 
 		<field type="note"

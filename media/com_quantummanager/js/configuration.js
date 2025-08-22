@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded' ,function () {
             let fmIndex = parseInt(quantumAll[i].getAttribute('data-index'));
             fmIndex = parseInt(quantumAll[i].getAttribute('data-index'));
             QuantummanagerLists[fmIndex].Quantumtoolbar.buttonAdd('conf', 'right', 'file-other', 'hidden-label', QuantumtoolbarLang.buttonOptions , 'quantummanager-icon-settings', {}, function (ev) {
-                location.href = '/administrator/index.php?option=com_config&view=component&component=com_quantummanager';
+                location.href = Joomla.getOptions('system.paths').root + '/administrator/index.php?option=com_config&view=component&component=com_quantummanager';
             });
         }
     }, 10);
