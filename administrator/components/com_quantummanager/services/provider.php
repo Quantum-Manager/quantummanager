@@ -24,7 +24,7 @@ use Joomla\Event\DispatcherInterface;
 
 return new class implements ServiceProviderInterface {
 
-	public function register(Container $container)
+	public function register(Container $container): void
 	{
 		$container->set(
 			MVCFactoryInterface::class,

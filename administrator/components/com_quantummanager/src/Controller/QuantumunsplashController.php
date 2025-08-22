@@ -12,14 +12,10 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Http\Transport\CurlTransport;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Component\QuantumManager\Administrator\Filesystem\LocalFilesystem;
 use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
-use Joomla\Filesystem\File;
-use Joomla\Filesystem\Folder;
 use Joomla\Registry\Registry;
 
 /**
