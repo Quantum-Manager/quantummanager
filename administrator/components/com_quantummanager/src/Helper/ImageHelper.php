@@ -40,22 +40,11 @@ use function mb_strpos;
 use function mb_strlen;
 use function str_replace;
 
-/**
- * Class ImageHelper
- */
 class ImageHelper
 {
 
+	private array $exifs = [];
 
-	private $exifs = [];
-
-	/**
-	 * @param          $path_source
-	 * @param          $file
-	 * @param   array  $options
-	 *
-	 * @return bool
-	 */
 	public function afterUpload($path_source, $file, $options = [])
 	{
 		$info = pathinfo($file);
@@ -111,9 +100,6 @@ class ImageHelper
 
 	}
 
-	/**
-	 * @param $file
-	 */
 	public function saveExif($file)
 	{
 		if (!empty($this->exifs))
@@ -137,9 +123,6 @@ class ImageHelper
 
 	}
 
-	/**
-	 * @param $fileSource
-	 */
 	public function originalSave($fileSource)
 	{
 		try
@@ -165,11 +148,6 @@ class ImageHelper
 		}
 	}
 
-	/**
-	 * @param         $file
-	 * @param   null  $widthFit
-	 * @param   null  $heightFit
-	 */
 	public function bestFit($file, $widthFit = null, $heightFit = null)
 	{
 		list($width, $height, $type, $attr) = getimagesize($file);
@@ -217,12 +195,6 @@ class ImageHelper
 
 	}
 
-	/**
-	 *
-	 * @return string
-	 *
-	 * @since version
-	 */
 	public function getNameDriver()
 	{
 		if (extension_loaded('imagick'))
@@ -291,11 +263,6 @@ class ImageHelper
 		}
 	}
 
-	/**
-	 * @param         $file
-	 * @param   null  $widthFit
-	 * @param   null  $heightFit
-	 */
 	public function fit($file, $widthFit = null, $heightFit = null)
 	{
 		if (is_null($widthFit))
@@ -324,11 +291,6 @@ class ImageHelper
 
 	}
 
-	/**
-	 * @param         $file
-	 * @param   null  $widthFit
-	 * @param   null  $heightFit
-	 */
 	public function resize($file, $widthFit = null, $heightFit = null)
 	{
 
@@ -359,9 +321,6 @@ class ImageHelper
 
 	}
 
-	/**
-	 * @param $file
-	 */
 	public function resizeWatermark($file)
 	{
 		try
@@ -414,9 +373,6 @@ class ImageHelper
 
 	}
 
-	/**
-	 * @param $fileSource
-	 */
 	public function rotateExif($fileSource)
 	{
 		if (function_exists('exif_read_data'))
@@ -460,13 +416,6 @@ class ImageHelper
 
 	}
 
-	/**
-	 * @param $file
-	 *
-	 * @return bool
-	 *
-	 * @since version
-	 */
 	public function otherFilters($file)
 	{
 		try
@@ -537,9 +486,6 @@ class ImageHelper
 		}
 	}
 
-	/**
-	 * @param $file
-	 */
 	public function writeExif($file)
 	{
 		if (empty($this->exifs))
@@ -565,9 +511,6 @@ class ImageHelper
 
 	}
 
-	/**
-	 * @param $file
-	 */
 	public function reloadCache($file)
 	{
 		try

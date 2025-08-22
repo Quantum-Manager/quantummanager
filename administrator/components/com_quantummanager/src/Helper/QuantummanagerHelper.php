@@ -21,56 +21,26 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Version;
+use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 use Joomla\Filesystem\Path;
 use Joomla\Registry\Registry;
 use stdClass;
 
-/**
- * Quantummanager helper.
- *
- * @package     A package name
- * @since       1.0
- */
 class QuantummanagerHelper
 {
 
-	/**
-	 * @var null
-	 * @since version
-	 */
-	protected static $cacheParams = null;
+	protected static ?Registry $cacheParams = null;
 
-	/**
-	 * @var string
-	 * @since version
-	 */
-	public static $cachePathRoot = [];
+	public static array $cachePathRoot = [];
 
-	/**
-	 * @var string
-	 * @since version
-	 */
-	public static $cacheMimeType = '';
+	public static string $cacheMimeType = '';
 
+	public static string $cacheVersion = '';
 
-	/**
-	 * @var null
-	 */
-	public static $cacheVersion = null;
+	public static array $listScriptsInsert = [];
 
-
-	/**
-	 * @var array
-	 */
-	public static $listScriptsInsert = [];
-
-
-	/**
-	 * @var array
-	 * @since version
-	 */
-	public static $forbiddenExtensions = [
+	public static array $forbiddenExtensions = [
 		'php',
 		'phps',
 		'pht',
@@ -90,14 +60,7 @@ class QuantummanagerHelper
 		'htaccess'
 	];
 
-
-	/**
-	 * @param $name
-	 * @param $mimeType
-	 *
-	 * @return bool
-	 */
-	public static function checkFile($name, $mimeType)
+	public static function checkFile(string $name, string $mimeType): bool
 	{
 		try
 		{
@@ -157,11 +120,7 @@ class QuantummanagerHelper
 		}
 	}
 
-
-	/**
-	 * @param $file
-	 */
-	public static function filterFile($file)
+	public static function filterFile($file): void
 	{
 		try
 		{
@@ -180,10 +139,7 @@ class QuantummanagerHelper
 		}
 	}
 
-	/**
-	 * @return CMSObject
-	 */
-	public static function getActions()
+	public static function getActions(): CMSObject
 	{
 		$user      = Factory::getUser();
 		$result    = new CMSObject;
@@ -201,16 +157,7 @@ class QuantummanagerHelper
 		return $result;
 	}
 
-
-	/**
-	 * @param         $path
-	 * @param         $scopeName
-	 * @param   bool  $pathUnix
-	 *
-	 * @return string|string[]
-	 * @throws Exception
-	 */
-	public static function preparePathRoot($path, $scopeName, $pathUnix = false)
+	public static function preparePathRoot(string $path, string $scopeName, bool $pathUnix = false): array|string
 	{
 		$path       = trim($path);
 		$pathConfig = '';
@@ -246,19 +193,7 @@ class QuantummanagerHelper
 		return $path;
 	}
 
-
-	/**
-	 * @param           $path
-	 * @param   bool    $host
-	 * @param   string  $scopeName
-	 * @param   bool    $pathUnix
-	 *
-	 * @return string
-	 *
-	 * @throws Exception
-	 * @since version
-	 */
-	public static function preparePath($path, $host = false, $scopeName = '', $pathUnix = false)
+	public static function preparePath(string $path, bool $host = false, string $scopeName = '', bool $pathUnix = false): string
 	{
 		$path       = trim($path);
 		$pathConfig = '';
@@ -412,11 +347,7 @@ class QuantummanagerHelper
 		return trim($path, DIRECTORY_SEPARATOR);
 	}
 
-
-	/**
-	 * @return mixed|string
-	 */
-	public static function getFolderRoot()
+	public static function getFolderRoot(): string
 	{
 		$componentParams = ComponentHelper::getParams('com_quantummanager');
 		$folderRoot      = $componentParams->get('path', 'images');
@@ -429,17 +360,7 @@ class QuantummanagerHelper
 		return $folderRoot;
 	}
 
-
-	/**
-	 * @param           $name
-	 * @param   string  $default
-	 * @param   bool    $withProfiles
-	 *
-	 * @return mixed|string
-	 *
-	 * @since version
-	 */
-	public static function getParamsComponentValue($name, $default = '', $withProfiles = true)
+	public static function getParamsComponentValue(string $name, mixed $default = '', bool $withProfiles = true): mixed
 	{
 		$profiles = static::getComponentsParams('profiles', '');
 		$value    = static::getComponentsParams($name, $default);
@@ -469,8 +390,7 @@ class QuantummanagerHelper
 		return $value;
 	}
 
-
-	public static function loadLang()
+	public static function loadLang(): void
 	{
 		$lang         = Factory::getLanguage();
 		$extension    = 'com_quantummanager';
@@ -479,16 +399,7 @@ class QuantummanagerHelper
 		$lang->load($extension, $base_dir, $language_tag, true);
 	}
 
-
-	/**
-	 * @param        $bytes
-	 * @param   int  $decimals
-	 *
-	 * @return string
-	 *
-	 * @since version
-	 */
-	public static function formatFileSize($bytes, $decimals = 2)
+	public static function formatFileSize(string $bytes, int $decimals = 2): string
 	{
 		$size   = array('b', 'kb', 'Mb', 'Gb', 'Tb', 'Pb', 'Eb', 'Zb', 'Yb');
 		$factor = floor((strlen($bytes) - 1) / 3);
@@ -496,15 +407,7 @@ class QuantummanagerHelper
 		return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . " " . @$size[$factor];
 	}
 
-
-	/**
-	 * @param $scopeName
-	 *
-	 *
-	 * @throws Exception
-	 * @since version
-	 */
-	public static function getScope($scopeName)
+	public static function getScope(string $scopeName)
 	{
 
 		self::checkScopes();
@@ -535,15 +438,7 @@ class QuantummanagerHelper
 		return $find;
 	}
 
-
-	/**
-	 * @param   int  $enabled
-	 *
-	 * @return array|object
-	 *
-	 * @since version
-	 */
-	public static function getAllScope($enabled = 1)
+	public static function getAllScope(int $enabled = 1): object|array
 	{
 		self::checkScopes();
 
@@ -625,8 +520,7 @@ class QuantummanagerHelper
 		return $scopesOutput;
 	}
 
-
-	public static function checkScopes()
+	public static function checkScopes(): void
 	{
 		$scopesCustom = self::getParamsComponentValue('scopescustom', [], false);
 		$scopeFail    = false;
@@ -648,14 +542,7 @@ class QuantummanagerHelper
 
 	}
 
-
-	/**
-	 *
-	 * @return array
-	 *
-	 * @since version
-	 */
-	public static function getDefaultScopes()
+	public static function getDefaultScopes(): array
 	{
 		return [
 			(object) [
@@ -685,15 +572,7 @@ class QuantummanagerHelper
 		];
 	}
 
-
-	/**
-	 * @param $name
-	 * @param $value
-	 *
-	 *
-	 * @since version
-	 */
-	public static function getComponentsParams($name, $default = null)
+	public static function getComponentsParams(string $name, mixed $default = null)
 	{
 		if (static::$cacheParams !== null)
 		{
@@ -710,15 +589,7 @@ class QuantummanagerHelper
 		return static::$cacheParams->get($name, $default);
 	}
 
-
-	/**
-	 * @param $name
-	 * @param $value
-	 *
-	 *
-	 * @since version
-	 */
-	public static function setComponentsParams($name, $value)
+	public static function setComponentsParams(string $name, mixed $value)
 	{
 		$params = ComponentHelper::getParams('com_quantummanager');
 		$params->set($name, $value);
@@ -747,18 +618,7 @@ class QuantummanagerHelper
 
 	}
 
-
-	/**
-	 * Clean the cache
-	 *
-	 * @param   string   $group      The cache group
-	 * @param   integer  $client_id  The ID of the client
-	 *
-	 * @return  void
-	 *
-	 * @since   3.2
-	 */
-	public static function cleanCache($group = null, $client_id = 0)
+	public static function cleanCache(string $group = null, int $client_id = 0): void
 	{
 		$conf = Factory::getConfig();
 
@@ -771,30 +631,7 @@ class QuantummanagerHelper
 		$cache->clean();
 	}
 
-
-	/**
-	 * Checks an uploaded for suspicious naming and potential PHP contents which could indicate a hacking attempt.
-	 *
-	 * The options you can define are:
-	 * null_byte                   Prevent files with a null byte in their name (buffer overflow attack)
-	 * forbidden_extensions        Do not allow these strings anywhere in the file's extension
-	 * php_tag_in_content          Do not allow `<?php` tag in content
-	 * shorttag_in_content         Do not allow short tag `<?` in content
-	 * shorttag_extensions         Which file extensions to scan for short tags in content
-	 * fobidden_ext_in_content     Do not allow forbidden_extensions anywhere in content
-	 * php_ext_content_extensions  Which file extensions to scan for .php in content
-	 *
-	 * This code is an adaptation and improvement of Admin Tools' UploadShield feature,
-	 * relicensed and contributed by its author.
-	 *
-	 * @param   array  $file     An uploaded file descriptor
-	 * @param   array  $options  The scanner options (see the code for details)
-	 *
-	 * @return  boolean  True of the file is safe
-	 *
-	 * @since   3.4
-	 */
-	public static function isSafeFile($file, $options = array())
+	public static function isSafeFile(array $file, array $options = []): bool
 	{
 		$defaultOptions = array(
 
@@ -1028,17 +865,7 @@ class QuantummanagerHelper
 		return true;
 	}
 
-
-	/**
-	 * Method to decode a file data array.
-	 *
-	 * @param   array  $data  The data array to decode.
-	 *
-	 * @return  array
-	 *
-	 * @since   3.4
-	 */
-	protected static function decodeFileData(array $data)
+	protected static function decodeFileData(array $data): array
 	{
 		$result = array();
 
@@ -1055,15 +882,7 @@ class QuantummanagerHelper
 		return array('name' => $data[0], 'type' => $data[1], 'tmp_name' => $data[2], 'error' => $data[3], 'size' => $data[4]);
 	}
 
-
-	/**
-	 * @param $value
-	 *
-	 * @return mixed
-	 *
-	 * @since version
-	 */
-	public static function escapeJsonString($value)
+	public static function escapeJsonString(string $value): string
 	{
 		$escapers     = array("\\", "/", "\"", "\n", "\r", "\t", "\x08", "\x0c");
 		$replacements = array("\\\\", "\\/", "\\\"", "\\n", "\\r", "\\t", "\\f", "\\b");
@@ -1071,11 +890,7 @@ class QuantummanagerHelper
 		return str_replace($escapers, $replacements, $value);
 	}
 
-
-	/**
-	 * @return int
-	 */
-	public static function getMemoryLimit()
+	public static function getMemoryLimit(): int
 	{
 		$memory_limit = ini_get('memory_limit');
 
@@ -1099,11 +914,7 @@ class QuantummanagerHelper
 		return (int) $memory_limit;
 	}
 
-
-	/**
-	 * @return bool
-	 */
-	public static function isUserAdmin()
+	public static function isUserAdmin(): bool
 	{
 		$groups = Factory::getUser()->groups;
 		if (in_array('2', $groups) || in_array('8', $groups))
@@ -1116,8 +927,7 @@ class QuantummanagerHelper
 		}
 	}
 
-
-	public static function scriptInsertOnPage($name, $script)
+	public static function scriptInsertOnPage(string $name, string $script): void
 	{
 		if (!in_array($name, self::$listScriptsInsert))
 		{
@@ -1126,10 +936,9 @@ class QuantummanagerHelper
 		}
 	}
 
-
-	public static function getVersion()
+	public static function getVersion(): string
 	{
-		if (!is_null(self::$cacheVersion))
+		if (!empty(self::$cacheVersion))
 		{
 			return self::$cacheVersion;
 		}
@@ -1144,16 +953,14 @@ class QuantummanagerHelper
 		return self::$cacheVersion;
 	}
 
-
-	public static function setHeadersNoCache()
+	public static function setHeadersNoCache(): void
 	{
 		$app = Factory::getApplication();
 		$app->setHeader('Cache-Control', 'no-store');
 		$app->sendHeaders();
 	}
 
-
-	public static function isJoomla4()
+	public static function isJoomla4(): bool
 	{
 		if (version_compare((new Version())->getShortVersion(), '4.0', '<'))
 		{
@@ -1163,8 +970,7 @@ class QuantummanagerHelper
 		return true;
 	}
 
-
-	public static function fileUploadMaxSize()
+	public static function fileUploadMaxSize(): float|int
 	{
 		static $max_size = -1;
 
@@ -1189,8 +995,7 @@ class QuantummanagerHelper
 		return $max_size;
 	}
 
-
-	public static function parseSize($size)
+	public static function parseSize($size): float
 	{
 		$unit = preg_replace('/[^bkmgtpezy]/i', '', $size); // Remove the non-unit characters from the size.
 		$size = preg_replace('/[^0-9\.]/', '', $size); // Remove the non-numeric characters from the size.
@@ -1203,6 +1008,30 @@ class QuantummanagerHelper
 		{
 			return round($size);
 		}
+	}
+
+	public static function prepareFileExs(string $exs): string
+	{
+		$regex = ['#[^A-Za-z0-9]#'];
+
+		return mb_strtolower(preg_replace($regex, '', $exs));
+	}
+
+	public static function prepareFileName(string $name): string
+	{
+		$lang = Factory::getLanguage();
+
+		if (!(int) QuantummanagerHelper::getParamsComponentValue('translit', 0))
+		{
+			$nameForSafe = preg_replace('#[\-]{2,}#isu', '-', str_replace(' ', '-', $name));
+			$nameForSafe = File::makeSafe($lang->transliterate($nameForSafe), ['#^\.#', '#\040#']);
+		}
+		else
+		{
+			$nameForSafe = preg_replace("#[\"\'\%\<\>]#", '', strip_tags($name));
+		}
+
+		return $nameForSafe;
 	}
 
 }

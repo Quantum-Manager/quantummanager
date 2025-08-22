@@ -41,18 +41,17 @@ window.Qantumupload = function (Filemanager, UploadElement, options) {
         Filemanager.element.setAttribute('data-drag-drop-title', QuantumuploadLang.dragDrop);
 
         if (
-            (Filemanager.data.scope === undefined ||
-                Filemanager.data.scope === '') &&
-            (this.scope !== undefined && this.scope !== null)
+            this.scope !== undefined &&
+            this.scope !== null &&
+            this.scope !== ''
         ) {
             Filemanager.data.scope = this.scope;
         }
 
         if (
-            (Filemanager.data.path === undefined ||
-                Filemanager.data.path === '') &&
-            (this.path !== undefined && this.path !== null)
-
+            this.path !== undefined &&
+            this.path !== null &&
+            this.path !== ''
         ) {
             Filemanager.data.path = this.path;
         }

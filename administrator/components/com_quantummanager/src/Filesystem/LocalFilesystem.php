@@ -674,7 +674,7 @@ class LocalFilesystem
 					'dateM'       => $fileDate,
 				];
 
-				if (in_array(strtolower($exs), ['jpg', 'png', 'jpeg', 'gif', 'svg', 'webp']))
+				if (in_array(strtolower($exs), ['jpg', 'png', 'jpeg', 'gif', 'webp']))
 				{
 					$cache_file      = static::getPreviewImageFromFile('administrator/cache/com_quantummanager/' . $path . '/' . $file);
 					$cache_file_full = Path::clean(JPATH_ROOT . DIRECTORY_SEPARATOR . $cache_file);
@@ -687,11 +687,6 @@ class LocalFilesystem
 					{
 						$fileMeta['fileP'] = 'index.php?option=com_quantummanager&task=quantumviewfiles.generatePreviewImage&scope=' . $scopeName . '&file=' . $file;
 					}
-				}
-
-				if (strtolower($exs) == 'svg')
-				{
-					$fileMeta['fileP'] = Uri::root(false) . $path . '/' . $file;
 				}
 
 				$filesOutput[] = $fileMeta;
@@ -1183,20 +1178,9 @@ class LocalFilesystem
 			}
 			else
 			{
-				$lang      = Factory::getLanguage();
-				$nameSplit = explode('.', $file['name']);
-				$nameExs   = mb_strtolower(array_pop($nameSplit));
-
-				if (!(int) QuantummanagerHelper::getParamsComponentValue('translit', 0))
-				{
-					$nameForSafe = preg_replace('#[\-]{2,}#isu', '-', str_replace(' ', '-', implode('_', $nameSplit)));
-					$nameForSafe = File::makeSafe($lang->transliterate($nameForSafe), ['#^\.#', '#\040#']);
-				}
-				else
-				{
-					$nameForSafe = implode('.', $nameSplit);
-				}
-
+				$nameSplit       = explode('.', $file['name']);
+				$nameExs         = QuantummanagerHelper::prepareFileExs(array_pop($nameSplit));
+				$nameForSafe     = QuantummanagerHelper::prepareFileName(implode('.', $nameSplit));
 				$maxSizeFileName = (int) QuantummanagerHelper::getParamsComponentValue('maxsizefilename', 63);
 
 				if (mb_strlen($nameForSafe) > $maxSizeFileName && $maxSizeFileName > 0)
@@ -1214,7 +1198,6 @@ class LocalFilesystem
 				}
 
 				$uploadedFileName = $nameSafe . '.' . $nameExs;
-				$exs              = explode(',', 'jpg,jpeg,png,gif,webp');
 				$type             = preg_replace("/\/.*?$/isu", '', $file['type']);
 				$data['name']     = isset($data['name']) ? $data['name'] : '';
 				$path_source      = QuantummanagerHelper::preparePathRoot($data['path'], $data['scope']);
@@ -1412,11 +1395,6 @@ class LocalFilesystem
 			$app->redirect($siteUrl . 'administrator/cache/com_quantummanager' . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $newFile . '?v=' . mt_rand(111111, 999999));
 		}
 
-		if ($exs === 'svg')
-		{
-			$app->redirect($siteUrl . $path . DIRECTORY_SEPARATOR . $file . '?=' . mt_rand(111111, 999999));
-		}
-
 		$mapFileColors = include implode(DIRECTORY_SEPARATOR, [JPATH_ROOT, 'administrator', 'components', 'com_quantummanager', 'layouts', 'mapfilescolors.php']);
 		$colors        = $mapFileColors['default'];
 
@@ -1535,23 +1513,12 @@ class LocalFilesystem
 	public static function renameFile($path, $scope, $file, $name = '')
 	{
 		$path      = QuantummanagerHelper::preparePath($path, false, $scope);
-		$app       = Factory::getApplication();
 		$splitFile = explode('.', $file);
-		$exs       = mb_strtolower(array_pop($splitFile));
+		$exs       = QuantummanagerHelper::prepareFileExs(array_pop($splitFile));
+		$nameSafe  = QuantummanagerHelper::prepareFileName($name);
 		$output    = [
 			'status' => 'fail'
 		];
-
-		$lang = Factory::getLanguage();
-
-		if (!(int) QuantummanagerHelper::getParamsComponentValue('translit', 0))
-		{
-			$nameSafe = File::makeSafe($lang->transliterate($name), ['#^\.#', '#\040#']);
-		}
-		else
-		{
-			$nameSafe = $name;
-		}
 
 		if (!in_array($exs, QuantummanagerHelper::$forbiddenExtensions) && file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file))
 		{
@@ -1625,10 +1592,14 @@ class LocalFilesystem
 	public static function getImageForCrop($path, $scope, $file)
 	{
 		$path           = QuantummanagerHelper::preparePath($path, false, $scope);
-		$originalresize = (int) QuantummanagerHelper::getParamsComponentValue('originalresize', 0);
+		$originalResize = (int) QuantummanagerHelper::getParamsComponentValue('originalresize', 0);
 		$output         = [];
 
-		if ($originalresize)
+		$nameSplit       = explode('.', $file);
+		$nameExs         = QuantummanagerHelper::prepareFileExs(array_pop($nameSplit));
+		$nameForSafe     = QuantummanagerHelper::prepareFileName(implode('.', $nameSplit));
+
+		if ($originalResize)
 		{
 			if (file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . '_original' . DIRECTORY_SEPARATOR . $file))
 			{
@@ -1636,12 +1607,12 @@ class LocalFilesystem
 			}
 			else
 			{
-				$output['path'] = $path . '/' . $file;
+				$output['path'] = $path . '/' . implode('.', [$nameForSafe, $nameExs]);
 			}
 		}
 		else
 		{
-			$output['path'] = $path . '/' . $file;
+			$output['path'] = $path . '/' . implode('.', [$nameForSafe, $nameExs]);
 		}
 
 		return json_encode($output);

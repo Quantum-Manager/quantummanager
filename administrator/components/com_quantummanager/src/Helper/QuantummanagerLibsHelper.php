@@ -14,28 +14,12 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Version;
 
-/**
- * Quantummanager helper.
- *
- * @package     A package name
- * @since       1.0
- */
 class QuantummanagerLibsHelper
 {
 
-	/**
-	 * @var bool
-	 * @since version
-	 */
-	private static $flagScriptHead = false;
+	private static bool $flagScriptHead = false;
 
-
-	/**
-	 *
-	 *
-	 * @since version
-	 */
-	public static function includeScriptHead()
+	public static function includeScriptHead(): void
 	{
 		if (!self::$flagScriptHead)
 		{
@@ -46,11 +30,7 @@ class QuantummanagerLibsHelper
 		}
 	}
 
-
-	/**
-	 * @param $includes
-	 */
-	public static function includes($includes)
+	public static function includes($includes): void
 	{
 		if (is_array($includes))
 		{
@@ -72,8 +52,7 @@ class QuantummanagerLibsHelper
 		}
 	}
 
-
-	public static function core()
+	public static function core(): void
 	{
 		HTMLHelper::_('stylesheet', 'com_quantummanager/main.css', [
 			'version'  => filemtime(__FILE__),
@@ -88,8 +67,7 @@ class QuantummanagerLibsHelper
 		static::theme();
 	}
 
-
-	public static function theme()
+	public static function theme(): void
 	{
 
 		HTMLHelper::_('stylesheet', 'com_quantummanager/joomla.css', [
@@ -114,8 +92,7 @@ class QuantummanagerLibsHelper
 		}
 	}
 
-
-	public static function utils()
+	public static function utils(): void
 	{
 		HTMLHelper::_('script', 'com_quantummanager/utils.js', [
 			'version'  => filemtime(__FILE__),
@@ -123,8 +100,7 @@ class QuantummanagerLibsHelper
 		]);
 	}
 
-
-	public static function alert()
+	public static function alert(): void
 	{
 		HTMLHelper::_('script', 'com_quantummanager/jsalert.min.js', [
 			'version'  => filemtime(__FILE__),
@@ -132,8 +108,7 @@ class QuantummanagerLibsHelper
 		]);
 	}
 
-
-	public static function contextmenu()
+	public static function contextmenu(): void
 	{
 		HTMLHelper::_('stylesheet', 'com_quantummanager/contextual.css', [
 			'version'  => filemtime(__FILE__),
@@ -146,8 +121,7 @@ class QuantummanagerLibsHelper
 		]);
 	}
 
-
-	public static function clipboard()
+	public static function clipboard(): void
 	{
 		HTMLHelper::_('script', 'com_quantummanager/clipboard.min.js', [
 			'version'  => filemtime(__FILE__),
@@ -155,8 +129,7 @@ class QuantummanagerLibsHelper
 		]);
 	}
 
-
-	public static function notify()
+	public static function notify(): void
 	{
 		HTMLHelper::_('stylesheet', 'com_quantummanager/notify.css', [
 			'version'  => filemtime(__FILE__),
@@ -169,8 +142,7 @@ class QuantummanagerLibsHelper
 		]);
 	}
 
-
-	public static function lazyload()
+	public static function lazyload(): void
 	{
 		HTMLHelper::_('script', 'com_quantummanager/lazyload.js', [
 			'version'  => filemtime(__FILE__),
@@ -178,8 +150,7 @@ class QuantummanagerLibsHelper
 		]);
 	}
 
-
-	public static function dragSelect()
+	public static function dragSelect(): void
 	{
 		HTMLHelper::_('script', 'com_quantummanager/ds.min.js', [
 			'version'  => filemtime(__FILE__),
@@ -187,8 +158,7 @@ class QuantummanagerLibsHelper
 		]);
 	}
 
-
-	public static function dynamicGrid()
+	public static function dynamicGrid(): void
 	{
 		HTMLHelper::_('script', 'com_quantummanager/masonry.min.js', [
 			'version'  => filemtime(__FILE__),
@@ -196,8 +166,7 @@ class QuantummanagerLibsHelper
 		]);
 	}
 
-
-	public static function split()
+	public static function split(): void
 	{
 		HTMLHelper::_('script', 'com_quantummanager/split.min.js', [
 			'version'  => filemtime(__FILE__),
@@ -205,8 +174,7 @@ class QuantummanagerLibsHelper
 		]);
 	}
 
-
-	public static function imageEditor()
+	public static function imageEditor(): void
 	{
 		HTMLHelper::_('stylesheet', 'com_quantummanager/cropperjs.min.css', [
 			'version'  => filemtime(__FILE__),
