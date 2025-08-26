@@ -924,14 +924,13 @@ class LocalFilesystem
 			}
 			else
 			{
-				if (!isset($data['name']))
+				if (!isset($data['name']) || !isset($data['exs']))
 				{
 					return json_encode(['fail']);
 				}
 
-				$nameSplit        = explode('.', $data['name']);
-				$nameExs          = QuantummanagerHelper::prepareFileExs(array_pop($nameSplit));
-				$nameForSafe      = QuantummanagerHelper::prepareFileName(implode('.', $nameSplit));
+				$nameForSafe      = QuantummanagerHelper::prepareFileName($data['name']);
+				$nameExs          = QuantummanagerHelper::prepareFileExs($data['exs']);
 				$uploadedFileName = $nameForSafe . '.' . $nameExs;
 
 				if (in_array($nameExs, QuantummanagerHelper::$forbiddenExtensions))
