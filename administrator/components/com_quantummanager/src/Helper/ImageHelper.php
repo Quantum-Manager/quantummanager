@@ -148,7 +148,7 @@ class ImageHelper
 			echo $e->getMessage();
 		}
 	}
-
+  
 	public function bestFit(string $file, $widthFit = null, $heightFit = null): void
 	{
 		list($width, $height, $type, $attr) = getimagesize($file);
