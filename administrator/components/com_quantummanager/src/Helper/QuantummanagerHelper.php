@@ -70,7 +70,7 @@ class QuantummanagerHelper
 				$componentParams     = ComponentHelper::getParams('com_quantummanager');
 				self::$cacheMimeType = $componentParams->get('mimetype');
 
-				if (empty(self::$cacheMimeType) || self::$cacheMimeType === null)
+				if (empty(self::$cacheMimeType))
 				{
 					self::$cacheMimeType = file_get_contents(JPATH_SITE . DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, ['administrator', 'components', 'com_quantummanager', 'mimetype.txt']));
 					$componentParams->set('mimetype', self::$cacheMimeType);
@@ -618,7 +618,7 @@ class QuantummanagerHelper
 
 	}
 
-	public static function cleanCache(string $group = null, int $client_id = 0): void
+	public static function cleanCache(?string $group = null, int $client_id = 0): void
 	{
 		$conf = Factory::getConfig();
 

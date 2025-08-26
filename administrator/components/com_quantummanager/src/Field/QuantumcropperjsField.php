@@ -12,49 +12,27 @@ defined('_JEXEC') or die;
 
 use Exception;
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Form\FormField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\Component\QuantumManager\Administrator\Helper\ImageHelper;
 use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
 use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerLibsHelper;
 
-/**
- * Class QuantumcropperjsField
- */
 class QuantumcropperjsField extends QuantumbaseField
 {
 
-	/**
-	 * @var string
-	 */
 	public $type = 'Quantumcropperjs';
 
-	/**
-	 * @var string
-	 */
 	protected $layout = 'quantumcropperjs';
 
-
-	/**
-	 * Allow to override renderer include paths in child fields
-	 *
-	 * @return  array
-	 *
-	 * @since   3.5
-	 */
-	protected function getLayoutPaths()
+	protected function getLayoutPaths(): array
 	{
 		return array_merge(parent::getLayoutPaths(), [
 			JPATH_ROOT . '/administrator/components/com_quantummanager/layouts/fields',
 		]);
 	}
 
-
-	/**
-	 * @return array
-	 */
-	protected function getLayoutData()
+	protected function getLayoutData(): array
 	{
 		$driver = (new ImageHelper())->getNameDriver();
 
@@ -75,8 +53,7 @@ class QuantumcropperjsField extends QuantumbaseField
 		);
 	}
 
-
-	public function getInput()
+	public function getInput(): string
 	{
 		try
 		{

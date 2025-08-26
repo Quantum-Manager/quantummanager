@@ -45,13 +45,13 @@ class ImageHelper
 
 	private array $exifs = [];
 
-	public function afterUpload($path_source, $file, $options = [])
+	public function afterUpload(string $path_source, string $file, array $options = []): void
 	{
 		$info = pathinfo($file);
 
 		if (isset($info['extension']) && (!in_array(mb_strtolower($info['extension']), ['jpg', 'jpeg', 'png', 'webp'])))
 		{
-			return false;
+			return;
 		}
 
 		$defaultOptions = [
@@ -100,7 +100,7 @@ class ImageHelper
 
 	}
 
-	public function saveExif($file)
+	public function saveExif(string $file): void
 	{
 		if (!empty($this->exifs))
 		{
@@ -108,6 +108,7 @@ class ImageHelper
 		}
 
 		$exifSave = (int) QuantummanagerHelper::getParamsComponentValue('exifsave', 0);
+
 		if ($exifSave)
 		{
 			$error_reporting = error_reporting();
@@ -123,7 +124,7 @@ class ImageHelper
 
 	}
 
-	public function originalSave($fileSource)
+	public function originalSave(string $fileSource): void
 	{
 		try
 		{
@@ -147,8 +148,8 @@ class ImageHelper
 			echo $e->getMessage();
 		}
 	}
-
-	public function bestFit($file, $widthFit = null, $heightFit = null)
+  
+	public function bestFit(string $file, $widthFit = null, $heightFit = null): void
 	{
 		list($width, $height, $type, $attr) = getimagesize($file);
 		$newWidth  = $width;
@@ -195,7 +196,7 @@ class ImageHelper
 
 	}
 
-	public function getNameDriver()
+	public function getNameDriver(): string
 	{
 		if (extension_loaded('imagick'))
 		{
@@ -205,7 +206,7 @@ class ImageHelper
 		return 'gd';
 	}
 
-	public function foldersResize($path_source, $file)
+	public function foldersResize(string $path_source, string $file): void
 	{
 		$folders_rules = QuantummanagerHelper::getParamsComponentValue('resizefolders', []);
 		foreach ($folders_rules as $folder_rule)
@@ -263,7 +264,7 @@ class ImageHelper
 		}
 	}
 
-	public function fit($file, $widthFit = null, $heightFit = null)
+	public function fit(string $file, $widthFit = null, $heightFit = null): void
 	{
 		if (is_null($widthFit))
 		{
@@ -288,10 +289,9 @@ class ImageHelper
 			->read($file)
 			->cover($maxWidth, $maxHeight)
 			->save($file);
-
 	}
 
-	public function resize($file, $widthFit = null, $heightFit = null)
+	public function resize(string $file, $widthFit = null, $heightFit = null): void
 	{
 
 		if (is_null($widthFit))
@@ -318,10 +318,9 @@ class ImageHelper
 			->resize($maxWidth, $maxHeight)
 			->resizeCanvas($maxWidth, $maxHeight)
 			->save($file);
-
 	}
 
-	public function resizeWatermark($file)
+	public function resizeWatermark(string $file): void
 	{
 		try
 		{
@@ -356,14 +355,13 @@ class ImageHelper
 
 				if ($logoWidth > $imageWidth && $logoHeight > $imageHeight)
 				{
-					return false;
+					return;
 				}
 
 				$image->place($watermark, $position, $padding, $padding);
 				$image->save($file);
 
 			}
-
 
 		}
 		catch (Exception $e)
@@ -373,7 +371,7 @@ class ImageHelper
 
 	}
 
-	public function rotateExif($fileSource)
+	public function rotateExif(string $fileSource): void
 	{
 		if (function_exists('exif_read_data'))
 		{
@@ -413,18 +411,18 @@ class ImageHelper
 				}
 			}
 		}
-
 	}
 
-	public function otherFilters($file)
+	public function otherFilters(string $file): void
 	{
 		try
 		{
 
 			$info = pathinfo($file);
+
 			if (isset($info['extension']) && (!in_array(mb_strtolower($info['extension']), ['jpg', 'jpeg', 'png', 'webp'])))
 			{
-				return false;
+				return;
 			}
 
 			$input   = Factory::getApplication()->getInput();
@@ -486,7 +484,7 @@ class ImageHelper
 		}
 	}
 
-	public function writeExif($file)
+	public function writeExif(string $file): void
 	{
 		if (empty($this->exifs))
 		{
@@ -511,7 +509,7 @@ class ImageHelper
 
 	}
 
-	public function reloadCache($file)
+	public function reloadCache(string $file): void
 	{
 		try
 		{

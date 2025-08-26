@@ -11,47 +11,25 @@
 defined('_JEXEC') or die;
 
 use Exception;
-use Joomla\CMS\Form\FormField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerLibsHelper;
 
-/**
- * Class QuantumunsplashField
- */
 class QuantumunsplashField extends QuantumbaseField
 {
 
-	/**
-	 * @var string
-	 */
 	public $type = 'QuantumUnsplash';
 
-	/**
-	 * @var string
-	 */
 	protected $layout = 'quantumunsplash';
 
-
-	/**
-	 * Allow to override renderer include paths in child fields
-	 *
-	 * @return  array
-	 *
-	 * @since   3.5
-	 */
-	protected function getLayoutPaths()
+	protected function getLayoutPaths(): array
 	{
 		return array_merge(parent::getLayoutPaths(), [
 			JPATH_ROOT . '/administrator/components/com_quantummanager/layouts/fields',
 		]);
 	}
 
-
-	/**
-	 * @return array
-	 */
-	protected function getLayoutData()
+	protected function getLayoutData(): array
 	{
 		return array_merge(parent::getLayoutData(),
 			[
@@ -60,8 +38,7 @@ class QuantumunsplashField extends QuantumbaseField
 		);
 	}
 
-
-	public function getInput()
+	public function getInput(): string
 	{
 		try
 		{

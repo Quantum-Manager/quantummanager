@@ -15,29 +15,16 @@ use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
 
-/**
- * Class QuantumbaseField
- */
 class QuantumbaseField extends FormField
 {
 
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $addLayouts = [];
+	private array $addLayouts = [];
 
+	protected string $cssClass = '';
 
-	protected $cssClass = '';
+	protected bool $standalone = false;
 
-
-	protected $standalone = false;
-
-
-	/**
-	 * @return array
-	 */
-	protected function getLayoutData()
+	protected function getLayoutData(): array
 	{
 		$scopes = QuantummanagerHelper::getAllScope();
 
@@ -77,15 +64,7 @@ class QuantumbaseField extends FormField
 		);
 	}
 
-
-	/**
-	 * Allow to override renderer include paths in child fields
-	 *
-	 * @return  array
-	 *
-	 * @since   3.5
-	 */
-	protected function getLayoutPaths()
+	protected function getLayoutPaths(): array
 	{
 		return array_merge(parent::getLayoutPaths(), $this->addLayouts, [
 			JPATH_ROOT . '/administrator/components/com_quantummanager/layouts/fields',
@@ -93,8 +72,7 @@ class QuantumbaseField extends FormField
 		]);
 	}
 
-
-	public function addCustomLayoutsPath($layouts)
+	public function addCustomLayoutsPath(array $layouts): void
 	{
 		$this->addLayouts = array_merge($this->addLayouts, $layouts);
 	}

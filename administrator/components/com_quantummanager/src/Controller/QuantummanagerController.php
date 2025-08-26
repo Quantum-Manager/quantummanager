@@ -10,26 +10,21 @@
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
 
-/**
- * Class DisplayController
- */
 class QuantummanagerController extends BaseController
 {
 
-	public function hideJedReview()
+	public function hideJedReview(): void
 	{
-		$app = Factory::getApplication();
 
 		if ((int) QuantummanagerHelper::getParamsComponentValue('reivew', 1))
 		{
 			QuantummanagerHelper::setComponentsParams('review', "0");
 		}
 
-		$app->close();
+		$this->app->close();
 	}
 
 }

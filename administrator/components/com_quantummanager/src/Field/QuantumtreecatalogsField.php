@@ -11,39 +11,21 @@
 defined('_JEXEC') or die;
 
 use Exception;
-use Joomla\CMS\Form\FormField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerLibsHelper;
 
-/**
- * Class QuantumtreecatalogsField
- */
 class QuantumtreecatalogsField extends QuantumbaseField
 {
 
-	/**
-	 * @var string
-	 */
 	public $type = 'QuantumTreeCatalogs';
 
-	/**
-	 * @var string
-	 */
 	protected $layout = 'quantumtreecatalogs';
 
+	protected string $directory = '';
 
-	protected $directory = '';
-
-	/**
-	 * Allow to override renderer include paths in child fields
-	 *
-	 * @return  array
-	 *
-	 * @since   3.5
-	 */
-	protected function getLayoutPaths()
+	protected function getLayoutPaths(): array
 	{
 		$path = JPATH_ROOT . '/administrator/components/com_quantummanager/layouts/fields';
 
@@ -60,11 +42,7 @@ class QuantumtreecatalogsField extends QuantumbaseField
 		]);
 	}
 
-
-	/**
-	 * @return array
-	 */
-	protected function getLayoutData()
+	protected function getLayoutData(): array
 	{
 		return array_merge(parent::getLayoutData(),
 			[
@@ -78,8 +56,7 @@ class QuantumtreecatalogsField extends QuantumbaseField
 		);
 	}
 
-
-	public function getInput()
+	public function getInput(): string
 	{
 		try
 		{

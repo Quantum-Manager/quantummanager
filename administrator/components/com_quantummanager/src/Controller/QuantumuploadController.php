@@ -10,7 +10,6 @@
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\Component\QuantumManager\Administrator\Filesystem\LocalFilesystem;
 use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
@@ -21,21 +20,19 @@ use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
 class QuantumuploadController extends BaseController
 {
 
-
-	public function upload()
+	public function upload(): void
 	{
-		$app  = Factory::getApplication();
-		$data = $app->input->getArray();
+		$data = $this->app->input->getArray();
 
 		if (!isset($data['path'], $data['scope']))
 		{
-			$app->close();
+			$this->app->close();
 		}
 
 		echo LocalFilesystem::upload();
 
 		QuantummanagerHelper::setHeadersNoCache();
-		$app->close();
+		$this->app->close();
 	}
 
 }

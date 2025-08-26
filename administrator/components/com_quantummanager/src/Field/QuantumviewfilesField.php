@@ -11,74 +11,44 @@
 defined('_JEXEC') or die;
 
 use Exception;
-use Joomla\CMS\Form\FormField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
 use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerLibsHelper;
 
-/**
- * Class QuantumviewfilesField
- */
 class QuantumviewfilesField extends QuantumbaseField
 {
 
-	/**
-	 * @var string
-	 */
 	public $type = 'QuantumViewfiles';
 
-	/**
-	 * @var string
-	 */
 	protected $layout = 'quantumviewfiles';
 
+	protected string $metafile = '1';
 
-	protected $metafile = '1';
+	protected string $watermark = '0';
 
+	protected string $folderdblclick = '0';
 
-	protected $watermark = '0';
+	protected string $help = '1';
 
+	protected string $previewsfolder = '1';
 
-	protected $folderdblclick = '0';
+	protected string $previewsfolderopen = '1';
 
+	protected array $previewslist = [];
 
-	protected $help = '1';
+	protected string $directory = '';
 
+	protected string $onlyfiles = '0';
 
-	protected $previewsfolder = '1';
-
-
-	protected $previewsfolderopen = '1';
-
-
-	protected $previewslist = [];
-
-
-	protected $directory = '';
-
-
-	protected $onlyfiles = '0';
-
-
-	/**
-	 * Allow to override renderer include paths in child fields
-	 *
-	 * @return  array
-	 *
-	 * @since   3.5
-	 */
-	protected function getLayoutPaths()
+	protected function getLayoutPaths(): array
 	{
 		return array_merge(parent::getLayoutPaths(), [
 			JPATH_ROOT . '/administrator/components/com_quantummanager/layouts/fields',
 		]);
 	}
 
-	/**
-	 * @return array
-	 */
-	protected function getLayoutData()
+	protected function getLayoutData(): array
 	{
 
 		return array_merge(parent::getLayoutData(),
@@ -99,14 +69,7 @@ class QuantumviewfilesField extends QuantumbaseField
 		);
 	}
 
-
-	/**
-	 *
-	 * @return string
-	 *
-	 * @since version
-	 */
-	public function getInput()
+	public function getInput(): string
 	{
 		try
 		{

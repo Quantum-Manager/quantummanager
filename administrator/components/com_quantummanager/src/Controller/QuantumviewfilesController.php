@@ -10,57 +10,52 @@
 
 defined('_JEXEC') or die;
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\Component\QuantumManager\Administrator\Filesystem\LocalFilesystem;
 use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
 
-/**
- * Class QuantumviewfilesController
- */
 class QuantumviewfilesController extends BaseController
 {
 
-	public function createDirectory()
+	public function createDirectory(): void
 	{
-		$app  = Factory::getApplication();
-		$data = $app->input->getArray();
+		$data = $this->app->input->getArray();
 
 		if (!isset($data['path'], $data['name'], $data['scope']))
 		{
-			$app->close();
+			$this->app->close();
 		}
 
 		echo LocalFilesystem::createDirectory($data['path'], $data['scope'], $data['name']);
 
 		QuantummanagerHelper::setHeadersNoCache();
-		$app->close();
+		$this->app->close();
 	}
 
-	public function getFiles()
+	public function getFiles(): void
 	{
-		$app  = Factory::getApplication();
-		$data = $app->input->getArray();
+		$data = $this->app->input->getArray();
 
 		if (!isset($data['path'], $data['scope']))
 		{
-			$app->close();
+			$this->app->close();
 		}
 
 		echo LocalFilesystem::getFiles($data['path'], $data['scope']);
 
 		QuantummanagerHelper::setHeadersNoCache();
-		$app->close();
+		$this->app->close();
 	}
 
-	public function getMetaFile()
+	public function getMetaFile(): void
 	{
-		$app  = Factory::getApplication();
-		$data = $app->input->getArray();
+		$data = $this->app->input->getArray();
 
 		if (!isset($data['path'], $data['scope']))
 		{
-			$app->close();
+			$this->app->close();
 		}
 
 		$name = '';
@@ -73,17 +68,16 @@ class QuantumviewfilesController extends BaseController
 		echo LocalFilesystem::getMetaFile($data['path'], $data['scope'], $name);
 
 		QuantummanagerHelper::setHeadersNoCache();
-		$app->close();
+		$this->app->close();
 	}
 
-	public function watermark()
+	public function watermark(): void
 	{
-		$app  = Factory::getApplication();
-		$data = $app->input->getArray();
+		$data = $this->app->input->getArray();
 
 		if (!isset($data['path'], $data['scope']))
 		{
-			$app->close();
+			$this->app->close();
 		}
 
 		$list = '';
@@ -93,16 +87,15 @@ class QuantumviewfilesController extends BaseController
 			$list = json_decode($data['list']);
 		}
 
-		echo LocalFilesystem::setWatermark($data['path'], $data['scope'], $list);
+		LocalFilesystem::setWatermark($data['path'], $data['scope'], $list);
 
 		QuantummanagerHelper::setHeadersNoCache();
-		$app->close();
+		$this->app->close();
 	}
 
-	public function duplicate()
+	public function duplicate(): void
 	{
-		$app  = Factory::getApplication();
-		$data = $app->input->getArray();
+		$data = $this->app->input->getArray();
 
 		if (!isset(
 			$data['path'],
@@ -110,7 +103,7 @@ class QuantumviewfilesController extends BaseController
 			$data['list'])
 		)
 		{
-			$app->close();
+			$this->app->close();
 		}
 
 		$path  = $data['path'];
@@ -119,19 +112,18 @@ class QuantumviewfilesController extends BaseController
 
 		if (count($list) === 0)
 		{
-			$app->close();
+			$this->app->close();
 		}
 
 		echo LocalFilesystem::duplicate($path, $scope, $list);
 
 		QuantummanagerHelper::setHeadersNoCache();
-		$app->close();
+		$this->app->close();
 	}
 
-	public function paste()
+	public function paste(): void
 	{
-		$app  = Factory::getApplication();
-		$data = $app->input->getArray();
+		$data = $this->app->input->getArray();
 
 		if (!isset(
 			$data['pathFrom'],
@@ -142,7 +134,7 @@ class QuantumviewfilesController extends BaseController
 			$data['list'])
 		)
 		{
-			$app->close();
+			$this->app->close();
 		}
 
 		$pathFrom  = $data['pathFrom'];
@@ -154,23 +146,22 @@ class QuantumviewfilesController extends BaseController
 
 		if (count($list) === 0)
 		{
-			$app->close();
+			$this->app->close();
 		}
 
 		echo LocalFilesystem::paste($pathFrom, $scopeFrom, $pathTo, $scopeTo, $cut, $list);
 
 		QuantummanagerHelper::setHeadersNoCache();
-		$app->close();
+		$this->app->close();
 	}
 
-	public function delete()
+	public function delete(): void
 	{
-		$app  = Factory::getApplication();
-		$data = $app->input->getArray();
+		$data = $this->app->input->getArray();
 
 		if (!isset($data['path'], $data['list'], $data['scope']))
 		{
-			$app->close();
+			$this->app->close();
 		}
 
 		$path  = $data['path'];
@@ -180,20 +171,19 @@ class QuantumviewfilesController extends BaseController
 		echo LocalFilesystem::delete($scope, $path, $list);
 
 		QuantummanagerHelper::setHeadersNoCache();
-		$app->close();
+		$this->app->close();
 
 	}
 
-	public function getParsePath()
+	public function getParsePath(): void
 	{
 		try
 		{
-			$app  = Factory::getApplication();
-			$data = $app->input->getArray();
+			$data = $this->app->input->getArray();
 
 			if (!isset($data['path'], $data['scope']))
 			{
-				$app->close();
+				$this->app->close();
 			}
 
 			$path  = $data['path'];
@@ -210,7 +200,7 @@ class QuantumviewfilesController extends BaseController
 			]);
 
 			QuantummanagerHelper::setHeadersNoCache();
-			$app->close();
+			$this->app->close();
 		}
 		catch (Exception $e)
 		{
@@ -218,22 +208,20 @@ class QuantumviewfilesController extends BaseController
 		}
 	}
 
-	public function renameFile()
+	public function renameFile(): void
 	{
 		try
 		{
-			$app  = Factory::getApplication();
-			$data = $app->input->getArray();
-			$file = '';
+			$data = $this->app->input->getArray();
 
 			if (!isset($data['path'], $data['scope'], $data['file'], $data['name']))
 			{
-				$app->close();
+				$this->app->close();
 			}
 
 			if (empty($data['path']) || empty($data['scope']) || empty($data['file']) || empty($data['name']))
 			{
-				$app->close();
+				$this->app->close();
 			}
 
 			$path  = $data['path'];
@@ -244,7 +232,7 @@ class QuantumviewfilesController extends BaseController
 			echo LocalFilesystem::renameFile($path, $scope, $file, $name);
 
 			QuantummanagerHelper::setHeadersNoCache();
-			$app->close();
+			$this->app->close();
 		}
 		catch (Exception $e)
 		{
@@ -252,22 +240,20 @@ class QuantumviewfilesController extends BaseController
 		}
 	}
 
-	public function renameDirectory()
+	public function renameDirectory(): void
 	{
 		try
 		{
-			$app  = Factory::getApplication();
-			$data = $app->input->getArray();
-			$file = '';
+			$data      = $this->app->input->getArray();
 
 			if (!isset($data['path'], $data['scope'], $data['oldName'], $data['name']))
 			{
-				$app->close();
+				$this->app->close();
 			}
 
 			if (empty($data['path']) || empty($data['scope']) || empty($data['oldName']) || empty($data['name']))
 			{
-				$app->close();
+				$this->app->close();
 			}
 
 			$path    = $data['path'];
@@ -278,7 +264,7 @@ class QuantumviewfilesController extends BaseController
 			echo LocalFilesystem::renameDirectory($path, $scope, $oldName, $name);
 
 			QuantummanagerHelper::setHeadersNoCache();
-			$app->close();
+			$this->app->close();
 		}
 		catch (Exception $e)
 		{
@@ -286,17 +272,16 @@ class QuantumviewfilesController extends BaseController
 		}
 	}
 
-	public function generatePreviewImage()
+	public function generatePreviewImage(): void
 	{
 		try
 		{
-			$app  = Factory::getApplication();
-			$data = $app->input->getArray();
-			$file = '';
+			$data      = $this->app->input->getArray();
+			$file      = '';
 
 			if (!isset($data['path'], $data['scope']))
 			{
-				$app->close();
+				$this->app->close();
 			}
 
 			$path  = $data['path'];
@@ -310,7 +295,7 @@ class QuantumviewfilesController extends BaseController
 			LocalFilesystem::generatePreviewImage($path, $scope, $file);
 
 			QuantummanagerHelper::setHeadersNoCache();
-			$app->close();
+			$this->app->close();
 		}
 		catch (Exception $e)
 		{
@@ -318,17 +303,15 @@ class QuantumviewfilesController extends BaseController
 		}
 	}
 
-	public function createPreview()
+	public function createPreview(): void
 	{
 		try
 		{
-			$app  = Factory::getApplication();
-			$data = $app->input->getArray();
-			$file = '';
+			$data      = $this->app->input->getArray();
 
 			if (!isset($data['path'], $data['scope'], $data['list'], $data['preview']))
 			{
-				$app->close();
+				$this->app->close();
 			}
 
 			$path    = $data['path'];
@@ -339,7 +322,7 @@ class QuantumviewfilesController extends BaseController
 			echo LocalFilesystem::createPreview($path, $scope, $list, $preview);
 
 			QuantummanagerHelper::setHeadersNoCache();
-			$app->close();
+			$this->app->close();
 		}
 		catch (Exception $e)
 		{

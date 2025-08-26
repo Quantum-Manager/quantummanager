@@ -14,27 +14,14 @@ use Joomla\CMS\Form\Field\TextField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Uri\Uri;
 
-/**
- * Class QuantumconfigpathField
- */
 class QuantumconfigpathField extends TextField
 {
 
-	/**
-	 * @var string
-	 * @since version
-	 */
 	public $type = 'QuantumConfigpath';
 
-	protected $prefix = '';
+	protected string $prefix = '';
 
-	/**
-	 *
-	 * @return string
-	 *
-	 * @since version
-	 */
-	public function getInput()
+	public function getInput(): string
 	{
 
 		HTMLHelper::_('stylesheet', 'com_quantummanager/configfields.css', [
@@ -44,11 +31,7 @@ class QuantumconfigpathField extends TextField
 
 		$this->__set('prefix', $this->getAttribute('prefix', Uri::root()));
 
-		$html = parent::getInput();
-		$html = "<div class='quantumconfig-quantumconfigpath-inputs'><span>" . $this->prefix . "</span>" . $html . "</div>";
-
-		return $html;
+		return "<div class='quantumconfig-quantumconfigpath-inputs'><span>" . $this->prefix . "</span>" . parent::getInput() . "</div>";
 	}
-
 
 }
