@@ -657,11 +657,6 @@ class LocalFilesystem
 			return json_encode(['fail']);
 		}
 
-		if ($list === null)
-		{
-			$list = [];
-		}
-
 		$lang         = Factory::getLanguage();
 		$path_compile = JPATH_SITE . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($path, false, $scope);
 
@@ -784,11 +779,6 @@ class LocalFilesystem
 			return json_encode(['fail']);
 		}
 
-		if ($list === null)
-		{
-			$list = [];
-		}
-
 		$pathFromCompile = JPATH_SITE . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($pathFrom, false, $scopeFrom);
 		$pathToCompile   = JPATH_SITE . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($pathTo, false, $scopeTo);
 
@@ -861,11 +851,6 @@ class LocalFilesystem
 		if (!$actions->get('core.delete'))
 		{
 			return json_encode(['fail']);
-		}
-
-		if ($list === null)
-		{
-			$list = [];
 		}
 
 		$path = JPATH_SITE . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($path, false, $scope);
