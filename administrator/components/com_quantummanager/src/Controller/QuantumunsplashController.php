@@ -10,6 +10,7 @@
 
 defined('_JEXEC') or die;
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Http\Transport\CurlTransport;
 use Joomla\CMS\MVC\Controller\BaseController;
@@ -18,21 +19,15 @@ use Joomla\Component\QuantumManager\Administrator\Filesystem\LocalFilesystem;
 use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
 use Joomla\Registry\Registry;
 
-/**
- * Class QuantumunsplashController
- */
 class QuantumunsplashController extends BaseController
 {
 
-
-	public function search()
+	public function search(): void
 	{
-
-		$app = Factory::getApplication();
 
 		try
 		{
-			$data           = Factory::getApplication()->input->getArray();
+			$data           = $this->app->input->getArray();
 			$dataForRequest = [
 				'q'    => '',
 				'page' => '1',
@@ -67,21 +62,17 @@ class QuantumunsplashController extends BaseController
 			echo $e->getMessage();
 		}
 
-
 		QuantummanagerHelper::setHeadersNoCache();
-		$app->close();
+		$this->app->close();
 	}
 
-
-	public function download()
+	public function download(): void
 	{
-		$app  = Factory::getApplication();
 		$data = Factory::getApplication()->input->getArray();
-		$file = $data['file'];
 
 		if (!isset($data['file'], $data['path'], $data['scope']))
 		{
-			$app->close();
+			$this->app->close();
 		}
 
 		$path  = $data['path'];
@@ -92,15 +83,12 @@ class QuantumunsplashController extends BaseController
 		echo LocalFilesystem::downloadFileUnsplash($path, $scope, $file, $id);
 
 		QuantummanagerHelper::setHeadersNoCache();
-		$app->close();
-
+		$this->app->close();
 	}
 
-
-	public function downloadTrigger()
+	public function downloadTrigger(): void
 	{
-		$app  = Factory::getApplication();
-		$data = $app->input->getArray();
+		$data = $this->app->input->getArray();
 
 		$query = http_build_query([
 			'option' => 'com_yoohikashop',
@@ -118,7 +106,7 @@ class QuantumunsplashController extends BaseController
 		$photo   = json_decode($request->body, JSON_OBJECT_AS_ARRAY);
 
 		QuantummanagerHelper::setHeadersNoCache();
-		$app->close();
+		$this->app->close();
 	}
 
 }

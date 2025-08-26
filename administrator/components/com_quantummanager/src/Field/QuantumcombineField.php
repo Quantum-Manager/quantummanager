@@ -18,32 +18,16 @@ use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
 use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerLibsHelper;
 use SimpleXMLElement;
 
-/**
- * Class QuantumcombineField
- */
 class QuantumcombineField extends QuantumbaseField
 {
 
-	/**
-	 * @var string
-	 */
 	public $type = 'QuantumCombine';
 
-	/**
-	 * @var string
-	 */
 	protected $layout = 'quantumcombine';
 
+	protected string $fields;
 
-	protected $fields = [];
-
-	/**
-	 *
-	 * @return string
-	 *
-	 * @since version
-	 */
-	public function getInput()
+	public function getInput(): string
 	{
 		try
 		{
@@ -59,7 +43,6 @@ class QuantumcombineField extends QuantumbaseField
 
 			if (!empty($this->fields))
 			{
-
 
 				if (file_exists(JPATH_ROOT . '/media/com_quantummanager/css/' . $this->layout . '.css'))
 				{
@@ -155,6 +138,5 @@ class QuantumcombineField extends QuantumbaseField
 		}
 
 	}
-
 
 }

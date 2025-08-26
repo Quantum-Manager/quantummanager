@@ -16,47 +16,24 @@ use Joomla\CMS\Layout\FileLayout;
 use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
 use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerLibsHelper;
 
-/**
- * Class QuantumuploadField
- */
 class QuantumuploadField extends QuantumbaseField
 {
 
-	/**
-	 * @var string
-	 */
 	public $type = 'QuantumUpload';
 
-	/**
-	 * @var string
-	 * @since version
-	 */
 	protected $layout = 'quantumupload';
 
+	protected int $maxsize = 0;
 
-	protected $maxsize = 0;
+	protected int $maxsizeServer = 0;
 
+	protected string $directory = '';
 
-	protected $maxsizeServer = 0;
+	protected string $scope = '';
 
+	protected bool $dropAreaHidden = false;
 
-	protected $directory = '';
-
-
-	protected $scope = '';
-
-
-	protected $dropAreaHidden = false;
-
-
-	/**
-	 * Allow to override renderer include paths in child fields
-	 *
-	 * @return  array
-	 *
-	 * @since   3.5
-	 */
-	protected function getLayoutPaths()
+	protected function getLayoutPaths(): array
 	{
 		$renderer = new FileLayout('default');
 		$renderer->getDefaultIncludePaths();
@@ -66,11 +43,7 @@ class QuantumuploadField extends QuantumbaseField
 		], $renderer->getDefaultIncludePaths());
 	}
 
-
-	/**
-	 * @return array
-	 */
-	protected function getLayoutData()
+	protected function getLayoutData(): array
 	{
 
 		return array_merge(parent::getLayoutData(),
@@ -86,7 +59,7 @@ class QuantumuploadField extends QuantumbaseField
 		);
 	}
 
-	public function getInput()
+	public function getInput(): string
 	{
 		try
 		{

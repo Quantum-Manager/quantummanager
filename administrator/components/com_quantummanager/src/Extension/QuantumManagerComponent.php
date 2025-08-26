@@ -1,6 +1,6 @@
 <?php namespace Joomla\Component\QuantumManager\Administrator\Extension;
 
-\defined('JPATH_PLATFORM') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\Router\RouterServiceInterface;
 use Joomla\CMS\Component\Router\RouterServiceTrait;
@@ -17,7 +17,7 @@ class QuantumManagerComponent extends MVCComponent implements
 	use HTMLRegistryAwareTrait;
 	use RouterServiceTrait;
 
-	public function boot(ContainerInterface $container)
+	public function boot(ContainerInterface $container): void
 	{
 		Factory::getApplication()->getLanguage()->load('com_quantummanager');
 		PluginHelper::importPlugin('quantummanager');

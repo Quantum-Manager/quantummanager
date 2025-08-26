@@ -13,31 +13,17 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Form\Field\TextField;
 use Joomla\CMS\Language\Text;
 
-/**
- * Class QuantumconfigscopetitleField
- */
 class QuantumconfigscopetitleField extends TextField
 {
 
-	/**
-	 * @var string
-	 * @since version
-	 */
 	public $type = 'QuantumconfigScopeTitle';
 
-	/**
-	 *
-	 * @return string
-	 *
-	 * @since version
-	 */
-	public function getInput()
+	public function getInput(): string
 	{
 		$id          = $this->form->getData()->get('id');
 		$this->value = Text::_('COM_QUANTUMMANAGER_SCOPE_' . mb_strtoupper($id));
 
 		return parent::getInput();
 	}
-
 
 }

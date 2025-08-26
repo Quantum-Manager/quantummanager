@@ -10,25 +10,20 @@
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\Component\QuantumManager\Administrator\Filesystem\LocalFilesystem;
 use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
 
-/**
- * Class QuantumtreecatalogsController
- */
 class QuantumtreecatalogsController extends BaseController
 {
 
-	public function getDirectories()
+	public function getDirectories(): void
 	{
-		$app  = Factory::getApplication();
-		$data = $app->input->getArray();
+		$data = $this->app->input->getArray();
 
 		if (!isset($data['path']))
 		{
-			$app->close();
+			$this->app->close();
 		}
 
 		$path      = $data['path'];
@@ -52,7 +47,7 @@ class QuantumtreecatalogsController extends BaseController
 		echo LocalFilesystem::getScopesDirectories($path, $root, $scope);
 
 		QuantummanagerHelper::setHeadersNoCache();
-		$app->close();
+		$this->app->close();
 	}
 
 }
