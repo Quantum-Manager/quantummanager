@@ -149,7 +149,7 @@ class ImageHelper
 		}
 	}
   
-	public function bestFit(string $file, $widthFit = null, $heightFit = null): void
+	public function bestFit(string $file, ?int $widthFit = null, ?int $heightFit = null): void
 	{
 		list($width, $height, $type, $attr) = getimagesize($file);
 		$newWidth  = $width;
@@ -161,7 +161,7 @@ class ImageHelper
 		}
 		else
 		{
-			$maxWidth = (int) $widthFit;
+			$maxWidth = $widthFit;
 		}
 
 		if (is_null($heightFit))
@@ -170,7 +170,7 @@ class ImageHelper
 		}
 		else
 		{
-			$maxHeight = (int) $heightFit;
+			$maxHeight = $heightFit;
 		}
 
 		$ratio = $width / $height;
@@ -264,7 +264,7 @@ class ImageHelper
 		}
 	}
 
-	public function fit(string $file, $widthFit = null, $heightFit = null): void
+	public function fit(string $file, ?int $widthFit = null, ?int $heightFit = null): void
 	{
 		if (is_null($widthFit))
 		{
@@ -272,7 +272,7 @@ class ImageHelper
 		}
 		else
 		{
-			$maxWidth = (int) $widthFit;
+			$maxWidth = $widthFit;
 		}
 
 		if (is_null($heightFit))
@@ -281,7 +281,7 @@ class ImageHelper
 		}
 		else
 		{
-			$maxHeight = (int) $heightFit;
+			$maxHeight = $heightFit;
 		}
 
 		$manager = Manager::getInstance(['driver' => $this->getNameDriver()]);
@@ -291,7 +291,7 @@ class ImageHelper
 			->save($file);
 	}
 
-	public function resize(string $file, $widthFit = null, $heightFit = null): void
+	public function resize(string $file, ?int $widthFit = null, ?int $heightFit = null): void
 	{
 
 		if (is_null($widthFit))
@@ -300,7 +300,7 @@ class ImageHelper
 		}
 		else
 		{
-			$maxWidth = (int) $widthFit;
+			$maxWidth = $widthFit;
 		}
 
 		if (is_null($heightFit))
@@ -309,7 +309,7 @@ class ImageHelper
 		}
 		else
 		{
-			$maxHeight = (int) $heightFit;
+			$maxHeight = $heightFit;
 		}
 
 		$manager = Manager::getInstance(['driver' => $this->getNameDriver()]);
