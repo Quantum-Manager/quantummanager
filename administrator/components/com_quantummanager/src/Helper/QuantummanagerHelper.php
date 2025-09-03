@@ -68,7 +68,7 @@ class QuantummanagerHelper
 			if (empty(self::$cacheMimeType))
 			{
 				$componentParams     = ComponentHelper::getParams('com_quantummanager');
-				self::$cacheMimeType = $componentParams->get('mimetype');
+				self::$cacheMimeType = $componentParams->get('mimetype', '');
 
 				if (empty(self::$cacheMimeType))
 				{
