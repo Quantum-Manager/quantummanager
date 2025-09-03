@@ -7,7 +7,7 @@
     <authorUrl>https://www.norrnext.com</authorUrl>
     <copyright>Copyright © 2019 Delo Design &amp; NorrNext. All rights reserved.</copyright>
     <license>GNU General Public License version 3 or later; see license.txt</license>
-    <version>3.2.2</version>
+    <version>3.2.3</version>
     <description>COM_QUANTUMMANAGER_XML_DESCRIPTION</description>
     <namespace path="src">Joomla\Component\QuantumManager</namespace>
 
