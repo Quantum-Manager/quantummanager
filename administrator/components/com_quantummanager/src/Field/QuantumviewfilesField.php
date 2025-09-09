@@ -82,7 +82,7 @@ class QuantumviewfilesField extends QuantumbaseField
 			$this->__set('help', $this->getAttribute('help', '1'));
 			$this->__set('previewsfolder', $this->getAttribute('previewsfolderopen', QuantummanagerHelper::getParamsComponentValue('previewsfolder', '1')));
 			$this->__set('previewsfolderopen', $this->getAttribute('previewsfolderopen', QuantummanagerHelper::getParamsComponentValue('previewsfolderopen', '1')));
-			$this->__set('previewslist', $this->getAttribute('previewslist', QuantummanagerHelper::getParamsComponentValue('previewslist', [])));
+			$this->__set('previewslist', (array)$this->getAttribute('previewslist', QuantummanagerHelper::getParamsComponentValue('previewslist', [])));
 			$this->directory = $this->getAttribute('directory', 'images');
 			$this->onlyfiles = $this->getAttribute('onlyfiles', '0');
 
