@@ -21,7 +21,9 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\WebAsset\WebAssetManager;
 use Joomla\Database\DatabaseDriver;
+use Joomla\Event\Event;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 use Joomla\Filesystem\Path;
@@ -162,8 +164,7 @@ class QuantummanagerHelper
 
 	public static function preparePathRoot(string $path, string $scopeName, bool $pathUnix = false): string
 	{
-		$path       = trim($path);
-		$pathConfig = '';
+		$path = trim($path);
 
 		if (!preg_match('#^root.*#', $path))
 		{
@@ -198,8 +199,7 @@ class QuantummanagerHelper
 
 	public static function preparePath(string $path, bool $host = false, string $scopeName = '', bool $pathUnix = false): string
 	{
-		$path       = trim($path);
-		$pathConfig = '';
+		$path = trim($path);
 
 		if (!preg_match('#^root.*#', $path))
 		{
@@ -274,7 +274,12 @@ class QuantummanagerHelper
 		];
 
 		PluginHelper::importPlugin('quantummanager');
-		$results = Factory::getApplication()->triggerEvent('onQuantummanagerAddVariables');
+		$results = Factory::getApplication()
+			->getDispatcher()
+			->dispatch(
+				'onQuantummanagerAddVariables',
+				new Event('onQuantummanagerAddVariables', [&$params])
+			);
 
 		if (is_array($results))
 		{
@@ -574,7 +579,12 @@ class QuantummanagerHelper
 		$params = ComponentHelper::getParams('com_quantummanager');
 
 		PluginHelper::importPlugin('quantummanager');
-		Factory::getApplication()->triggerEvent('onQuantumManagerConfiguration', [&$params]);
+		Factory::getApplication()
+			->getDispatcher()
+			->dispatch(
+				'onQuantumManagerConfiguration',
+				new Event('onQuantumManagerConfiguration', [&$params])
+			);
 
 		static::$cacheParams = $params;
 
@@ -878,7 +888,9 @@ class QuantummanagerHelper
 	{
 		if (!in_array($name, self::$listScriptsInsert))
 		{
-			Factory::getDocument()->addScriptDeclaration($script);
+			/** @var WebAssetManager $wa */
+			$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+			$wa->addInlineScript($script);
 			self::$listScriptsInsert[] = $name;
 		}
 	}
