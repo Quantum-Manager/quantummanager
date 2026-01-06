@@ -1,4 +1,6 @@
-<?php namespace Joomla\Component\QuantumManager\Administrator\Controller;
+<?php
+
+namespace Joomla\Component\QuantumManager\Administrator\Controller;
 
 /**
  * @package    quantummanager
@@ -14,9 +16,6 @@ use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\Component\QuantumManager\Administrator\Filesystem\LocalFilesystem;
 use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
 
-/**
- * Class QuantumuploadController
- */
 class QuantumuploadController extends BaseController
 {
 

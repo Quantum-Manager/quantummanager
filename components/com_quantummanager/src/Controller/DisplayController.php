@@ -1,4 +1,6 @@
-<?php namespace Joomla\Component\QuantumManager\Site\Controller;
+<?php
+
+namespace Joomla\Component\QuantumManager\Site\Controller;
 
 /**
  * @package    quantummanager
@@ -12,12 +14,6 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Controller\BaseController;
 
-/**
- * DisplayController Controller.
- *
- * @package  quantummanager
- * @since    1.0
- */
 class DisplayController extends BaseController
 {
 

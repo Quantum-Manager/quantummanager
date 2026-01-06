@@ -1,6 +1,16 @@
-<?php namespace Joomla\Component\QuantumManager\Administrator\Extension;
+<?php
 
-\defined('_JEXEC') or die;
+namespace Joomla\Component\QuantumManager\Administrator\Extension;
+
+/**
+ * @package    quantummanager
+ * @author     Dmitry Tsymbal <cymbal@delo-design.ru>
+ * @copyright  Copyright © 2019 Delo Design & NorrNext. All rights reserved.
+ * @license    GNU General Public License version 3 or later; see license.txt
+ * @link       https://www.norrnext.com
+ */
+
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Application\CMSApplicationInterface;
 use Joomla\CMS\Factory;
@@ -18,7 +28,7 @@ final class FrontMVCFactory extends MVCFactory
 			throw new \InvalidArgumentException(Text::sprintf('JLIB_APPLICATION_ERROR_NOT_ACCESS'));
 		}
 
-		if (Factory::getUser()->id === 0)
+		if (Factory::getApplication()->getIdentity()->id === 0)
 		{
 			throw new \InvalidArgumentException(Text::sprintf('JLIB_APPLICATION_ERROR_NOT_ACCESS'));
 		}

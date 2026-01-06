@@ -32,7 +32,6 @@ $app->getSession()->clear('quantummanageraddscripts');
 
 try
 {
-	//$folderRoot = QuantummanagerHelper::getFolderRoot();
 	$folderRoot = 'root';
 
 	$buttonsBun = [];
@@ -72,15 +71,6 @@ try
 			'position' => 'bottom'
 		],
 	];
-
-
-	if ((int) QuantummanagerHelper::getParamsComponentValue('unsplash', '1'))
-	{
-		$fields['quantumunsplash'] = [
-			'label'    => '',
-			'position' => 'bottom'
-		];
-	}
 
 	$actions = QuantummanagerHelper::getActions();
 	if (!$actions->get('core.create'))

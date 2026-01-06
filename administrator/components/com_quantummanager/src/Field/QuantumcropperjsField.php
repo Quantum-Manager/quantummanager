@@ -1,4 +1,6 @@
-<?php namespace Joomla\Component\QuantumManager\Administrator\Field;
+<?php
+
+namespace Joomla\Component\QuantumManager\Administrator\Field;
 
 /**
  * @package    quantummanager
@@ -57,7 +59,6 @@ class QuantumcropperjsField extends QuantumbaseField
 	{
 		try
 		{
-
 
 			$this->__set('standalone', $this->getAttribute('standalone', true));
 			$this->__set('cssClass', $this->getAttribute('cssClass', ''));

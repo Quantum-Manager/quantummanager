@@ -1,4 +1,6 @@
-<?php namespace Joomla\Component\QuantumManager\Administrator\Helper;
+<?php
+
+namespace Joomla\Component\QuantumManager\Administrator\Helper;
 
 /**
  * @package    quantummanager
@@ -293,7 +295,6 @@ class ImageHelper
 
 	public function resize(string $file, ?int $widthFit = null, ?int $heightFit = null): void
 	{
-
 		if (is_null($widthFit))
 		{
 			$maxWidth = (int) QuantummanagerHelper::getParamsComponentValue('rezizemaxwidth', 1920);
@@ -346,7 +347,6 @@ class ImageHelper
 
 				if ((int) QuantummanagerHelper::getParamsComponentValue('overlaypercent', 0))
 				{
-					//сжимаем водяной знак по процентному соотношению от изображения на который накладывается
 					$precent       = (double) QuantummanagerHelper::getParamsComponentValue('overlaypercentvalue', 10);
 					$logoWidthMax  = $imageWidth / 100 * $precent;
 					$logoHeightMax = $imageHeight / 100 * $precent;

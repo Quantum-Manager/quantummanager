@@ -1,4 +1,6 @@
-<?php namespace Joomla\Component\QuantumManager\Administrator\View\Quantummanager;
+<?php
+
+namespace Joomla\Component\QuantumManager\Administrator\View\Quantummanager;
 
 /**
  * @package    quantummanager
@@ -21,17 +23,17 @@ class HtmlView extends BaseHtmlView
 
 	protected string $sidebar = '';
 
-	public function display($tpl = null)
+	public function display($tpl = null): void
 	{
 		$this->toolbar();
 		$this->helper = new QuantummanagerHelper;
 
-		return parent::display($tpl);
+		parent::display($tpl);
 	}
 
 	private function toolbar(): void
 	{
-		if (Factory::getUser()->authorise('core.admin', 'com_quantummanager'))
+		if (Factory::getApplication()->getIdentity()->authorise('core.admin', 'com_quantummanager'))
 		{
 			HTMLHelper::_('script', 'com_quantummanager/configuration.js', [
 				'version'  => filemtime(__FILE__),

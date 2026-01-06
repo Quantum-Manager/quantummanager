@@ -303,41 +303,6 @@
 
 	<fieldset name="image" label="COM_QUANTUMMANAGER_CONFIG_IMAGE" description="COM_QUANTUMMANAGER_CONFIG_IMAGE_DESC">
 
-		<field name="unsplash"
-			   type="radio"
-			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_UNSPLASH_LABEL"
-			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_UNSPLASH_DESC"
-			   required="true"
-			   class="btn-group btn-group-yesno"
-			   default="1">
-			<option value="1">COM_QUANTUMMANAGER_ACTION_ENABLE</option>
-			<option value="0">COM_QUANTUMMANAGER_ACTION_DISABLE</option>
-		</field>
-
-		<!--
-		<field name="pixabay"
-			   type="radio"
-			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_PIXABAY_LABEL"
-			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_PIXABAY_DESC"
-			   required="true"
-			   class="btn-group btn-group-yesno"
-			   default="1">
-			<option value="1">COM_QUANTUMMANAGER_ACTION_ENABLE</option>
-			<option value="0">COM_QUANTUMMANAGER_ACTION_DISABLE</option>
-		</field>
-
-		<field name="pexels"
-			   type="radio"
-			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_PEXELS_LABEL"
-			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_PEXELS_DESC"
-			   required="true"
-			   class="btn-group btn-group-yesno"
-			   default="1">
-			<option value="1">COM_QUANTUMMANAGER_ACTION_ENABLE</option>
-			<option value="0">COM_QUANTUMMANAGER_ACTION_DISABLE</option>
-		</field>
-		-->
-
 		<field name="original"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_ORIGINAL_LABEL"

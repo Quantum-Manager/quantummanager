@@ -9,7 +9,6 @@
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\Component\QuantumManager\Administrator\Field\QuantumcombineField;
 use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
@@ -60,14 +59,6 @@ try
 			'position' => 'bottom'
 		],
 	];
-
-	if ((int) QuantummanagerHelper::getParamsComponentValue('unsplash', '1'))
-	{
-		$fields['quantumunsplash'] = [
-			'label'    => '',
-			'position' => 'bottom'
-		];
-	}
 
 	$actions = QuantummanagerHelper::getActions();
 	if (!$actions->get('core.create'))

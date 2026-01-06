@@ -1,4 +1,6 @@
-<?php namespace Joomla\Component\QuantumManager\Administrator\Field;
+<?php
+
+namespace Joomla\Component\QuantumManager\Administrator\Field;
 
 /**
  * @package    quantummanager
@@ -59,7 +61,6 @@ class QuantumbaseField extends FormField
 				'urlRoot'   => $urlRoot,
 				'urlMedia'  => $urlMedia,
 				'scopes'    => $scopes,
-				'isJoomla4' => QuantummanagerHelper::isJoomla4() ? '1' : '0',
 			]
 		);
 	}

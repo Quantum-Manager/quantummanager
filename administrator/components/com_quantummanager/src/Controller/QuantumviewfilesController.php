@@ -1,4 +1,6 @@
-<?php namespace Joomla\Component\QuantumManager\Administrator\Controller;
+<?php
+
+namespace Joomla\Component\QuantumManager\Administrator\Controller;
 
 /**
  * @package    quantummanager
@@ -11,7 +13,6 @@
 defined('_JEXEC') or die;
 
 use Exception;
-use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\Component\QuantumManager\Administrator\Filesystem\LocalFilesystem;
 use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
@@ -244,7 +245,7 @@ class QuantumviewfilesController extends BaseController
 	{
 		try
 		{
-			$data      = $this->app->input->getArray();
+			$data = $this->app->input->getArray();
 
 			if (!isset($data['path'], $data['scope'], $data['oldName'], $data['name']))
 			{
@@ -276,8 +277,8 @@ class QuantumviewfilesController extends BaseController
 	{
 		try
 		{
-			$data      = $this->app->input->getArray();
-			$file      = '';
+			$data = $this->app->input->getArray();
+			$file = '';
 
 			if (!isset($data['path'], $data['scope']))
 			{
@@ -307,7 +308,7 @@ class QuantumviewfilesController extends BaseController
 	{
 		try
 		{
-			$data      = $this->app->input->getArray();
+			$data = $this->app->input->getArray();
 
 			if (!isset($data['path'], $data['scope'], $data['list'], $data['preview']))
 			{

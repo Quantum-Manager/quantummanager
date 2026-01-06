@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    quantummanager
  * @author     Dmitry Tsymbal <cymbal@delo-design.ru>
@@ -7,10 +8,11 @@
  * @link       https://www.norrnext.com
  */
 
+defined('_JEXEC') or die;
+
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
 
-defined('_JEXEC') or die;
 extract($displayData);
 ?>
 

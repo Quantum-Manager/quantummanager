@@ -1,4 +1,6 @@
-<?php namespace Joomla\Component\QuantumManager\Administrator\Field;
+<?php
+
+namespace Joomla\Component\QuantumManager\Administrator\Field;
 
 /**
  * @package    quantummanager

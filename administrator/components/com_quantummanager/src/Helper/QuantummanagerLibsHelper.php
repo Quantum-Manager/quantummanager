@@ -1,4 +1,6 @@
-<?php namespace Joomla\Component\QuantumManager\Administrator\Helper;
+<?php
+
+namespace Joomla\Component\QuantumManager\Administrator\Helper;
 
 /**
  * @package    quantummanager
@@ -23,7 +25,6 @@ class QuantummanagerLibsHelper
 	{
 		if (!self::$flagScriptHead)
 		{
-
 			Factory::getDocument()
 				->addScriptDeclaration(file_get_contents(JPATH_ROOT . '/media/com_quantummanager/js/dispatcher.js'));
 			self::$flagScriptHead = true;

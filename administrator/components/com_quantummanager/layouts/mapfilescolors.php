@@ -1,4 +1,7 @@
 <?php
+
+defined('_JEXEC') or die;
+
 return [
 	'default' => [
 		'#444',

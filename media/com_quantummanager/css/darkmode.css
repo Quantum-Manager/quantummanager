@@ -69,16 +69,6 @@
         font-weight: bold !important;
     }
 
-    .quantumunsplash-module {
-        background-color: var(--com-media-manager-content-bg, #fff) !important;
-    }
-
-    .quantumunsplash-module .quantumunsplash-module-header input {
-        background-color: var(--body-bg) !important;
-        border: var(--border-width) solid var(--template-bg-dark-20) !important;
-        background-clip: padding-box !important;
-    }
-
     .quantumupload-module .drop-area {
         border-color: #ffffff0d !important;
     }
