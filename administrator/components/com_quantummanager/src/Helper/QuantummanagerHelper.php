@@ -12,6 +12,7 @@ namespace Joomla\Component\QuantumManager\Administrator\Helper;
 
 defined('_JEXEC') or die;
 
+use enshrined\svgSanitize\Sanitizer;
 use Exception;
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
@@ -129,14 +130,42 @@ class QuantummanagerHelper
 	{
 		try
 		{
-			//TODO доработать фильтрацию
+			if (!file_exists($file))
+			{
+				return;
+			}
 
-			/*if (file_exists($file)) {
-				file_put_contents(
-					$file,
-					preg_replace(['/<(\?|\%)\=?(php)?/', '/(\%|\?)>/'], ['', ''], file_get_contents($file))
-				);
-			}*/
+			$componentParams = ComponentHelper::getParams('com_quantummanager');
+			$splitFileName   = explode('.', $file);
+			$exstension      = array_pop($splitFileName);
+
+			if ($exstension === 'svg')
+			{
+				$filterSvg = true;
+
+				if (
+					self::isUserAdmin() && !$componentParams->get('sanitizeruploadadmin', 1)
+					|| !self::isUserAdmin() && !$componentParams->get('sanitizeruploaduser', 1)
+				)
+				{
+					$filterSvg = false;
+				}
+
+				if ($filterSvg)
+				{
+					$sanitizer = new Sanitizer();
+					$isValid   = $sanitizer->sanitize(file_get_contents($file));
+
+					if ($isValid)
+					{
+						file_put_contents($file, $isValid);
+					}
+					else
+					{
+						File::delete($file);
+					}
+				}
+			}
 		}
 		catch (Exception $e)
 		{

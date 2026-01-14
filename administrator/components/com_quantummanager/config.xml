@@ -448,6 +448,45 @@
 			   showon="overlay!:0"/>
 
 		<field type="spacer"
+			   name="spacer_image_sanitizer"
+			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_SPACER_SANITIZER"
+			   filter="unset"
+		/>
+
+		<field name="sanitizerpreviewadmin"
+			   type="radio"
+			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_SANITIZER_PREVIEW_ADMIN_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_SANITIZER_PREVIEW_ADMIN_DESC"
+			   required="true"
+			   class="btn-group btn-group-yesno"
+			   default="1">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field name="sanitizeruploadadmin"
+			   type="radio"
+			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_SANITIZER_UPLOAD_ADMIN_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_SANITIZER_UPLOAD_ADMIN_DESC"
+			   required="true"
+			   class="btn-group btn-group-yesno"
+			   default="1">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field name="sanitizeruploaduser"
+			   type="radio"
+			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_SANITIZER_UPLOAD_USER_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_SANITIZER_UPLOAD_USER_DESC"
+			   required="true"
+			   class="btn-group btn-group-yesno"
+			   default="1">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field type="spacer"
 			   name="spacer_image_editor"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_SPACER_IMAGE_EDITOR"
 			   filter="unset"

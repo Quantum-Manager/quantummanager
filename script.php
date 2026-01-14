@@ -1,138 +1,88 @@
 <?php
-/**
- * @package    quantummanager
- * @author     Dmitry Tsymbal <cymbal@delo-design.ru>
- * @copyright  Copyright © 2019 Delo Design & NorrNext. All rights reserved.
- * @license    GNU General Public License version 3 or later; see license.txt
- * @link       https://www.norrnext.com
- */
-
-use Joomla\CMS\Factory;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Version;
-use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
 
 defined('_JEXEC') or die;
 
-/**
- * Quantummanager script file.
- *
- * @package     A package name
- * @since       1.0
- */
-class com_quantummanagerInstallerScript
-{
+use Joomla\CMS\Application\AdministratorApplication;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Installer\InstallerAdapter;
+use Joomla\CMS\Installer\InstallerScriptInterface;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Version;
+use Joomla\Database\DatabaseDriver;
+use Joomla\DI\Container;
+use Joomla\DI\ServiceProviderInterface;
 
-	/**
-	 * Minimum PHP version required to install the extension.
-	 *
-	 * @var  string
-	 *
-	 * @since  0.0.1
-	 */
-	protected $minimumPhp = '7.4';
-
-	/**
-	 * Minimum Joomla version required to install the extension.
-	 *
-	 * @var  string
-	 *
-	 * @since  0.0.1
-	 */
-	protected $minimumJoomla = '4.0.0';
-
-	/**
-	 * @var string
-	 */
-	protected $helpURL = 'https://docs.norrnext.com/quantum-manager/';
-
-
-	/**
-	 * Extensions for php
-	 * @var array
-	 */
-	protected $extensions = [
-		'fileinfo',
-		'curl',
-		'mbstring'
-	];
-
-
-	/**
-	 * Called before any type of action
-	 *
-	 * @param   string            $route    Which action is happening (install|uninstall|discover_install|update)
-	 * @param   JAdapterInstance  $adapter  The object responsible for running this script
-	 *
-	 * @return  boolean  True on success
-	 */
-	public function preflight($route, $adapter)
+return new class () implements ServiceProviderInterface {
+	public function register(Container $container): void
 	{
-		$app = Factory::getApplication();
+		$container->set(InstallerScriptInterface::class, new class ($container->get(AdministratorApplication::class)) implements InstallerScriptInterface {
 
-		if (!(version_compare(PHP_VERSION, $this->minimumPhp) >= 0))
-		{
-			$app->enqueueMessage(Text::sprintf('COM_QUANTUMMANAGER_ERROR_COMPATIBLE_PHP', $this->minimumPhp),
-				'error');
+			protected AdministratorApplication $app;
 
-			return false;
-		}
+			protected DatabaseDriver $db;
 
-		$jversion = new Version();
-		if (!$jversion->isCompatible($this->minimumJoomla))
-		{
-			$app->enqueueMessage(Text::sprintf('COM_QUANTUMMANAGER_ERROR_COMPATIBLE_PHP', $this->minimumJoomla),
-				'error');
+			protected string $minimumJoomla = '4.2.0';
 
-			return false;
-		}
+			protected string $minimumPhp = '8.1';
 
-		//Check extension
-		$extensionsNotLoaded = [];
-		foreach ($this->extensions as $extension)
-		{
-			if (!extension_loaded($extension))
+			public function __construct(AdministratorApplication $app)
 			{
-				$extensionsNotLoaded[] = $extension;
+				$this->app = $app;
+				$this->db  = Factory::getContainer()->get('DatabaseDriver');
 			}
-		}
 
-		if (count($extensionsNotLoaded))
-		{
-			$app->enqueueMessage(Text::sprintf('COM_QUANTUMMANAGER_ERROR_EXTENSIONS', implode(',', $extensionsNotLoaded)),
-				'error');
+			public function preflight(string $type, InstallerAdapter $adapter): bool
+			{
+				if (!$this->checkCompatible())
+				{
+					return false;
+				}
 
-			return false;
-		}
+				return true;
+			}
 
+			protected function checkCompatible(): bool
+			{
+				$app = Factory::getApplication();
+
+				if (!(new Version())->isCompatible($this->minimumJoomla))
+				{
+					$app->enqueueMessage(Text::sprintf('COM_QUANTUMMANAGER_ERROR_WRONG_JOOMLA', $this->minimumJoomla),
+						'error');
+
+					return false;
+				}
+
+				if (!(version_compare(PHP_VERSION, $this->minimumPhp) >= 0))
+				{
+					$app->enqueueMessage(Text::sprintf('COM_QUANTUMMANAGER_ERROR_COMPATIBLE_PHP', $this->minimumPhp),
+						'error');
+
+					return false;
+				}
+
+				return true;
+			}
+
+			public function install(InstallerAdapter $adapter): bool
+			{
+				return true;
+			}
+
+			public function update(InstallerAdapter $adapter): bool
+			{
+				return true;
+			}
+
+			public function uninstall(InstallerAdapter $adapter): bool
+			{
+				return true;
+			}
+
+			public function postflight(string $type, InstallerAdapter $adapter): bool
+			{
+				return true;
+			}
+		});
 	}
-
-	/**
-	 * This method is called after a component is updated.
-	 *
-	 * @param   \stdClass  $parent  - Parent object calling object.
-	 *
-	 * @return void
-	 */
-	public function update($parent)
-	{
-		//QuantummanagerHelper::setComponentsParams('helpURL', $this->helpURL);
-	}
-
-	/**
-	 * Called after any type of action
-	 *
-	 * @param   string            $route    Which action is happening (install|uninstall|discover_install|update)
-	 * @param   JAdapterInstance  $adapter  The object responsible for running this script
-	 *
-	 * @return  boolean  True on success
-	 */
-	public function postflight($route, $adapter)
-	{
-		if ($route === 'install')
-		{
-			//QuantummanagerHelper::setComponentsParams('helpURL', $this->helpURL);
-		}
-	}
-
-}
+};

@@ -12,12 +12,15 @@ namespace Joomla\Component\QuantumManager\Administrator\Filesystem;
 
 defined('_JEXEC') or die;
 
+use enshrined\svgSanitize\Sanitizer;
 use Exception;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Component\QuantumManager\Administrator\Helper\ImageHelper;
 use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
+use Joomla\Event\Event;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 use Joomla\Filesystem\Path;
@@ -575,7 +578,7 @@ class LocalFilesystem
 					'dateM'       => $fileDate,
 				];
 
-				if (in_array(strtolower($exs), ['jpg', 'png', 'jpeg', 'gif', 'webp']))
+				if (in_array(strtolower($exs), ['jpg', 'png', 'jpeg', 'gif', 'webp', 'svg']))
 				{
 					$cache_file      = static::getPreviewImageFromFile('administrator/cache/com_quantummanager/' . $path . '/' . $file);
 					$cache_file_full = Path::clean(JPATH_ROOT . DIRECTORY_SEPARATOR . $cache_file);
@@ -719,7 +722,6 @@ class LocalFilesystem
 					continue;
 				}
 
-
 				if (is_file($file_source))
 				{
 					$file_new = $find_new_name($file, 0, true);
@@ -728,7 +730,6 @@ class LocalFilesystem
 					{
 						File::copy($file_source, $path_compile . DIRECTORY_SEPARATOR . $file_new);
 					}
-
 				}
 				else
 				{
@@ -972,7 +973,6 @@ class LocalFilesystem
 					$image->afterUpload($path_source, $path . DIRECTORY_SEPARATOR . $uploadedFileName);
 
 				}
-
 			}
 		}
 
@@ -1004,7 +1004,6 @@ class LocalFilesystem
 			{
 				$optionsForSafe['php_ext_content_extensions'] = ['null'];
 			}
-
 
 			if ($file === null || !isset($file['name']))
 			{
@@ -1043,7 +1042,6 @@ class LocalFilesystem
 					case 3:
 						$output['error'] = Text::_('COM_QUANTUMMANAGER_ERROR_PARTIAL_UPLOAD');
 				}
-
 			}
 			else
 			{
@@ -1086,7 +1084,6 @@ class LocalFilesystem
 
 				if (File::upload($file['tmp_name'], $path . DIRECTORY_SEPARATOR . $uploadedFileName))
 				{
-
 					QuantummanagerHelper::filterFile($path . DIRECTORY_SEPARATOR . $uploadedFileName);
 
 					$output['name'] = $uploadedFileName;
@@ -1097,13 +1094,18 @@ class LocalFilesystem
 						$image->afterUpload($path_source, $path . DIRECTORY_SEPARATOR . $uploadedFileName, ['rotateExif' => 1]);
 					}
 
-					Factory::getApplication()->triggerEvent('onQuantumManagerAfterUpload', [
-						$path . DIRECTORY_SEPARATOR . $uploadedFileName,
-						$path,
-						$uploadedFileName,
-						$data['scope'],
-						$data['path']
-					]);
+					Factory::getApplication()
+						->getDispatcher()
+						->dispatch(
+							'onQuantumManagerAfterUpload',
+							new Event('onQuantumManagerAfterUpload', [
+								$path . DIRECTORY_SEPARATOR . $uploadedFileName,
+								$path,
+								$uploadedFileName,
+								$data['scope'],
+								$data['path']
+							])
+						);
 				}
 
 			}
@@ -1121,12 +1123,13 @@ class LocalFilesystem
 
 	public static function generatePreviewImage(string $path, string $scope, string $file): void
 	{
-		$app            = Factory::getApplication();
-		$splitFile      = explode('.', $file);
-		$exs            = mb_strtolower(array_pop($splitFile));
-		$mediaIconsPath = 'media/com_quantummanager/images/icons/';
-		$siteUrl        = Uri::root();
-		$path           = QuantummanagerHelper::preparePath($path, false, $scope);
+		$app             = Factory::getApplication();
+		$splitFile       = explode('.', $file);
+		$exs             = mb_strtolower(array_pop($splitFile));
+		$mediaIconsPath  = 'media/com_quantummanager/images/icons/';
+		$siteUrl         = Uri::root();
+		$path            = QuantummanagerHelper::preparePath($path, false, $scope);
+		$componentParams = ComponentHelper::getParams('com_quantummanager');
 
 		if (empty($file))
 		{
@@ -1139,7 +1142,6 @@ class LocalFilesystem
 				$app->redirect($siteUrl . $mediaIconsPath . 'folder-empty.svg');
 			}
 		}
-
 
 		if (in_array($exs, ['jpg', 'jpeg', 'png', 'gif']))
 		{
@@ -1159,7 +1161,6 @@ class LocalFilesystem
 				}
 			}
 
-
 			if (!file_exists($cache . DIRECTORY_SEPARATOR . $file))
 			{
 				$fileSize = filesize($directory . DIRECTORY_SEPARATOR . $file);
@@ -1168,16 +1169,11 @@ class LocalFilesystem
 					$manager->read($directory . DIRECTORY_SEPARATOR . $file)
 						->scale(null, 320)
 						->save($cache . DIRECTORY_SEPARATOR . $file);
-
-					$app->redirect($siteUrl . 'administrator/cache/com_quantummanager' . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file . '?v=' . mt_rand(111111, 999999));
 				}
 
 			}
-			else
-			{
-				$app->redirect($siteUrl . 'administrator/cache/com_quantummanager' . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file . '?v=' . mt_rand(111111, 999999));
-			}
 
+			$app->redirect($siteUrl . 'administrator/cache/com_quantummanager' . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file . '?v=' . mt_rand(111111, 999999));
 		}
 
 		if ($exs === 'webp')
@@ -1208,6 +1204,50 @@ class LocalFilesystem
 			}
 
 			$app->redirect($siteUrl . 'administrator/cache/com_quantummanager' . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $newFile . '?v=' . mt_rand(111111, 999999));
+		}
+
+		if ($exs === 'svg')
+		{
+
+			if (
+				QuantummanagerHelper::isUserAdmin()
+				&& !$componentParams->get('sanitizerpreviewadmin')
+			)
+			{
+				$app->redirect($siteUrl . $path . DIRECTORY_SEPARATOR . $file);
+			}
+
+			$directory   = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
+			$cacheSource = JPATH_ROOT . DIRECTORY_SEPARATOR . 'administrator/cache/com_quantummanager';
+			$cache       = $cacheSource;
+			$pathArr     = explode('/', $path);
+			$newFile     = implode('.', $splitFile) . '.svg';
+
+			foreach ($pathArr as $iValue)
+			{
+				$cache .= DIRECTORY_SEPARATOR . $iValue;
+				if (!file_exists($cache))
+				{
+					Folder::create($cache);
+				}
+			}
+
+			if (!file_exists($cache . DIRECTORY_SEPARATOR . $newFile))
+			{
+				$sanitizer = new Sanitizer();
+				$isValid   = $sanitizer->sanitize(file_get_contents($directory . DIRECTORY_SEPARATOR . $file));
+
+				if ($isValid)
+				{
+					touch($cache . DIRECTORY_SEPARATOR . $newFile);
+					file_put_contents($cache . DIRECTORY_SEPARATOR . $newFile, $isValid);
+					$app->redirect($siteUrl . 'administrator/cache/com_quantummanager' . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $newFile . '?v=' . mt_rand(111111, 999999));
+				}
+			}
+			else
+			{
+				$app->redirect($siteUrl . 'administrator/cache/com_quantummanager' . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $newFile . '?v=' . mt_rand(111111, 999999));
+			}
 		}
 
 		$mapFileColors = include implode(DIRECTORY_SEPARATOR, [JPATH_ROOT, 'administrator', 'components', 'com_quantummanager', 'layouts', 'mapfilescolors.php']);

@@ -13,13 +13,14 @@ namespace Joomla\Component\QuantumManager\Administrator\Helper;
 defined('_JEXEC') or die;
 
 use Exception;
-use JLoader;
 use Joomla\CMS\Factory;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 use Joomla\CMS\Helper\MediaHelper;
 use Joomla\Libraries\JInterventionimage\Manager;
 
+use Joomla\Libraries\JPel\JPel;
+use lsolesen\pel\PelExif;
 use function defined;
 use function exif_read_data;
 use function function_exists;
@@ -45,7 +46,7 @@ use function str_replace;
 class ImageHelper
 {
 
-	private array $exifs = [];
+	private ?PelExif $exifs;
 
 	public function afterUpload(string $path_source, string $file, array $options = []): void
 	{
@@ -116,8 +117,7 @@ class ImageHelper
 			$error_reporting = error_reporting();
 			error_reporting($error_reporting & ~E_DEPRECATED);
 
-			JLoader::register('JPel', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jpel' . DIRECTORY_SEPARATOR . 'jpel.php');
-			$fi = \JPel::instance($file);
+			$fi = JPel::instance($file);
 			if ($fi)
 			{
 				$this->exifs = $fi->getExif();
@@ -220,7 +220,6 @@ class ImageHelper
 
 			$pos = mb_strpos($path_source, $folder_rule->folder);
 
-
 			if ($pos !== false)
 			{
 				if ($pos === 0)
@@ -240,7 +239,6 @@ class ImageHelper
 						$resize = true;
 					}
 
-
 					if ($resize)
 					{
 
@@ -249,12 +247,10 @@ class ImageHelper
 							$this->fit($file, (int) $folder_rule->maxwidth, (int) $folder_rule->maxheight);
 						}
 
-
 						if ($folder_rule->algorithm === 'bestfit')
 						{
 							$this->bestFit($file, (int) $folder_rule->maxwidth, (int) $folder_rule->maxheight);
 						}
-
 
 						if ($folder_rule->algorithm === 'resize')
 						{
@@ -417,7 +413,6 @@ class ImageHelper
 	{
 		try
 		{
-
 			$info = pathinfo($file);
 
 			if (isset($info['extension']) && (!in_array(mb_strtolower($info['extension']), ['jpg', 'jpeg', 'png', 'webp'])))
@@ -497,13 +492,12 @@ class ImageHelper
 			$error_reporting = error_reporting();
 			error_reporting($error_reporting & ~E_DEPRECATED);
 
-			JLoader::register('JPel', JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'jpel' . DIRECTORY_SEPARATOR . 'jpel.php');
-			$fi = \JPel::instance($file);
+			$fi = JPel::instance($file);
 			if ($fi)
 			{
 				$fi->setExif($this->exifs);
 				$fi->save($file);
-				$this->exifs = [];
+				$this->exifs = null;
 			}
 		}
 
