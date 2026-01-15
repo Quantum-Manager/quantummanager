@@ -18,7 +18,7 @@ use Joomla\CMS\Language\Text;
 class QuantumconfigscopetitleField extends TextField
 {
 
-	public $type = 'QuantumconfigScopeTitle';
+	protected $type = 'Quantumconfigscopetitle';
 
 	public function getInput(): string
 	{

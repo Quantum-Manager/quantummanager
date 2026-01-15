@@ -21,7 +21,7 @@ use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerLibsHelpe
 class QuantumviewfilesField extends QuantumbaseField
 {
 
-	public $type = 'QuantumViewfiles';
+	protected $type = 'Quantumviewfiles';
 
 	protected $layout = 'quantumviewfiles';
 

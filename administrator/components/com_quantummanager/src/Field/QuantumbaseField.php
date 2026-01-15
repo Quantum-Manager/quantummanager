@@ -20,6 +20,8 @@ use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
 class QuantumbaseField extends FormField
 {
 
+	protected $type = 'Quantumbase';
+
 	private array $addLayouts = [];
 
 	protected string $cssClass = '';

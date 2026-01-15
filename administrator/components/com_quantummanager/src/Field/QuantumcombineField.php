@@ -23,7 +23,7 @@ use SimpleXMLElement;
 class QuantumcombineField extends QuantumbaseField
 {
 
-	public $type = 'QuantumCombine';
+	protected $type = 'Quantumcombine';
 
 	protected $layout = 'quantumcombine';
 

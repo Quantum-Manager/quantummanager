@@ -21,7 +21,7 @@ use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerLibsHelpe
 class QuantumuploadField extends QuantumbaseField
 {
 
-	public $type = 'QuantumUpload';
+	protected $type = 'Quantumupload';
 
 	protected $layout = 'quantumupload';
 
