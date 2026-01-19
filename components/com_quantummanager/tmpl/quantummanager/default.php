@@ -21,7 +21,6 @@ $app->getSession()->clear('quantummanageraddscripts');
 try
 {
 	$folderRoot = 'root';
-
 	$buttonsBun = [];
 	$fields     = [
 		'quantumtreecatalogs' => [

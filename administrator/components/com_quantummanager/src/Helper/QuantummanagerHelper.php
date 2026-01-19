@@ -20,7 +20,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
-use Joomla\CMS\Table\Table;
+use Joomla\CMS\Table\Extension;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\WebAsset\WebAssetManager;
 use Joomla\Database\DatabaseDriver;
@@ -626,7 +626,7 @@ class QuantummanagerHelper
 		$params->set($name, $value);
 
 		$componentid = ComponentHelper::getComponent('com_quantummanager')->id;
-		$table       = Table::getInstance('extension');
+		$table       = new Extension(Factory::getContainer()->get(DatabaseDriver::class));
 		$table->load($componentid);
 		$table->bind(['params' => $params->toString()]);
 
