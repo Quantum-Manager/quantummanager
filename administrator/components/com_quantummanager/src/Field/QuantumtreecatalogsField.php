@@ -1,4 +1,6 @@
-<?php namespace Joomla\Component\QuantumManager\Administrator\Field;
+<?php
+
+namespace Joomla\Component\QuantumManager\Administrator\Field;
 
 /**
  * @package    quantummanager
@@ -19,7 +21,7 @@ use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerLibsHelpe
 class QuantumtreecatalogsField extends QuantumbaseField
 {
 
-	public $type = 'QuantumTreeCatalogs';
+	protected $type = 'QuantumtreecCatalogs';
 
 	protected $layout = 'quantumtreecatalogs';
 

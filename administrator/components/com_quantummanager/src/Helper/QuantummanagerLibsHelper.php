@@ -1,4 +1,6 @@
-<?php namespace Joomla\Component\QuantumManager\Administrator\Helper;
+<?php
+
+namespace Joomla\Component\QuantumManager\Administrator\Helper;
 
 /**
  * @package    quantummanager
@@ -13,6 +15,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Version;
+use Joomla\CMS\WebAsset\WebAssetManager;
 
 class QuantummanagerLibsHelper
 {
@@ -23,9 +26,10 @@ class QuantummanagerLibsHelper
 	{
 		if (!self::$flagScriptHead)
 		{
+			/** @var WebAssetManager $wa */
+			$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+			$wa->addInlineScript(file_get_contents(JPATH_ROOT . '/media/com_quantummanager/js/dispatcher.js'));
 
-			Factory::getDocument()
-				->addScriptDeclaration(file_get_contents(JPATH_ROOT . '/media/com_quantummanager/js/dispatcher.js'));
 			self::$flagScriptHead = true;
 		}
 	}
@@ -80,7 +84,7 @@ class QuantummanagerLibsHelper
 			'relative' => true
 		]);
 
-		if(
+		if (
 			version_compare((new Version)->getShortVersion(), '5.0.0', '>=') &&
 			Factory::getApplication()->isClient('administrator')
 		)

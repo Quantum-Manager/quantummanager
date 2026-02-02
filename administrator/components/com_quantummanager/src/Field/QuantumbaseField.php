@@ -1,4 +1,6 @@
-<?php namespace Joomla\Component\QuantumManager\Administrator\Field;
+<?php
+
+namespace Joomla\Component\QuantumManager\Administrator\Field;
 
 /**
  * @package    quantummanager
@@ -17,6 +19,8 @@ use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
 
 class QuantumbaseField extends FormField
 {
+
+	protected $type = 'Quantumbase';
 
 	private array $addLayouts = [];
 
@@ -59,7 +63,6 @@ class QuantumbaseField extends FormField
 				'urlRoot'   => $urlRoot,
 				'urlMedia'  => $urlMedia,
 				'scopes'    => $scopes,
-				'isJoomla4' => QuantummanagerHelper::isJoomla4() ? '1' : '0',
 			]
 		);
 	}

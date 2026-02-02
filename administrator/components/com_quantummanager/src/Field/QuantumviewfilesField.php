@@ -1,4 +1,6 @@
-<?php namespace Joomla\Component\QuantumManager\Administrator\Field;
+<?php
+
+namespace Joomla\Component\QuantumManager\Administrator\Field;
 
 /**
  * @package    quantummanager
@@ -19,7 +21,7 @@ use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerLibsHelpe
 class QuantumviewfilesField extends QuantumbaseField
 {
 
-	public $type = 'QuantumViewfiles';
+	protected $type = 'Quantumviewfiles';
 
 	protected $layout = 'quantumviewfiles';
 

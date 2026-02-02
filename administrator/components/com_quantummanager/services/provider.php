@@ -1,4 +1,6 @@
-<?php \defined('_JEXEC') or die;
+<?php
+
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Component\Router\RouterFactoryInterface;

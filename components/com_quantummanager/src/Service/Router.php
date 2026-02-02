@@ -1,4 +1,6 @@
-<?php namespace Joomla\Component\QuantumManager\Site\Service;
+<?php
+
+namespace Joomla\Component\QuantumManager\Site\Service;
 
 /**
  * @package    quantummanager
@@ -8,6 +10,8 @@
  * @link       https://www.norrnext.com
  */
 
+defined('_JEXEC') or die;
+
 use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Component\Router\RouterView;
 use Joomla\CMS\Component\Router\RouterViewConfiguration;
@@ -16,15 +20,6 @@ use Joomla\CMS\Component\Router\Rules\NomenuRules;
 use Joomla\CMS\Component\Router\Rules\StandardRules;
 use Joomla\CMS\Menu\AbstractMenu;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
-
-/**
- * Routing class of com_quantummanager
- *
- * @since  3.3
- */
 class Router extends RouterView
 {
 

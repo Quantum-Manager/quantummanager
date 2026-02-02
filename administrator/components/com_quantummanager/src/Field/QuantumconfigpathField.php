@@ -1,4 +1,6 @@
-<?php namespace Joomla\Component\QuantumManager\Administrator\Field;
+<?php
+
+namespace Joomla\Component\QuantumManager\Administrator\Field;
 
 /**
  * @package    quantummanager
@@ -17,7 +19,7 @@ use Joomla\CMS\Uri\Uri;
 class QuantumconfigpathField extends TextField
 {
 
-	public $type = 'QuantumConfigpath';
+	protected $type = 'Quantumconfigpath';
 
 	protected string $prefix = '';
 

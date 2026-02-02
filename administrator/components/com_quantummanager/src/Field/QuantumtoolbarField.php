@@ -1,4 +1,6 @@
-<?php namespace Joomla\Component\QuantumManager\Administrator\Field;
+<?php
+
+namespace Joomla\Component\QuantumManager\Administrator\Field;
 
 /**
  * @package    quantummanager
@@ -18,7 +20,7 @@ use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerLibsHelpe
 class QuantumtoolbarField extends QuantumbaseField
 {
 
-	public $type = 'QuantumToolbar';
+	protected $type = 'Quantumtoolbar';
 
 	protected $layout = 'quantumtoolbar';
 
@@ -48,7 +50,6 @@ class QuantumtoolbarField extends QuantumbaseField
 	{
 		try
 		{
-
 			$this->__set('standalone', $this->getAttribute('standalone', true));
 			$this->__set('buttons', $this->getAttribute('buttons', 'all'));
 			$this->__set('buttonsBun', $this->getAttribute('buttonsBun', ','));

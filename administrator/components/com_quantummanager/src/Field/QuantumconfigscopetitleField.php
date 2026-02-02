@@ -1,4 +1,6 @@
-<?php namespace Joomla\Component\QuantumManager\Administrator\Field;
+<?php
+
+namespace Joomla\Component\QuantumManager\Administrator\Field;
 
 /**
  * @package    quantummanager
@@ -16,7 +18,7 @@ use Joomla\CMS\Language\Text;
 class QuantumconfigscopetitleField extends TextField
 {
 
-	public $type = 'QuantumconfigScopeTitle';
+	protected $type = 'Quantumconfigscopetitle';
 
 	public function getInput(): string
 	{

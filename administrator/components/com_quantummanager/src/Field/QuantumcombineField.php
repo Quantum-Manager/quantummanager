@@ -1,4 +1,6 @@
-<?php namespace Joomla\Component\QuantumManager\Administrator\Field;
+<?php
+
+namespace Joomla\Component\QuantumManager\Administrator\Field;
 
 /**
  * @package    quantummanager
@@ -21,7 +23,7 @@ use SimpleXMLElement;
 class QuantumcombineField extends QuantumbaseField
 {
 
-	public $type = 'QuantumCombine';
+	protected $type = 'Quantumcombine';
 
 	protected $layout = 'quantumcombine';
 

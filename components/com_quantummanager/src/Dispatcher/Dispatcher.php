@@ -1,4 +1,6 @@
-<?php namespace Joomla\Component\QuantumManager\Site\Dispatcher;
+<?php
+
+namespace Joomla\Component\QuantumManager\Site\Dispatcher;
 
 /**
  * @package    quantummanager
@@ -10,21 +12,13 @@
 
 use Joomla\CMS\Dispatcher\ComponentDispatcher;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
+defined('_JEXEC') or die;
 
-/**
- * ComponentDispatcher class for com_quantummanager
- *
- * @since  4.0.0
- */
 class Dispatcher extends ComponentDispatcher
 {
 
 	protected function loadLanguage()
 	{
-		// Load common and local language files.
 		$this->app->getLanguage()->load($this->option, JPATH_BASE) ||
 		$this->app->getLanguage()->load($this->option, JPATH_COMPONENT);
 		$this->app->getLanguage()->load($this->option, JPATH_ADMINISTRATOR);

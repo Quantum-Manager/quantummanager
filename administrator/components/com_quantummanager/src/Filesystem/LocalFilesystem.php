@@ -12,12 +12,15 @@ namespace Joomla\Component\QuantumManager\Administrator\Filesystem;
 
 defined('_JEXEC') or die;
 
+use enshrined\svgSanitize\Sanitizer;
 use Exception;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Component\QuantumManager\Administrator\Helper\ImageHelper;
 use Joomla\Component\QuantumManager\Administrator\Helper\QuantummanagerHelper;
+use Joomla\Event\Event;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 use Joomla\Filesystem\Path;
@@ -33,13 +36,11 @@ use function function_exists;
 use function getimagesize;
 use function http_build_query;
 use function in_array;
-use function ini_set;
 use function is_file;
 use function is_writable;
 use function json_encode;
 use function opendir;
 use function pathinfo;
-use function preg_match;
 use function preg_replace;
 use function readdir;
 use function rename;
@@ -61,7 +62,6 @@ use function mb_strlen;
 use function mt_rand;
 use function md5;
 use function file_get_contents;
-use function file_put_contents;
 use function header;
 use function strtolower;
 use function urldecode;
@@ -103,7 +103,8 @@ class LocalFilesystem
 
 	public static function getScopesDirectories(string $path, string $root, string $scopeSource = 'all'): string
 	{
-		$scopes = QuantummanagerHelper::getAllScope();
+		$scopes      = QuantummanagerHelper::getAllScope();
+		$directories = [];
 
 		if ($scopeSource === 'all')
 		{
@@ -115,7 +116,6 @@ class LocalFilesystem
 
 				if (!file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $path))
 				{
-					//создаем папку для области, если ее нет
 					foreach ($pathArr as $iValue)
 					{
 						$pathCurr .= DIRECTORY_SEPARATOR . $iValue;
@@ -126,7 +126,7 @@ class LocalFilesystem
 					}
 				}
 
-				$directories[] = static::showdir(JPATH_ROOT . DIRECTORY_SEPARATOR . $path, $root, $scope->title, $scope->id, true, true);
+				$directories[] = static::showDir(JPATH_ROOT . DIRECTORY_SEPARATOR . $path, $root, $scope->title, $scope->id, true, true);
 			}
 		}
 		else
@@ -136,7 +136,7 @@ class LocalFilesystem
 				if ($scope->id === $scopeSource)
 				{
 					$path          = JPATH_ROOT . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath('root', false, $scope->id);
-					$directories[] = static::showdir($path, $root, $scope->title, $scope->id, true, true);
+					$directories[] = static::showDir($path, $root, $scope->title, $scope->id, true, true);
 					break;
 				}
 			}
@@ -147,7 +147,7 @@ class LocalFilesystem
 		], false, 1000);
 	}
 
-	protected static function showdir
+	protected static function showDir
 	(
 		string $dir,
 		string $root = '',
@@ -155,8 +155,8 @@ class LocalFilesystem
 		string $scopeId = '',
 		bool   $folderOnly = false,
 		bool   $showRoot = false,
-		int    $level = 0,  // do not use!!!
-		string $ef = ''     // do not use!!!
+		int    $level = 0,
+		string $ef = ''
 	): array
 	{
 
@@ -173,10 +173,9 @@ class LocalFilesystem
 
 		if ($showRoot && $level == 0)
 		{
-			$subdir = static::showdir($dir, $root, $scopeTitle, $scopeId, $folderOnly, $showRoot, $level + 1, $ef);
+			$subdir = static::showDir($dir, $root, $scopeTitle, $scopeId, $folderOnly, $showRoot, $level + 1, $ef);
 
 			return [
-				//'path' => QuantummanagerHelper::getFolderRoot(),
 				'path'     => $root,
 				'title'    => $scopeTitle,
 				'scopeid'  => $scopeId,
@@ -201,7 +200,7 @@ class LocalFilesystem
 
 						$folders[] = [
 							'path'     => $name,
-							'subpath'  => static::showdir($dir . DIRECTORY_SEPARATOR . $name, $root, $scopeTitle, $scopeId, $folderOnly, $showRoot, $level + 1, $ef),
+							'subpath'  => static::showDir($dir . DIRECTORY_SEPARATOR . $name, $root, $scopeTitle, $scopeId, $folderOnly, $showRoot, $level + 1, $ef),
 							'is_empty' => (int) static::dirIisEmpty($dir . DIRECTORY_SEPARATOR . $name)
 						];
 					}
@@ -237,7 +236,7 @@ class LocalFilesystem
 	public static function getDirectories(string $path, string $root): string
 	{
 		$path        = JPATH_ROOT . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($path);
-		$directories = static::showdir($path, $root, '', true, true);
+		$directories = static::showDir($path, $root, '', true, true);
 
 		return json_encode([
 			'directories' => $directories
@@ -280,17 +279,6 @@ class LocalFilesystem
 					'find'    => [],
 				];
 
-
-				/*$globalInfo[] = [
-					'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_FILENAME'),
-					'value' => implode('.', $splitFile) . '.' . $exs,
-				];*/
-
-				/*$globalInfo[] = [
-					'key' => Text::_('COM_QUANTUMMANAGER_METAINFO_EXS'),
-					'value' => $exs,
-				];*/
-
 				$stat = stat($filePath);
 
 				if ($stat !== false)
@@ -328,10 +316,8 @@ class LocalFilesystem
 
 				}
 
-
 				if (in_array($exs, ['jpg', 'jpeg']))
 				{
-
 					try
 					{
 						if (function_exists('exif_read_data'))
@@ -394,7 +380,6 @@ class LocalFilesystem
 				$splitDirectory = explode(DIRECTORY_SEPARATOR, $directory);
 				$directoryName  = array_pop($splitDirectory);
 
-
 				$meta = [
 					'preview' => [
 						'link' => 'index.php?' . http_build_query([
@@ -410,7 +395,6 @@ class LocalFilesystem
 					'global'  => [],
 					'find'    => [],
 				];
-
 
 				if ($extended)
 				{
@@ -474,7 +458,6 @@ class LocalFilesystem
 						]
 					]);
 				}
-
 
 			}
 
@@ -595,7 +578,7 @@ class LocalFilesystem
 					'dateM'       => $fileDate,
 				];
 
-				if (in_array(strtolower($exs), ['jpg', 'png', 'jpeg', 'gif', 'webp']))
+				if (in_array(strtolower($exs), ['jpg', 'png', 'jpeg', 'gif', 'webp', 'svg']))
 				{
 					$cache_file      = static::getPreviewImageFromFile('administrator/cache/com_quantummanager/' . $path . '/' . $file);
 					$cache_file_full = Path::clean(JPATH_ROOT . DIRECTORY_SEPARATOR . $cache_file);
@@ -633,6 +616,11 @@ class LocalFilesystem
 		{
 			echo $exception->getMessage();
 		}
+
+		return json_encode([
+			'error'   => '0',
+			'message' => 'folder not create',
+		]);
 	}
 
 	public static function getPreviewImageFromFile(string $file): string
@@ -657,7 +645,7 @@ class LocalFilesystem
 			return json_encode(['fail']);
 		}
 
-		$lang         = Factory::getLanguage();
+		$lang         = Factory::getApplication()->getLanguage();
 		$path_compile = JPATH_SITE . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($path, false, $scope);
 
 		$find_new_name = static function ($name, $count = 0, $is_file = true) use ($lang, $path_compile, &$find_new_name) {
@@ -734,7 +722,6 @@ class LocalFilesystem
 					continue;
 				}
 
-
 				if (is_file($file_source))
 				{
 					$file_new = $find_new_name($file, 0, true);
@@ -743,7 +730,6 @@ class LocalFilesystem
 					{
 						File::copy($file_source, $path_compile . DIRECTORY_SEPARATOR . $file_new);
 					}
-
 				}
 				else
 				{
@@ -987,7 +973,6 @@ class LocalFilesystem
 					$image->afterUpload($path_source, $path . DIRECTORY_SEPARATOR . $uploadedFileName);
 
 				}
-
 			}
 		}
 
@@ -1019,7 +1004,6 @@ class LocalFilesystem
 			{
 				$optionsForSafe['php_ext_content_extensions'] = ['null'];
 			}
-
 
 			if ($file === null || !isset($file['name']))
 			{
@@ -1058,7 +1042,6 @@ class LocalFilesystem
 					case 3:
 						$output['error'] = Text::_('COM_QUANTUMMANAGER_ERROR_PARTIAL_UPLOAD');
 				}
-
 			}
 			else
 			{
@@ -1101,7 +1084,6 @@ class LocalFilesystem
 
 				if (File::upload($file['tmp_name'], $path . DIRECTORY_SEPARATOR . $uploadedFileName))
 				{
-
 					QuantummanagerHelper::filterFile($path . DIRECTORY_SEPARATOR . $uploadedFileName);
 
 					$output['name'] = $uploadedFileName;
@@ -1112,13 +1094,18 @@ class LocalFilesystem
 						$image->afterUpload($path_source, $path . DIRECTORY_SEPARATOR . $uploadedFileName, ['rotateExif' => 1]);
 					}
 
-					Factory::getApplication()->triggerEvent('onQuantumManagerAfterUpload', [
-						$path . DIRECTORY_SEPARATOR . $uploadedFileName,
-						$path,
-						$uploadedFileName,
-						$data['scope'],
-						$data['path']
-					]);
+					Factory::getApplication()
+						->getDispatcher()
+						->dispatch(
+							'onQuantumManagerAfterUpload',
+							new Event('onQuantumManagerAfterUpload', [
+								$path . DIRECTORY_SEPARATOR . $uploadedFileName,
+								$path,
+								$uploadedFileName,
+								$data['scope'],
+								$data['path']
+							])
+						);
 				}
 
 			}
@@ -1130,67 +1117,31 @@ class LocalFilesystem
 		{
 			echo $e->getMessage();
 		}
-	}
 
-	public static function downloadFileUnsplash(string $path_source, string $scope, string $file, string $id): string
-	{
-
-		$output = [];
-		if (preg_match('#^https://images.unsplash.com/.*?#', $file))
-		{
-
-			@ini_set('memory_limit', '256M');
-
-			$lang = Factory::getLanguage();
-			$path = QuantummanagerHelper::preparePath($path_source, false, $scope);
-
-			$fileContent = file_get_contents($file);
-			$filePath    = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
-			$id          = QuantummanagerHelper::prepareFileName($id);
-			$fileName    = $id . '.jpg';
-
-			try
-			{
-				@file_put_contents($filePath . DIRECTORY_SEPARATOR . $fileName, $fileContent);
-
-				$image = new ImageHelper;
-				$image->afterUpload($path, $filePath . DIRECTORY_SEPARATOR . $fileName);
-
-				$output['name'] = $fileName;
-			}
-			catch (Exception $e)
-			{
-				$output['name'] = '';
-			}
-
-		}
-
-		return json_encode($output);
+		return json_encode(['fail']);
 	}
 
 	public static function generatePreviewImage(string $path, string $scope, string $file): void
 	{
-		$app            = Factory::getApplication();
-		$splitFile      = explode('.', $file);
-		$exs            = mb_strtolower(array_pop($splitFile));
-		$mediaIconsPath = 'media/com_quantummanager/images/icons/';
-		$siteUrl        = Uri::root();
-		$path           = QuantummanagerHelper::preparePath($path, false, $scope);
+		$app             = Factory::getApplication();
+		$splitFile       = explode('.', $file);
+		$exs             = mb_strtolower(array_pop($splitFile));
+		$mediaIconsPath  = 'media/com_quantummanager/images/icons/';
+		$siteUrl         = Uri::root();
+		$path            = QuantummanagerHelper::preparePath($path, false, $scope);
+		$componentParams = ComponentHelper::getParams('com_quantummanager');
 
 		if (empty($file))
 		{
-			$prefix = QuantummanagerHelper::isJoomla4() ? 'j4-' : '';
-
 			if (static::dirIisEmpty(JPATH_ROOT . DIRECTORY_SEPARATOR . $path))
 			{
-				$app->redirect($siteUrl . $mediaIconsPath . $prefix . 'folder.svg');
+				$app->redirect($siteUrl . $mediaIconsPath . 'folder.svg');
 			}
 			else
 			{
-				$app->redirect($siteUrl . $mediaIconsPath . $prefix . 'folder-empty.svg');
+				$app->redirect($siteUrl . $mediaIconsPath . 'folder-empty.svg');
 			}
 		}
-
 
 		if (in_array($exs, ['jpg', 'jpeg', 'png', 'gif']))
 		{
@@ -1210,7 +1161,6 @@ class LocalFilesystem
 				}
 			}
 
-
 			if (!file_exists($cache . DIRECTORY_SEPARATOR . $file))
 			{
 				$fileSize = filesize($directory . DIRECTORY_SEPARATOR . $file);
@@ -1219,16 +1169,11 @@ class LocalFilesystem
 					$manager->read($directory . DIRECTORY_SEPARATOR . $file)
 						->scale(null, 320)
 						->save($cache . DIRECTORY_SEPARATOR . $file);
-
-					$app->redirect($siteUrl . 'administrator/cache/com_quantummanager' . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file . '?v=' . mt_rand(111111, 999999));
 				}
 
 			}
-			else
-			{
-				$app->redirect($siteUrl . 'administrator/cache/com_quantummanager' . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file . '?v=' . mt_rand(111111, 999999));
-			}
 
+			$app->redirect($siteUrl . 'administrator/cache/com_quantummanager' . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file . '?v=' . mt_rand(111111, 999999));
 		}
 
 		if ($exs === 'webp')
@@ -1261,6 +1206,50 @@ class LocalFilesystem
 			$app->redirect($siteUrl . 'administrator/cache/com_quantummanager' . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $newFile . '?v=' . mt_rand(111111, 999999));
 		}
 
+		if ($exs === 'svg')
+		{
+
+			if (
+				QuantummanagerHelper::isUserAdmin()
+				&& !$componentParams->get('sanitizerpreviewadmin')
+			)
+			{
+				$app->redirect($siteUrl . $path . DIRECTORY_SEPARATOR . $file);
+			}
+
+			$directory   = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
+			$cacheSource = JPATH_ROOT . DIRECTORY_SEPARATOR . 'administrator/cache/com_quantummanager';
+			$cache       = $cacheSource;
+			$pathArr     = explode('/', $path);
+			$newFile     = implode('.', $splitFile) . '.svg';
+
+			foreach ($pathArr as $iValue)
+			{
+				$cache .= DIRECTORY_SEPARATOR . $iValue;
+				if (!file_exists($cache))
+				{
+					Folder::create($cache);
+				}
+			}
+
+			if (!file_exists($cache . DIRECTORY_SEPARATOR . $newFile))
+			{
+				$sanitizer = new Sanitizer();
+				$isValid   = $sanitizer->sanitize(file_get_contents($directory . DIRECTORY_SEPARATOR . $file));
+
+				if ($isValid)
+				{
+					touch($cache . DIRECTORY_SEPARATOR . $newFile);
+					file_put_contents($cache . DIRECTORY_SEPARATOR . $newFile, $isValid);
+					$app->redirect($siteUrl . 'administrator/cache/com_quantummanager' . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $newFile . '?v=' . mt_rand(111111, 999999));
+				}
+			}
+			else
+			{
+				$app->redirect($siteUrl . 'administrator/cache/com_quantummanager' . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $newFile . '?v=' . mt_rand(111111, 999999));
+			}
+		}
+
 		$mapFileColors = include implode(DIRECTORY_SEPARATOR, [JPATH_ROOT, 'administrator', 'components', 'com_quantummanager', 'layouts', 'mapfilescolors.php']);
 		$colors        = $mapFileColors['default'];
 
@@ -1270,7 +1259,7 @@ class LocalFilesystem
 		}
 
 		$svg = '<?xml version="1.0" encoding="iso-8859-1"?>' . file_get_contents(JPATH_ROOT . DIRECTORY_SEPARATOR . '/media/com_quantummanager/images/icons/file.svg');
-		$svg = str_replace(array('data-fill-m=""', 'data-fill-t=""'), array('fill="' . $colors[0] . '"', 'fill="' . $colors[1] . '"'), $svg);
+		$svg = str_replace(['data-fill-m=""', 'data-fill-t=""'], ['fill="' . $colors[0] . '"', 'fill="' . $colors[1] . '"'], $svg);
 		$svg = str_replace('</g>', "<text x=\"150\" y=\"200\" fill=\"#FFFFFF\" style=\"font-size: 80px;text-anchor: middle;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;\">" . $exs . "</text></g>", $svg);
 
 		header('Content-type: image/svg+xml');
@@ -1372,12 +1361,6 @@ class LocalFilesystem
 				];
 			}
 		}
-		else
-		{
-			$output = [
-				'status' => 'fail'
-			];
-		}
 
 		return json_encode($output);
 	}
@@ -1389,7 +1372,7 @@ class LocalFilesystem
 			'status' => 'fail'
 		];
 
-		$lang = Factory::getLanguage();
+		$lang = Factory::getApplication()->getLanguage();
 
 		if (!(int) QuantummanagerHelper::getParamsComponentValue('translit', 0))
 		{
@@ -1461,6 +1444,5 @@ class LocalFilesystem
 		}
 
 	}
-
 
 }

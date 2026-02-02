@@ -1,4 +1,6 @@
-<?php namespace Joomla\Component\QuantumManager\Administrator\Helper;
+<?php
+
+namespace Joomla\Component\QuantumManager\Administrator\Helper;
 
 /**
  * @package    quantummanager
@@ -10,17 +12,19 @@
 
 defined('_JEXEC') or die;
 
+use enshrined\svgSanitize\Sanitizer;
 use Exception;
 use Joomla\CMS\Access\Access;
-use Joomla\CMS\Cache\Cache;
+use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\PluginHelper;
-use Joomla\CMS\Table\Table;
+use Joomla\CMS\Table\Extension;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Version;
+use Joomla\CMS\WebAsset\WebAssetManager;
+use Joomla\Database\DatabaseDriver;
+use Joomla\Event\Event;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 use Joomla\Filesystem\Path;
@@ -64,7 +68,6 @@ class QuantummanagerHelper
 	{
 		try
 		{
-
 			if (empty(self::$cacheMimeType))
 			{
 				$componentParams     = ComponentHelper::getParams('com_quantummanager');
@@ -77,7 +80,10 @@ class QuantummanagerHelper
 					$component          = new stdClass;
 					$component->element = 'com_quantummanager';
 					$component->params  = (string) $componentParams;
-					Factory::getDbo()->updateObject('#__extensions', $component, ['element']);
+
+					/** @var DatabaseDriver $db */
+					$db = Factory::getContainer()->get(DatabaseDriver::class);
+					$db->updateObject('#__extensions', $component, ['element']);
 				}
 
 			}
@@ -124,14 +130,42 @@ class QuantummanagerHelper
 	{
 		try
 		{
-			//TODO доработать фильтрацию
+			if (!file_exists($file))
+			{
+				return;
+			}
 
-			/*if (file_exists($file)) {
-				file_put_contents(
-					$file,
-					preg_replace(['/<(\?|\%)\=?(php)?/', '/(\%|\?)>/'], ['', ''], file_get_contents($file))
-				);
-			}*/
+			$componentParams = ComponentHelper::getParams('com_quantummanager');
+			$splitFileName   = explode('.', $file);
+			$exstension      = array_pop($splitFileName);
+
+			if ($exstension === 'svg')
+			{
+				$filterSvg = true;
+
+				if (
+					self::isUserAdmin() && !$componentParams->get('sanitizeruploadadmin', 1)
+					|| !self::isUserAdmin() && !$componentParams->get('sanitizeruploaduser', 1)
+				)
+				{
+					$filterSvg = false;
+				}
+
+				if ($filterSvg)
+				{
+					$sanitizer = new Sanitizer();
+					$isValid   = $sanitizer->sanitize(file_get_contents($file));
+
+					if ($isValid)
+					{
+						file_put_contents($file, $isValid);
+					}
+					else
+					{
+						File::delete($file);
+					}
+				}
+			}
 		}
 		catch (Exception $e)
 		{
@@ -139,10 +173,10 @@ class QuantummanagerHelper
 		}
 	}
 
-	public static function getActions(): CMSObject
+	public static function getActions(): Registry
 	{
-		$user      = Factory::getUser();
-		$result    = new CMSObject;
+		$user      = Factory::getApplication()->getIdentity();
+		$result    = new Registry;
 		$assetName = 'com_quantummanager';
 		$actions   = Access::getActionsFromFile(
 			JPATH_ADMINISTRATOR . '/components/' . $assetName . '/access.xml',
@@ -157,10 +191,9 @@ class QuantummanagerHelper
 		return $result;
 	}
 
-	public static function preparePathRoot(string $path, string $scopeName, bool $pathUnix = false): array|string
+	public static function preparePathRoot(string $path, string $scopeName, bool $pathUnix = false): string
 	{
-		$path       = trim($path);
-		$pathConfig = '';
+		$path = trim($path);
 
 		if (!preg_match('#^root.*#', $path))
 		{
@@ -195,8 +228,7 @@ class QuantummanagerHelper
 
 	public static function preparePath(string $path, bool $host = false, string $scopeName = '', bool $pathUnix = false): string
 	{
-		$path       = trim($path);
-		$pathConfig = '';
+		$path = trim($path);
 
 		if (!preg_match('#^root.*#', $path))
 		{
@@ -221,7 +253,7 @@ class QuantummanagerHelper
 
 		if (substr_count($path, '{user_id}'))
 		{
-			$user = Factory::getUser();
+			$user = Factory::getApplication()->getIdentity();
 		}
 		else
 		{
@@ -271,7 +303,12 @@ class QuantummanagerHelper
 		];
 
 		PluginHelper::importPlugin('quantummanager');
-		$results = Factory::getApplication()->triggerEvent('onQuantummanagerAddVariables');
+		$results = Factory::getApplication()
+			->getDispatcher()
+			->dispatch(
+				'onQuantummanagerAddVariables',
+				new Event('onQuantummanagerAddVariables', [&$params])
+			);
 
 		if (is_array($results))
 		{
@@ -294,7 +331,6 @@ class QuantummanagerHelper
 		$path            = Path::clean($path);
 		$pathConfigParse = Path::clean($pathConfigParse);
 
-		//если пытаются выйти за пределы папки, то не даем этого сделать
 		if (!preg_match('#^' . str_replace(DIRECTORY_SEPARATOR, "\\" . DIRECTORY_SEPARATOR, "\(" . Path::clean(JPATH_ROOT . DIRECTORY_SEPARATOR) . "\)?" . $pathConfigParse) . '.*?#', $path))
 		{
 			if (preg_match('#.*?' . str_replace(DIRECTORY_SEPARATOR, "\\" . DIRECTORY_SEPARATOR, Path::clean(JPATH_ROOT . DIRECTORY_SEPARATOR) . $pathConfigParse) . '.*?#', $path))
@@ -350,27 +386,21 @@ class QuantummanagerHelper
 	public static function getFolderRoot(): string
 	{
 		$componentParams = ComponentHelper::getParams('com_quantummanager');
-		$folderRoot      = $componentParams->get('path', 'images');
 
-		if ($folderRoot === 'root')
-		{
-			$folderRoot = 'root';
-		}
-
-		return $folderRoot;
+		return $componentParams->get('path', 'images');
 	}
 
 	public static function getParamsComponentValue(string $name, mixed $default = '', bool $withProfiles = true): mixed
 	{
 		$profiles = static::getComponentsParams('profiles', '');
 		$value    = static::getComponentsParams($name, $default);
-		$groups   = Factory::getUser()->groups;
+		$groups   = Factory::getApplication()->getIdentity()->groups;
 
 		if ($withProfiles)
 		{
 			if (!empty($profiles))
 			{
-				foreach ($profiles as $key => $profile)
+				foreach ($profiles as $profile)
 				{
 					if (in_array((int) $profile->group, $groups) && ($name === $profile->config))
 					{
@@ -392,7 +422,7 @@ class QuantummanagerHelper
 
 	public static function loadLang(): void
 	{
-		$lang         = Factory::getLanguage();
+		$lang         = Factory::getApplication()->getLanguage();
 		$extension    = 'com_quantummanager';
 		$base_dir     = JPATH_ROOT . DIRECTORY_SEPARATOR . 'administrator';
 		$language_tag = $lang->getTag();
@@ -442,7 +472,7 @@ class QuantummanagerHelper
 	{
 		self::checkScopes();
 
-		$session          = Factory::getSession();
+		$session          = Factory::getApplication()->getSession();
 		$pathSession      = $session->get('quantummanagerroot', '');
 		$pathSessionCheck = $session->get('quantummanagerrootcheck', 1);
 		$scopesOutput     = [];
@@ -496,16 +526,13 @@ class QuantummanagerHelper
 
 			$scope = (object) $scope;
 
-			if (isset($scope->enable))
+			if (
+				isset($scope->enable)
+				&& (string) $enabled === '1'
+				&& !(int) $scope->enable
+			)
 			{
-				if ((string) $enabled === '1')
-				{
-					if (!(int) $scope->enable)
-					{
-						continue;
-					}
-				}
-
+				continue;
 			}
 
 			if (empty($scope->path))
@@ -516,7 +543,6 @@ class QuantummanagerHelper
 			$scopesOutput[] = $scope;
 		}
 
-
 		return $scopesOutput;
 	}
 
@@ -524,7 +550,7 @@ class QuantummanagerHelper
 	{
 		$scopesCustom = self::getParamsComponentValue('scopescustom', [], false);
 		$scopeFail    = false;
-		$lang         = Factory::getLanguage();
+		$lang         = Factory::getApplication()->getLanguage();
 
 		foreach ($scopesCustom as $scope)
 		{
@@ -582,7 +608,12 @@ class QuantummanagerHelper
 		$params = ComponentHelper::getParams('com_quantummanager');
 
 		PluginHelper::importPlugin('quantummanager');
-		Factory::getApplication()->triggerEvent('onQuantumManagerConfiguration', [&$params]);
+		Factory::getApplication()
+			->getDispatcher()
+			->dispatch(
+				'onQuantumManagerConfiguration',
+				new Event('onQuantumManagerConfiguration', [&$params])
+			);
 
 		static::$cacheParams = $params;
 
@@ -595,7 +626,7 @@ class QuantummanagerHelper
 		$params->set($name, $value);
 
 		$componentid = ComponentHelper::getComponent('com_quantummanager')->id;
-		$table       = Table::getInstance('extension');
+		$table       = new Extension(Factory::getContainer()->get(DatabaseDriver::class));
 		$table->load($componentid);
 		$table->bind(['params' => $params->toString()]);
 
@@ -620,77 +651,56 @@ class QuantummanagerHelper
 
 	public static function cleanCache(?string $group = null, int $client_id = 0): void
 	{
-		$conf = Factory::getConfig();
+		$conf = Factory::getApplication()->getConfig();
 
 		$options = [
 			'defaultgroup' => !is_null($group) ? $group : Factory::getApplication()->input->get('option'),
 			'cachebase'    => $client_id ? JPATH_ADMINISTRATOR . '/cache' : $conf->get('cache_path', JPATH_SITE . '/cache')
 		];
 
-		$cache = Cache::getInstance('callback', $options);
+		$cache = Factory::getContainer()
+			->get(CacheControllerFactoryInterface::class)
+			->createCacheController('callback', $options);
 		$cache->clean();
 	}
 
 	public static function isSafeFile(array $file, array $options = []): bool
 	{
-		$defaultOptions = array(
-
-			// Null byte in file name
+		$defaultOptions = [
 			'null_byte'                  => true,
-
-			// Forbidden string in extension (e.g. php matched .php, .xxx.php, .php.xxx and so on)
-			'forbidden_extensions'       => array(
-				'php', 'phps', 'pht', 'phtml', 'php3', 'php4', 'php5', 'php6', 'php7', 'inc', 'pl', 'cgi', 'fcgi', 'java', 'jar', 'py',
-			),
-
-			// <?php tag in file contents
+			'forbidden_extensions'       => ['php', 'phps', 'pht', 'phtml', 'php3', 'php4', 'php5', 'php6', 'php7', 'inc', 'pl', 'cgi', 'fcgi', 'java', 'jar', 'py',],
 			'php_tag_in_content'         => true,
-
-			// <? tag in file contents
 			'shorttag_in_content'        => true,
-
-			// Which file extensions to scan for short tags
-			'shorttag_extensions'        => array(
-				'inc', 'phps', 'class', 'php3', 'php4', 'php5', 'txt', 'dat', 'tpl', 'tmpl',
-			),
-
-			// Forbidden extensions anywhere in the content
+			'shorttag_extensions'        => ['inc', 'phps', 'class', 'php3', 'php4', 'php5', 'txt', 'dat', 'tpl', 'tmpl',],
 			'fobidden_ext_in_content'    => true,
+			'php_ext_content_extensions' => ['zip', 'rar', 'tar', 'gz', 'tgz', 'bz2', 'tbz', 'jpa'],
+		];
 
-			// Which file extensions to scan for .php in the content
-			'php_ext_content_extensions' => array('zip', 'rar', 'tar', 'gz', 'tgz', 'bz2', 'tbz', 'jpa'),
-		);
-
-		$options = array_replace($defaultOptions, $options);
-
-		// Make sure we can scan nested file descriptors
+		$options     = array_replace($defaultOptions, $options);
 		$descriptors = $file;
 
 		if (isset($file['name']) && isset($file['tmp_name']))
 		{
 			$descriptors = self::decodeFileData(
-				array(
+				[
 					$file['name'],
 					$file['type'],
 					$file['tmp_name'],
 					$file['error'],
 					$file['size'],
-				)
+				]
 			);
 		}
 
-		// Handle non-nested descriptors (single files)
 		if (isset($descriptors['name']))
 		{
-			$descriptors = array($descriptors);
+			$descriptors = [$descriptors];
 		}
 
-		// Scan all descriptors detected
 		foreach ($descriptors as $fileDescriptor)
 		{
 			if (!isset($fileDescriptor['name']))
 			{
-				// This is a nested descriptor. We have to recurse.
 				if (!self::isSafeFile($fileDescriptor, $options))
 				{
 					return false;
@@ -704,12 +714,12 @@ class QuantummanagerHelper
 
 			if (!is_array($tempNames))
 			{
-				$tempNames = array($tempNames);
+				$tempNames = [$tempNames];
 			}
 
 			if (!is_array($intendedNames))
 			{
-				$intendedNames = array($intendedNames);
+				$intendedNames = [$intendedNames];
 			}
 
 			$len = count($tempNames);
@@ -719,7 +729,6 @@ class QuantummanagerHelper
 				$tempName     = array_shift($tempNames);
 				$intendedName = array_shift($intendedNames);
 
-				// 1. Null byte check
 				if ($options['null_byte'])
 				{
 					if (strstr($intendedName, "\x00"))
@@ -728,7 +737,6 @@ class QuantummanagerHelper
 					}
 				}
 
-				// 2. PHP-in-extension check (.php, .php.xxx[.yyy[.zzz[...]]], .xxx[.yyy[.zzz[...]]].php)
 				if (!empty($options['forbidden_extensions']))
 				{
 					$explodedName = explode('.', $intendedName);
@@ -736,10 +744,6 @@ class QuantummanagerHelper
 					array_pop($explodedName);
 					$explodedName = array_map('strtolower', $explodedName);
 
-					/*
-					 * DO NOT USE array_intersect HERE! array_intersect expects the two arrays to
-					 * be set, i.e. they should have unique values.
-					 */
 					foreach ($options['forbidden_extensions'] as $ext)
 					{
 						if (in_array($ext, $explodedName))
@@ -749,10 +753,11 @@ class QuantummanagerHelper
 					}
 				}
 
-				// 3. File contents scanner (PHP tag in file contents)
-				if ($options['php_tag_in_content']
+				if (
+					$options['php_tag_in_content']
 					|| $options['shorttag_in_content']
-					|| ($options['fobidden_ext_in_content'] && !empty($options['forbidden_extensions'])))
+					|| ($options['fobidden_ext_in_content'] && !empty($options['forbidden_extensions']))
+				)
 				{
 					$fp = @fopen($tempName, 'r');
 
@@ -775,15 +780,9 @@ class QuantummanagerHelper
 
 								if (empty($suspiciousExtensions))
 								{
-									$suspiciousExtensions = array(
-										'inc', 'phps', 'class', 'php3', 'php4', 'txt', 'dat', 'tpl', 'tmpl',
-									);
+									$suspiciousExtensions = ['inc', 'phps', 'class', 'php3', 'php4', 'txt', 'dat', 'tpl', 'tmpl',];
 								}
 
-								/*
-								 * DO NOT USE array_intersect HERE! array_intersect expects the two arrays to
-								 * be set, i.e. they should have unique values.
-								 */
 								$collide = false;
 
 								foreach ($suspiciousExtensions as $ext)
@@ -798,7 +797,6 @@ class QuantummanagerHelper
 
 								if ($collide)
 								{
-									// These are suspicious text files which may have the short tag (<?) in them
 									if (strstr($data, '<?'))
 									{
 										return false;
@@ -812,15 +810,10 @@ class QuantummanagerHelper
 
 								if (empty($suspiciousExtensions))
 								{
-									$suspiciousExtensions = array(
-										'zip', 'rar', 'tar', 'gz', 'tgz', 'bz2', 'tbz', 'jpa',
-									);
+									$suspiciousExtensions = ['zip', 'rar', 'tar', 'gz', 'tgz', 'bz2', 'tbz', 'jpa',];
 								}
 
-								/*
-								 * DO NOT USE array_intersect HERE! array_intersect expects the two arrays to
-								 * be set, i.e. they should have unique values.
-								 */
+
 								$collide = false;
 
 								foreach ($suspiciousExtensions as $ext)
@@ -835,10 +828,6 @@ class QuantummanagerHelper
 
 								if ($collide)
 								{
-									/*
-									 * These are suspicious text files which may have an executable
-									 * file extension in them
-									 */
 									foreach ($options['forbidden_extensions'] as $ext)
 									{
 										if (strstr($data, '.' . $ext))
@@ -849,10 +838,6 @@ class QuantummanagerHelper
 								}
 							}
 
-							/*
-							 * This makes sure that we don't accidentally skip a <?php tag if it's across
-							 * a read boundary, even on multibyte strings
-							 */
 							$data = substr($data, -10);
 						}
 
@@ -867,25 +852,25 @@ class QuantummanagerHelper
 
 	protected static function decodeFileData(array $data): array
 	{
-		$result = array();
+		$result = [];
 
 		if (is_array($data[0]))
 		{
 			foreach ($data[0] as $k => $v)
 			{
-				$result[$k] = self::decodeFileData(array($data[0][$k], $data[1][$k], $data[2][$k], $data[3][$k], $data[4][$k]));
+				$result[$k] = self::decodeFileData([$data[0][$k], $data[1][$k], $data[2][$k], $data[3][$k], $data[4][$k]]);
 			}
 
 			return $result;
 		}
 
-		return array('name' => $data[0], 'type' => $data[1], 'tmp_name' => $data[2], 'error' => $data[3], 'size' => $data[4]);
+		return ['name' => $data[0], 'type' => $data[1], 'tmp_name' => $data[2], 'error' => $data[3], 'size' => $data[4]];
 	}
 
 	public static function escapeJsonString(string $value): string
 	{
-		$escapers     = array("\\", "/", "\"", "\n", "\r", "\t", "\x08", "\x0c");
-		$replacements = array("\\\\", "\\/", "\\\"", "\\n", "\\r", "\\t", "\\f", "\\b");
+		$escapers     = ["\\", "/", "\"", "\n", "\r", "\t", "\x08", "\x0c"];
+		$replacements = ["\\\\", "\\/", "\\\"", "\\n", "\\r", "\\t", "\\f", "\\b"];
 
 		return str_replace($escapers, $replacements, $value);
 	}
@@ -903,11 +888,11 @@ class QuantummanagerHelper
 		{
 			if ($matches[2] === 'M')
 			{
-				$memory_limit = $matches[1] * 1024 * 1024; // nnnM -> nnn MB
+				$memory_limit = $matches[1] * 1024 * 1024;
 			}
 			else if ($matches[2] === 'K')
 			{
-				$memory_limit = $matches[1] * 1024; // nnnK -> nnn KB
+				$memory_limit = $matches[1] * 1024;
 			}
 		}
 
@@ -916,7 +901,8 @@ class QuantummanagerHelper
 
 	public static function isUserAdmin(): bool
 	{
-		$groups = Factory::getUser()->groups;
+		$groups = Factory::getApplication()->getIdentity()->groups;
+
 		if (in_array('2', $groups) || in_array('8', $groups))
 		{
 			return true;
@@ -931,7 +917,9 @@ class QuantummanagerHelper
 	{
 		if (!in_array($name, self::$listScriptsInsert))
 		{
-			Factory::getDocument()->addScriptDeclaration($script);
+			/** @var WebAssetManager $wa */
+			$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+			$wa->addInlineScript($script);
 			self::$listScriptsInsert[] = $name;
 		}
 	}
@@ -943,7 +931,8 @@ class QuantummanagerHelper
 			return self::$cacheVersion;
 		}
 
-		$db                 = Factory::getDbo();
+		/** @var DatabaseDriver $db */
+		$db                 = Factory::getContainer()->get(DatabaseDriver::class);
 		$query              = $db->getQuery(true)
 			->select('manifest_cache')
 			->from($db->quoteName('#__extensions'))
@@ -960,31 +949,18 @@ class QuantummanagerHelper
 		$app->sendHeaders();
 	}
 
-	public static function isJoomla4(): bool
-	{
-		if (version_compare((new Version())->getShortVersion(), '4.0', '<'))
-		{
-			return false;
-		}
-
-		return true;
-	}
-
 	public static function fileUploadMaxSize(): float|int
 	{
 		static $max_size = -1;
 
 		if ($max_size < 0)
 		{
-			// Start with post_max_size.
 			$post_max_size = static::parseSize(ini_get('post_max_size'));
 			if ($post_max_size > 0)
 			{
 				$max_size = $post_max_size;
 			}
 
-			// If upload_max_size is less, then reduce. Except if upload_max_size is
-			// zero, which indicates no limit.
 			$upload_max = static::parseSize(ini_get('upload_max_filesize'));
 			if ($upload_max > 0 && $upload_max < $max_size)
 			{
@@ -997,11 +973,11 @@ class QuantummanagerHelper
 
 	public static function parseSize($size): float
 	{
-		$unit = preg_replace('/[^bkmgtpezy]/i', '', $size); // Remove the non-unit characters from the size.
-		$size = preg_replace('/[^0-9\.]/', '', $size); // Remove the non-numeric characters from the size.
+		$unit = preg_replace('/[^bkmgtpezy]/i', '', $size);
+		$size = preg_replace('/[^0-9\.]/', '', $size);
+
 		if ($unit)
 		{
-			// Find the position of the unit in the ordered string which is the power of magnitude to multiply a kilobyte by.
 			return round($size * pow(1024, stripos('bkmgtpezy', $unit[0])));
 		}
 		else
@@ -1019,7 +995,7 @@ class QuantummanagerHelper
 
 	public static function prepareFileName(string $name): string
 	{
-		$lang = Factory::getLanguage();
+		$lang = Factory::getApplication()->getLanguage();
 
 		if (!(int) QuantummanagerHelper::getParamsComponentValue('translit', 0))
 		{

@@ -1,4 +1,6 @@
-<?php namespace Joomla\Component\QuantumManager\Administrator\Controller;
+<?php
+
+namespace Joomla\Component\QuantumManager\Administrator\Controller;
 
 /**
  * @package    quantummanager
@@ -21,7 +23,7 @@ class QuantummanagerController extends BaseController
 
 		if ((int) QuantummanagerHelper::getParamsComponentValue('reivew', 1))
 		{
-			QuantummanagerHelper::setComponentsParams('review', "0");
+			QuantummanagerHelper::setComponentsParams('review', '0');
 		}
 
 		$this->app->close();

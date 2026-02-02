@@ -1,4 +1,6 @@
-<?php namespace Joomla\Component\QuantumManager\Administrator\Controller;
+<?php
+
+namespace Joomla\Component\QuantumManager\Administrator\Controller;
 
 /**
  * @package    quantummanager

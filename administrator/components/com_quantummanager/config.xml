@@ -303,41 +303,6 @@
 
 	<fieldset name="image" label="COM_QUANTUMMANAGER_CONFIG_IMAGE" description="COM_QUANTUMMANAGER_CONFIG_IMAGE_DESC">
 
-		<field name="unsplash"
-			   type="radio"
-			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_UNSPLASH_LABEL"
-			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_UNSPLASH_DESC"
-			   required="true"
-			   class="btn-group btn-group-yesno"
-			   default="1">
-			<option value="1">COM_QUANTUMMANAGER_ACTION_ENABLE</option>
-			<option value="0">COM_QUANTUMMANAGER_ACTION_DISABLE</option>
-		</field>
-
-		<!--
-		<field name="pixabay"
-			   type="radio"
-			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_PIXABAY_LABEL"
-			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_PIXABAY_DESC"
-			   required="true"
-			   class="btn-group btn-group-yesno"
-			   default="1">
-			<option value="1">COM_QUANTUMMANAGER_ACTION_ENABLE</option>
-			<option value="0">COM_QUANTUMMANAGER_ACTION_DISABLE</option>
-		</field>
-
-		<field name="pexels"
-			   type="radio"
-			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_PEXELS_LABEL"
-			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_PEXELS_DESC"
-			   required="true"
-			   class="btn-group btn-group-yesno"
-			   default="1">
-			<option value="1">COM_QUANTUMMANAGER_ACTION_ENABLE</option>
-			<option value="0">COM_QUANTUMMANAGER_ACTION_DISABLE</option>
-		</field>
-		-->
-
 		<field name="original"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_ORIGINAL_LABEL"
@@ -481,6 +446,45 @@
 			   required="true"
 			   default="10"
 			   showon="overlay!:0"/>
+
+		<field type="spacer"
+			   name="spacer_image_sanitizer"
+			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_SPACER_SANITIZER"
+			   filter="unset"
+		/>
+
+		<field name="sanitizerpreviewadmin"
+			   type="radio"
+			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_SANITIZER_PREVIEW_ADMIN_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_SANITIZER_PREVIEW_ADMIN_DESC"
+			   required="true"
+			   class="btn-group btn-group-yesno"
+			   default="1">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field name="sanitizeruploadadmin"
+			   type="radio"
+			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_SANITIZER_UPLOAD_ADMIN_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_SANITIZER_UPLOAD_ADMIN_DESC"
+			   required="true"
+			   class="btn-group btn-group-yesno"
+			   default="1">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field name="sanitizeruploaduser"
+			   type="radio"
+			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_SANITIZER_UPLOAD_USER_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_SANITIZER_UPLOAD_USER_DESC"
+			   required="true"
+			   class="btn-group btn-group-yesno"
+			   default="1">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
 
 		<field type="spacer"
 			   name="spacer_image_editor"
