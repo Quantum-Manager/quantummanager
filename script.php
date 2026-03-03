@@ -21,9 +21,9 @@ return new class () implements ServiceProviderInterface {
 
 			protected DatabaseDriver $db;
 
-			protected string $minimumJoomla = '4.2.0';
+			protected string $minimumJoomla = '5.0.0';
 
-			protected string $minimumPhp = '8.1';
+			protected string $minimumPhp = '8.2';
 
 			public function __construct(AdministratorApplication $app)
 			{
