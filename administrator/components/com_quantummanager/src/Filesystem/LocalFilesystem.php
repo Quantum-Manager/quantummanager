@@ -970,7 +970,8 @@ class LocalFilesystem
 						}
 					}
 
-					$image->afterUpload($path_source, $path . DIRECTORY_SEPARATOR . $uploadedFileName);
+					// Saving an edited image must keep its name and format, so no conversion here
+					$image->afterUpload($path_source, $path . DIRECTORY_SEPARATOR . $uploadedFileName, ['convert' => 0]);
 
 				}
 			}
@@ -1091,7 +1092,13 @@ class LocalFilesystem
 					if ($type === 'image')
 					{
 						$image = new ImageHelper;
-						$image->afterUpload($path_source, $path . DIRECTORY_SEPARATOR . $uploadedFileName, ['rotateExif' => 1]);
+						$uploadedFile = $image->afterUpload($path_source, $path . DIRECTORY_SEPARATOR . $uploadedFileName, ['rotateExif' => 1]);
+
+						if ($uploadedFile !== $path . DIRECTORY_SEPARATOR . $uploadedFileName)
+						{
+							$uploadedFileName = basename($uploadedFile);
+							$output['name']   = $uploadedFileName;
+						}
 					}
 
 					Factory::getApplication()
