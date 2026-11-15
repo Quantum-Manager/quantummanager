@@ -68,6 +68,8 @@ use function urldecode;
 
 class LocalFilesystem
 {
+	/** GDO PATCH: максимальная глубина дерева папок (3 = images/gallery/2026/10). */
+	public const TREE_MAX_LEVEL = 3;
 
 	public static function createDirectory(string $path, string $scope, string $name): string
 	{
@@ -167,6 +169,15 @@ class LocalFilesystem
 		}
 
 		if (!file_exists($dir))
+		{
+			return [];
+		}
+
+		// GDO PATCH: ограничение глубины дерева папок (полный обход images/
+		// с ~6300 папками занимал ~6 с). Глубже TREE_MAX_LEVEL папки в дереве
+		// не показываются, но доступны через панель файлов справа.
+		// При обновлении Quantum Manager правку нужно внести заново.
+		if ($level > static::TREE_MAX_LEVEL)
 		{
 			return [];
 		}
