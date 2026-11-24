@@ -48,13 +48,17 @@ class ImageHelper
 
 	private ?PelExif $exifs;
 
-	public function afterUpload(string $path_source, string $file, array $options = []): void
+	/**
+	 * Processes an uploaded image and returns the path of the resulting file
+	 * (it differs from $file when the image was converted to another format).
+	 */
+	public function afterUpload(string $path_source, string $file, array $options = []): string
 	{
 		$info = pathinfo($file);
 
 		if (isset($info['extension']) && (!in_array(mb_strtolower($info['extension']), ['jpg', 'jpeg', 'png', 'webp'])))
 		{
-			return;
+			return $file;
 		}
 
 		$defaultOptions = [
@@ -63,6 +67,7 @@ class ImageHelper
 			'resize'        => 1,
 			'overlay'       => 1,
 			'foldersResize' => 1,
+			'convert'       => 1,
 		];
 
 		foreach ($options as $key => $value)
@@ -99,8 +104,107 @@ class ImageHelper
 
 		$this->otherFilters($file);
 		$this->writeExif($file);
+
+		if ((int) QuantummanagerHelper::getParamsComponentValue('convert', 0) && (int) $defaultOptions['convert'])
+		{
+			$file = $this->convert($file);
+		}
+
 		$this->reloadCache($file);
 
+		return $file;
+	}
+
+	/**
+	 * Checks whether the current image driver can encode the given format.
+	 */
+	public function canEncode(string $format): bool
+	{
+		if ($this->getNameDriver() === 'imagick')
+		{
+			try
+			{
+				return in_array(strtoupper($format), \Imagick::queryFormats(strtoupper($format)), true);
+			}
+			catch (\Throwable $e)
+			{
+				return false;
+			}
+		}
+
+		return function_exists('image' . $format);
+	}
+
+	/**
+	 * Converts a JPEG/PNG image to WebP / AVIF according to the component settings.
+	 * The source file is removed after a successful conversion.
+	 *
+	 * @return string Path of the converted file, or the source path if nothing was converted.
+	 */
+	public function convert(string $file): string
+	{
+		try
+		{
+			$info = pathinfo($file);
+			$exs  = mb_strtolower($info['extension'] ?? '');
+
+			// WebP uploads are kept as is (no re-encoding)
+			if (!in_array($exs, ['jpg', 'jpeg', 'png'], true))
+			{
+				return $file;
+			}
+
+			$format = mb_strtolower((string) QuantummanagerHelper::getParamsComponentValue('convertformat', 'webp'));
+
+			if (!in_array($format, ['webp', 'avif'], true) || !$this->canEncode($format))
+			{
+				return $file;
+			}
+
+			$quality = (int) QuantummanagerHelper::getParamsComponentValue('convertquality', 80);
+			$quality = max(1, min(100, $quality));
+
+			$target = $info['dirname'] . DIRECTORY_SEPARATOR . $info['filename'] . '.' . $format;
+
+			if (file_exists($target))
+			{
+				$target = $info['dirname'] . DIRECTORY_SEPARATOR . $info['filename'] . '_p' . mt_rand(11111, 99999) . '.' . $format;
+			}
+
+			// Encoder warnings/notices must not leak into the JSON response of the upload
+			ob_start();
+
+			try
+			{
+				$manager = Manager::getInstance(['driver' => $this->getNameDriver()]);
+				$image   = $manager->read($file);
+				$encoded = $format === 'avif' ? $image->toAvif($quality) : $image->toWebp($quality);
+				$encoded->save($target);
+			}
+			finally
+			{
+				ob_end_clean();
+			}
+
+			if (!file_exists($target) || filesize($target) === 0)
+			{
+				if (file_exists($target))
+				{
+					File::delete($target);
+				}
+
+				return $file;
+			}
+
+			File::delete($file);
+
+			return $target;
+		}
+		catch (\Throwable $e)
+		{
+			// Conversion must never break the upload: keep the source file
+			return $file;
+		}
 	}
 
 	public function saveExif(string $file): void

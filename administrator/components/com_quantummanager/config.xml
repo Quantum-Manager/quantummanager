@@ -326,6 +326,37 @@
 			<option value="0">JNO</option>
 		</field>
 
+		<field name="convert"
+			   type="radio"
+			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_CONVERT_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_CONVERT_DESC"
+			   required="true"
+			   class="btn-group btn-group-yesno"
+			   default="0">
+			<option value="1">COM_QUANTUMMANAGER_ACTION_ENABLE</option>
+			<option value="0">COM_QUANTUMMANAGER_ACTION_DISABLE</option>
+		</field>
+
+		<field name="convertformat"
+			   type="list"
+			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_CONVERTFORMAT_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_CONVERTFORMAT_DESC"
+			   default="webp"
+			   showon="convert:1">
+			<option value="webp">WebP</option>
+			<option value="avif">AVIF</option>
+		</field>
+
+		<field name="convertquality"
+			   type="number"
+			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_CONVERTQUALITY_LABEL"
+			   description="COM_QUANTUMMANAGER_CONFIG_IMAGE_CONVERTQUALITY_DESC"
+			   default="80"
+			   min="1"
+			   max="100"
+			   showon="convert:1"
+		/>
+
 		<field name="resize"
 			   type="radio"
 			   label="COM_QUANTUMMANAGER_CONFIG_IMAGE_RESIZE_LABEL"
