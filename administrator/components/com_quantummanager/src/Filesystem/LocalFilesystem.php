@@ -71,6 +71,7 @@ class LocalFilesystem
 
 	public static function createDirectory(string $path, string $scope, string $name): string
 	{
+		QuantummanagerHelper::checkFileName($name);
 
 		$actions = QuantummanagerHelper::getActions();
 		if (!$actions->get('core.create'))
@@ -93,6 +94,7 @@ class LocalFilesystem
 				$nameForSafe = $name;
 			}
 
+			QuantummanagerHelper::checkFileName($nameForSafe, $path);
 			Folder::create($path . DIRECTORY_SEPARATOR . $nameForSafe);
 
 			return json_encode(['ok']);
@@ -195,7 +197,7 @@ class LocalFilesystem
 
 				foreach ($list as $name)
 				{
-					if (is_dir($dir . DIRECTORY_SEPARATOR . $name))
+					if (!is_link($dir . DIRECTORY_SEPARATOR . $name) && is_dir($dir . DIRECTORY_SEPARATOR . $name))
 					{
 
 						$folders[] = [
@@ -245,12 +247,23 @@ class LocalFilesystem
 
 	public static function getMetaFile(string $path, string $scope, string $file): string
 	{
+		if ($file !== '')
+		{
+			QuantummanagerHelper::checkFileName($file);
+		}
+
 		$sourcePath = $path;
 		$path       = QuantummanagerHelper::preparePath($path, false, $scope);
 
 		$extended  = (int) QuantummanagerHelper::getParamsComponentValue('metafileextended', 0);
 		$showPath  = (int) QuantummanagerHelper::getParamsComponentValue('metafileshowpath', 0);
 		$directory = JPATH_ROOT . DIRECTORY_SEPARATOR . $path;
+
+		if ($file !== '')
+		{
+			QuantummanagerHelper::checkFileName($file, $directory);
+		}
+
 		$filePath  = $directory . DIRECTORY_SEPARATOR . $file;
 		$meta      = [];
 
@@ -475,6 +488,8 @@ class LocalFilesystem
 	{
 		$directories      = Folder::folders($dir);
 		$files            = Folder::files($dir, '');
+		$directories      = array_values(array_filter($directories, static fn ($name) => !is_link($dir . DIRECTORY_SEPARATOR . $name)));
+		$files            = array_values(array_filter($files, static fn ($name) => !is_link($dir . DIRECTORY_SEPARATOR . $name)));
 		$size             = 0;
 		$sizeCurrent      = 0;
 		$filesCount       = count($files);
@@ -551,6 +566,11 @@ class LocalFilesystem
 
 			foreach ($files as $file)
 			{
+				if (is_link($directory . DIRECTORY_SEPARATOR . $file))
+				{
+					continue;
+				}
+
 				$fileParse = explode('.', $file);
 
 				if (count($fileParse) === 1)
@@ -599,6 +619,11 @@ class LocalFilesystem
 			$directoriesOutput = [];
 			foreach ($directories as $value)
 			{
+				if (is_link($directory . DIRECTORY_SEPARATOR . $value))
+				{
+					continue;
+				}
+
 				$directoriesOutput[] = [
 					'name'        => $value,
 					'is_writable' => (int) is_writable($directory . DIRECTORY_SEPARATOR . $value),
@@ -638,6 +663,11 @@ class LocalFilesystem
 
 	public static function duplicate(string $path, string $scope, array $list = []): string
 	{
+		foreach ($list as $file)
+		{
+			QuantummanagerHelper::checkFileName($file);
+		}
+
 		$actions = QuantummanagerHelper::getActions();
 
 		if (!$actions->get('core.edit'))
@@ -647,6 +677,11 @@ class LocalFilesystem
 
 		$lang         = Factory::getApplication()->getLanguage();
 		$path_compile = JPATH_SITE . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($path, false, $scope);
+
+		foreach ($list as $file)
+		{
+			QuantummanagerHelper::checkFileName($file, $path_compile);
+		}
 
 		$find_new_name = static function ($name, $count = 0, $is_file = true) use ($lang, $path_compile, &$find_new_name) {
 
@@ -700,6 +735,7 @@ class LocalFilesystem
 				}
 			}
 
+			QuantummanagerHelper::checkFileName($nameSafe, $path_compile);
 			$check_file = $path_compile . DIRECTORY_SEPARATOR . $nameSafe;
 
 			if (!file_exists($check_file))
@@ -758,6 +794,11 @@ class LocalFilesystem
 		array  $list = []
 	): string
 	{
+		foreach ($list as $file)
+		{
+			QuantummanagerHelper::checkFileName($file);
+		}
+
 		$actions = QuantummanagerHelper::getActions();
 
 		if (!$actions->get('core.edit'))
@@ -767,6 +808,12 @@ class LocalFilesystem
 
 		$pathFromCompile = JPATH_SITE . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($pathFrom, false, $scopeFrom);
 		$pathToCompile   = JPATH_SITE . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($pathTo, false, $scopeTo);
+
+		foreach ($list as $file)
+		{
+			QuantummanagerHelper::checkFileName($file, $pathFromCompile);
+			QuantummanagerHelper::checkFileName($file, $pathToCompile);
+		}
 
 		if (file_exists($pathFromCompile) && file_exists($pathToCompile))
 		{
@@ -832,6 +879,10 @@ class LocalFilesystem
 
 	public static function delete(string $scope, string $path = '', array $list = []): string
 	{
+		foreach ($list as $file)
+		{
+			QuantummanagerHelper::checkFileName($file);
+		}
 
 		$actions = QuantummanagerHelper::getActions();
 		if (!$actions->get('core.delete'))
@@ -840,6 +891,11 @@ class LocalFilesystem
 		}
 
 		$path = JPATH_SITE . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($path, false, $scope);
+
+		foreach ($list as $file)
+		{
+			QuantummanagerHelper::checkFileName($file, $path);
+		}
 
 		if (file_exists($path))
 		{
@@ -926,8 +982,10 @@ class LocalFilesystem
 					return $output['error'];
 				}
 
-				$path_source = QuantummanagerHelper::preparePath($data['path'], $data['scope']);
+				$path_source = QuantummanagerHelper::preparePathRoot($data['path'], $data['scope']);
 				$path        = JPATH_ROOT . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($data['path'], false, $data['scope']);
+
+				QuantummanagerHelper::checkFileName($uploadedFileName, $path);
 
 				if (!QuantummanagerHelper::checkFile($uploadedFileName, $file['type']))
 				{
@@ -945,10 +1003,13 @@ class LocalFilesystem
 
 				if (isset($data['source']) && !empty($data['source']))
 				{
-					$data['source'] = urldecode($data['source']);
-					if (file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $data['source']))
+					$source = Path::clean(JPATH_ROOT . DIRECTORY_SEPARATOR . urldecode($data['source']));
+					$scopeRoot = JPATH_ROOT . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath('root', false, $data['scope']);
+					QuantummanagerHelper::checkPathWithinScope($source, $scopeRoot);
+
+					if (file_exists($source))
 					{
-						$image->saveExif(JPATH_ROOT . DIRECTORY_SEPARATOR . $data['source']);
+						$image->saveExif($source);
 					}
 				}
 
@@ -1070,6 +1131,8 @@ class LocalFilesystem
 				$path_source      = QuantummanagerHelper::preparePathRoot($data['path'], $data['scope']);
 				$path             = JPATH_ROOT . DIRECTORY_SEPARATOR . QuantummanagerHelper::preparePath($data['path'], false, $data['scope']);
 
+				QuantummanagerHelper::checkFileName($uploadedFileName, $path);
+
 				if (!QuantummanagerHelper::checkFile($file['name'], $file['type']))
 				{
 					$output['error'] = Text::_('COM_QUANTUMMANAGER_ERROR_UPLOAD_ACCESS') . ': ' . (empty($file['type']) ? Text::_('COM_QUANTUMMANAGER_EMPTY_MIMETYPE') : $file['type']);
@@ -1123,6 +1186,11 @@ class LocalFilesystem
 
 	public static function generatePreviewImage(string $path, string $scope, string $file): void
 	{
+		if ($file !== '')
+		{
+			QuantummanagerHelper::checkFileName($file);
+		}
+
 		$app             = Factory::getApplication();
 		$splitFile       = explode('.', $file);
 		$exs             = mb_strtolower(array_pop($splitFile));
@@ -1130,6 +1198,11 @@ class LocalFilesystem
 		$siteUrl         = Uri::root();
 		$path            = QuantummanagerHelper::preparePath($path, false, $scope);
 		$componentParams = ComponentHelper::getParams('com_quantummanager');
+
+		if ($file !== '')
+		{
+			QuantummanagerHelper::checkFileName($file, JPATH_ROOT . DIRECTORY_SEPARATOR . $path);
+		}
 
 		if (empty($file))
 		{
@@ -1270,6 +1343,10 @@ class LocalFilesystem
 
 	public static function createPreview(string $path, string $scope, array $list, string $previewTitle): string
 	{
+		foreach ($list as $file)
+		{
+			QuantummanagerHelper::checkFileName($file);
+		}
 
 		$path   = QuantummanagerHelper::preparePath($path, false, $scope);
 		$image  = new ImageHelper();
@@ -1277,6 +1354,7 @@ class LocalFilesystem
 
 		foreach ($list as $file)
 		{
+			QuantummanagerHelper::checkFileName($file, JPATH_ROOT . DIRECTORY_SEPARATOR . $path);
 			$pathFileFrom = JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file;
 
 			$info = pathinfo($pathFileFrom);
@@ -1344,6 +1422,9 @@ class LocalFilesystem
 
 	public static function renameFile(string $path, string $scope, string $file, string $name = ''): string
 	{
+		QuantummanagerHelper::checkFileName($file);
+		QuantummanagerHelper::checkFileName($name);
+
 		$path      = QuantummanagerHelper::preparePath($path, false, $scope);
 		$splitFile = explode('.', $file);
 		$exs       = QuantummanagerHelper::prepareFileExs(array_pop($splitFile));
@@ -1351,6 +1432,9 @@ class LocalFilesystem
 		$output    = [
 			'status' => 'fail'
 		];
+
+		QuantummanagerHelper::checkFileName($file, JPATH_ROOT . DIRECTORY_SEPARATOR . $path);
+		QuantummanagerHelper::checkFileName($nameSafe . '.' . $exs, JPATH_ROOT . DIRECTORY_SEPARATOR . $path);
 
 		if (!in_array($exs, QuantummanagerHelper::$forbiddenExtensions) && file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file))
 		{
@@ -1367,6 +1451,9 @@ class LocalFilesystem
 
 	public static function renameDirectory(string $path, string $scope, string $oldName, string $name = ''): string
 	{
+		QuantummanagerHelper::checkFileName($oldName);
+		QuantummanagerHelper::checkFileName($name);
+
 		$path   = QuantummanagerHelper::preparePath($path, false, $scope);
 		$output = [
 			'status' => 'fail'
@@ -1383,6 +1470,9 @@ class LocalFilesystem
 			$nameSafe = preg_replace("#[\"\'\%\<\>]#", '', strip_tags($name));
 		}
 
+		QuantummanagerHelper::checkFileName($oldName, JPATH_ROOT . DIRECTORY_SEPARATOR . $path);
+		QuantummanagerHelper::checkFileName($nameSafe, JPATH_ROOT . DIRECTORY_SEPARATOR . $path);
+
 		if (rename(JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $oldName, JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $nameSafe))
 		{
 			$output = [
@@ -1395,6 +1485,8 @@ class LocalFilesystem
 
 	public static function getImageForCrop(string $path, string $scope, string $file): string
 	{
+		QuantummanagerHelper::checkFileName($file);
+
 		$path           = QuantummanagerHelper::preparePath($path, false, $scope);
 		$originalResize = (int) QuantummanagerHelper::getParamsComponentValue('originalresize', 0);
 		$output         = [];
@@ -1403,8 +1495,13 @@ class LocalFilesystem
 		$nameExs     = QuantummanagerHelper::prepareFileExs(array_pop($nameSplit));
 		$nameForSafe = QuantummanagerHelper::prepareFileName(implode('.', $nameSplit));
 
+		QuantummanagerHelper::checkFileName($file, JPATH_ROOT . DIRECTORY_SEPARATOR . $path);
+
 		if ($originalResize)
 		{
+			QuantummanagerHelper::checkFileName('_original', JPATH_ROOT . DIRECTORY_SEPARATOR . $path);
+			QuantummanagerHelper::checkFileName($file, JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . '_original');
+
 			if (file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . '_original' . DIRECTORY_SEPARATOR . $file))
 			{
 				$output['path'] = $path . '/_original/' . $file;
@@ -1424,12 +1521,17 @@ class LocalFilesystem
 
 	public static function setWatermark(string $path, string $scope, array $list): void
 	{
+		foreach ($list as $file)
+		{
+			QuantummanagerHelper::checkFileName($file);
+		}
 
 		$path  = QuantummanagerHelper::preparePath($path, false, $scope);
 		$image = new ImageHelper;
 
 		foreach ($list as $file)
 		{
+			QuantummanagerHelper::checkFileName($file, JPATH_ROOT . DIRECTORY_SEPARATOR . $path);
 			$pathFile = JPATH_ROOT . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $file;
 
 			$info = pathinfo($pathFile);

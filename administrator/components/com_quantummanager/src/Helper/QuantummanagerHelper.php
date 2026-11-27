@@ -191,65 +191,130 @@ class QuantummanagerHelper
 		return $result;
 	}
 
+	/**
+	 * Normalise before validating: Joomla's Path::clean() also converts backslashes.
+	 * Never repair traversal by deleting substrings; reject the entire request.
+	 */
+	protected static function normaliseRelativePath(string $path): string
+	{
+		$path = str_replace('\\', '/', trim($path));
+
+		if (preg_match('#[\x00-\x1f\x7f:]#', $path) || str_starts_with($path, '/'))
+		{
+			throw new \InvalidArgumentException('Invalid path.', 403);
+		}
+
+		$parts = [];
+
+		foreach (explode('/', $path) as $part)
+		{
+			if ($part === '..' || (DIRECTORY_SEPARATOR === '\\' && $part !== '.' && rtrim($part, ". ") !== $part))
+			{
+				throw new \InvalidArgumentException('Invalid path.', 403);
+			}
+
+			if ($part !== '' && $part !== '.')
+			{
+				$parts[] = $part;
+			}
+		}
+
+		return implode('/', $parts);
+	}
+
+	public static function checkPathWithinScope(string $path, string $scopePath): void
+	{
+		// Resolve existing ancestors as well as the not-yet-created path suffix.
+		// This catches symlinks outside the scope before creating any directories.
+		$resolvedPaths = [];
+
+		foreach ([$path, $scopePath] as $currentPath)
+		{
+			$currentPath = Path::clean($currentPath);
+
+			if (str_contains($currentPath, "\0") || in_array('..', explode('/', str_replace('\\', '/', $currentPath)), true))
+			{
+				throw new \InvalidArgumentException('Invalid path.', 403);
+			}
+
+			$tail = [];
+
+			while (($resolved = realpath($currentPath)) === false)
+			{
+				if (is_link($currentPath) || dirname($currentPath) === $currentPath)
+				{
+					throw new \InvalidArgumentException('Invalid path.', 403);
+				}
+
+				array_unshift($tail, basename($currentPath));
+				$currentPath = dirname($currentPath);
+			}
+
+			$resolved = rtrim(str_replace('\\', '/', $resolved), '/') . ($tail ? '/' . implode('/', $tail) : '');
+			$resolvedPaths[] = DIRECTORY_SEPARATOR === '\\' ? strtolower($resolved) : $resolved;
+		}
+
+		[$path, $scopePath] = $resolvedPaths;
+
+		if ($path !== $scopePath && !str_starts_with($path, $scopePath . '/'))
+		{
+			throw new \InvalidArgumentException('Path is outside the selected scope.', 403);
+		}
+	}
+
+	/** Names received separately from a directory must be single path components. */
+	public static function checkFileName(mixed $name, string $directory = ''): void
+	{
+		if (!is_string($name) || $name === '' || $name === '.' || $name === '..' || trim($name) !== $name || preg_match('#[\x00-\x1f\x7f/\\\\:]#', $name)
+			|| (DIRECTORY_SEPARATOR === '\\' && rtrim($name, ". ") !== $name))
+		{
+			throw new \InvalidArgumentException('Invalid file name.', 403);
+		}
+
+		if ($directory !== '')
+		{
+			self::checkPathWithinScope($directory . DIRECTORY_SEPARATOR . $name, $directory);
+		}
+	}
+
 	public static function preparePathRoot(string $path, string $scopeName, bool $pathUnix = false): string
 	{
-		$path = trim($path);
+		$path = self::normaliseRelativePath($path);
 
-		if (!preg_match('#^root.*#', $path))
+		if (!isset(static::$cachePathRoot[$scopeName]))
 		{
-			$path = 'root/' . $path;
+			$scope = self::getScope($scopeName);
+
+			if ($scope === null)
+			{
+				throw new \InvalidArgumentException('Invalid scope.', 403);
+			}
+
+			static::$cachePathRoot[$scopeName] = $scope->path;
 		}
 
-		if (empty(static::$cachePathRoot[$scopeName]))
+		$scopePath = self::normaliseRelativePath(static::$cachePathRoot[$scopeName]);
+
+		if ($path === 'root')
 		{
-			$scope                             = self::getScope($scopeName);
-			$pathConfig                        = $scope->path;
-			static::$cachePathRoot[$scopeName] = $pathConfig;
+			$path = '';
 		}
-		else
+		elseif (str_starts_with($path, 'root/'))
 		{
-			$pathConfig = static::$cachePathRoot[$scopeName];
-		}
-
-		$path = str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
-		$path = preg_replace('#' . str_replace('\\', '\\\\', JPATH_ROOT) . "\/root?#", $pathConfig, $path);
-		$path = preg_replace('#^root?#', $pathConfig, $path);
-		$path = str_replace('..' . DIRECTORY_SEPARATOR, '', $path);
-
-		$path = Path::clean($path);
-
-		if ($pathUnix)
-		{
-			$path = str_replace("\\", '/', $path);
+			$path = substr($path, 5);
 		}
 
-		return $path;
+		$path = ($scopePath === '' ? '' : $scopePath . '/') . $path;
+		$path = self::normaliseRelativePath($path);
+		self::checkPathWithinScope(JPATH_ROOT . '/' . $path, JPATH_ROOT . '/' . $scopePath);
+
+		return $path === '' ? '' : Path::clean($path, $pathUnix ? '/' : DIRECTORY_SEPARATOR);
 	}
 
 	public static function preparePath(string $path, bool $host = false, string $scopeName = '', bool $pathUnix = false): string
 	{
-		$path = trim($path);
-
-		if (!preg_match('#^root.*#', $path))
-		{
-			$path = 'root/' . $path;
-		}
-
-		if (empty(static::$cachePathRoot[$scopeName]))
-		{
-			$scope                             = self::getScope($scopeName);
-			$pathConfig                        = $scope->path;
-			static::$cachePathRoot[$scopeName] = $pathConfig;
-		}
-		else
-		{
-			$pathConfig = static::$cachePathRoot[$scopeName];
-		}
-
-		$path = str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
-		$path = preg_replace('#' . str_replace('\\', '\\\\', JPATH_ROOT) . "\/root?#", $pathConfig, $path);
-		$path = preg_replace('#^root?#', $pathConfig, $path);
-		$path = str_replace('..' . DIRECTORY_SEPARATOR, '', $path);
+		$path = self::preparePathRoot($path, $scopeName, true);
+		$pathConfig = self::preparePathRoot('root', $scopeName, true);
 
 		if (substr_count($path, '{user_id}'))
 		{
@@ -328,59 +393,30 @@ class QuantummanagerHelper
 		$path            = str_replace($variables, $values, $path);
 		$pathConfigParse = str_replace($variables, $values, $pathConfig);
 
-		$path            = Path::clean($path);
-		$pathConfigParse = Path::clean($pathConfigParse);
+		// Validate again after expanding configured variables, before creating folders.
+		$path = self::normaliseRelativePath($path);
+		$pathConfigParse = self::normaliseRelativePath($pathConfigParse);
 
-		if (!preg_match('#^' . str_replace(DIRECTORY_SEPARATOR, "\\" . DIRECTORY_SEPARATOR, "\(" . Path::clean(JPATH_ROOT . DIRECTORY_SEPARATOR) . "\)?" . $pathConfigParse) . '.*?#', $path))
+		if ($path !== $pathConfigParse && $pathConfigParse !== '' && !str_starts_with($path, $pathConfigParse . '/'))
 		{
-			if (preg_match('#.*?' . str_replace(DIRECTORY_SEPARATOR, "\\" . DIRECTORY_SEPARATOR, Path::clean(JPATH_ROOT . DIRECTORY_SEPARATOR) . $pathConfigParse) . '.*?#', $path))
-			{
-				$path = JPATH_ROOT . DIRECTORY_SEPARATOR . $pathConfigParse . str_replace(JPATH_ROOT, '', $path);
-			}
-			else
-			{
-				$path = str_replace(JPATH_ROOT, '', $path);
-			}
-
-			$path = str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
+			throw new \InvalidArgumentException('Path is outside the selected scope.', 403);
 		}
 
-		$pathCurrent = str_replace(
-			[
-				JPATH_ROOT,
-				DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR
-			],
-			[
-				'',
-				DIRECTORY_SEPARATOR
-			],
-			$path
-		);
+		self::checkPathWithinScope(JPATH_ROOT . '/' . $path, JPATH_ROOT . '/' . $pathConfigParse);
 
-		$folders    = explode(DIRECTORY_SEPARATOR, $pathCurrent);
-		$currentTmp = JPATH_ROOT;
-
-		foreach ($folders as $tmpFolder)
+		if (!is_dir(JPATH_ROOT . '/' . $path))
 		{
-			$currentTmp .= DIRECTORY_SEPARATOR . $tmpFolder;
-
-			if (!file_exists($currentTmp))
-			{
-				Folder::create($currentTmp);
-			}
+			Folder::create(JPATH_ROOT . '/' . $path);
 		}
 
-		if ($pathUnix)
-		{
-			$path = str_replace("\\", '/', $path);
-		}
+		$path = $path === '' ? '' : Path::clean($path, $pathUnix ? '/' : DIRECTORY_SEPARATOR);
 
 		if ($host)
 		{
 			$path = Uri::root() . $path;
 		}
 
-		return trim($path, DIRECTORY_SEPARATOR);
+		return $path;
 	}
 
 	public static function getFolderRoot(): string
